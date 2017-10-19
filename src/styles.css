@@ -1,1 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../src/assets/css/login.css";
+
+h1 {
+    margin: 0;
+    font-size: 50px;
+    font-weight: 700;
+    color: #fff;
+}
+
+h2 {
+    margin: 0;
+    font-size: 28px;
+    color: #fff;
+}
+
+h3 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 300;
+    color: #fff;
+}
+
+h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ccc;
+}
+
+h5 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 200;
+    color: #fff;
+}
+
+.gradient {
+    min-height: 100vh;
+    background: black;
+    /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#0d1c7c, black);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#0d1c7c, black);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#0d1c7c, black);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#0d1c7c, black, black);
+    /* Standard syntax */
+}

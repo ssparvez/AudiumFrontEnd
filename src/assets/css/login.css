@@ -1,0 +1,33 @@
+.tabs .tab a {
+  color: white;
+}
+
+
+/*Black color to the text*/
+
+.tab {
+  background-color: #414141;
+  width: 100vh;
+}
+
+.tabs .tab a:hover {
+  background-color: #eee;
+  color: #000;
+}
+
+
+/*Text color on hover*/
+
+.tabs .tab a.active {
+  color: #2196f3;
+}
+
+
+/*Background and text color when a tab is active*/
+
+.tabs .indicator {
+  background-color: #2196f3;
+}
+
+
+/*Color of underline*/

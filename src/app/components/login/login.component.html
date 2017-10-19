@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body class="gradient">
+  <!-- Main Content -->
+  <main>
+    <div class="container">
+      <!-- Page Content goes here -->
+      <div class="row"></div>
+      <div class="row">
+        <div class="col s12 m6 center-align">
+          <h1>Audium</h1>
+          <a routerLink="/dash" class="waves-effect">TESTING</a>
+          <div class="divider"></div>
+          <div class="row"></div>
+          <h3>Discover the music you love</h3>
+        </div>
+        <div class="col s12 m6">
+          <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'">
+            <mz-tab-item [active]="'true'" [label]="'LOGIN'" [class]="''">
+              <div class="col s12 grey darken-1">
+                <form class="" method="post">
+                  <div class="row">
+                    <div class="input-field col s12 ">
+                      <i class="material-icons prefix white-text">email</i>
+                      <label for="email-signin">Email</label>
+                      <input id="email-signin" type="email" class="validate">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <i class="material-icons prefix white-text">vpn_key</i>
+                      <label for="password-signin">Password</label>
+                      <input id="password-signin" type="password" class="validate">
+                    </div>
+                    <label style='float: right;'>
+                      <a class='pink-text' href='#!'>
+                        <b>Forgot Password?</b>
+                      </a>
+                    </label>
+                  </div>
+                  <br/>
+                  <div class='row'>
+                    <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect blue'>Log Into Audium</button>
+                  </div>
+                  <p class="white-text center-align">Or log in with</p>
+                  <br/>
+                  <div class='row'>
+                    <div class="col m6">
+                      <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect' style="background-color: #3b5998;">Facebook</button>
+                    </div>
+                    <div class="col m6">
+                      <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect white black-text'>Google</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </mz-tab-item>
+            <mz-tab-item [label]="'REGISTER'">
+              <div class="col s12 grey darken-1">
+                <form class="">
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+                      <label for="first_name">First Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input id="last_name" type="text" class="validate">
+                      <label for="last_name">Last Name</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input id="email" type="email" class="validate">
+                      <label for="email">Email</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input id="password" type="password" class="validate">
+                      <label for="password">Password</label>
+                    </div>
+                  </div>
+                  <br />
+                  <div class='row'>
+                    <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect blue'>Create Account</button>
+                  </div>
+                </form>
+              </div>
+            </mz-tab-item>
+          </mz-tab>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer></footer>
+</body>
+
+</html>
