@@ -20,16 +20,20 @@ import { FrontPageComponent } from './components/front-page/front-page.component
 
 
 const appRoutes: Routes = [
-  {path: "home", outlet: 'content', component: HomeComponent}, // path is blank for main
-  {path: "account", component: AccountComponent, outlet: 'content'},
-  {path: "songs", outlet: 'content', component: SongsComponent},
-  {path: "albums", component: AlbumsComponent, outlet: 'content'},
-  {path: "artists", component: ArtistsComponent, outlet: 'content'},
-  {path: "playlists", component: PlaylistsComponent, outlet: 'content'},
-  {path: "dash", component: DashboardComponent},
+  {path: "dash", component: DashboardComponent,
+  children: [
+    {path: "home" , component: HomeComponent},
+    {path: "songs", component: SongsComponent},
+    {path: "account", component: AccountComponent},
+    {path: "albums", component: AlbumsComponent},
+    {path: "artists", component: ArtistsComponent},
+    {path: "playlists", component: PlaylistsComponent},
+    ]
+
+  },
   {path: "login", component: LoginComponent},
   {path: "", component: FrontPageComponent}
-]
+];
 
 @NgModule({
   declarations: [
