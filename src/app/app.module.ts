@@ -49,7 +49,7 @@ const appRoutes: Routes = [
     AccountComponent,
     MusicplayerComponent,
     LoginComponent,
-    FrontPageComponent
+    FrontPageComponent,
   ],
   imports: [
     BrowserModule,
