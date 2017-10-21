@@ -2,71 +2,95 @@
 <html>
 
 <head>
-  <!--Let browser know website is optimized for mobile-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 
-<body class="gradient">
+<body>
   <!-- Main Content -->
-  <main>
-    <div class="container">
+    <div class="container" >
       <!-- Page Content goes here -->
-      <div class="row"></div>
       <div class="row">
-        <div class="col s12 m6 center-align">
-          <h1>Audium</h1>
-          <a routerLink="/dash" class="waves-effect">TESTING</a>
-          <div class="divider"></div>
-          <div class="row"></div>
-          <h3>Discover the music you love</h3>
+        <div class="row m6 center-align">
+          <img src="assets/images/logo_blue.png" class="login-page-logo"><span class="login-page-logo2">Audium</span>
+          <div class="divider" style="background-color: #2196f3"></div>
         </div>
-        <div class="col s12 m6">
+        <div class="col s6 push-s3" >
           <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'">
-            <mz-tab-item [active]="'true'" [label]="'LOGIN'" [class]="''">
+            <mz-tab-item [label]="'LOGIN'" >
               <div class="col s12 grey darken-1">
-                <form class="" method="post">
-                  <div class="row">
+                <form #f="ngForm" (ngSubmit)="login(f.value)">
+                      <div *ngIf="invalidLogin" class="card-panel red lighten-1 center-align">Invalid username and/or password.</div>
+                    <div class="row">
                     <div class="input-field col s12 ">
                       <i class="material-icons prefix white-text">email</i>
-                      <label for="email-signin">Email</label>
-                      <input id="email-signin" type="email" class="validate">
+                      <input
+                        required
+                        ngModel
+                        minlength="3"
+                        name="usernameemail"
+                        #usernameemail="ngModel"
+                        id="email-signin"
+                        type="text"
+                        class="form-control validate">
+                      <label for="email-signin">Username or Email</label>
+                      <div  *ngIf="usernameemail.touched && !usernameemail.valid">
+                        <div  *ngIf="usernameemail.errors['minlength']" class="login-notif1 card-panel red lighten-1">
+                          <span class="login-notif2"> Username should be minimun {{usernameemail.errors['minlength'].requiredLength}} characters</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="input-field col s12">
                       <i class="material-icons prefix white-text">vpn_key</i>
+                      <input
+                        ngModel
+                        minlength="5"
+                        name="password"
+                        #password="ngModel"
+                        required
+                        id="password-signin"
+                        type="password"
+                        class="form-control validate">
                       <label for="password-signin">Password</label>
-                      <input id="password-signin" type="password" class="validate">
+                      <div  *ngIf="password.touched && !password.valid">
+                        <div  *ngIf="password.errors['minlength']" class="login-notif1 card-panel red lighten-1">
+                          <span class="login-notif2"> Password should be minimun {{password.errors['minlength'].requiredLength}} characters</span>
+                        </div>
+                      </div>
                     </div>
-                    <label style='float: right;'>
-                      <a class='pink-text' href='#!'>
+                    <label>
+                      <a class='login-page-forgotpass' href='#!'>
                         <b>Forgot Password?</b>
                       </a>
                     </label>
                   </div>
                   <br/>
                   <div class='row'>
-                    <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect blue'>Log Into Audium</button>
+                    <button type='submit'
+                            name='btn_login'
+                            class='col s10 push-s1 btn btn-large waves-effect login-page-loginbtn'>
+                      Log In
+                    </button>
                   </div>
                   <p class="white-text center-align">Or log in with</p>
                   <br/>
                   <div class='row'>
                     <div class="col m6">
-                      <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect' style="background-color: #3b5998;">Facebook</button>
+                      <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect login-page-loginbtn2' style="background-color: #3b5998;">Facebook</button>
                     </div>
                     <div class="col m6">
-                      <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect white black-text'>Google</button>
+                      <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect white black-text login-page-loginbtn3'>Google</button>
                     </div>
                   </div>
                 </form>
               </div>
             </mz-tab-item>
-            <mz-tab-item [label]="'REGISTER'">
+            <mz-tab-item [active]="registerCheck" [label]="'REGISTER'">
               <div class="col s12 grey darken-1">
                 <form class="">
                   <div class="row">
                     <div class="input-field col s6">
-                      <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+                      <input  id="first_name" type="text" class="validate">
                       <label for="first_name">First Name</label>
                     </div>
                     <div class="input-field col s6">
@@ -75,7 +99,11 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="input-field col s12">
+                    <div class="input-field col s5">
+                      <input id="username" type="text" class="validate">
+                      <label for="username">Username</label>
+                    </div>
+                    <div class="input-field col s7">
                       <input id="email" type="email" class="validate">
                       <label for="email">Email</label>
                     </div>
@@ -86,9 +114,28 @@
                       <label for="password">Password</label>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <mz-datepicker-container class="col s12">
+                          <input mz-datepicker
+                                 [label]="'Date of Birth'"
+                                 [options]="dateOptions"
+                                 type="text"
+                          >
+                      </mz-datepicker-container>
+                    </div>
+                    <div class="input-field col s6">
+                      <input name="group1" type="radio" value="male" id="radio1" />
+                      <label for="radio1">Male</label>
+                      <input name="group1" type="radio" value="female" id="radio2" />
+                      <label for="radio2">Female</label>
+                      <input name="group1" type="radio" value="nonbinary" id="radio3" />
+                      <label for="radio3">Non-binary</label>
+                    </div>
+                  </div>
                   <br />
                   <div class='row'>
-                    <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect blue'>Create Account</button>
+                    <button type='submit' name='btn_login' class='col s10 offset-s1 btn btn-large waves-effect login-page-createbtn'>Create Account</button>
                   </div>
                 </form>
               </div>
@@ -97,8 +144,6 @@
         </div>
       </div>
     </div>
-  </main>
-  <footer></footer>
 </body>
 
 </html>

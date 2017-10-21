@@ -6,14 +6,14 @@
     background-attachment: fixed;
     font-weight:  bold;
   }
-  
-  
+
+
   .front-page-container {
     width: 50vw;
     transform: translate(50%,30vh);
     height: 50%;
   }
-  
+
   .col {
     height: 43vh;
   }
@@ -22,43 +22,43 @@
     border-right: solid;
     border-color: #bdbdbd;
     border-width: thin;
-  
+
   }
-  
+
   .front-page-sc {
     color: yellow;
-  
+
   }
-  
+
   .front-page-btn {
-    border-radius: 25px;
-    width: 90%;
+    border-radius: 25vw;
+    width: 15vw;
     height: 6.3vh;
     background-color: #2196f3;
     font-size: large;
   }
   .front-page-signup-btn {
-    margin-top: 35%;
+    margin-top: 5%;
   }
-  
+
   .front-page-signin-btn {
     margin-top: 7%;
     background-color: whitesmoke;
     color: #2196f3;
   }
-  
+
   .front-page-txt-fc {
     margin-top: 6%;
     color: #9e9e9e  ;
   }
-  
+
   .front-page-txt-sc-1 {
     margin-top: 10%;
     color: #2196f3;
     font-size: 5.5vh;
-  
+
   }
-  
+
   .front-page-txt-sc-2 {
     color: whitesmoke;
     font-size: 2.5vh;
@@ -67,9 +67,22 @@
     color: whitesmoke;
     font-size: 1.8vh;
   }
-  
+
   .front-page-icon-check {
     color: #2196f3;
     font-size: xx-large;
     vertical-align: text-bottom;
   }
+
+.front-page-logo {
+  width: 8vw;
+  vertical-align: middle;
+}
+
+.front-page-logo2 {
+  vertical-align: middle;
+  font-weight: 100;
+  font-size: 2.5vw;
+  color: white;
+  margin-left: 3%;
+}
