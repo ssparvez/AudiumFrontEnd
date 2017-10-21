@@ -1,3 +1,6 @@
+.card {
+    margin: 0;
+}
 #music-card-title {
     opacity: 0.8;
     width: 300px;
