@@ -5,7 +5,7 @@
     </div>
   </mz-sidenav-header>
   <mz-sidenav-link>
-    <a routerLinkActive="active current" [routerLink]="['home']" class="waves-effect">
+    <a routerLinkActive="active current" [routerLink]="['home']" class=" sidenav-links waves-effect">
       <i class="material-icons white-text">home</i>
       <span class="white-text">Home</span>
     </a>
@@ -16,10 +16,13 @@
           <span class="white-text">Your Account</span>
         </a>
   </mz-sidenav-link>
-  <mz-sidenav-collapsible [onClose]="" [onOpen]="">
+  <mz-sidenav-collapsible [onClose]="" [onOpen]="" (click)="changeExpansion()">
     <mz-sidenav-collapsible-header>
       <i class="material-icons white-text" style="padding: 0 16px;">library_music</i>
-      <span class="white-text" style="padding-left:8px;">Your Library</span>
+      <span class="white-text" style="padding-left:8px;">Your Library
+        <i *ngIf="isExpanded == false" class="material-icons white-text right">keyboard_arrow_down</i>
+        <i *ngIf="isExpanded == true" class="material-icons white-text right">keyboard_arrow_up</i>
+      </span>
     </mz-sidenav-collapsible-header>
     <mz-sidenav-collapsible-content>
       <div class="grey darken-2">

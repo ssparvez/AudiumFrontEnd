@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     } else {
       console.log(values);
       this.invalidLogin = false;
-      this.router.navigate(['/dash']);
+      this.router.navigate(['/dash/home']);
 
     }
   }

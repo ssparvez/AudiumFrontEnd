@@ -1,5 +1,5 @@
 mz-sidenav-header div {
-    font-size: 32px; 
+    font-size: 32px;
     padding: 4px 0px 4px 32px;
 }
 
@@ -13,7 +13,13 @@ mz-sidenav-header img {
 }
 
 app-musicplayer {
-    position: fixed; /* Set to fixed position */
-    bottom: 32px;
-    top: 404px;
+  position: absolute;
+  bottom: 6%;
+
 }
+
+mz-sidenav-link  span, mz-sidenav-collapsible span {
+  font-size: large;
+}
+
+
