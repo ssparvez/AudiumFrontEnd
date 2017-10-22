@@ -27,7 +27,7 @@ const appRoutes: Routes = [
     {path: "account", component: AccountComponent},
     {path: "albums", component: AlbumsComponent},
     {path: "artists", component: ArtistsComponent},
-    {path: "playlists", component: PlaylistsComponent},
+    {path: "playlists", component: PlaylistsComponent}
     ]
 
   },
@@ -49,7 +49,7 @@ const appRoutes: Routes = [
     AccountComponent,
     MusicplayerComponent,
     LoginComponent,
-    FrontPageComponent,
+    FrontPageComponent
   ],
   imports: [
     BrowserModule,

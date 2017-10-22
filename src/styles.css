@@ -15,6 +15,7 @@ h1 {
 h2 {
     margin: 0;
     font-size: 28px;
+    font-weight: 500;
     color: #fff;
 }
 
@@ -52,3 +53,13 @@ h5 {
     background: linear-gradient(#0d1c7c, black, black);
     /* Standard syntax */
 }
+<<<<<<< HEAD
+
+#small-card-title {
+    padding: 4px 24px 4px 4px;
+    opacity: 0.8;
+    width: 200px !important;
+    height: 50px;
+}
+=======
+>>>>>>> 814ea9024e8e60c14b268ea05d41f64295a79162
