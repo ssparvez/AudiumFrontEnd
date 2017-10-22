@@ -15,6 +15,7 @@ h1 {
 h2 {
     margin: 0;
     font-size: 28px;
+    font-weight: 500;
     color: #fff;
 }
 
@@ -51,4 +52,11 @@ h5 {
     /* For Firefox 3.6 to 15 */
     background: linear-gradient(#0d1c7c, black, black);
     /* Standard syntax */
+}
+
+#small-card-title {
+    padding: 4px 24px 4px 4px;
+    opacity: 0.8;
+    width: 200px !important;
+    height: 50px;
 }
