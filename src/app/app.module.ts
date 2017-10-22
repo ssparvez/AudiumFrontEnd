@@ -17,7 +17,7 @@ import { PlaylistsComponent } from './components/dashboard/content/library/playl
 import { AccountComponent } from './components/dashboard/content/account/account.component';
 import { LoginComponent } from './components/login/login.component';
 import { FrontPageComponent } from './components/front-page/front-page.component';
-
+import { FormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent,
@@ -31,7 +31,7 @@ const appRoutes: Routes = [
     ]
 
   },
-  {path: "login", component: LoginComponent},
+  {path: "login/:register", component: LoginComponent},
   {path: "", component: FrontPageComponent}
 ];
 
@@ -53,6 +53,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     BrowserAnimationsModule,
     MaterializeModule.forRoot(),
     RouterModule.forRoot(appRoutes)
@@ -61,3 +62,6 @@ const appRoutes: Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
