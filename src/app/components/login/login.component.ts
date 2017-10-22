@@ -48,6 +48,12 @@ export class LoginComponent implements OnInit {
   }
 
 
+  signUp(formValues) {
+
+    console.log(formValues.value);
+  }
+
+
   /**signIn(credentials) {
     this.authService.login(credentials)
       .subscribe(result => {

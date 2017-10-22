@@ -20,18 +20,11 @@
                       <input
                         required
                         ngModel
-                        minlength="3"
-                        name="usernameemail"
-                        #usernameemail="ngModel"
+                        name="username_email"
                         id="email-signin"
                         type="text"
                         class="form-control validate">
                       <label for="email-signin">Username or Email</label>
-                      <div  *ngIf="usernameemail.touched && !usernameemail.valid">
-                        <div  *ngIf="usernameemail.errors['minlength']" class="login-notif1 card-panel red lighten-1">
-                          <span class="login-notif2"> Username should be minimun {{usernameemail.errors['minlength'].requiredLength}} characters</span>
-                        </div>
-                      </div>
                     </div>
                   </div>
                   <div class="row">
@@ -39,19 +32,12 @@
                       <i class="material-icons prefix white-text">vpn_key</i>
                       <input
                         ngModel
-                        minlength="5"
                         name="password"
-                        #password="ngModel"
                         required
                         id="password-signin"
                         type="password"
                         class="form-control validate">
                       <label for="password-signin">Password</label>
-                      <div  *ngIf="password.touched && !password.valid">
-                        <div  *ngIf="password.errors['minlength']" class="login-notif1 card-panel red lighten-1">
-                          <span class="login-notif2"> Password should be minimun {{password.errors['minlength'].requiredLength}} characters</span>
-                        </div>
-                      </div>
                     </div>
                     <label>
                       <a class='login-page-forgotpass' href='#!'>
@@ -82,37 +68,84 @@
             </mz-tab-item>
             <mz-tab-item [active]="registerCheck" [label]="'REGISTER'">
               <div class="col s12 grey darken-1">
-                <form class="">
+                <form #formSignup="ngForm" (ngSubmit)="signUp(formSignup)">
                   <div class="row">
                     <div class="input-field col s6">
-                      <input  id="first_name" type="text" class="validate">
+                      <input
+                        ngModel
+                        required
+                        name="firstName"
+                        id="first_name"
+                        type="text"
+                        class="validate">
                       <label for="first_name">First Name</label>
                     </div>
                     <div class="input-field col s6">
-                      <input id="last_name" type="text" class="validate">
+                      <input
+                        ngModel
+                        required
+                        name="lastName"
+                        id="last_name"
+                        type="text"
+                        class="validate">
                       <label for="last_name">Last Name</label>
                     </div>
                   </div>
                   <div class="row">
                     <div class="input-field col s5">
-                      <input id="username" type="text" class="validate">
+                      <input
+                        required
+                        ngModel
+                        minlength="3"
+                        name="username"
+                        #username="ngModel"
+                        type="text"
+                        class="form-control validate"
+                        id="username">
                       <label for="username">Username</label>
+                      <div  *ngIf="username.touched && !username.valid">
+                        <div  *ngIf="username.errors['minlength']" class=" card-panel red lighten-1">
+                          <span class=""> Username should be minimun {{username.errors['minlength'].requiredLength}} characters</span>
+                        </div>
+                      </div>
                     </div>
                     <div class="input-field col s7">
-                      <input id="email" type="email" class="validate">
+                      <input
+                        ngModel
+                        required
+                        name="email"
+                        id="email"
+                        type="email"
+                        class="validate">
                       <label for="email">Email</label>
                     </div>
                   </div>
                   <div class="row">
                     <div class="input-field col s12">
-                      <input id="password" type="password" class="validate">
+                      <input
+                        ngModel
+                        minlength="5"
+                        name="password"
+                        #password="ngModel"
+                        required
+                        id="password"
+                        type="password"
+                        class="form-control validate">
                       <label for="password">Password</label>
+                      <div  *ngIf="password.touched && !password.valid">
+                        <div  *ngIf="password.errors['minlength']" class="login-notif1 card-panel red lighten-1">
+                          <span class="login-notif2"> Password should be minimun {{password.errors['minlength'].requiredLength}} characters</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="input-field col s6">
                       <mz-datepicker-container class="col s12">
                           <input mz-datepicker
+                                 ngModel
+                                 name="dob"
+                                 required
                                  [label]="'Date of Birth'"
                                  [options]="dateOptions"
                                  type="text"
@@ -120,17 +153,17 @@
                       </mz-datepicker-container>
                     </div>
                     <div class="input-field col s6">
-                      <input name="group1" type="radio" value="male" id="radio1" />
+                      <input ngModel name="gender" type="radio" value="male" id="radio1" required />
                       <label for="radio1">Male</label>
-                      <input name="group1" type="radio" value="female" id="radio2" />
+                      <input ngModel name="gender"  type="radio" value="female" id="radio2" />
                       <label for="radio2">Female</label>
-                      <input name="group1" type="radio" value="nonbinary" id="radio3" />
+                      <input ngModel name="gender" type="radio" value="nonbinary" id="radio3" />
                       <label for="radio3">Non-binary</label>
                     </div>
                   </div>
                   <br />
                   <div class='row'>
-                    <button type='submit' name='btn_login' class='col s10 offset-s1 btn btn-large waves-effect login-page-createbtn'>Create Account</button>
+                    <button type='submit' [disabled]="!formSignup.valid" name='btn_login' class='col s10 offset-s1 btn btn-large waves-effect login-page-createbtn'>Create Account</button>
                   </div>
                 </form>
               </div>
