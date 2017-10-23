@@ -7,6 +7,11 @@ footer {
 
   }
 
+.card-panel {
+  text-align: center;
+  padding: 8px;
+  font-size: small;
+}
 body {
   background: whitesmoke;
   height: 100vh;
@@ -30,16 +35,6 @@ body {
   color: white;
   font-size: small;
   margin-right: 3%;
-
-}
-
-.login-notif1 {
-  height: 30px;
-}
-.login-notif2 {
-  position: absolute;
-  margin-top: -1vh;
-  margin-left: 6vw;
 
 }
 
