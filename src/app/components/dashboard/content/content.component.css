@@ -15,3 +15,11 @@ main {
         padding-left: 0;
     }
 }
+
+.content-searchicon {
+  position: absolute;
+  font-size: xx-large;
+  bottom: 10%;
+}
+
+

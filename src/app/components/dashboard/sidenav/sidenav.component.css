@@ -14,12 +14,17 @@ mz-sidenav-header img {
 
 app-musicplayer {
   position: absolute;
-  bottom: 6%;
+  bottom: 4%;
 
 }
 
-mz-sidenav-link  span, mz-sidenav-collapsible span {
+mz-sidenav-link a, mz-sidenav-collapsible span {
   font-size: large;
+  color: white;
 }
 
 
+.sidenav-text {
+  vertical-align: middle;
+  margin-left: 11%;
+}

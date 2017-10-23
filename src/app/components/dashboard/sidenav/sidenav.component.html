@@ -4,16 +4,18 @@
       <img src="assets/images/logo.png"><span >Audium</span>
     </div>
   </mz-sidenav-header>
-  <mz-sidenav-link>
-    <a routerLinkActive="active current" [routerLink]="['home']" class=" sidenav-links waves-effect">
-      <i class="material-icons white-text">home</i>
-      <span class="white-text">Home</span>
+  <mz-sidenav-link >
+    <a  routerLinkActive="blue-text" [routerLink]="['home']" class=" sidenav-links waves-effect">
+      <div >
+        <i class="material-icons" style="vertical-align: text-top">home</i>
+        <span class="sidenav-text" >Home</span>
+      </div>
     </a>
   </mz-sidenav-link>
   <mz-sidenav-link>
-      <a [routerLink]="['account']" class="waves-effect">
-          <i class="material-icons white-text">account_box</i>
-          <span class="white-text">Your Account</span>
+      <a routerLinkActive="blue" [routerLink]="['account']" class="waves-effect">
+          <i class="material-icons white-text" >account_box</i>
+          <span class="" >Account</span>
         </a>
   </mz-sidenav-link>
   <mz-sidenav-collapsible [onClose]="" [onOpen]="" (click)="changeExpansion()">
@@ -27,25 +29,25 @@
     <mz-sidenav-collapsible-content>
       <div class="grey darken-2">
         <mz-sidenav-link>
-          <a [routerLink]="['songs']" class="waves-effect">
+          <a routerLinkActive="blue"  [routerLink]="['songs']" class="waves-effect">
             <i class="material-icons white-text">audiotrack</i>
             <span class="white-text">Songs</span>
           </a>
         </mz-sidenav-link>
         <mz-sidenav-link>
-          <a [routerLink]="['albums']" class="waves-effect">
+          <a routerLinkActive="blue" [routerLink]="['albums']" class="waves-effect">
             <i class="material-icons white-text">album</i>
             <span class="white-text">Albums</span>
           </a>
         </mz-sidenav-link>
         <mz-sidenav-link>
-          <a [routerLink]="['artists']" class="waves-effect">
+          <a routerLinkActive="blue" [routerLink]="['artists']" class="waves-effect">
             <i class="material-icons white-text">record_voice_over</i>
             <span class="white-text">Artists</span>
           </a>
         </mz-sidenav-link>
         <mz-sidenav-link>
-          <a [routerLink]="['playlists']" class="waves-effect">
+          <a routerLinkActive="blue" [routerLink]="['playlists']" class="waves-effect">
             <i class="material-icons white-text">queue_music</i>
             <span class="white-text">Playlists</span>
           </a>

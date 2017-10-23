@@ -22,8 +22,8 @@ export class SidenavComponent implements OnInit {
 
   changeExpansion() {
     this.isExpanded = !this.isExpanded;
-    console.log(this.isExpanded);
   }
 
 }
+
 
