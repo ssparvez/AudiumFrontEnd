@@ -56,6 +56,6 @@ h5 {
 #small-card-title {
   padding: 4px 24px 4px 4px;
   opacity: 0.8;
-  width: 200px !important;
+  width: 100% !important;
   height: 50px;
 }
