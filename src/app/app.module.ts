@@ -1,9 +1,12 @@
+// Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterializeModule } from 'ng2-materialize';
 import { RouterModule, Routes } from '@angular/router';
-
+import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
+// Components
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidenavComponent } from './components/dashboard/sidenav/sidenav.component';
@@ -17,7 +20,8 @@ import { PlaylistsComponent } from './components/dashboard/content/library/playl
 import { AccountComponent } from './components/dashboard/content/account/account.component';
 import { LoginComponent } from './components/login/login.component';
 import { FrontPageComponent } from './components/front-page/front-page.component';
-import { FormsModule } from '@angular/forms';
+// Services
+import { SongsService } from "./services/songs/songs.service";
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent,
@@ -54,11 +58,12 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    HttpModule,
     BrowserAnimationsModule,
     MaterializeModule.forRoot(),
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
   ],
-  providers: [],
+  providers: [SongsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

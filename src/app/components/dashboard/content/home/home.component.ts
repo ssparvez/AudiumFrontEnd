@@ -6,12 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
   recents: number[];
+  genres: number[];
   constructor() { }
 
   ngOnInit() {
     this.recents = [1,2,3,4,5,6]
+    this.genres = [1,2,3,4,5,6,7,8]
   }
 
 }
