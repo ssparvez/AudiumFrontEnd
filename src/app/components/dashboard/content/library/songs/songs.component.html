@@ -19,9 +19,7 @@
         <tbody>
             <tr *ngFor="let song of songs">
                 <td>{{song.title}}</td>
-                <td>{{song.artist}}</td>
-                <td>{{song.album}}</td>
-                <td>7/22/17</td>
+                <td><span *ngFor="let artist of song.artists">{{artist.name}}, </span></td>
             </tr>
         </tbody>
     </table>
