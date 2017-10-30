@@ -23,7 +23,8 @@ import { FrontPageComponent } from './components/front-page/front-page.component
 // Servicesgit pull
 import { SongsService } from "./services/songs/songs.service";
 import { AuthenticationService } from "./services/authentication/authentication.service";
-import {AuthGuard} from "./guards/authguard.service";
+import { AuthGuard } from "./guards/authguard.service";
+import { DataService } from "./services/data.service";
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -66,8 +67,10 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
   ],
   providers: [
+    DataService,
     SongsService,
-    AuthenticationService
+    AuthenticationService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
