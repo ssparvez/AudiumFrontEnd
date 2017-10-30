@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
+import {AuthenticationService} from "../../services/authentication/authentication.service";
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    //  private authService: AuthService
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -36,14 +37,20 @@ export class LoginComponent implements OnInit {
   }
 
   login(values) {
-
     if (values.password === "" || values.username === "") {
       this.invalidLogin = true;
     } else {
-      console.log(values);
-      this.invalidLogin = false;
-      this.router.navigate(['/dash/home']);
-
+      this.authService.login(values)
+        .subscribe(correctInfo => {
+          if (correctInfo) {
+            // let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+            // this.router.navigate([returnUrl || '/']);
+            this.invalidLogin = false;
+            this.router.navigate(['/dash/home']);
+          } else {
+            this.invalidLogin = true;
+          }
+        });
     }
   }
 
@@ -52,19 +59,6 @@ export class LoginComponent implements OnInit {
 
     console.log(formValues.value);
   }
-
-
-  /**signIn(credentials) {
-    this.authService.login(credentials)
-      .subscribe(result => {
-        if (result) {
-          //let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-          this.router.navigate([returnUrl || '/']);
-        } else {
-          this.invalidLogin = true;
-        }
-      });
-  }**/
 
 
 }

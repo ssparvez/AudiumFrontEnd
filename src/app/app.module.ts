@@ -20,11 +20,13 @@ import { PlaylistsComponent } from './components/dashboard/content/library/playl
 import { AccountComponent } from './components/dashboard/content/account/account.component';
 import { LoginComponent } from './components/login/login.component';
 import { FrontPageComponent } from './components/front-page/front-page.component';
-// Services
+// Servicesgit pull
 import { SongsService } from "./services/songs/songs.service";
+import { AuthenticationService } from "./services/authentication/authentication.service";
+import {AuthGuard} from "./guards/authguard.service";
 
 const appRoutes: Routes = [
-  {path: "dash", component: DashboardComponent,
+  {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
   children: [
     {path: "home" , component: HomeComponent},
     {path: "songs", component: SongsComponent},
@@ -63,7 +65,10 @@ const appRoutes: Routes = [
     MaterializeModule.forRoot(),
     RouterModule.forRoot(appRoutes),
   ],
-  providers: [SongsService],
+  providers: [
+    SongsService,
+    AuthenticationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

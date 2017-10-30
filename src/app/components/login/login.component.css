@@ -9,8 +9,6 @@ footer {
 
 .card-panel {
   text-align: center;
-  padding: 8px;
-  font-size: small;
 }
 body {
   background: whitesmoke;
@@ -18,26 +16,28 @@ body {
 }
 
 .login-page-logo {
-  width: 8vw;
+  width: 9vw;
   vertical-align: middle;
 }
 
 .login-page-logo2 {
   vertical-align: middle;
   font-weight: bold;
-  font-size: 2.5vw;
+  font-size: 3.5vw;
   color: #2196f3;
   margin-left: 3%;
 }
 
 .login-page-forgotpass {
+  position: relative;
   float: right;
   color: white;
   font-size: small;
   margin-right: 3%;
+  margin-bottom: 5%;
+
 
 }
-
 /* label color */
 .input-field label {
 
@@ -82,3 +82,7 @@ input[type="radio"]:checked + label:after {
   background-color: #2196f3;
 }
 
+.login-cp1 {
+  padding: 8px;
+  font-size: small;
+}

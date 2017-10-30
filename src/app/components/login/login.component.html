@@ -8,7 +8,7 @@
       <span class="login-page-logo2">Audium</span>
       <div class="divider" style="background-color: #2196f3"></div>
     </div>
-    <div class="col s6 push-s3">
+    <div class="col s6 offset-s3">
       <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'">
         <mz-tab-item [label]="'LOGIN'">
           <div class="col s12 grey darken-1">
@@ -17,7 +17,7 @@
               <div class="row">
                 <div class="input-field col s12 ">
                   <i class="material-icons prefix white-text">email</i>
-                  <input required ngModel name="username_email" id="email-signin" type="text" class="form-control validate">
+                  <input required ngModel name="username" id="email-signin" type="text" class="form-control validate">
                   <label for="email-signin">Username or Email</label>
                 </div>
               </div>
@@ -27,12 +27,12 @@
                   <input ngModel name="password" required id="password-signin" type="password" class="form-control validate">
                   <label for="password-signin">Password</label>
                 </div>
-                <label>
-                  <a class='login-page-forgotpass' href='#!'>
-                    <b>Forgot Password?</b>
-                  </a>
-                </label>
               </div>
+              <label>
+                <a class='login-page-forgotpass' href='#!'>
+                  <b>Forgot Password?</b>
+                </a>
+              </label>
               <br/>
               <div class='row'>
                 <button type='submit' name='btn_login' class='col s10 push-s1 btn btn-large waves-effect login-page-loginbtn'>
@@ -70,7 +70,7 @@
                   <input required ngModel minlength="3" name="username" #username="ngModel" type="text" class="form-control validate" id="username">
                   <label for="username">Username</label>
                   <div *ngIf="username.touched && !username.valid">
-                    <div *ngIf="username.errors['minlength']" class=" card-panel red lighten-1">
+                    <div *ngIf="username.errors['minlength']" class=" card-panel login-cp1 red lighten-1">
                       <span class=""> Username should be minimun {{username.errors['minlength'].requiredLength}} characters</span>
                     </div>
                   </div>
@@ -92,12 +92,12 @@
                 </div>
               </div>
               <div class="row">
-                <div class="input-field col s6">
+                <div class="input-field col s4">
                   <mz-datepicker-container class="col s12">
                     <input mz-datepicker ngModel name="dob" required [label]="'Date of Birth'" [options]="dateOptions" type="text">
                   </mz-datepicker-container>
                 </div>
-                <div class="input-field col s6">
+                <div class="input-field col s8">
                   <input ngModel name="gender" type="radio" value="male" id="radio1" required />
                   <label for="radio1">Male</label>
                   <input ngModel name="gender" type="radio" value="female" id="radio2" />
