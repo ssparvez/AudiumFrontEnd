@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   this.route.paramMap.subscribe(param => {
-    if (param.get('register') === 'false') {
+    if (param.get('login') === 'false') {
       this.registerCheck = 'true';
     }
     });
@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(values)
         .subscribe(correctInfo => {
           if (correctInfo) {
-            // let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+            //let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
             // this.router.navigate([returnUrl || '/']);
             this.invalidLogin = false;
             this.router.navigate(['/dash/home']);
@@ -53,13 +53,6 @@ export class LoginComponent implements OnInit {
         });
     }
   }
-
-
-  signUp(formValues) {
-
-    console.log(formValues.value);
-  }
-
 
 }
 

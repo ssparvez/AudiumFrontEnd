@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {AuthenticationService} from "../../../services/authentication/authentication.service";
 
 @Component({
   selector: 'app-sidenav',
@@ -10,7 +11,9 @@ export class SidenavComponent implements OnInit {
 
   isExpanded = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthenticationService) {
+
+  }
 
   ngOnInit() {
 
@@ -22,6 +25,11 @@ export class SidenavComponent implements OnInit {
 
   changeExpansion() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login/true']);
   }
 
 }
