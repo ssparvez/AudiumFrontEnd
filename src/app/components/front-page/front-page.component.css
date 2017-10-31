@@ -32,10 +32,11 @@
 
   .front-page-btn {
     border-radius: 25vw;
-    width: 15vw;
-    height: 6.3vh;
+    width: 13vw;
+    height: 6vh;
     background-color: #2196f3;
-    font-size: medium;
+    font-size: 0.8vw;
+
   }
   .front-page-signup-btn {
     margin-top: 5%;

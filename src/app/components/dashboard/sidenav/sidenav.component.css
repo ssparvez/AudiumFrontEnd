@@ -1,3 +1,6 @@
+mz-sidenav {
+  height: 50vh;
+}
 mz-sidenav-header div {
     font-size: 32px;
     padding: 4px 0px 4px 32px;
@@ -28,3 +31,13 @@ mz-sidenav-link a, mz-sidenav-collapsible span {
   vertical-align: middle;
   margin-left: 11%;
 }
+
+
+.divider {
+  height: 20px;
+   border-bottom:1px solid gray;
+   background-color: transparent;
+ }
+
+
+

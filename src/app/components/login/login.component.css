@@ -15,6 +15,11 @@ body {
   height: 100vh;
 }
 
+html {
+  background: whitesmoke;
+  height: 100%;
+}
+
 .login-page-logo {
   width: 9vw;
   vertical-align: middle;

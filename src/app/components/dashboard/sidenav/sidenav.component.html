@@ -5,7 +5,7 @@
     </div>
   </mz-sidenav-header>
   <mz-sidenav-link >
-    <a  routerLinkActive="blue-text" [routerLink]="['home']" class=" sidenav-links waves-effect">
+    <a  routerLinkActive="blue" [routerLink]="['home']" class=" sidenav-links waves-effect">
       <div >
         <i class="material-icons" style="vertical-align: text-top">home</i>
         <span class="sidenav-text" >Home</span>
@@ -55,5 +55,11 @@
       </div>
     </mz-sidenav-collapsible-content>
   </mz-sidenav-collapsible>
+  <div class="divider"></div>
+  <mz-sidenav-link class="page-footer" >
+    <a class="waves-effect" (click)="logout()" >
+   <span class="white-text"> Sign Out </span>
+  </a>
+  </mz-sidenav-link>
   <app-musicplayer></app-musicplayer>
 </mz-sidenav>
