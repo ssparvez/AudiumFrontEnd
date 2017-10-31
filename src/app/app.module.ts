@@ -21,7 +21,7 @@ import { AccountComponent } from './components/dashboard/content/account/account
 import { LoginComponent } from './components/login/login.component';
 import { FrontPageComponent } from './components/front-page/front-page.component';
 // Servicesgit pull
-import { SongsService } from "./services/songs/songs.service";
+import { LibraryService } from "./services/library/library.service";
 import { AuthenticationService } from "./services/authentication/authentication.service";
 import { AuthGuard } from "./guards/authguard.service";
 import { DataService } from "./services/data.service";
@@ -68,7 +68,7 @@ const appRoutes: Routes = [
   ],
   providers: [
     DataService,
-    SongsService,
+    LibraryService,
     AuthenticationService,
     AuthGuard
   ],
