@@ -2,20 +2,25 @@
   <mz-sidenav-header>
     <div class="blue white-text">
       <img src="assets/images/logo.png"><span >Audium</span>
+      <a class="waves-effect right" (click)="logout()" >
+          <i class="material-icons white-text">exit_to_app</i>
+    </a>
     </div>
   </mz-sidenav-header>
   <mz-sidenav-link >
-    <a  routerLinkActive="blue" [routerLink]="['home']" class=" sidenav-links waves-effect">
+    <a  routerLinkActive="blue-text text-lighten-2" [routerLink]="['home']" class="waves-effect">
       <div >
         <i class="material-icons" style="vertical-align: text-top">home</i>
-        <span class="sidenav-text" >Home</span>
+        <span class="sidenav-text">Home</span>
       </div>
     </a>
   </mz-sidenav-link>
   <mz-sidenav-link>
-      <a routerLinkActive="blue" [routerLink]="['account']" class="waves-effect">
-          <i class="material-icons white-text" >account_box</i>
-          <span class="" >Account</span>
+      <a routerLinkActive="blue-text text-lighten-2" [routerLink]="['account']" class="waves-effect">
+        <div>
+          <i class="material-icons"style="vertical-align: text-top">account_box</i>
+          <span class="sidenav-text">Account</span>
+        </div>        
         </a>
   </mz-sidenav-link>
   <mz-sidenav-collapsible [onClose]="" [onOpen]="" (click)="changeExpansion()">
@@ -29,37 +34,39 @@
     <mz-sidenav-collapsible-content>
       <div class="grey darken-2">
         <mz-sidenav-link>
-          <a routerLinkActive="blue"  [routerLink]="['songs']" class="waves-effect">
-            <i class="material-icons white-text">audiotrack</i>
-            <span class="white-text">Songs</span>
+          <a routerLinkActive="blue-text text-lighten-2"  [routerLink]="['songs']" class="waves-effect">
+            <div>
+            <i class="material-icons" style="vertical-align: text-top">audiotrack</i>
+            <span class="sidenav-text">Songs</span>
+          </div>
           </a>
         </mz-sidenav-link>
         <mz-sidenav-link>
-          <a routerLinkActive="blue" [routerLink]="['albums']" class="waves-effect">
-            <i class="material-icons white-text">album</i>
-            <span class="white-text">Albums</span>
+          <a routerLinkActive="blue-text text-lighten-2" [routerLink]="['albums']" class="waves-effect">
+            <div>
+            <i class="material-icons" style="vertical-align: text-top">album</i>
+            <span class="sidenav-text">Albums</span>
+          </div>
           </a>
         </mz-sidenav-link>
         <mz-sidenav-link>
-          <a routerLinkActive="blue" [routerLink]="['artists']" class="waves-effect">
-            <i class="material-icons white-text">record_voice_over</i>
-            <span class="white-text">Artists</span>
+          <a routerLinkActive="blue-text text-lighten-2" [routerLink]="['artists']" class="waves-effect">
+            <div>
+            <i class="material-icons" style="vertical-align: text-top">record_voice_over</i>
+            <span class="sidenav-text">Artists</span>
+          </div>
           </a>
         </mz-sidenav-link>
         <mz-sidenav-link>
-          <a routerLinkActive="blue" [routerLink]="['playlists']" class="waves-effect">
-            <i class="material-icons white-text">queue_music</i>
-            <span class="white-text">Playlists</span>
+          <a routerLinkActive="blue-text text-lighten-2" [routerLink]="['playlists']" class="waves-effect">
+            <div>
+            <i class="material-icons" style="vertical-align: text-top">queue_music</i>
+            <span class="sidenav-text">Playlists</span>
+          </div>
           </a>
         </mz-sidenav-link>
       </div>
     </mz-sidenav-collapsible-content>
   </mz-sidenav-collapsible>
-  <div class="divider"></div>
-  <mz-sidenav-link class="page-footer" >
-    <a class="waves-effect" (click)="logout()" >
-   <span class="white-text"> Sign Out </span>
-  </a>
-  </mz-sidenav-link>
   <app-musicplayer></app-musicplayer>
 </mz-sidenav>

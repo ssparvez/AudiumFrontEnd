@@ -21,7 +21,7 @@ export class AuthenticationService {
         let result = {
           token: response['_body']
         };
-        if ( result && result.token) {
+        if (result && result.token) {
           localStorage.setItem('token', result.token);
           const info = this.currentUser;
             const account = new Account(info.username,
