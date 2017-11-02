@@ -18,18 +18,19 @@ export class AuthenticationService {
     return this.http.post('http://localhost:8080/login', credentials
       )
       .map(response => {
+        console.log(response);
         let result = {
           token: response['_body']
         };
+
         if ( result && result.token) {
           localStorage.setItem('token', result.token);
           const info = this.currentUser;
-            const account = new Account(info.username,
-              info.firstName,
-              info.lastName,
-              info.email,
-              info.accountID,
-              info.role);
+            const account = new Account();
+            account.username = info.username;
+            account.accountID = info.accountID;
+            account.role = info.role;
+            account.firstName = info.role;
           sessionStorage.setItem('currentUser', JSON.stringify(account));
           return true;
         } else {
