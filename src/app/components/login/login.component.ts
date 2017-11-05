@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
+import {register} from "ts-node/dist";
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
     clear: 'Clear', // Clear button text
     close: 'Ok',
     format: 'mmm dd, yyyy',
-    formatSubmit: 'mm-dd-yyy',
+    formatSubmit: 'yyyy-mm-dd',
     selectMonths: true,
     selectYears: 100,
     max: new Date()
@@ -52,6 +53,21 @@ export class LoginComponent implements OnInit {
           }
         });
     }
+  }
+
+  signUp(values) {
+    console.log(values);
+    this.authService.register(values)
+      .subscribe(correctInfo => {
+        if (correctInfo) {
+          console.log("yes");
+          this.registerCheck = 'false';
+          this.router.navigate(['/login/true']);
+          location.reload();
+        } else {
+
+        }
+      });
   }
 
 }

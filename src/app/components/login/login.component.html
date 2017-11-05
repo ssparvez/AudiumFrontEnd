@@ -10,7 +10,7 @@
       <div class="divider" style="background-color: #2196f3"></div>
     </div>
     <div class="col s6 offset-s3">
-      <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'">
+      <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'" >
         <mz-tab-item [label]="'LOGIN'">
           <div class="col s12 grey darken-1">
             <form #f="ngForm" (ngSubmit)="login(f.value)">
@@ -55,14 +55,14 @@
         </mz-tab-item>
         <mz-tab-item [active]="registerCheck" [label]="'REGISTER'">
           <div class="col s12 grey darken-1">
-            <form #formSignup="ngForm" (ngSubmit)="signUp(formSignup)">
+            <form #formSignup="ngForm" (ngSubmit)="signUp(formSignup.value)">
               <div class="row">
                 <div class="input-field col s6">
-                  <input ngModel required name="firstName" id="first_name" type="text" class="validate">
+                  <input ngModel required name="firstname" id="first_name" type="text" class="validate">
                   <label for="first_name">First Name</label>
                 </div>
                 <div class="input-field col s6">
-                  <input ngModel required name="lastName" id="last_name" type="text" class="validate">
+                  <input ngModel required name="lastname" id="last_name" type="text" class="validate">
                   <label for="last_name">Last Name</label>
                 </div>
               </div>
@@ -95,7 +95,7 @@
               <div class="row">
                 <div class="input-field col s4">
                   <mz-datepicker-container class="col s12">
-                    <input mz-datepicker ngModel name="dob" required [label]="'Date of Birth'" [options]="dateOptions" type="text">
+                    <input mz-datepicker ngModel name="dateofbirth" required [label]="'Date of Birth'" [options]="dateOptions" type="text">
                   </mz-datepicker-container>
                 </div>
                 <div class="input-field col s8">
