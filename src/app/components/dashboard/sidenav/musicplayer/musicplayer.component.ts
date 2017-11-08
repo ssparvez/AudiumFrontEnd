@@ -33,26 +33,26 @@ export class MusicplayerComponent implements OnInit {
         onend: () => { this.toggleNext(); }
       });
     }
-     
+
   }
 
   togglePlayback():void {
     this.isPlaying ? this.togglePause() : this.togglePlay();
   }
   togglePause():void {
-    this.playIcon = "play_arrow"; 
+    this.playIcon = "play_arrow";
     this.isPlaying = false;
     this.songQueue[this.queueIndex].sound.pause();
   }
   togglePlay(): void {
-    this.playIcon = "pause"; 
+    this.playIcon = "pause";
     this.isPlaying = true;
     if(this.isMuted) {
       this.songQueue[this.queueIndex].sound.mute(true);
     }
-    this.songQueue[this.queueIndex].sound.play(); 
-    
-    
+    this.songQueue[this.queueIndex].sound.play();
+
+
   }
   toggleNext(): void {
     if(this.queueIndex != this.songQueue.length - 1) {
@@ -71,13 +71,13 @@ export class MusicplayerComponent implements OnInit {
 
   toggleMute():void {
     if(this.isMuted) {
-      this.soundIcon = "volume_up"; 
+      this.soundIcon = "volume_up";
       this.songQueue[this.queueIndex].sound.mute(false);
     } else {
-      this.soundIcon = "volume_off"; 
+      this.soundIcon = "volume_off";
       this.songQueue[this.queueIndex].sound.mute(true);
     }
-    this.isMuted = !this.isMuted
+    this.isMuted = !this.isMuted;
   }
 
   toggleShuffle(): void {
@@ -94,7 +94,7 @@ export class MusicplayerComponent implements OnInit {
   }
   // REPeaT NOT WORKING RN
   toggleRepeat(): void {
-    if(this.isRepeated){
+    if(this.isRepeated) {
        this.songQueue[this.queueIndex].sound.loop(true);
        this.songQueue[this.queueIndex].sound.on('end', () => {});
      } else {
@@ -107,9 +107,9 @@ export class MusicplayerComponent implements OnInit {
 class Song {
   id: number;
   title: string;
-  artist : string;
+  artist: string;
   playing = false;
-  sound : Howl;
+  sound: Howl;
   url: string;
   albumArtUrl: string;
 
