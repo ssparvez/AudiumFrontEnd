@@ -28,7 +28,7 @@ interface Song {
   id: string,
   title: string,
   artists: Artist [],
-  album: string
+  album: Album []
 }
 
 interface Artist {

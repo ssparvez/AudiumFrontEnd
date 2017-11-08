@@ -20,8 +20,7 @@
             <tr *ngFor="let song of songs">
                 <td>{{song.title}}</td>
                 <td><span *ngFor="let artist of song.artists; last as isLast">{{artist.name}}{{isLast ? '' : ', '}}</span></td>
-                <td *ngIf="song.album != null">{{song.album.title}}</td>
-                <td *ngIf="song.album == null">N/A</td>
+                <td><span *ngFor="let album of song.albums; last as isLast">{{album.title}}{{isLast ? '' : ', '}}</span></td>
                 <td>2 days ago</td>
             </tr>
         </tbody>
