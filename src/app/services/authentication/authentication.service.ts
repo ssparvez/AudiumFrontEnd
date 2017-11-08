@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {JwtHelper, tokenNotExpired} from "angular2-jwt";
-import { Account } from '../../classes/Account';
 import { DataService } from '../../services/data.service';
+import { Http, RequestOptions, Headers } from '@angular/http';
+import {CustomerAccount} from "../../classes/customer-account.service";
 
 @Injectable()
 export class AuthenticationService {
 
-  constructor( private http: Http, private dataService:DataService) { }
+  constructor(private http: Http,
+              private dataService:DataService,
+              private currentUser: CustomerAccount) { }
 
 
   login(credentials) {
@@ -51,7 +53,7 @@ export class AuthenticationService {
     return tokenNotExpired();
   }
 
-  get currentUser() {
+  get currentUserInfo() {
     const token = localStorage.getItem('token');
     if (!token) {
       return null;
@@ -61,13 +63,18 @@ export class AuthenticationService {
 
 
   storeInfo() {
-    const info = this.currentUser;
-    const account = new Account();
-    account.username = info.username;
-    account.accountID = info.accountID;
-    account.role = info.role;
-    account.firstName = info.role;
-    sessionStorage.setItem('currentUser', JSON.stringify(account));
+    const info = this.currentUserInfo;
+    let username = info.username;
+    this.currentUser.username  = username.charAt(0).toUpperCase() + username.slice(1);
+    this.currentUser.accountId = info.accountId;
+    this.currentUser.role = info.role;
+    this.currentUser.firstName = info.firstName;
+    this.currentUser.lastName = info.lastName;
+    this.currentUser.email = info.email;
+    this.currentUser.dob = info.dob;
+    this.currentUser.profilePicURL = this.dataService.profilePic + this.currentUser.accountId + '.png';
+    sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
+
   }
 
 }

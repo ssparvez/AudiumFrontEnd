@@ -5,13 +5,11 @@ export class Account {
   private _firstName: string;
   private _lastName: string;
   private _email: string;
-  private _accountID: number;
+  private _accountId: number;
   private _role: string;
   private _isActive: number;
 
   constructor() {}
-
-
 
   set isActive(value: number) {
     this._isActive = value;
@@ -33,8 +31,8 @@ export class Account {
     this._email = value;
   }
 
-  set accountID(value: number) {
-    this._accountID = value;
+  set accountId(value: number) {
+    this._accountId = value;
   }
 
   set role(value: string) {
@@ -44,7 +42,6 @@ export class Account {
   get isActive(): number {
     return this._isActive;
   }
-
   get username(): string {
     return this._username;
   }
@@ -61,11 +58,13 @@ export class Account {
     return this._email;
   }
 
-  get accountID(): number {
-    return this._accountID;
+  get accountId(): number {
+    return this._accountId;
   }
 
   get role(): string {
     return this._role;
   }
+
+
 }

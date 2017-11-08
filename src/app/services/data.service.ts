@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
-@Injectable() 
+@Injectable()
 export class DataService {
     connectionURL = "http://localhost:8080";
+    profilePic = this.connectionURL + '/profile/';
 }

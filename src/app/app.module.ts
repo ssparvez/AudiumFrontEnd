@@ -26,6 +26,7 @@ import { AuthenticationService } from "./services/authentication/authentication.
 import { AuthGuard } from "./guards/authguard.service";
 import { DataService } from "./services/data.service";
 import { AuthHttp } from 'angular2-jwt/angular2-jwt';
+import {CustomerAccount} from "./classes/customer-account.service";
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -72,7 +73,8 @@ const appRoutes: Routes = [
     LibraryService,
     AuthenticationService,
     AuthGuard,
-    AuthHttp
+    AuthHttp,
+    CustomerAccount
   ],
   bootstrap: [AppComponent]
 })
