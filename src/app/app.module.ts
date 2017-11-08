@@ -20,9 +20,10 @@ import { PlaylistsComponent } from './components/dashboard/content/library/playl
 import { AccountComponent } from './components/dashboard/content/account/account.component';
 import { LoginComponent } from './components/login/login.component';
 import { FrontPageComponent } from './components/front-page/front-page.component';
-// Servicesgit pull
+// Services
 import { LibraryService } from "./services/library/library.service";
 import { AuthenticationService } from "./services/authentication/authentication.service";
+import { PlayerService } from './services/player/player.service';
 import { AuthGuard } from "./guards/authguard.service";
 import { DataService } from "./services/data.service";
 import { AuthHttp } from 'angular2-jwt/angular2-jwt';
@@ -72,6 +73,7 @@ const appRoutes: Routes = [
     DataService,
     LibraryService,
     AuthenticationService,
+    PlayerService,
     AuthGuard,
     AuthHttp,
     CustomerAccount
