@@ -55,7 +55,7 @@ h5 {
 }
 #small-card-title {
   padding: 4px 24px 4px 4px;
-  opacity: 0.8;
+  background-color: rgba(0, 0, 0, 0.6) !important;
   width: 100% !important;
   height: 50px;
 }

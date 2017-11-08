@@ -1,8 +1,16 @@
 .card {
     margin: 0;
 }
+h4 {
+    width: 125px;
+}
+
+img {
+    height: 300px;
+    width: 300px !important;
+}
 #music-card-title {
-    opacity: 0.8;
+    background-color: rgba(0,0,0, 0.8) !important;
     width: 300px;
     height: 150px;
 }
@@ -16,176 +24,4 @@
 .music-controls {
     float: left;
     width: 100%;
-}
-
-.mejs-controls {
-
-}
-
-.mejs-container {
-    position: relative;
-}
-
-.mejs-playpause-button {
-    position: absolute !important;
-    right: 0;
-    bottom: 95%;
-}
-
-.mejs-playpause-button button {
-    display: block;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    border: 0;
-    font-family: FontAwesome;
-    font-size: 23px;
-    color: #cf5da3;
-    background: transparent;
-}
-
-.mejs-volume-button button {
-    display: block;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    border: 0;
-    font-family: FontAwesome;
-    font-size: 20px;
-    color: #5bbb95;
-    background: transparent;
-}
-
-.mejs-play button:before {
-    content: "\f04b";
-}
-
-.mejs-controls .mejs-pause button:before {
-    content: "\f04c";
-}
-
-.mejs-controls .mejs-stop button:before {
-    content: "\f04d";
-}
-
-.mejs-controls .mejs-mute button:before {
-    content: "\f028";
-}
-
-.mejs-controls .mejs-unmute button:before {
-    content: "\f026";
-}
-
-.mejs-container .mejs-controls .mejs-time {
-    width: 100%;
-    color: #fff;
-}
-
-.mejs-controls .mejs-time-rail .mejs-time-loaded {
-    background: rgba(255,255,255,0.2);
-}
-
-.mejs-container .mejs-controls .mejs-time span {
-    font-size: 15px;
-}
-
-.mejs-controls div.mejs-time-rail {
-    margin-top: 10px;
-}
-
-.mejs-container .mejs-controls div {
-    display: block;
-    float: left;
-    position: relative;
-    width: 40px;
-}
-
-span.mejs-duration {
-    float: right;
-    text-align: right;
-    color: #ccc;
-}
-
-span.mejs-currenttime {
-    font-weight: 700;
-}
-
-.mejs-controls .mejs-time-rail span {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 3px;
-    border-radius: 50px;
-    cursor: pointer;
-}
-
-.mejs-controls .mejs-time-rail .mejs-time-current {
-    background: #5BBB95 none repeat scroll 0 0;
-}
-
-.mejs-controls .mejs-volume-button {
-    position: relative;
-    position: absolute !important;
-    top: 15px;
-    right: 60px;
-    width: 40px;
-    height: 40px;
-}
-
-.mejs-controls div.mejs-horizontal-volume-slider {
-    display: block;
-    position: absolute !important;
-    position: relative;
-    top: 38px;
-    right: 0;
-    width: 60px;
-    height: 3px;
-    border-radius: 50px;
-    line-height: 11px;
-}
-
-.mejs-controls .mejs-time-rail .mejs-time-float {
-    display: none;
-    top: -40px;
-    width: 40px;
-    height: 25px;
-    margin-left: -18px;
-    text-align: center;
-    font-size: 10px;
-    background: #fff;
-}
-
-.mejs-controls .mejs-time-rail .mejs-time-float-current {
-    display: block;
-    position: relative;
-    top: 0;
-    margin: 0;
-    line-height: 26px;
-    color: #100d28;
-}
-
-.mejs-controls .mejs-time-rail .mejs-time-float-corner {
-    top: auto;
-    bottom: -5px;
-    left: 50%;
-    width: 0;
-    height: 0;
-    margin-left: -6px;
-    border-top: 6px solid #fff;
-    border-right: 6px solid transparent;
-    border-left: 6px solid transparent;
-}
-
-.mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-total,
-.mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-current {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255,255,255,0.1);
-}
-
-.mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-current {
-    background: #fff;
 }
