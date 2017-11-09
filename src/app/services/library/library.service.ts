@@ -6,14 +6,18 @@ import { DataService } from '../data.service';
 
 @Injectable()
 export class LibraryService {
-
-  constructor(private http: Http, public dataService: DataService) { }
+  accountId: string
+  constructor(private http: Http, public dataService: DataService) { 
+    this.accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;
+  }
 
   getAllSongs() {
-    let accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;
-    return this.http.get(this.dataService.connectionURL + "/accounts/" + accountId + "/songs").map(res => res.json());
+    return this.http.get(this.dataService.connectionURL + "/accounts/" + this.accountId + "/songs").map(res => res.json());
+  }
+  getAllAlbums() {
+    
   }
   getAllPlaylists() {
-    return this.http.get(this.dataService.connectionURL + "/playlists").map(res => res.json());
+    return this.http.get(this.dataService.connectionURL + "/accounts/" + this.accountId + "/playlists").map(res => res.json());
   }
 }

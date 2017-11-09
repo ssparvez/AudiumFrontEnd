@@ -21,6 +21,7 @@ import { AccountComponent } from './components/dashboard/content/account/account
 import { LoginComponent } from './components/login/login.component';
 import { FrontPageComponent } from './components/front-page/front-page.component';
 // Services
+import { HomeService } from "./services/home/home.service";
 import { LibraryService } from "./services/library/library.service";
 import { AuthenticationService } from "./services/authentication/authentication.service";
 import { PlayerService } from './services/player/player.service';
@@ -28,6 +29,7 @@ import { AuthGuard } from "./guards/authguard.service";
 import { DataService } from "./services/data.service";
 import { AuthHttp } from 'angular2-jwt/angular2-jwt';
 import {CustomerAccount} from "./classes/customer-account.service";
+import { PlaylistModalComponent } from './components/dashboard/content/library/playlists/playlist-modal/playlist-modal.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -59,7 +61,8 @@ const appRoutes: Routes = [
     AccountComponent,
     MusicplayerComponent,
     LoginComponent,
-    FrontPageComponent
+    FrontPageComponent,
+    PlaylistModalComponent
   ],
   imports: [
     BrowserModule,
@@ -76,9 +79,11 @@ const appRoutes: Routes = [
     PlayerService,
     AuthGuard,
     AuthHttp,
-    CustomerAccount
+    CustomerAccount,
+    HomeService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PlaylistModalComponent]
 })
 export class AppModule { }
 

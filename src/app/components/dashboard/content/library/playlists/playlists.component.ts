@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LibraryService } from '../../../../../services/library/library.service';
+import { MzModalService } from 'ng2-materialize';
+import { PlaylistModalComponent } from './playlist-modal/playlist-modal.component';
 
 
 @Component({
@@ -10,12 +12,17 @@ import { LibraryService } from '../../../../../services/library/library.service'
 export class PlaylistsComponent implements OnInit {
 
   playlists : Playlist[]
-  constructor(private libraryService : LibraryService) { }
+  constructor(private libraryService : LibraryService, private modalService : MzModalService) { }
 
   ngOnInit() {
     this.libraryService.getAllPlaylists().subscribe((playlists) => {
-      this.playlists = playlists
+      this.playlists = playlists;
+      console.log(this.playlists);
     });
+  }
+
+  openAddPlaylistForm() {
+    this.modalService.open(PlaylistModalComponent);
   }
 
 }
