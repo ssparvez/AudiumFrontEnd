@@ -30,7 +30,13 @@ export class MusicplayerComponent implements OnInit {
     for(let song of this.songQueue) {
       song.sound = new Howl({
         src: [song.url],
-        onend: () => { this.toggleNext(); }
+        onend: () => { 
+          if(!this.isRepeated) {
+            this.toggleNext(); 
+          } else {
+            //this.songQueue[this.queueIndex].sound.
+          }
+        }
       });
     }
 

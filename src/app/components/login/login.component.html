@@ -1,122 +1,124 @@
 <html>
+
 <body>
-<!-- Main Content -->
-<div class="container">
-  <!-- Page Content goes here -->
-  <div class="row">
-    <div class="row center-align">
-      <img src="assets/images/logo_blue.png" class="login-page-logo">
-      <span class="login-page-logo2">Audium</span>
-      <div class="divider" style="background-color: #2196f3"></div>
-    </div>
-    <div class="col s6 offset-s3">
-      <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'" >
-        <mz-tab-item [label]="'LOGIN'">
-          <div class="col s12 grey darken-1">
-            <form #f="ngForm" (ngSubmit)="login(f.value)">
-              <div *ngIf="invalidLogin" class="card-panel red lighten-1 center-align">Invalid username and/or password.</div>
-              <div class="row">
-                <div class="input-field col s12 ">
-                  <i class="material-icons prefix white-text">email</i>
-                  <input required ngModel name="username" id="email-signin" type="text" class="form-control validate">
-                  <label for="email-signin">Username or Email</label>
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Page Content goes here -->
+    <div class="row">
+      <div class="row center-align">
+        <img src="assets/images/logo_blue.png" class="login-page-logo">
+        <span class="login-page-logo2">Audium</span>
+        <div class="divider" style="background-color: #2196f3"></div>
+      </div>
+      <div class="col s6 offset-s3">
+        <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'">
+          <mz-tab-item [label]="'LOGIN'">
+            <div class="col s12 grey darken-1">
+              <form #f="ngForm" (ngSubmit)="login(f.value)">
+                <div *ngIf="invalidLogin" class="card-panel red lighten-1 center-align">Invalid username and/or password.</div>
+                <div class="row">
+                  <div class="input-field col s12 ">
+                    <i class="material-icons prefix white-text">email</i>
+                    <input required ngModel name="username" id="email-signin" type="text" class="form-control validate">
+                    <label for="email-signin">Username or Email</label>
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s12">
-                  <i class="material-icons prefix white-text">vpn_key</i>
-                  <input ngModel name="password" required id="password-signin" type="password" class="form-control validate">
-                  <label for="password-signin">Password</label>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <i class="material-icons prefix white-text">vpn_key</i>
+                    <input ngModel name="password" required id="password-signin" type="password" class="form-control validate">
+                    <label for="password-signin">Password</label>
+                  </div>
                 </div>
-              </div>
-              <label>
-                <a class='login-page-forgotpass' href='#!'>
-                  <b>Forgot Password?</b>
-                </a>
-              </label>
-              <br/>
-              <div class='row'>
-                <button type='submit' name='btn_login' class='col s10 push-s1 btn btn-large waves-effect login-page-loginbtn'>
-                  Log In
-                </button>
-              </div>
-              <!--<p class="white-text center-align">Or log in with</p>-->
-              <!--<br/>-->
-              <!--<div class='row'>-->
+                <label>
+                  <a class='login-page-forgotpass' href='#!'>
+                    <b>Forgot Password?</b>
+                  </a>
+                </label>
+                <br/>
+                <div class='row'>
+                  <button type='submit' name='btn_login' class='col s10 push-s1 btn btn-large waves-effect login-page-loginbtn'>
+                    Log In
+                  </button>
+                </div>
+                <!--<p class="white-text center-align">Or log in with</p>-->
+                <!--<br/>-->
+                <!--<div class='row'>-->
                 <!--<div class="col m6">-->
-                  <!--<button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect login-page-loginbtn2' style="background-color: #3b5998;">Facebook</button>-->
+                <!--<button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect login-page-loginbtn2' style="background-color: #3b5998;">Facebook</button>-->
                 <!--</div>-->
                 <!--<div class="col m6">-->
-                  <!--<button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect white black-text login-page-loginbtn3'>Google</button>-->
+                <!--<button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect white black-text login-page-loginbtn3'>Google</button>-->
                 <!--</div>-->
-              <!--</div>-->
-            </form>
-          </div>
-        </mz-tab-item>
-        <mz-tab-item [active]="registerCheck" [label]="'REGISTER'">
-          <div class="col s12 grey darken-1">
-            <form #formSignup="ngForm" (ngSubmit)="signUp(formSignup.value)">
-              <div class="row">
-                <div class="input-field col s6">
-                  <input ngModel required name="firstname" id="first_name" type="text" class="validate">
-                  <label for="first_name">First Name</label>
+                <!--</div>-->
+              </form>
+            </div>
+          </mz-tab-item>
+          <mz-tab-item [active]="registerCheck" [label]="'REGISTER'">
+            <div class="col s12 grey darken-1">
+              <form #formSignup="ngForm" (ngSubmit)="signUp(formSignup.value)">
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input ngModel required name="firstname" id="first_name" type="text" class="validate">
+                    <label for="first_name">First Name</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input ngModel required name="lastname" id="last_name" type="text" class="validate">
+                    <label for="last_name">Last Name</label>
+                  </div>
                 </div>
-                <div class="input-field col s6">
-                  <input ngModel required name="lastname" id="last_name" type="text" class="validate">
-                  <label for="last_name">Last Name</label>
+                <div class="row">
+                  <div class="input-field col s5">
+                    <input required ngModel minlength="3" name="username" #username="ngModel" type="text" class="form-control validate" id="username">
+                    <label for="username">Username</label>
+                    <div *ngIf="username.touched && !username.valid">
+                      <div *ngIf="username.errors['minlength']" class=" card-panel login-cp1 red lighten-1">
+                        <span class=""> Username should be minimun {{username.errors['minlength'].requiredLength}} characters</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="input-field col s7">
+                    <input ngModel required name="email" id="email" type="email" class="validate">
+                    <label for="email">Email</label>
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s5">
-                  <input required ngModel minlength="3" name="username" #username="ngModel" type="text" class="form-control validate" id="username">
-                  <label for="username">Username</label>
-                  <div *ngIf="username.touched && !username.valid">
-                    <div *ngIf="username.errors['minlength']" class=" card-panel login-cp1 red lighten-1">
-                      <span class=""> Username should be minimun {{username.errors['minlength'].requiredLength}} characters</span>
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input ngModel minlength="5" name="password" #password="ngModel" required id="password" type="password" class="form-control validate">
+                    <label for="password">Password</label>
+                    <div *ngIf="password.touched && !password.valid">
+                      <div *ngIf="password.errors['minlength']" class="card-panel red lighten-1">
+                        <span> Password should be minimun {{password.errors['minlength'].requiredLength}} characters</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="input-field col s7">
-                  <input ngModel required name="email" id="email" type="email" class="validate">
-                  <label for="email">Email</label>
-                </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s12">
-                  <input ngModel minlength="5" name="password" #password="ngModel" required id="password" type="password" class="form-control validate">
-                  <label for="password">Password</label>
-                  <div *ngIf="password.touched && !password.valid">
-                    <div *ngIf="password.errors['minlength']" class="card-panel red lighten-1">
-                      <span> Password should be minimun {{password.errors['minlength'].requiredLength}} characters</span>
-                    </div>
+                <div class="row">
+                  <div class="input-field col s4">
+                    <mz-datepicker-container class="col s12">
+                      <input mz-datepicker ngModel name="dateofbirth" required [label]="'Date of Birth'" [options]="dateOptions" type="text">
+                    </mz-datepicker-container>
+                  </div>
+                  <div class="input-field col s8">
+                    <input ngModel name="gender" type="radio" value="male" id="radio1" required />
+                    <label for="radio1">Male</label>
+                    <input ngModel name="gender" type="radio" value="female" id="radio2" />
+                    <label for="radio2">Female</label>
+                    <input ngModel name="gender" type="radio" value="nonbinary" id="radio3" />
+                    <label for="radio3">Non-binary</label>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s4">
-                  <mz-datepicker-container class="col s12">
-                    <input mz-datepicker ngModel name="dateofbirth" required [label]="'Date of Birth'" [options]="dateOptions" type="text">
-                  </mz-datepicker-container>
+                <br />
+                <div class='row'>
+                  <button type='submit' [disabled]="!formSignup.valid" name='btn_login' class='col s10 offset-s1 btn btn-large waves-effect login-page-createbtn'>Create Account</button>
                 </div>
-                <div class="input-field col s8">
-                  <input ngModel name="gender" type="radio" value="male" id="radio1" required />
-                  <label for="radio1">Male</label>
-                  <input ngModel name="gender" type="radio" value="female" id="radio2" />
-                  <label for="radio2">Female</label>
-                  <input ngModel name="gender" type="radio" value="nonbinary" id="radio3" />
-                  <label for="radio3">Non-binary</label>
-                </div>
-              </div>
-              <br />
-              <div class='row'>
-                <button type='submit' [disabled]="!formSignup.valid" name='btn_login' class='col s10 offset-s1 btn btn-large waves-effect login-page-createbtn'>Create Account</button>
-              </div>
-            </form>
-          </div>
-        </mz-tab-item>
-      </mz-tab>
+              </form>
+            </div>
+          </mz-tab-item>
+        </mz-tab>
+      </div>
     </div>
   </div>
-</div>
 </body>
+
 </html>

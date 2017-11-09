@@ -1,25 +1,27 @@
 <div class="row">
-    <div class="left">
-        <h1>Playlists</h1>
-    </div>
-    <div class="right">
-        <a class="btn btn-floating btn-large blue" (click)="openAddPlaylistForm()"><i class="material-icons">add</i></a>
-    </div>
+  <div class="left">
+    <h1>Playlists</h1>
+  </div>
+  <div class="right">
+    <a class="btn btn-floating btn-large blue" (click)="openAddPlaylistForm()">
+      <i class="material-icons">add</i>
+    </a>
+  </div>
 </div>
 <div class="row" style="margin-bottom:0;">
-    <div *ngFor="let playlist of playlists" class="card horizontal grey darken-2">
-      <div class="card-image">
-        <img src="assets/images/defaults/playlist.png" width="175" height="175">
+  <div *ngFor="let playlist of playlists" class="card horizontal grey darken-2">
+    <div class="card-image">
+      <img src="assets/images/defaults/playlist.svg" width="175" height="175">
+    </div>
+    <div class="card-stacked">
+      <div class="card-content">
+        <h2>{{playlist.name}}</h2>
+        <h4>{{playlist.description}}</h4>
       </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <h2>{{playlist.name}}</h2>
-          <h4>{{playlist.description}}</h4>
-        </div>
-        <div class="card-action">
-          <a href="#">Play</a>
-          <a href="#">Edit</a>
-        </div>
+      <div class="card-action">
+        <a href="#">Play</a>
+        <a href="#">Edit</a>
       </div>
-    </div>    
+    </div>
+  </div>
 </div>
