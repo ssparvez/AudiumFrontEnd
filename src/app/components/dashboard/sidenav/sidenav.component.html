@@ -19,8 +19,9 @@
   <mz-sidenav-link>
     <a routerLinkActive="blue-text text-lighten-2" [routerLink]="['account']" class="waves-effect">
       <div>
-        <i class="material-icons" style="vertical-align: text-top">account_box</i>
-        <span class="sidenav-text">Account</span>
+          <img width="24" height="24" style="vertical-align: middle;" class="circle" src="{{accountImage}}" onerror="this.src='assets/images/defaults/user_profile.svg'">
+          <!-- <i class="material-icons" style="vertical-align: text-top">account_box</i> -->
+        <span class="sidenav-text">{{accountName}}</span>
       </div>
     </a>
   </mz-sidenav-link>

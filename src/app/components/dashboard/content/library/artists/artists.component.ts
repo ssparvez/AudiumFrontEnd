@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LibraryService } from '../../../../../services/library/library.service';
 
 @Component({
   selector: 'app-artists',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./artists.component.css']
 })
 export class ArtistsComponent implements OnInit {
-
-  constructor() { }
+  artists: Artist[]
+  constructor(private libraryService: LibraryService) {
+    this.libraryService.getAllArtists().subscribe((artists) => {
+      this.artists = artists;
+      console.log(this.artists);
+    });
+   }
 
   ngOnInit() {
   }
 
+}
+
+interface Artist {
+  name: string;
 }

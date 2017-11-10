@@ -8,11 +8,22 @@ import { LibraryService } from '../../../../../services/library/library.service'
 })
 export class AlbumsComponent implements OnInit {
 
-  albums: number[]
+  albums: Album[]
   constructor(private libraryService : LibraryService) { }
 
   ngOnInit() {
-    this.albums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+    this.libraryService.getAllAlbums().subscribe((albums) => {
+      this.albums = albums;
+      console.log(this.albums);
+    });
   }
+}
 
+interface Album {
+  title: string;
+  artist: Artist;
+}
+
+interface Artist {
+  name: string;
 }
