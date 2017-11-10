@@ -23,15 +23,15 @@
         </div>
       </div>
       <div class="row" style="margin-bottom: 0px;">
-            <a [routerLink]="" (click)="toggleShuffle()" aria-hidden="true">
-                <i class="material-icons white-text" style="vertical-align: middle;">shuffle</i>
-            </a>
-            <a [routerLink]="" (click)="toggleRepeat()" aria-hidden="true">
-                    <i class="material-icons" [ngClass]="{'white-text': !isRepeated, 'blue-text': !isRepeated}" style="vertical-align: middle;">loop</i>
-                </a>
-            <a [routerLink]="" (click)="toggleMute()" aria-hidden="true">
-                <i class="material-icons white-text" style="vertical-align: middle;">{{soundIcon}}</i>
-            </a>
+        <a [routerLink]="" (click)="toggleShuffle()" aria-hidden="true">
+          <i class="material-icons white-text" style="vertical-align: middle;">shuffle</i>
+        </a>
+        <a [routerLink]="" (click)="toggleRepeat()" aria-hidden="true">
+          <i class="material-icons" [ngClass]="{'white-text': !isRepeated, 'blue-text': !isRepeated}" style="vertical-align: middle;">loop</i>
+        </a>
+        <a [routerLink]="" (click)="toggleMute()" aria-hidden="true">
+          <i class="material-icons white-text" style="vertical-align: middle;">{{soundIcon}}</i>
+        </a>
       </div>
     </span>
   </div>

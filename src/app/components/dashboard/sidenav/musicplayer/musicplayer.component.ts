@@ -30,7 +30,13 @@ export class MusicplayerComponent implements OnInit {
     for(let song of this.songQueue) {
       song.sound = new Howl({
         src: [song.url],
-        onend: () => { this.toggleNext(); }
+        onend: () => { 
+          if(!this.isRepeated) {
+            this.toggleNext(); 
+          } else {
+            //this.songQueue[this.queueIndex].sound.
+          }
+        }
       });
     }
 
@@ -84,8 +90,8 @@ export class MusicplayerComponent implements OnInit {
     if(this.isShuffled) {
 
     } else {
-      for (let i = this.songQueue.length - 1; i > this.queueIndex + 1; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
+      for (let i = this.songQueue.length - 1; i > this.queueIndex; i--) {
+        let j = Math.floor(Math.random() * (i - this.queueIndex + 1)) + this.queueIndex + 1;
         let x = this.songQueue[i];
         this.songQueue[i] = this.songQueue[j];
         this.songQueue[j] = x;

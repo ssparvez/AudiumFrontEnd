@@ -21,6 +21,7 @@ import { AccountComponent } from './components/dashboard/content/account/account
 import { LoginComponent } from './components/login/login.component';
 import { FrontPageComponent } from './components/front-page/front-page.component';
 // Services
+import { HomeService } from "./services/home/home.service";
 import { LibraryService } from "./services/library/library.service";
 import { AuthenticationService } from "./services/authentication/authentication.service";
 import { PlayerService } from './services/player/player.service';
@@ -28,6 +29,7 @@ import { AuthGuard } from "./guards/authguard.service";
 import { DataService } from "./services/data.service";
 import {  AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt/angular2-jwt';
 import {CustomerAccount} from "./classes/customer-account.service";
+import { PlaylistModalComponent } from './components/dashboard/content/library/playlists/playlist-modal/playlist-modal.component';
 import {GeneralService} from "./services/general/general.service";
 
 const appRoutes: Routes = [
@@ -73,7 +75,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AccountComponent,
     MusicplayerComponent,
     LoginComponent,
-    FrontPageComponent
+    FrontPageComponent,
+    PlaylistModalComponent
   ],
   imports: [
     BrowserModule,
@@ -90,6 +93,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AuthenticationService,
     PlayerService,
     AuthGuard,
+    AuthHttp,
+    HomeService,
     CustomerAccount,
     {
       provide: AuthHttp,
@@ -97,7 +102,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       deps: [Http, RequestOptions]
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PlaylistModalComponent]
 })
 export class AppModule { }
 
