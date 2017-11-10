@@ -64,7 +64,7 @@ export class AuthenticationService {
 
   storeInfo() {
     const info = this.currentUserInfo;
-    let username = info.username;
+    const username = info.username;
     this.currentUser.username  = username.charAt(0).toUpperCase() + username.slice(1);
     this.currentUser.accountId = info.accountId;
     this.currentUser.role = info.role;
@@ -72,6 +72,7 @@ export class AuthenticationService {
     this.currentUser.lastName = info.lastName;
     this.currentUser.email = info.email;
     this.currentUser.dob = info.dob;
+    this.currentUser.gender = info.gender;
     this.currentUser.profilePicURL = this.dataService.profilePic + this.currentUser.accountId + '.png';
     sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
 

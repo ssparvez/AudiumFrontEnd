@@ -12,7 +12,6 @@ export class CustomerAccount extends Account {
     super();
   }
 
-
   get dob(): string {
     return this._dob;
   }
@@ -46,5 +45,6 @@ export class CustomerAccount extends Account {
     this.email = json['_email'];
     this.accountId = json['_accountId'];
     this.lastName = json['_lastName'];
+    this.gender = json['_gender'];
   }
 }

@@ -25,7 +25,7 @@ export class MusicplayerComponent implements OnInit {
       new Song(2, "Feels Good Inc.", "Gorillaz", '../../../../../assets/songs/FeelsGoodInc.mp3', '../../../../../assets/images/demondays.jpeg'),
       new Song(2, "song 3", "Gorillaz", '../../../../../assets/songs/FeelsGoodInc.mp3', '../../../../../assets/images/demondays.jpeg'),
       new Song(2, "song 4", "Gorillaz", '../../../../../assets/songs/FeelsGoodInc.mp3', '../../../../../assets/images/demondays.jpeg')
-    ]
+    ];
     // init the songs
     for(let song of this.songQueue) {
       song.sound = new Howl({

@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterializeModule } from 'ng2-materialize';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpModule } from '@angular/http';
+import {Http, HttpModule, RequestOptions} from '@angular/http';
 import { FormsModule } from '@angular/forms';
 // Components
 import { AppComponent } from './app.component';
@@ -26,8 +26,9 @@ import { AuthenticationService } from "./services/authentication/authentication.
 import { PlayerService } from './services/player/player.service';
 import { AuthGuard } from "./guards/authguard.service";
 import { DataService } from "./services/data.service";
-import { AuthHttp } from 'angular2-jwt/angular2-jwt';
+import {  AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt/angular2-jwt';
 import {CustomerAccount} from "./classes/customer-account.service";
+import {GeneralService} from "./services/general/general.service";
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -44,6 +45,19 @@ const appRoutes: Routes = [
   {path: "login/:login", component: LoginComponent},
   {path: "", component: FrontPageComponent}
 ];
+
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig({
+    headerName: 'Authorization',
+    headerPrefix: 'Bearer',
+    tokenName: 'token',
+    tokenGetter: (() => localStorage.getItem('token')),
+    globalHeaders: [{ 'Content-Type': 'application/json' }],
+    noJwtError: true
+  }), http, options);
+}
+
+
 
 @NgModule({
   declarations: [
@@ -70,13 +84,18 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
   ],
   providers: [
+    GeneralService,
     DataService,
     LibraryService,
     AuthenticationService,
     PlayerService,
     AuthGuard,
-    AuthHttp,
-    CustomerAccount
+    CustomerAccount,
+    {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [Http, RequestOptions]
+    },
   ],
   bootstrap: [AppComponent]
 })

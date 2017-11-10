@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
+import {Renderer2} from '@angular/core';
 import {register} from "ts-node/dist";
 
 @Component({
@@ -26,7 +27,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private renderer: Renderer2
   ) { }
 
   ngOnInit() {
@@ -46,6 +48,7 @@ export class LoginComponent implements OnInit {
           if (correctInfo) {
             //let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
             // this.router.navigate([returnUrl || '/']);
+            this.renderer.selectRootElement('form').style.display = 'none';
             this.invalidLogin = false;
             this.router.navigate(['/dash/home']);
           } else {

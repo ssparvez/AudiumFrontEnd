@@ -12,7 +12,58 @@
       </div>
     </div>
   </div>
-  <div class="col s4">
+  <div *ngIf="toEditProfile == true" class="col s4">
+    <div class="card grey darken-2">
+      <div class="card-content">
+      <form #f="ngForm" (ngSubmit)="submitEditProfile(f.value)">
+        <div class=" row input-field">
+          <div class="input-field col s5 offset-s1 margin-top">
+            <input ngModel required [(ngModel)]="getCurrentUser().firstName"
+                   name="firstname" id="first_name" type="text" class="validate" >
+            <label class="active" for="first_name">First Name</label>
+          </div>
+          <div class="input-field col s5 margin-top" >
+            <input ngModel required [(ngModel)]="getCurrentUser().lastName"
+                   name="lastname" id="last_name" type="text" class="validate">
+            <label class="active" for="last_name">Last Name</label>
+          </div>
+        </div>
+        <div class="row input-field">
+          <mz-datepicker-container class="col s10 offset-s1 ">
+            <input mz-datepicker ngModel [(ngModel)]="getCurrentUser().dob" name="dateofbirth" id="dob" required
+                   [options]="dateOptions" type="text">
+            <label class="active" for="dob">Date of Birth</label>
+          </mz-datepicker-container>
+        </div>
+        <div class="input-field row">
+          <div class="col s10 offset-s1">
+            <mz-select-container>
+              <select mz-select
+                      ngModel
+                      name="gender"
+                      id="gender_field"
+                      [(ngModel)]="getCurrentUser().gender"
+              >
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+              <label class="active" for="gender_field">Gender</label>
+            </mz-select-container>
+          </div>
+        </div>
+        <div class="row">
+          <button mz-button [disabled]="!f.valid" type='submit' class='col s4  offset-s1 blue btn  waves-effect'>
+            Submit
+          </button>
+          <button  mz-button class='col s4 offset-s1 blue btn  waves-effect'  (click)="cancelEditProfile()">
+            Cancel
+          </button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="toEditProfile == false" class="col s4">
     <div class="card grey darken-2">
       <div class="card-content">
         <div class="row center">
@@ -44,7 +95,7 @@
         </div>
         <div class="row">
           <div class="col s12">
-            <button mz-button class="account-btn btn">
+            <button mz-button class="account-btn btn" (click)="editProfile()">
               EDIT PROFILE
             </button>
           </div>

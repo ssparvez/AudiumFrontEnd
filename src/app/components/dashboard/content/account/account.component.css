@@ -45,4 +45,22 @@
   padding-top: 15%;
   padding-bottom: 15%;
 }
+/* label color */
+.input-field label {
 
+  color: white;
+}
+/* label focus color */
+.input-field input:focus + label {
+  color: white;
+}
+
+.input-field {
+  color: white;
+}
+
+.margin-top {
+  margin-top: 10%;
+
+
+}
