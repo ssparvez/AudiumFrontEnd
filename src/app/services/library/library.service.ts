@@ -14,8 +14,11 @@ export class LibraryService {
   getAllSongs() {
     return this.http.get(this.dataService.connectionURL + "/accounts/" + this.accountId + "/songs").map(res => res.json());
   }
+  getAllArtists() {
+    return this.http.get(this.dataService.connectionURL + "/accounts/" + this.accountId + "/artists").map(res => res.json());
+  }
   getAllAlbums() {
-    
+    return this.http.get(this.dataService.connectionURL + "/accounts/" + this.accountId + "/albums").map(res => res.json());
   }
   getAllPlaylists() {
     return this.http.get(this.dataService.connectionURL + "/accounts/" + this.accountId + "/playlists").map(res => res.json());

@@ -2,12 +2,12 @@
   <h1>Artists</h1>
 </div>
 <div class="row" style="margin-bottom:0;">
-  <div class="col s12 m3">
+  <div class="col s12 m3" *ngFor="let artist of artists">
     <div class="card">
       <div class="card-image">
         <img src="assets/images/defaults/artist.svg">
         <span class="card-title black" id="small-card-title">
-          <h4>Tame Impala</h4>
+          <h4>{{artist.name}}</h4>
         </span>
         <a class="btn-floating halfway-fab waves-effect waves-light blue">
           <i class="material-icons">play_arrow</i>

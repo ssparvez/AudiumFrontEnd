@@ -1,13 +1,40 @@
-# Editor configuration, see http://editorconfig.org
+# EditorConfig is awesome: http://EditorConfig.org
+
+# Source for this config: https://github.com/poteto/component-best-practices/blob/master/.editorconfig
+
+# top-most EditorConfig file
 root = true
 
+# Settings for all files
 [*]
+end_of_line = lf
 charset = utf-8
-indent_style = space
-indent_size = 2
 insert_final_newline = true
 trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+#max_line_length = 72  # Do we want to use this setting? 72 = IntelliJ default suggested line length (not enforced)
 
-[*.md]
-max_line_length = off
+[*.js]
+indent_style = space
+indent_size = 2
+
+[*.hbs]
+insert_final_newline = false
+indent_style = space
+indent_size = 2
+
+[*.css]
+indent_style = space
+indent_size = 2
+
+[*.html]
+indent_style = space
+indent_size = 2
+
+[*.{diff,md}]
 trim_trailing_whitespace = false
+
+[Makefile]
+indent_style = tab
+indent_size = 4
