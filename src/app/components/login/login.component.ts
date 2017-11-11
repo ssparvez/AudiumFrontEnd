@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(values)
         .subscribe(correctInfo => {
           if (correctInfo) {
-            //let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+            // let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
             // this.router.navigate([returnUrl || '/']);
             /* Hiding the login form triggers the "Save password?" prompt on many newer browsers */
             this.renderer.selectRootElement('form').style.display = 'none';

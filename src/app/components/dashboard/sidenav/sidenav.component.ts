@@ -10,11 +10,11 @@ import {AuthenticationService} from "../../../services/authentication/authentica
 export class SidenavComponent implements OnInit {
 
   isExpanded = false;
-  accountName : string;
-  accountImage : string;
+  accountName: string;
+  accountImage: string;
 
   constructor(private router: Router, private authService: AuthenticationService) {
-    let currentUser = JSON.parse(sessionStorage.getItem("currentUser"))
+    let currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     this.accountName = currentUser._firstName + " " + currentUser._lastName;
     this.accountImage = currentUser._profilePicUrl;
   }

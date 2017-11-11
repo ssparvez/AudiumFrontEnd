@@ -59,11 +59,11 @@
               <form #formSignup="ngForm" (ngSubmit)="signUp(formSignup.value)">
                 <div class="row">
                   <div class="input-field col s6">
-                    <input ngModel required name="firstname" id="first_name" type="text" class="validate">
+                    <input ngModel required name="firstName" id="first_name" type="text" class="validate">
                     <label for="first_name">First Name</label>
                   </div>
                   <div class="input-field col s6">
-                    <input ngModel required name="lastname" id="last_name" type="text" class="validate">
+                    <input ngModel required name="lastName" id="last_name" type="text" class="validate">
                     <label for="last_name">Last Name</label>
                   </div>
                 </div>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
-                    <input ngModel minlength="5" name="password" #password="ngModel" required id="password" type="password" class="form-control validate">
+                    <input ngModel minlength="5" name="passwordHash" #password="ngModel" required id="password" type="password" class="form-control validate">
                     <label for="password">Password</label>
                     <div *ngIf="password.touched && !password.valid">
                       <div *ngIf="password.errors['minlength']" class="card-panel red lighten-1">
