@@ -32,7 +32,6 @@ export class AuthenticationService {
           return false;
         }
       });
-
   }
 
   register(values) {

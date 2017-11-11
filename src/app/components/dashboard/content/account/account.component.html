@@ -50,10 +50,10 @@
           </div>
         </div>
         <div class="row">
-          <button mz-button [disabled]="!f.valid" type='submit' class='col s4  offset-s1 blue btn  waves-effect'>
+          <button mz-button [disabled]="!f.valid" type='submit' class='col s4  offset-s1 blue btn  edit-button waves-effect'>
             Submit
           </button>
-          <button  mz-button class='col s4 offset-s1 blue btn  waves-effect'  (click)="cancelEditProfile()">
+          <button  mz-button class='col s4 offset-s1 blue btn edit-button waves-effect'  (click)="cancelEditProfile()">
             Cancel
           </button>
         </div>
@@ -68,13 +68,13 @@
           <h2>Your Profile</h2>
         </div>
         <div class="row">
-          <div class="col s6 ">
+          <div class="col s10 ">
             <h3>Name</h3>
             <h4>{{getCurrentUser().firstName}} {{getCurrentUser().lastName}}</h4>
           </div>
         </div>
         <div class="row">
-          <div class="col s6">
+          <div class="col s10">
             <h3>Email</h3>
             <h4>{{getCurrentUser().email}}</h4>
           </div>
@@ -128,6 +128,15 @@
             </div>
           </ng-template>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s5">
+    <div class="card grey darken-2">
+      <div class="card-content center">
+        <button mz-button class="account-btn account-btn-pssw btn">
+          Edit Payment INfo
+        </button>
       </div>
     </div>
   </div>
