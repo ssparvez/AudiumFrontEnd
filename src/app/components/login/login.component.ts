@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
           if (correctInfo) {
             //let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
             // this.router.navigate([returnUrl || '/']);
+            /* Hiding the login form triggers the "Save password?" prompt on many newer browsers */
             this.renderer.selectRootElement('form').style.display = 'none';
             this.invalidLogin = false;
             this.router.navigate(['/dash/home']);
