@@ -16,8 +16,7 @@ export class PaymentInfoComponent {
   accountId: number;
 
   constructor(private dialogRef:MdDialogRef<PaymentInfoComponent>,
-              private service: GeneralService,
-              private paymentInfo: PaymentInfo) {
+              private service: GeneralService) {
     this.loadDate();
     this.accountId = JSON.parse(sessionStorage.getItem('currentUser'))._accountId;
 }
