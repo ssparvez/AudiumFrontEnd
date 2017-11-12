@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import {JwtHelper, tokenNotExpired} from "angular2-jwt";
-import { DataService } from '../../services/data.service';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import {CustomerAccount} from "../../classes/customer-account.service";
+import {GeneralService} from "../general/general.service";
+import {AppError} from "../../errors/AppError";
+import {NotFoundError} from "../../errors/not-found-error";
+import {DataService} from "../data.service";
 
 @Injectable()
 export class AuthenticationService {
 
   constructor(private http: Http,
-              private dataService:DataService,
-              private currentUser: CustomerAccount) { }
+              private dataService: DataService,
+              private currentUser: CustomerAccount,
+              private service: GeneralService,) { }
 
 
   login(credentials) {
@@ -35,12 +39,14 @@ export class AuthenticationService {
   }
 
   register(values) {
-    return this.http.post(this.dataService.connectionURL + '/register', values)
-      .map(response => {
-        console.log(response.status);
-        return (response.status === 200);
-      });
-
+     this.service.post('/register', values).subscribe(
+      response => {
+        return true;
+      },(error: AppError) => {
+      if ( error instanceof NotFoundError) {
+        console.log("working");
+      }
+    });
   }
 
   logout() {

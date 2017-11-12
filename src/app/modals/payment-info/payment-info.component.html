@@ -1,0 +1,63 @@
+
+  <div class="row center">
+    <form #f="ngForm" (ngSubmit)="submitPaymentInfo(f.value)">
+      <div class="row">
+      <div class="input-field col s12 payment-modal center">
+        <input ngModel required
+               name="ccNumber" id="cc"
+               type="text"
+               class="validate"
+               maxlength="16"
+               [appInputFormat]="'cc'"
+        >
+        <label class="active" for="cc">Card Number</label>
+      </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6 payment-modal center">
+          <input ngModel required
+               name="ccv" id="ccv" type="text"
+                 class="validate" maxlength="3">
+          <label class="active" for="ccv">CCV</label>
+      </div>
+        <div class="input-field col s6 payment-modal center">
+          <input ngModel required
+               name="zipcode" id="zipcode"
+                 type="text" class="validate"
+                maxlength="5">
+          <label class="active" for="zipcode">Zip Code</label>
+        </div>
+      </div>
+      <div class="row">
+        <mz-select-container>
+          <div class="col s6">
+            <select mz-select
+                    ngModel
+                    name="exp-month"
+                    id="exp-month"
+            >
+              <option  *ngFor="let month of months" value="{{month}}">{{month}}</option>
+            </select>
+          </div>
+          <div class="col s6">
+            <select mz-select
+                    ngModel
+                    name="exp-year"
+                    id="exp-year"
+            >
+              <option  *ngFor="let year of years" value="{{year}}" class="payment-option">{{year}}</option>
+            </select>
+
+          </div>
+          <label class="active" for="exp-month">Expiration date</label>
+        </mz-select-container>
+      </div>
+      <div class="row center">
+        <button mz-button  type='submit' [flat]="true"
+                class=" waves-effect" >Submit</button>
+        <button mz-button  md-dialog-close="no" [flat]="true"
+                class=" waves-effect">Cancel</button>
+      </div>
+    </form>
+  </div>
+

@@ -20,6 +20,9 @@ import { PlaylistsComponent } from './components/dashboard/content/library/playl
 import { AccountComponent } from './components/dashboard/content/account/account.component';
 import { LoginComponent } from './components/login/login.component';
 import { FrontPageComponent } from './components/front-page/front-page.component';
+import { MdDialogModule} from '@angular/material';
+import { PaymentInfoComponent } from './modals/payment-info/payment-info.component';
+import { InputFormatDirective } from './directives/input-format.directive';
 // Services
 import { HomeService } from "./services/home/home.service";
 import { LibraryService } from "./services/library/library.service";
@@ -59,8 +62,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   }), http, options);
 }
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,9 +77,15 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     MusicplayerComponent,
     LoginComponent,
     FrontPageComponent,
-    PlaylistModalComponent
+    PlaylistModalComponent,
+    PaymentInfoComponent,
+    InputFormatDirective
   ],
+  entryComponents: [
+    PlaylistModalComponent,
+    PaymentInfoComponent],
   imports: [
+    MdDialogModule,
     BrowserModule,
     FormsModule,
     HttpModule,
@@ -102,8 +109,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       deps: [Http, RequestOptions]
     },
   ],
-  bootstrap: [AppComponent],
-  entryComponents: [PlaylistModalComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
 

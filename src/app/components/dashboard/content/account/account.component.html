@@ -28,7 +28,7 @@
         </div>
         <div class="row input-field">
           <mz-datepicker-container class="col s10 offset-s1 ">
-            <input mz-datepicker ngModel [(ngModel)]="getCurrentUser().dob" name="dateofbirth" id="dob" required
+            <input mz-datepicker ngModel [(ngModel)]="getCurrentUser().dob" name="dateOfBirth" id="dob" required
                    [options]="dateOptions" type="text">
             <label class="active" for="dob">Date of Birth</label>
           </mz-datepicker-container>
@@ -63,7 +63,7 @@
   </div>
   <div *ngIf="toEditProfile == false" class="col s4">
     <div class="card grey darken-2">
-      <div class="card-content">
+      <div class="card-content hoverable">
         <div class="row center">
           <h2>Your Profile</h2>
         </div>
@@ -112,7 +112,7 @@
               <div *ngSwitchCase="'PremiumUser'"> Premium</div>
             </h2>
           </div>
-          <div *ngIf="getCurrentUser().role === 'BasicUser' ; then upgrade else downgrade"></div>
+          <div *ngIf="getCurrentUser().role === this.basicUser ; then upgrade else downgrade"></div>
           <ng-template #upgrade>
             <div class="col s6">
               <button mz-button class="account-btn-dg waves-effect green btn">
@@ -131,11 +131,11 @@
       </div>
     </div>
   </div>
-  <div class="col s5">
+  <div *ngIf="getCurrentUser().role === this.premiumUser  " class="col s5">
     <div class="card grey darken-2">
       <div class="card-content center">
-        <button mz-button class="account-btn account-btn-pssw btn">
-          Edit Payment INfo
+        <button mz-button class="account-btn account-btn-pssw btn" (click)="openDialog()">
+          EDIT PAYMENT INFO
         </button>
       </div>
     </div>

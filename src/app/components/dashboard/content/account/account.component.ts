@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {CustomerAccount} from "../../../../classes/customer-account.service";
+import { PaymentInfoComponent } from "../../../../modals/payment-info/payment-info.component";
 import {DataService} from "../../../../services/data.service";
-import {AuthHttp} from "angular2-jwt";
 import {GeneralService} from "../../../../services/general/general.service";
 import {AuthenticationService} from "../../../../services/authentication/authentication.service";
 import {AppError} from "../../../../errors/AppError";
 import {NotFoundError} from "../../../../errors/not-found-error";
+import {MdDialog} from "@angular/material";
 
 @Component({
   selector: 'app-account',
@@ -24,12 +25,15 @@ export class AccountComponent implements OnInit {
     max: new Date()
 
   };
-  toEditProfile = false;
+  public toEditProfile = false;
+  public premiumUser = "PremiumUser";
+  public basicUser = "BasicUser";
 
   constructor( private currentUser: CustomerAccount,
                private dataService:DataService,
                private service: GeneralService,
-                private authService: AuthenticationService) { }
+               private authService: AuthenticationService,
+               private dialog: MdDialog) { }
 
   ngOnInit() {
     if ( this.currentUser.accountId == null) {
@@ -38,6 +42,13 @@ export class AccountComponent implements OnInit {
     }
   }
 
+
+  openDialog() {
+
+    this.dialog.open(PaymentInfoComponent, { width: '400px'})
+      .afterClosed()
+      .subscribe(result => {});
+  }
 
   getCurrentUser() {
 
@@ -52,23 +63,19 @@ export class AccountComponent implements OnInit {
   }
 
   submitEditProfile(values) {
-    values.accountid = this.currentUser.accountId;
+    values.accountId = this.currentUser.accountId;
     values.role = this.currentUser.role;
 
       this.service.update('/editcustomer',values).subscribe(
         response => {
-
           let result = {
             token: response['_body']
           };
-          console.log(result);
           if ( result && result.token) {
             localStorage.setItem('token', result.token);
             this.authService.storeInfo();
             this.toEditProfile = false;
-
           } else {
-            return false;
           }
         }, (error: AppError) => {
 
