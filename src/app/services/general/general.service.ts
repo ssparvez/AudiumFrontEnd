@@ -30,13 +30,8 @@ export class GeneralService {
       .catch(this.handleError);
   }
 
-<<<<<<< HEAD
-  get(endpoint, resources) {
-    return this.http.get(this.data.connectionURL + endpoint, resources)
-=======
   post(endpoint, resources) {
     return this.http.post(this.data.connectionURL + endpoint , resources)
->>>>>>> 37586ae01439fb7962617065901cbe41bf1d2e3a
       .map(response => response)
       .catch(this.handleError);
   }
