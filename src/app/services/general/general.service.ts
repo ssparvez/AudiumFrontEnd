@@ -15,8 +15,13 @@ export class GeneralService {
 
 
   update(endpoint, resources) {
-
     return this.http.put(this.data.connectionURL + endpoint, resources)
+      .map(response => response)
+      .catch(this.handleError);
+  }
+
+  get(endpoint, resources) {
+    return this.http.get(this.data.connectionURL + endpoint, resources)
       .map(response => response)
       .catch(this.handleError);
   }
@@ -26,6 +31,5 @@ export class GeneralService {
     if ( error.status === 404) {
       return Observable.throw(new NotFoundError(error));
     }
-
   }
 }

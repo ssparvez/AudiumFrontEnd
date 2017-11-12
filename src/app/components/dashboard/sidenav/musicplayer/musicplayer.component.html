@@ -24,14 +24,17 @@
       </div>
       <div class="row" style="margin-bottom: 0px;">
         <a [routerLink]="" (click)="toggleShuffle()" aria-hidden="true">
-          <i class="material-icons white-text" style="vertical-align: middle;">shuffle</i>
+          <i class="material-icons" [ngClass]="{'white-text': !isShuffled, 'blue-text': !isShuffled}" style="vertical-align: middle;">shuffle</i>
         </a>
         <a [routerLink]="" (click)="toggleRepeat()" aria-hidden="true">
-          <i class="material-icons" [ngClass]="{'white-text': !isRepeated, 'blue-text': !isRepeated}" style="vertical-align: middle;">loop</i>
+          <i class="material-icons" [ngClass]="{'white-text': !isRepeated, 'blue-text': !isRepeated}" style="vertical-align: middle;">{{repeatIcon}}</i>
         </a>
         <a [routerLink]="" (click)="toggleMute()" aria-hidden="true">
           <i class="material-icons white-text" style="vertical-align: middle;">{{soundIcon}}</i>
         </a>
+        <span class="volume-slider">
+          <input #ref (change)="changeVolume(ref.value)" class="browser-default volume-slider" type=range min=0 max=100 value={{volumeLevel*100}} id=fader step=1>
+        </span>  
       </div>
     </span>
   </div>

@@ -27,10 +27,10 @@ import { AuthenticationService } from "./services/authentication/authentication.
 import { PlayerService } from './services/player/player.service';
 import { AuthGuard } from "./guards/authguard.service";
 import { DataService } from "./services/data.service";
-import {  AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt/angular2-jwt';
-import {CustomerAccount} from "./classes/customer-account.service";
+import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt/angular2-jwt';
+import { CustomerAccount } from "./classes/customer-account.service";
 import { PlaylistModalComponent } from './components/dashboard/content/library/playlists/playlist-modal/playlist-modal.component';
-import {GeneralService} from "./services/general/general.service";
+import { GeneralService } from "./services/general/general.service";
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
