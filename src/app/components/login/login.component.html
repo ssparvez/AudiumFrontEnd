@@ -56,14 +56,15 @@
           </mz-tab-item>
           <mz-tab-item [active]="registerCheck" [label]="'REGISTER'">
             <div class="col s12 grey darken-1">
+              <div *ngIf="registrationCheck == false" class="card-panel red lighten-1 center-align">Registration failed. Please try again.</div>
               <form #formSignup="ngForm" (ngSubmit)="signUp(formSignup.value)">
                 <div class="row">
                   <div class="input-field col s6">
-                    <input ngModel required name="firstName" id="first_name" type="text" class="validate">
+                    <input ngModel required name="firstName" id="first_name" type="text" class="validate" [appInputFormat]="'capitalize'">
                     <label for="first_name">First Name</label>
                   </div>
                   <div class="input-field col s6">
-                    <input ngModel required name="lastName" id="last_name" type="text" class="validate">
+                    <input ngModel required name="lastName" id="last_name" type="text" class="validate" [appInputFormat]="'capitalize'">
                     <label for="last_name">Last Name</label>
                   </div>
                 </div>
@@ -96,7 +97,7 @@
                 <div class="row">
                   <div class="input-field col s4">
                     <mz-datepicker-container class="col s12">
-                      <input mz-datepicker ngModel name="dateofbirth" required [label]="'Date of Birth'" [options]="dateOptions" type="text">
+                      <input mz-datepicker ngModel name="dateOfBirth" required [label]="'Date of Birth'" [options]="dateOptions" type="text">
                     </mz-datepicker-container>
                   </div>
                   <div class="input-field col s8">

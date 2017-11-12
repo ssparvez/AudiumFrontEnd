@@ -6,6 +6,7 @@ import {NotFoundError} from "../../errors/not-found-error";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
+import {RequestOptions} from "@angular/http";
 
 
 @Injectable()
@@ -14,9 +15,24 @@ export class GeneralService {
   constructor( private http: AuthHttp, private data: DataService) { }
 
 
+  get(endpoint, resources) {
+
+    const options = new RequestOptions({body: resources});
+    return this.http.get(this.data.connectionURL + endpoint, options)
+      .map(response => response)
+      .catch(this.handleError);
+  }
+
+
   update(endpoint, resources) {
 
     return this.http.put(this.data.connectionURL + endpoint, resources)
+      .map(response => response)
+      .catch(this.handleError);
+  }
+
+  post(endpoint, resources) {
+    return this.http.post(this.data.connectionURL + endpoint , resources)
       .map(response => response)
       .catch(this.handleError);
   }

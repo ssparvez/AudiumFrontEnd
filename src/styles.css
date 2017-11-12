@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../src/assets/css/login.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body {
     background-color: black;
@@ -59,3 +60,8 @@ h5 {
   width: 100% !important;
   height: 50px;
 }
+
+.select-wrapper ul li>span {
+  color: grey;
+}
+

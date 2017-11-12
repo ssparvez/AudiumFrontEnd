@@ -12,6 +12,7 @@ import {register} from "ts-node/dist";
 export class LoginComponent implements OnInit {
 
   invalidLogin: boolean;
+  registrationCheck = true;
   registerCheck: String;
 
   public dateOptions: Pickadate.DateOptions = {
@@ -60,18 +61,14 @@ export class LoginComponent implements OnInit {
   }
 
   signUp(values) {
-    console.log(values);
-    this.authService.register(values)
-      .subscribe(correctInfo => {
-        if (correctInfo) {
-          console.log("yes");
-          this.registerCheck = 'false';
-          this.router.navigate(['/login/true']);
-          location.reload();
-        } else {
-
-        }
-      });
+    if (this.authService.register(values)) {
+      console.log("yes");
+      this.registerCheck = 'false';
+      this.router.navigate(['/login/true']);
+      location.reload();
+    } else {
+      this.registrationCheck = false;
+    }
   }
 
 }
