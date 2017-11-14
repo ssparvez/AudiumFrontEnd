@@ -9,9 +9,10 @@
   </div>
 </div>
 <div class="row" style="margin-bottom:0;">
-  <div *ngFor="let playlist of playlists" class="card horizontal grey darken-2">
+  <div class="row" [routerLink]="['../playlist', 1]" *ngFor="let playlist of playlists" >
+  <div  class="card horizontal grey darken-2">
     <div class="card-image">
-      <img src="assets/images/defaults/playlist.svg" width="175" height="175">
+      <img src="assets/images/defaults/playlist.svg" width="150" height="150">
     </div>
     <div class="card-stacked">
       <div class="card-content">
@@ -19,9 +20,10 @@
         <h4>{{playlist.description}}</h4>
       </div>
       <div class="card-action">
-        <a href="#">Play</a>
         <a href="#">Edit</a>
+        <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">play_arrow</i></a>              
       </div>
     </div>
   </div>
+</div>
 </div>

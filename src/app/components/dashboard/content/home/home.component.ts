@@ -8,11 +8,13 @@ import { HomeService } from '../../../../services/home/home.service'
 })
 export class HomeComponent implements OnInit {
   recents: number[];
+  topSongs: number[];
   genres: Genre[];
   constructor(private homeService : HomeService) { }
 
   ngOnInit() {
-    this.recents = [1,2,3,4,5,6]
+    this.recents = [1,2,3,4];
+    this.topSongs = [1,2,3,4,5]
     this.homeService.getAllGenres().subscribe((genres) => {
       this.genres = genres;
       console.log(this.genres);

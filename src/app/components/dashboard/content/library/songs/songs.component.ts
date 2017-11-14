@@ -15,6 +15,7 @@ export class SongsComponent implements OnInit {
   ngOnInit() {
     this.libraryService.getAllSongs().subscribe((songs) => {
       this.songs = songs
+      console.log(this.songs);
     });
   }
 
@@ -36,5 +37,6 @@ interface Artist {
 }
 
 interface Album {
+  albumId: number,
   title: string
 }
