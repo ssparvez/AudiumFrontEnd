@@ -7,6 +7,7 @@ import {AuthenticationService} from "../../../../services/authentication/authent
 import {AppError} from "../../../../errors/AppError";
 import {NotFoundError} from "../../../../errors/not-found-error";
 import {MdDialog} from "@angular/material";
+import {MzToastService} from "ng2-materialize/dist";
 
 @Component({
   selector: 'app-account',
@@ -33,7 +34,8 @@ export class AccountComponent implements OnInit {
                private dataService:DataService,
                private service: GeneralService,
                private authService: AuthenticationService,
-               private dialog: MdDialog) { }
+               private dialog: MdDialog,
+               private toastService: MzToastService) { }
 
   ngOnInit() {
     if ( this.currentUser.accountId == null) {
@@ -43,47 +45,54 @@ export class AccountComponent implements OnInit {
   }
 
 
-  openDialog() {
+  openNewPaymentDialog() {
 
-    this.dialog.open(PaymentInfoComponent, { width: '400px'})
+    this.dialog.open(PaymentInfoComponent,{ data: {isNew: true}, width: '400px'}, )
       .afterClosed()
-      .subscribe(result => {});
+      .subscribe(result => {
+        this.toastService.show("Your membership has been upgraded!", 3000, 'blue');
+      });
+  }
+
+  openEditPaymentDialog() {
+      this.dialog.open(PaymentInfoComponent,{ data: {isNew: false}, width: '400px'}, )
+          .afterClosed()
+          .subscribe(result => {});
   }
 
   getCurrentUser() {
-
-    return this.currentUser;
+      return this.currentUser;
   }
 
   editProfile() {
-    this.toEditProfile = true;
+      this.toEditProfile = true;
   }
   cancelEditProfile() {
-    this.toEditProfile = false;
+      this.toEditProfile = false;
   }
 
   submitEditProfile(values) {
     values.accountId = this.currentUser.accountId;
     values.role = this.currentUser.role;
-
-      this.service.update('/editcustomer',values).subscribe(
+    this.service.update('/editcustomer', values).subscribe(
         response => {
-          let result = {
-            token: response['_body']
-          };
-          if ( result && result.token) {
-            localStorage.setItem('token', result.token);
-            this.authService.storeInfo();
-            this.toEditProfile = false;
-          } else {
-          }
+            let result = {
+                token: response['_body']
+            };
+            if (result && result.token) {
+                localStorage.setItem('token', result.token);
+                this.authService.storeInfo();
+                this.toastService.show("Your Profile info was saved.", 3500, 'blue');
+                this.toEditProfile = false;
+            } else {
+            }
         }, (error: AppError) => {
 
-          if ( error instanceof NotFoundError) {
-            console.log("working");
-          }
+            if (error instanceof NotFoundError) {
+                console.log("working");
+            }
 
-          });
+        });
   }
 
 }

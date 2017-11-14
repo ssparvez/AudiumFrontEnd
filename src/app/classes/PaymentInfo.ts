@@ -45,4 +45,8 @@ export class PaymentInfo {
   set zipCode(value) {
     this._zipCode = value;
   }
+
+  get ExprYearMonth() {
+    return this.ccExprYear + '-' + this.ccExprMonth + '-01' ;
+  }
 }

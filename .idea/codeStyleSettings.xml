@@ -5,7 +5,6 @@
       <value>
         <option name="JD_KEEP_INVALID_TAGS" value="false" />
         <option name="JD_DO_NOT_WRAP_ONE_LINE_COMMENTS" value="true" />
-        <option name="JD_INDENT_ON_CONTINUATION" value="true" />
         <JavaCodeStyleSettings>
           <option name="BLANK_LINES_AROUND_INITIALIZER" value="0" />
         </JavaCodeStyleSettings>

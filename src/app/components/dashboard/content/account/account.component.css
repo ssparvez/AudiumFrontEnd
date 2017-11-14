@@ -71,5 +71,7 @@
   margin-top: 10%;
 
 }
-
-
+.account-toast {
+    color: white;
+    background-color: white;
+}

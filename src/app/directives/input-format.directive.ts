@@ -17,7 +17,7 @@ export class InputFormatDirective {
     } else  if (this.format === 'lowercase') {
       this.el.nativeElement.value = value.toLowerCase();
     } else if ( this.format === 'cc')  {
-      this.el.nativeElement.value = value.replace(/(\d{4})(\d{4})*(\d{4})*(\d{4})*/,"$1 $2 $3 $3");
+      this.el.nativeElement.value = value.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/,"$1 $2 $3 $3");
     }
 
   }

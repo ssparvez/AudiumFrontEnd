@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
 
   signUp(values) {
     if (this.authService.register(values)) {
-      console.log("yes");
+      this.registrationCheck = true;
       this.registerCheck = 'false';
       this.router.navigate(['/login/true']);
       location.reload();

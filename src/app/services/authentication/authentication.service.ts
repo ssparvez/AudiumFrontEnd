@@ -4,9 +4,11 @@ import {JwtHelper, tokenNotExpired} from "angular2-jwt";
 import { Http, RequestOptions, Headers } from '@angular/http';
 import {CustomerAccount} from "../../classes/customer-account.service";
 import {GeneralService} from "../general/general.service";
+import {DataService} from "../data.service";
+// Errors
 import {AppError} from "../../errors/AppError";
 import {NotFoundError} from "../../errors/not-found-error";
-import {DataService} from "../data.service";
+import {ServerError} from "../../errors/server-error";
 
 @Injectable()
 export class AuthenticationService {
@@ -24,7 +26,7 @@ export class AuthenticationService {
     return this.http.post( this.dataService.connectionURL + '/login', credentials
       )
       .map(response => {
-        let result = {
+        const result = {
           token: response['_body']
         };
 
@@ -38,15 +40,20 @@ export class AuthenticationService {
       });
   }
 
-  register(values) {
-     this.service.post('/register', values).subscribe(
+   register(values) {
+     return this.service.post('/register', values).subscribe(
       response => {
-        return true;
-      },(error: AppError) => {
+        return response;
+      }
+      ,(error: AppError) => {
       if ( error instanceof NotFoundError) {
         console.log("working");
       }
-    });
+      if ( error instanceof ServerError) {
+        console.log("sup");
+        return false;
+      }
+       });
   }
 
   logout() {

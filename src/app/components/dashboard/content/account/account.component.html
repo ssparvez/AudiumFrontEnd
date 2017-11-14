@@ -44,6 +44,7 @@
               >
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
+                <option value="Nonbinary">Non-Binary</option>
               </select>
               <label class="active" for="gender_field">Gender</label>
             </mz-select-container>
@@ -115,14 +116,14 @@
           <div *ngIf="getCurrentUser().role === this.basicUser ; then upgrade else downgrade"></div>
           <ng-template #upgrade>
             <div class="col s6">
-              <button mz-button class="account-btn-dg waves-effect green btn">
+              <button mz-button class="account-btn-dg waves-effect green btn" (click)="openNewPaymentDialog()">
                 Upgrade
               </button>
             </div>
           </ng-template>
           <ng-template #downgrade>
             <div class="col s6">
-              <button mz-button class="account-btn-dg waves-effect red btn">
+              <button mz-button class="account-btn-dg waves-effect red btn" (click)="openNewPaymentDialog()">
                 Downgrade
               </button>
             </div>
@@ -134,7 +135,7 @@
   <div *ngIf="getCurrentUser().role === this.premiumUser  " class="col s5">
     <div class="card grey darken-2">
       <div class="card-content center">
-        <button mz-button class="account-btn account-btn-pssw btn" (click)="openDialog()">
+        <button mz-button class="account-btn account-btn-pssw btn" (click)="openEditPaymentDialog()">
           EDIT PAYMENT INFO
         </button>
       </div>
