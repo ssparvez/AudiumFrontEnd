@@ -3,12 +3,12 @@
 </div>
 <div class="row" style="margin-bottom:0;">
   <div class="col s12 m3" *ngFor="let album of albums">
-    <div class="card">
+    <div  class="card">
       <div class="card-image">
-        <img src="assets/images/defaults/album.svg">
+        <img [routerLink]="['../album', album.albumId]" src="assets/images/defaults/album.svg">
         <span class="card-title black" id="small-card-title">
-          <h4>{{album.title}}</h4>
-          <h5>{{album.artist.name}}</h5>
+          <h4 [routerLink]="['../album', album.albumId]">{{album.title}}</h4>
+          <h5 [routerLink]="['../artist', album.artist.artistId]">{{album.artist.name}}</h5>
         </span>
         <a class="btn-floating halfway-fab waves-effect waves-light blue">
           <i class="material-icons">play_arrow</i>
