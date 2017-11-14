@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col s6 m4">
+        <div class="card">
+            <div class="card-image">
+                <img src="assets/images/everything-now.jpg">
+                <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">play_arrow</i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col s6 m8">
+        <h4>Album</h4>
+        <h1>Everything Now</h1>
+        <h2>by Arcade Fire</h2>
+    </div>
+</div>
+<div class="row">
+    <table class="bordered responsive-table white-text">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Date Added</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let song of songs">
+                <td>Everything Now</td>
+                <td>Arcade Fire</td>
+                <td>Everything Now</td>
+                <td>7/22/17</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -17,6 +17,9 @@ export class AlbumsComponent implements OnInit {
       console.log(this.albums);
     });
   }
+  updateUrl() {
+    
+  }
 }
 
 interface Album {

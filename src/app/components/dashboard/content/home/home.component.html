@@ -20,6 +20,33 @@
   </div>
 </div>
 <div class="row">
+  <h2 style="text-align: center;">Top 5 Songs</h2>
+</div>
+<div class="row">
+  <table class="bordered responsive-table highlight white-text">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Album</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let song of topSongs">
+        <td><!--{{song.title}}-->Everything Now</td>
+        <td>
+          <!--IN SPAN: *ngFor="let artist of song.artists; last as isLast"-->
+          <span><!--{{artist.name}}{{isLast ? '' : ', '}}-->Arcade Fire</span>
+        </td>
+        <td>
+          <!-- IN SPAN: *ngFor="let album of song.albums; last as isLast" -->
+          <span><!--{{album.title}}{{isLast ? '' : ', '}}-->Everything Now</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row">
   <h2 style="text-align: center;">Genres</h2>
 </div>
 <div class="row">

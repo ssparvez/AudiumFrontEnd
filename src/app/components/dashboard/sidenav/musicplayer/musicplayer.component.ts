@@ -25,7 +25,7 @@ export class MusicplayerComponent implements OnInit {
   constructor(private playerService : PlayerService) { }
   ngOnInit() {
    this.songQueue = [
-      new Song(1, "The Less I Know the Better", "Tame Impala", 'https://s3.us-east-2.amazonaws.com/media.audium.io/audio/TheLessIKnowTheBetter.m4a', "../../../../../assets/images/currents.jpg"),
+      new Song(1, "The Less I Know the Better", "Tame Impala", '../../../../../assets/songs/TheLessIKnowTheBetter.m4a', "../../../../../assets/images/currents.jpg"),
       new Song(2, "Intro", "The xx", '../../../../../assets/songs/Intro.mp3', '../../../../../assets/images/xx.png'),
       new Song(3, "Feels Good Inc.", "Gorillaz", '../../../../../assets/songs/FeelsGoodInc.mp3', '../../../../../assets/images/demondays.jpeg'),
       new Song(4, "song 4", "Gorillaz", '../../../../../assets/songs/FeelsGoodInc.mp3', '../../../../../assets/images/demondays.jpeg')
@@ -136,7 +136,7 @@ export class MusicplayerComponent implements OnInit {
     } else {
       // fisher-yates shuffle
       for (let i = this.songQueue.length - 1; i > this.queueIndex; i--) {
-        let j = Math.floor(Math.random() * (i - this.queueIndex + 1)) + this.queueIndex + 1;
+        let j = Math.floor(Math.random() * (i - this.queueIndex)) + this.queueIndex + 1;
         let x = this.songQueue[i];
         this.songQueue[i] = this.songQueue[j];
         this.songQueue[j] = x;

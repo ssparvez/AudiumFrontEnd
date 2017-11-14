@@ -34,6 +34,9 @@ import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt/
 import { CustomerAccount } from "./classes/customer-account.service";
 import { PlaylistModalComponent } from './components/dashboard/content/library/playlists/playlist-modal/playlist-modal.component';
 import { GeneralService } from "./services/general/general.service";
+import { ArtistComponent } from './components/dashboard/content/detailed/artist/artist.component';
+import { AlbumComponent } from './components/dashboard/content/detailed/album/album.component';
+import { PlaylistComponent } from './components/dashboard/content/detailed/playlist/playlist.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -43,7 +46,11 @@ const appRoutes: Routes = [
     {path: "account", component: AccountComponent},
     {path: "albums", component: AlbumsComponent},
     {path: "artists", component: ArtistsComponent},
-    {path: "playlists", component: PlaylistsComponent}
+    {path: "playlists", component: PlaylistsComponent},
+    //DETAILED
+    {path: "artist/:id", component: ArtistComponent},
+    {path: "album/:id", component: AlbumComponent},
+    {path: "playlist/:id", component: PlaylistComponent}
     ]
 
   },
@@ -79,7 +86,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     FrontPageComponent,
     PlaylistModalComponent,
     PaymentInfoComponent,
-    InputFormatDirective
+    InputFormatDirective,
+    //DETAILED
+    ArtistComponent,
+    AlbumComponent,
+    PlaylistComponent
   ],
   entryComponents: [
     PlaylistModalComponent,
