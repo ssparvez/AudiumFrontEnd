@@ -22,3 +22,11 @@
   color: grey;
 }
 
+button:hover {
+    background-color: #2196f3;
+}
+
+.payment-info-text {
+    font-size: large;
+
+}

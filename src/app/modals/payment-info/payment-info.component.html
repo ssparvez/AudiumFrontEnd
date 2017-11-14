@@ -1,14 +1,18 @@
 
   <div class="row center">
-    <form #f="ngForm" (ngSubmit)="submitPaymentInfo(f.value)">
+    <div class="grey-text darken-2 left payment-info-text">{{this.title}}</div><br><br>
+    <form #f="ngForm" (ngSubmit)="submitPaymentInfo()">
+      <div *ngIf="validInfo == false" class="card-panel red lighten-1 center-align">Invalid Information. Please try again.</div>
       <div class="row">
       <div class="input-field col s12 payment-modal center">
-        <input ngModel required
+        <input ngModel required="required"
                name="ccNumber" id="cc"
                type="text"
                class="validate"
                maxlength="16"
+               pattern="\d+"
                [appInputFormat]="'cc'"
+               [(ngModel)]="PaymentInfo.ccNumber"
         >
         <label class="active" for="cc">Card Number</label>
       </div>
@@ -16,15 +20,19 @@
       <div class="row">
         <div class="input-field col s6 payment-modal center">
           <input ngModel required
-               name="ccv" id="ccv" type="text"
-                 class="validate" maxlength="3">
+                 name="ccv" id="ccv" type="text"
+                 class="validate" maxlength="3"
+                 pattern="\d+"
+                 [(ngModel)]="PaymentInfo.ccCCV">
           <label class="active" for="ccv">CCV</label>
       </div>
         <div class="input-field col s6 payment-modal center">
           <input ngModel required
-               name="zipcode" id="zipcode"
+                 name="zipcode" id="zipcode"
                  type="text" class="validate"
-                maxlength="5">
+                 maxlength="5"
+                 pattern="\d+"
+                 [(ngModel)]="PaymentInfo.zipCode">
           <label class="active" for="zipcode">Zip Code</label>
         </div>
       </div>
@@ -33,18 +41,24 @@
           <div class="col s6">
             <select mz-select
                     ngModel
+                    required
                     name="exp-month"
                     id="exp-month"
+                    [(ngModel)]="PaymentInfo.ccExprMonth"
             >
+              <option value=""></option>
               <option  *ngFor="let month of months" value="{{month}}">{{month}}</option>
             </select>
           </div>
           <div class="col s6">
             <select mz-select
                     ngModel
+                    required
                     name="exp-year"
                     id="exp-year"
+                    [(ngModel)]="PaymentInfo.ccExprYear"
             >
+              <option value=""></option>
               <option  *ngFor="let year of years" value="{{year}}" class="payment-option">{{year}}</option>
             </select>
 
@@ -53,10 +67,13 @@
         </mz-select-container>
       </div>
       <div class="row center">
-        <button mz-button  type='submit' [flat]="true"
-                class=" waves-effect" >Submit</button>
+        <button mz-button
+                [disabled]="!f.valid"
+                type='submit'
+                [flat]="true"
+                class=" waves-effect">{{this.buttonName}}</button>
         <button mz-button  md-dialog-close="no" [flat]="true"
-                class=" waves-effect">Cancel</button>
+                class="waves-effect">Cancel</button>
       </div>
     </form>
   </div>
