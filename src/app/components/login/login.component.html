@@ -26,7 +26,7 @@
                 <div class="row">
                   <div class="input-field col s12">
                     <i class="material-icons prefix white-text">vpn_key</i>
-                    <input ngModel name="password" required id="password-signin" type="password" class="form-control validate">
+                    <input ngModel name="password" required id="password-signin" type="password" class="form-control validate" autocomplete="current-password">
                     <label for="password-signin">Password</label>
                   </div>
                 </div>
@@ -85,7 +85,7 @@
                 </div>
                 <div class="row">
                   <div class="input-field col s12">
-                    <input ngModel minlength="5" name="passwordHash" #password="ngModel" required id="password" type="password" class="form-control validate">
+                    <input ngModel minlength="5" name="passwordHash" #password="ngModel" required id="password" type="password" class="form-control validate" autocomplete="new-password">
                     <label for="password">Password</label>
                     <div *ngIf="password.touched && !password.valid">
                       <div *ngIf="password.errors['minlength']" class="card-panel red lighten-1">

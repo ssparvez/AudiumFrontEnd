@@ -4,6 +4,7 @@
     <option name="actions">
       <set>
         <option value="activate" />
+        <option value="activateOnShortcut" />
         <option value="noActionIfCompileErrors" />
         <option value="organizeImports" />
         <option value="reformat" />
@@ -17,7 +18,7 @@
     <option name="configurationPath" value="" />
     <option name="inclusions">
       <set>
-        <option value="(.*\.java|.*\.css|.*\.js|.*\.ts|.*\.sql|.*\.html)" />
+        <option value="(.*\.java|.*\.css|.*\.js|.*\.ts|.*\.sql|.*\.xml|.*\.html)" />
       </set>
     </option>
   </component>

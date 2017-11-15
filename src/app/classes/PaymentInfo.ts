@@ -47,6 +47,6 @@ export class PaymentInfo {
   }
 
   get ExprYearMonth() {
-    return this.ccExprYear + '-' + this.ccExprMonth + '-01' ;
+    return this.ccExprYear + '-' + this.ccExprMonth + '-01';
   }
 }
