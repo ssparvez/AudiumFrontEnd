@@ -21,5 +21,6 @@ export class ArtistsComponent implements OnInit {
 }
 
 interface Artist {
-  name: string;
+  artistId: number,
+  artistName: string;
 }

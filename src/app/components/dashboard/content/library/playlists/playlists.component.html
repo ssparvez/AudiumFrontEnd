@@ -9,7 +9,7 @@
   </div>
 </div>
 <div class="row" style="margin-bottom:0;">
-  <div class="row" [routerLink]="['../playlist', 1]" *ngFor="let playlist of playlists" >
+  <div class="row" (click)="viewPlaylist(playlist.playlistId)" *ngFor="let playlist of playlists" >
   <div  class="card horizontal grey darken-2">
     <div class="card-image">
       <img src="assets/images/defaults/playlist.svg" width="150" height="150">
