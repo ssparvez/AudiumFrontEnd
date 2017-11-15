@@ -43,5 +43,18 @@ interface Playlist {
   description: string,
   isPublic: boolean,
   accountId: number,
-  username: string
+  username: string,
+  songs: Song[]
+}
+
+interface Song {
+  id: number,
+  title: string,
+  artistId: number,
+  artistName: string,
+  albumId: number,
+  albumTitle: string,
+  duration: number,
+  isExplicit: boolean,
+  timeAdded: number
 }

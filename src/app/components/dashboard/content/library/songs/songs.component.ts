@@ -34,16 +34,7 @@ interface Song {
   artistName: string,
   albumId: number,
   albumTitle: string,
-  file: string,
+  duration: number,
+  isExplicit: boolean,
   timeAdded: number
-}
-
-interface Artist {
-  artistId: number,
-  artistName: string
-}
-
-interface Album {
-  albumId: number,
-  title: string
 }

@@ -1,36 +1,36 @@
 <div class="row">
-    <div class="col s6 m4">
-        <div class="card">
-            <div class="card-image">
-                <img src="assets/images/incolour.jpg">
-                <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">play_arrow</i></a>
-            </div>
-        </div>
+  <div class="col s6 m4">
+    <div class="card">
+      <div class="card-image">
+        <img src="assets/images/defaults/playlist.svg">
+        <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">play_arrow</i></a>
+      </div>
     </div>
-    <div class="col s6 m8">
-        <h4>Playlist</h4>
-        <h1>{{playlist.name}}</h1>
-        <h2>by {{playlist.username}}</h2>
-    </div>
+  </div>
+  <div class="col s6 m8">
+    <h4>Playlist</h4>
+    <h1>{{playlist?.name}}</h1>
+    <h2>by <span [routerLink]="['../../profile', playlist?.accountId]">{{playlist?.username}}</span></h2>
+  </div>
 </div>
 <div class="row">
-    <table class="bordered responsive-table white-text">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Artist</th>
-                <th>Album</th>
-                <th>Date Added</th>
-            </tr>
-        </thead>
+  <table class="bordered responsive-table white-text">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Album</th>
+        <th>Date Added</th>
+      </tr>
+    </thead>
 
-        <tbody>
-          <tr *ngFor="let song of playlist.songs">
-            <td>{{song.title}}</td>
-		    <td>{{song.artistName}}</td>
-		    <td>{{song.albumTitle}}</td>
-            <td>{{song.timeAdded | date}}</td>
-          </tr>
-        </tbody>
-    </table>
+    <tbody *ngIf="playlist && playlist.songs">
+      <tr *ngFor="let song of playlist.songs">
+      <td>{{song?.title}}</td>
+      <td><span [routerLink]="['../../artist', song?.artistId]">{{song?.artistName}}</span></td>
+      <td><span [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</span></td>
+      <td>{{song?.timeAdded | date}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

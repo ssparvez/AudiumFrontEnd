@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LibraryService } from '../../../../../services/library/library.service';
 import { ActivatedRoute, Router } from "@angular/router";
 
@@ -15,6 +15,7 @@ export class PlaylistComponent implements OnInit {
   
   constructor(
     private route: ActivatedRoute,
+	private router: Router,
     private libraryService : LibraryService
   ) { }
 
@@ -24,9 +25,9 @@ export class PlaylistComponent implements OnInit {
       console.log(this.id);
       this.libraryService.getPlaylist(this.id).subscribe((playlist) => {
         this.playlist = playlist;
-      });
-      this.libraryService.getPlaylistSongs(this.id).subscribe((songs) => {
-        this.playlist.songs = songs;
+		this.libraryService.getPlaylistSongs(this.id).subscribe((songs) => {
+          this.playlist.songs = songs;
+        });
       });
     });
   }
@@ -50,6 +51,7 @@ interface Song {
   artistName: string,
   albumId: number,
   albumTitle: string,
-  file: string,
+  duration: number,
+  isExplicit: boolean,
   timeAdded: number
 }

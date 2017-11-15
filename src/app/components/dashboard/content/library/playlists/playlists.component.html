@@ -8,16 +8,16 @@
     </a>
   </div>
 </div>
-<div class="row" style="margin-bottom:0;">
-  <div class="row" (click)="viewPlaylist(playlist.playlistId)" *ngFor="let playlist of playlists" >
+<div class="row" *ngIf="playlists" style="margin-bottom:0;">
+  <div class="row" (click)="viewPlaylist(playlist?.playlistId)" *ngFor="let playlist of playlists" >
   <div  class="card horizontal grey darken-2">
     <div class="card-image">
-      <img src="assets/images/defaults/playlist.svg" width="150" height="150">
+      <img [routerLink]="['../playlist', playlist?.playlistId]" src="assets/images/defaults/playlist.svg" width="150" height="150">
     </div>
     <div class="card-stacked">
-      <div class="card-content">
-        <h2>{{playlist.name}}</h2>
-        <h4>{{playlist.description}}</h4>
+      <div class="card-content" [routerLink]="['../playlist', playlist?.playlistId]">
+        <h2>{{playlist?.name}}</h2>
+        <h4>{{playlist?.description}}</h4>
       </div>
       <div class="card-action">
         <a href="#">Edit</a>
