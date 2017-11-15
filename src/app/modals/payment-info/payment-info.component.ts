@@ -52,7 +52,7 @@ export class PaymentInfoComponent  implements  OnInit {
   submitPaymentInfo() {
       const data = {
         accountId: this.accountId,
-        creditcardexpire: this.paymentInfo.ExprYearMonth,
+        creditcardexpire: this.paymentInfo.ccExprYear + '-' + this.paymentInfo.ccExprMonth + '-01',
         zipCode: this.paymentInfo.zipCode,
         creditcardhash: this.paymentInfo.ccNumber
       };

@@ -9,7 +9,7 @@ import { LibraryService } from '../../../../../services/library/library.service'
 })
 export class SongsComponent implements OnInit {
 
-  songs: Song []; // store retrieved songs in this var
+  songs: Song []; // Store retrieved songs in this var
   constructor(private toastService: MzToastService, private libraryService: LibraryService) { }
 
   ngOnInit() {
@@ -26,17 +26,15 @@ export class SongsComponent implements OnInit {
 }
 
 interface Song {
-  id: string,
+  id: number,
   title: string,
-  artists: Artist [],
-  album: Album []
-}
-
-interface Artist {
-  name: string
-}
-
-interface Album {
+  //artists: Artist [],
+  //album: Album []
+  artistId: number,
+  artistName: string,
   albumId: number,
-  title: string
+  albumTitle: string,
+  duration: number,
+  isExplicit: boolean,
+  timeAdded: number
 }

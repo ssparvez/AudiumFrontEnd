@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
 import {Renderer2} from '@angular/core';
 import {register} from "ts-node/dist";
@@ -14,17 +14,31 @@ export class LoginComponent implements OnInit {
   invalidLogin: boolean;
   registrationCheck = true;
   registerCheck: String;
-
+  now = new Date();
+  
   public dateOptions: Pickadate.DateOptions = {
     clear: 'Clear', // Clear button text
+	today: '',
     close: 'Ok',
     format: 'mmm dd, yyyy',
     formatSubmit: 'yyyy-mm-dd',
     selectMonths: true,
-    selectYears: 100,
-    max: new Date()
-
+    selectYears: 120,
+    max: new Date(this.now.getFullYear() - 13, this.now.getMonth(), this.now.getDate()),
+    onOpen: function() {
+      // Disable password fields to fix Chrome bug that makes date picker close too soon
+	  (<HTMLInputElement>document.getElementById('password')).disabled = true;
+	  (<HTMLInputElement>document.getElementById('password-signin')).disabled = true;
+    },
+    onClose: function() {
+      // Re-enable password fields
+	  (<HTMLInputElement>document.getElementById('password')).disabled = false;
+	  (<HTMLInputElement>document.getElementById('password-signin')).disabled = false;
+    },
+    closeOnClear: false,
+	closeOnSelect: false
   };
+  
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -33,7 +47,8 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-  this.route.paramMap.subscribe(param => {
+    this.route.paramMap.subscribe(param => {
+    
     if (param.get('login') === 'false') {
       this.registerCheck = 'true';
     }
