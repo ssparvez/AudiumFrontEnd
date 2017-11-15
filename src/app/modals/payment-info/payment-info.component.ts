@@ -4,13 +4,14 @@ import {GeneralService} from "../../services/general/general.service";
 import {AppError} from "../../errors/AppError";
 import {PaymentInfo} from "../../classes/PaymentInfo";
 import {CustomerAccount} from "../../classes/customer-account.service";
+import {MzToastService} from "ng2-materialize/dist";
 
 @Component({
   selector: 'app-payment-info',
   templateUrl: './payment-info.component.html',
   styleUrls: ['./payment-info.component.css']
 })
-export class PaymentInfoComponent {
+export class PaymentInfoComponent  implements  OnInit {
 
   months: number[] = [1, 2, 3, 4, 5 ,6 ,7 ,8 ,9, 10, 11, 12];
   years: number[] = [];
@@ -24,15 +25,18 @@ export class PaymentInfoComponent {
   constructor(private dialogRef:MdDialogRef<PaymentInfoComponent>,
               private currentUser: CustomerAccount,
               private service: GeneralService,
-              @Inject(MD_DIALOG_DATA) private data: { isNew: boolean }) {
+              private toastService: MzToastService,
+              @Inject(MD_DIALOG_DATA) private data: { isNew: boolean }) {}
 
+  ngOnInit() {
     this.loadDate();
     this.accountId = this.currentUser.accountId;
     this.isNew = this.data.isNew;
+    this.paymentInfo = new PaymentInfo("","","","","");
     if ( this.isNew === false) {
-        this.loadPaymentInfo();
+      this.loadPaymentInfo();
     } else {
-        this.loadEmpty();
+      this.loadEmpty();
     }
   }
 
@@ -46,23 +50,24 @@ export class PaymentInfoComponent {
   }
 
   submitPaymentInfo() {
-    if ( this.isNew === true) {
       const data = {
         accountId: this.accountId,
         creditcardexpire: this.paymentInfo.ExprYearMonth,
         zipCode: this.paymentInfo.zipCode,
         creditcardhash: this.paymentInfo.ccNumber
       };
-      console.log(data);
+    if ( this.isNew === true) {
+
       this.service.post('/upgrade',data).subscribe(
         response => {
-          response = response['_body'];
+          console.log(response);
           const result = {
-            token: response
+            token: response.token
           };
           if (result && result.token) {
             localStorage.setItem('token', result.token);
             this.currentUser.role = "PremiumUser";
+            this.toastService.show("Your membership has been upgraded!", 3000, 'blue');
             this.closeDialog();
           } else {
             this.validInfo = false;
@@ -73,7 +78,16 @@ export class PaymentInfoComponent {
         }
       );
     } else {
-
+      this.service.update('/editpaymentinfo', data).subscribe(
+        response => {
+          console.log(response);
+          this.toastService.show("Your payment info was changed", 3000, 'blue');
+          this.closeDialog();
+        },
+        (error: AppError) => {
+          this.validInfo = false;
+        }
+      );
     }
   }
 
@@ -82,17 +96,21 @@ export class PaymentInfoComponent {
   }
 
   loadPaymentInfo() {
-    this.service.get('/paymentinfo' + this.accountId ).subscribe(
+    this.service.get('/paymentinfo/' + this.accountId ).subscribe(
       response => {
-        const info = response['_body'];
+        const info = response;
+        console.log(info);
+        console.log(info['ccYear']);
         this.title = "Edit Payment Info";
         this.buttonName = "Submit";
         this.paymentInfo = new PaymentInfo(
             info.ccNumber, info.ccMonth,
-            info.ccYear, info.CCV,
-            info.zipCode
+            info.ccYear, info.zipCode
           );
+        console.log(this.paymentInfo.ccExprYear);
       }, (error: AppError) => {
+
+        this.closeDialog();
         });
   }
 
@@ -103,7 +121,6 @@ export class PaymentInfoComponent {
   loadEmpty() {
       this.title = "Add Payment Info";
       this.buttonName = "Upgrade";
-      this.paymentInfo = new PaymentInfo("","","","","");
   }
 
 }

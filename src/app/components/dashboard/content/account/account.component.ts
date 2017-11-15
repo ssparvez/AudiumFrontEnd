@@ -8,6 +8,8 @@ import {AppError} from "../../../../errors/AppError";
 import {NotFoundError} from "../../../../errors/not-found-error";
 import {MdDialog} from "@angular/material";
 import {MzToastService} from "ng2-materialize/dist";
+import {ChangePasswordComponent} from "../../../../modals/change-password/change-password.component";
+import {ConfirmDowngradeComponent} from "../../../../modals/confirm-downgrade/confirm-downgrade.component";
 
 @Component({
   selector: 'app-account',
@@ -50,15 +52,35 @@ export class AccountComponent implements OnInit {
     this.dialog.open(PaymentInfoComponent,{ data: {isNew: true}, width: '400px'}, )
       .afterClosed()
       .subscribe(result => {
-        this.toastService.show("Your membership has been upgraded!", 3000, 'blue');
       });
   }
 
   openEditPaymentDialog() {
-      this.dialog.open(PaymentInfoComponent,{ data: {isNew: false}, width: '400px'}, )
+      this.dialog.open(PaymentInfoComponent,{ data: {isNew: false}, width: '400px'} )
           .afterClosed()
-          .subscribe(result => {});
+          .subscribe(result => {
+          });
   }
+
+  openChangePassDialog() {
+    this.dialog.open(ChangePasswordComponent,{ data: {accountId: this.currentUser.accountId},  width: '400px'} )
+      .afterClosed()
+      .subscribe(result => {
+      });
+  }
+
+  downgradeAccount() {
+    this.dialog.open(ConfirmDowngradeComponent, {height: '150px'})
+      .afterClosed()
+      .subscribe(
+        result => {
+          if(result) {
+            console.log(result);
+          }
+        }
+      );
+  }
+
 
   getCurrentUser() {
       return this.currentUser;
@@ -76,8 +98,9 @@ export class AccountComponent implements OnInit {
     values.role = this.currentUser.role;
     this.service.update('/editcustomer', values).subscribe(
         response => {
+          console.log(response);
             let result = {
-                token: response['_body']
+                token: response.token
             };
             if (result && result.token) {
                 localStorage.setItem('token', result.token);
@@ -85,9 +108,11 @@ export class AccountComponent implements OnInit {
                 this.toastService.show("Your Profile info was saved.", 3500, 'blue');
                 this.toEditProfile = false;
             } else {
+              this.toastService.show("There was an error. Please try again.", 3000, 'blue');
             }
         }, (error: AppError) => {
 
+            this.toastService.show("There was an error. Please try again.", 3000, 'blue');
             if (error instanceof NotFoundError) {
                 console.log("working");
             }
