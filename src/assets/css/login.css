@@ -6,13 +6,13 @@
 /*Black color to the text*/
 
 .tab {
-  background-color: #414141;
+  background-color: #212121;
   width: 100vh;
 }
 
 .tabs .tab a:hover {
-  background-color: #eee;
-  color: #000;
+  background-color: #424242;
+  color: white;
 }
 
 
