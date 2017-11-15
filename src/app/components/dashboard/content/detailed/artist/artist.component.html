@@ -1,3 +1,63 @@
-<p class="white-text">
-  artist works!
-</p>
+<div class="card">
+  <div class="card-image">
+    <img src="assets/images/parallax.png">
+    <span class="card-title black" id="large-card-title">
+      <h1>Arcade Fire</h1>
+    </span>
+    <a class="btn-floating halfway-fab waves-effect waves-light blue">
+      <i class="material-icons">play_arrow</i>
+    </a>
+  </div>
+</div>
+
+<mz-tab
+[fixedTabWidth]="'true'"
+[responsiveThreshold]="'true'"
+>
+<mz-tab-item [label]="'Overview'">
+  <div class="row" style="margin-top: 40px;">
+    <h2 style="text-align: center;">Popular</h2>
+  </div>
+  <div class="row">
+    <table class="bordered responsive-table highlight white-text">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Album</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let song of topSongs">
+          <td><!--{{song.title}}-->Everything Now</td>
+          <td>
+            <span><!--{{album.title}}{{isLast ? '' : ', '}}-->Everything Now</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row" style="margin-top: 20px;">
+    <h2 style="text-align: center;">Albums</h2>
+  </div>
+  <div class="row">
+    <div class="col s12 m3" *ngFor="let album of albums">
+      <div class="card">
+        <div class="card-image">
+          <img src="assets/images/everything-now.jpg">
+          <span class="card-title black" id="small-card-title">
+            <h4>Everything Now</h4>
+            <h5>Arcade Fire</h5>
+          </span>
+          <a class="btn-floating halfway-fab waves-effect waves-light blue">
+            <i class="material-icons">play_arrow</i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</mz-tab-item>
+<mz-tab-item [label]="'About'"><h3>About</h3>
+</mz-tab-item>
+<mz-tab-item [label]="'Related Artists'"><h3>Related Artists</h3></mz-tab-item>
+<mz-tab-item [label]="'Events'"><h3>Events</h3></mz-tab-item>
+</mz-tab>
