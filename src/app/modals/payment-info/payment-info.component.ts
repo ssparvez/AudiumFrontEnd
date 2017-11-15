@@ -65,7 +65,7 @@ export class PaymentInfoComponent  implements  OnInit {
             token: response.token
           };
           if (result && result.token) {
-            localStorage.setItem('token', result.token);
+            localStorage.setItem('token', response.token);
             this.currentUser.role = "PremiumUser";
             this.toastService.show("Your membership has been upgraded!", 3000, 'blue');
             this.closeDialog();

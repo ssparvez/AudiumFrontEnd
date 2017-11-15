@@ -1,9 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-@import "../src/assets/css/login.css";
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 body {
     background-color: black;
+}
+
+a {
+    color: white;
 }
 
 h1 {
@@ -54,12 +57,14 @@ h5 {
     background: linear-gradient(#0d1c7c, black, black);
     /* Standard syntax */
 }
+
 #small-card-title {
-  padding: 4px 24px 4px 4px;
-  background-color: rgba(0, 0, 0, 0.6) !important;
-  width: 100% !important;
-  height: 50px;
+    padding: 4px 24px 4px 4px;
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    width: 100% !important;
+    height: 50px;
 }
+
 #large-card-title {
     background-color: rgba(0, 0, 0, 0.6) !important;
     width: 100% !important;
@@ -67,41 +72,34 @@ h5 {
 }
 
 .select-wrapper ul li>span {
-  color: grey;
+    color: grey;
 }
 
 .tabs .tab a {
     color: white;
-  }
-  
-  
-  /*Black color to the text*/
-  
-  .tab {
+}
+
+/*Black color to the text*/
+
+.tab {
     background-color: #212121;
     width: 100vh;
-  }
-  
-  .tabs .tab a:hover {
+}
+
+.tabs .tab a:hover {
     background-color: transparent;
     color: white;
-  }
-  
-  
-  /*Text color on hover*/
-  
-  .tabs .tab a.active {
-    color: #2196f3;
-  }
-  
-  
-  /*Background and text color when a tab is active*/
-  
-  .tabs .indicator {
-    background-color: #2196f3;
-  }
-  
-  
-  /*Color of underline*/
-  
+}
 
+/*Text color on hover*/
+
+.tabs .tab a.active {
+    color: #2196f3;
+}
+
+
+/*Background and text color when a tab is active*/
+
+.tabs .indicator {
+    background-color: #2196f3;
+}

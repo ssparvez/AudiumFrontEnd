@@ -21,9 +21,9 @@
     <tbody *ngIf="songs">
       <tr *ngFor="let song of songs">
         <td>{{song?.title}}</td>
-		<td><span [routerLink]="['../artist', song?.artistId]">{{song?.artistName}}</span></td>
-		<td><span [routerLink]="['../album', song?.albumId]">{{song?.albumTitle}}</span></td>
-        <td>{{song?.timeAdded | date}}</td>
+		    <td><span [routerLink]="['../artist', song?.artistId]">{{song?.artistName}}</span></td>
+		    <td><span [routerLink]="['../album', song?.albumId]">{{song?.albumTitle}}</span></td>
+        <td>{{song?.timeAdded | timeAgo}}</td>
       </tr>
     </tbody>
   </table>

@@ -6,6 +6,10 @@ import { MaterializeModule } from 'ng2-materialize';
 import { RouterModule, Routes } from '@angular/router';
 import {Http, HttpModule, RequestOptions} from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import { MdDialogModule} from '@angular/material';
+import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt/angular2-jwt';
+import {TimeAgoPipe} from 'time-ago-pipe';
+
 // Components
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -20,8 +24,14 @@ import { PlaylistsComponent } from './components/dashboard/content/library/playl
 import { AccountComponent } from './components/dashboard/content/account/account.component';
 import { LoginComponent } from './components/login/login.component';
 import { FrontPageComponent } from './components/front-page/front-page.component';
-import { MdDialogModule} from '@angular/material';
 import { PaymentInfoComponent } from './modals/payment-info/payment-info.component';
+import { ArtistComponent } from './components/dashboard/content/detailed/artist/artist.component';
+import { ProfileComponent } from './components/dashboard/content/detailed/profile/profile.component';
+import { AlbumComponent } from './components/dashboard/content/detailed/album/album.component';
+import { PlaylistComponent } from './components/dashboard/content/detailed/playlist/playlist.component';
+import { ChangePasswordComponent } from "./modals/change-password/change-password.component";
+import { ConfirmDowngradeComponent } from './modals/confirm-downgrade/confirm-downgrade.component';
+
 import { InputFormatDirective } from './directives/input-format.directive';
 // Services
 import { HomeService } from "./services/home/home.service";
@@ -30,15 +40,8 @@ import { AuthenticationService } from "./services/authentication/authentication.
 import { PlayerService } from './services/player/player.service';
 import { AuthGuard } from "./guards/authguard.service";
 import { DataService } from "./services/data.service";
-import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt/angular2-jwt';
 import { CustomerAccount } from "./classes/customer-account.service";
-import { PlaylistModalComponent } from './components/dashboard/content/library/playlists/playlist-modal/playlist-modal.component';
 import { GeneralService } from "./services/general/general.service";
-import { ArtistComponent } from './components/dashboard/content/detailed/artist/artist.component';
-import { AlbumComponent } from './components/dashboard/content/detailed/album/album.component';
-import { PlaylistComponent } from './components/dashboard/content/detailed/playlist/playlist.component';
-import {ChangePasswordComponent} from "./modals/change-password/change-password.component";
-import { ConfirmDowngradeComponent } from './modals/confirm-downgrade/confirm-downgrade.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -52,7 +55,8 @@ const appRoutes: Routes = [
     //DETAILED
     {path: "artist/:id", component: ArtistComponent},
     {path: "album/:id", component: AlbumComponent},
-    {path: "playlist/:id", component: PlaylistComponent}
+    {path: "playlist/:id", component: PlaylistComponent},
+    {path: "profile/:id", component: PlaylistComponent}
     ]
 
   },
@@ -86,7 +90,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     MusicplayerComponent,
     LoginComponent,
     FrontPageComponent,
-    PlaylistModalComponent,
     PaymentInfoComponent,
     InputFormatDirective,
     ChangePasswordComponent,
@@ -95,10 +98,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ArtistComponent,
     AlbumComponent,
     PlaylistComponent,
-
+    ProfileComponent,
+    TimeAgoPipe
   ],
   entryComponents: [
-    PlaylistModalComponent,
     PaymentInfoComponent,
     ChangePasswordComponent,
     ConfirmDowngradeComponent],

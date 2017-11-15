@@ -5,9 +5,9 @@
   <div class="col s12 m3" *ngFor="let artist of artists">
     <div class="card">
       <div class="card-image">
-        <img [routerLink]="['../artist', artist?.artistId]" src="assets/images/defaults/artist.svg">
+        <a [routerLink]="['../artist', artist?.artistId]"><img src="assets/images/defaults/artist.svg"></a>
         <span class="card-title black" id="small-card-title" [routerLink]="['../artist', artist?.artistId]">
-          <h4>{{artist?.artistName}}</h4>
+          <h4><a [routerLink]="['../artist', artist?.artistId]">{{artist?.artistName}}</a></h4>
         </span>
         <a class="btn-floating halfway-fab waves-effect waves-light blue">
           <i class="material-icons">play_arrow</i>
