@@ -7,8 +7,8 @@
       <div class="card-image">
         <img [routerLink]="['../album', album.albumId]" src="assets/images/defaults/album.svg">
         <span class="card-title black" id="small-card-title">
-          <h4 [routerLink]="['../album', album.albumId]">{{album.title}}</h4>
-          <h5 [routerLink]="['../artist', album.artist.artistId]">{{album.artist.name}}</h5>
+          <h4 class="truncate" [routerLink]="['../album', album.albumId]">{{album.title}}</h4>
+          <h5 class="truncate" [routerLink]="['../artist', album.artist.artistId]">{{album.artist.name}}</h5>
         </span>
         <a class="btn-floating halfway-fab waves-effect waves-light blue">
           <i class="material-icons">play_arrow</i>
