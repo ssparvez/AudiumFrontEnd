@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LibraryService } from '../../../../../services/library/library.service';
-import { PlaylistModalComponent } from './playlist-modal/playlist-modal.component';
 import { Router } from "@angular/router";
 
 

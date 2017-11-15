@@ -8,9 +8,11 @@
     </div>
   </div>
   <div class="col s6 m8">
-    <h4>Playlist</h4>
-    <h1>{{playlist?.name}}</h1>
-    <h2>by <span [routerLink]="['../../profile', playlist?.accountId]">{{playlist?.username}}</span></h2>
+    <div class="row" style="margin-top: 10px;"> <h4>Playlist</h4></div>
+    <div class="row" style="margin-bottom: 0px;"><h1>{{playlist?.name}}</h1></div>
+    <div class="row"><h2>by <span [routerLink]="['../../profile', playlist?.accountId]">{{playlist?.username}}</span></h2></div>
+    <div class="row"><h3>{{playlist?.description}}</h3></div>
+    <div class="row"><div class="chip" *ngIf="playlist && playlist.songs">{{playlist.songs.length}} songs</div></div>
   </div>
 </div>
 <div class="row">
