@@ -25,7 +25,7 @@ export class MusicplayerComponent implements OnInit {
   constructor(private playerService : PlayerService) { }
   ngOnInit() {
    this.songQueue = [
-      new Song(1, "The Less I Know the Better", "Tame Impala", '../../../../../assets/songs/TheLessIKnowTheBetter.m4a', "../../../../../assets/images/currents.jpg"),
+      new Song(1, "The Less I Know the Better", "Tame Impala", 'https://s3.us-east-2.amazonaws.com/media.audium.io/audio/TheLessIKnowTheBetter.m4a', "../../../../../assets/images/currents.jpg"),
       new Song(2, "Intro", "The xx", '../../../../../assets/songs/Intro.mp3', '../../../../../assets/images/xx.png'),
       new Song(3, "Feels Good Inc.", "Gorillaz", '../../../../../assets/songs/FeelsGoodInc.mp3', '../../../../../assets/images/demondays.jpeg'),
       new Song(4, "song 4", "Gorillaz", '../../../../../assets/songs/FeelsGoodInc.mp3', '../../../../../assets/images/demondays.jpeg')

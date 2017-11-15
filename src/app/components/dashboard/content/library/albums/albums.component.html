@@ -5,7 +5,7 @@
   <div class="col s12 m3" *ngFor="let album of albums">
     <div  class="card">
       <div class="card-image">
-        <img [routerLink]="['../album', album?.albumId]" src="assets/images/defaults/album.svg">
+        <a [routerLink]="['../album', album?.albumId]"><img src="assets/images/defaults/album.svg"></a>
         <span class="card-title black" id="small-card-title">
           <h4 class="truncate"><span [routerLink]="['../album', album?.albumId]">{{album?.albumTitle}}</span></h4>
           <h5 class="truncate"><span [routerLink]="['../artist', album?.artistId]">{{album?.artistName}}</span></h5>
