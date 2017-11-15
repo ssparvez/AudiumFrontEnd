@@ -18,12 +18,12 @@
         <th>Date Added</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf="songs">
       <tr *ngFor="let song of songs">
-        <td>{{song.title}}</td>
-		<td>{{song.artistName}}</td>
-		<td>{{song.albumTitle}}</td>
-        <td>{{song.timeAdded | date}}</td>
+        <td>{{song?.title}}</td>
+		<td><span [routerLink]="['../artist', song?.artistId]">{{song?.artistName}}</span></td>
+		<td><span [routerLink]="['../album', song?.albumId]">{{song?.albumTitle}}</span></td>
+        <td>{{song?.timeAdded | date}}</td>
       </tr>
     </tbody>
   </table>

@@ -6,8 +6,8 @@ import {NotFoundError} from "../../errors/not-found-error";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/throw';
-import {RequestOptions} from "@angular/http";
 import {ServerError} from "../../errors/server-error";
+import {AuthorizationError} from "../../errors/authorization-error";
 
 
 @Injectable()
@@ -18,23 +18,28 @@ export class GeneralService {
 
   get(endpoint) {
     return this.http.get(this.data.connectionURL + endpoint)
-      .map(response => response)
+      .map(response => response.json())
       .catch(this.handleError);
   }
 
 
   update(endpoint, resources) {
     return this.http.put(this.data.connectionURL + endpoint, resources)
-      .map(response => response)
+      .map(response => response.json())
       .catch(this.handleError);
   }
 
   post(endpoint, resources) {
     return this.http.post(this.data.connectionURL + endpoint , resources)
-      .map(response => response)
+      .map(response => response.json())
       .catch(this.handleError);
   }
 
+  deleteResource(endpoint) {
+    return this.http.delete(this.data.connectionURL + endpoint)
+      .map(response => response.json())
+      .catch(this.handleError);
+  }
 
    handleError(error: Response) {
     if ( error.status === 404) {
@@ -42,6 +47,9 @@ export class GeneralService {
     }
      if ( error.status === 500) {
        return Observable.throw(new ServerError(error));
+     }
+     if ( error.status === 401) {
+       return Observable.throw(new AuthorizationError(error));
      }
 
   }

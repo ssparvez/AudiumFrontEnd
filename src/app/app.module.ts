@@ -37,6 +37,8 @@ import { GeneralService } from "./services/general/general.service";
 import { ArtistComponent } from './components/dashboard/content/detailed/artist/artist.component';
 import { AlbumComponent } from './components/dashboard/content/detailed/album/album.component';
 import { PlaylistComponent } from './components/dashboard/content/detailed/playlist/playlist.component';
+import {ChangePasswordComponent} from "./modals/change-password/change-password.component";
+import { ConfirmDowngradeComponent } from './modals/confirm-downgrade/confirm-downgrade.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -87,14 +89,19 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     PlaylistModalComponent,
     PaymentInfoComponent,
     InputFormatDirective,
+    ChangePasswordComponent,
+    ConfirmDowngradeComponent,
     //DETAILED
     ArtistComponent,
     AlbumComponent,
-    PlaylistComponent
+    PlaylistComponent,
+
   ],
   entryComponents: [
     PlaylistModalComponent,
-    PaymentInfoComponent],
+    PaymentInfoComponent,
+    ChangePasswordComponent,
+    ConfirmDowngradeComponent],
   imports: [
     MdDialogModule,
     BrowserModule,

@@ -2,8 +2,7 @@
 export class PaymentInfo {
 
   constructor(private _ccNumber, private _ccExprMonth,
-              private _ccExprYear, private _ccCCV,
-              private _zipCode) {}
+              private _ccExprYear, private _zipCode, private _ccCCV?, ) {}
 
 
   get ccNumber() {
@@ -49,4 +48,5 @@ export class PaymentInfo {
   get ExprYearMonth() {
     return this.ccExprYear + '-' + this.ccExprMonth + '-01';
   }
+
 }
