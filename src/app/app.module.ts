@@ -4,11 +4,11 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterializeModule } from 'ng2-materialize';
 import { RouterModule, Routes } from '@angular/router';
-import {Http, HttpModule, RequestOptions} from '@angular/http';
+import { Http, HttpModule, RequestOptions } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { MdDialogModule} from '@angular/material';
 import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt/angular2-jwt';
-import {TimeAgoPipe} from 'time-ago-pipe';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 // Components
 import { AppComponent } from './app.component';
@@ -56,7 +56,7 @@ const appRoutes: Routes = [
     {path: "artist/:id", component: ArtistComponent},
     {path: "album/:id", component: AlbumComponent},
     {path: "playlist/:id", component: PlaylistComponent},
-    {path: "profile/:id", component: PlaylistComponent}
+    {path: "profile/:id", component: ProfileComponent}
     ]
 
   },

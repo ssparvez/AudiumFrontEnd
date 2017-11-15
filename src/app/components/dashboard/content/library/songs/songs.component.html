@@ -16,6 +16,7 @@
         <th>Artist</th>
         <th>Album</th>
         <th>Date Added</th>
+        <th>Duration</th>
       </tr>
     </thead>
     <tbody *ngIf="songs">
@@ -24,6 +25,7 @@
 		    <td><span [routerLink]="['../artist', song?.artistId]">{{song?.artistName}}</span></td>
 		    <td><span [routerLink]="['../album', song?.albumId]">{{song?.albumTitle}}</span></td>
         <td>{{song?.timeAdded | timeAgo}}</td>
+        <td>{{song?.duration}}</td>
       </tr>
     </tbody>
   </table>
