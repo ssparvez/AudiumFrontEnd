@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
+  followers: number[];
   constructor() { }
 
   ngOnInit() {
+    this.followers = [1,2,3,4]
   }
 
 }

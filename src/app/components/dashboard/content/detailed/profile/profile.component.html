@@ -20,8 +20,36 @@
       <h2 style="text-align: center;">Recently Played</h2>
     </div>
   </mz-tab-item>
-  <mz-tab-item [label]="'About'"><h3><p>{{artist?.bio}}</p></h3>
+  <mz-tab-item [label]="'Library'">
+      <div class="row" style="margin-top: 20px;">
+          <h2 style="text-align: center;">Playlists</h2>
+      </div>
+
   </mz-tab-item>
-  <mz-tab-item [label]="'Related Artists'"><h3>Related Artists</h3></mz-tab-item>
-  <mz-tab-item [label]="'Events'"><h3>Events</h3></mz-tab-item>
+  <mz-tab-item [label]="'Following'">
+      <ul class="collection" style="margin-top: 20px;">
+          <li class="collection-item avatar" *ngFor="let follower of followers">
+            <img src="assets/images/kebin.jpg" alt="" class="circle">
+            <span class="title">Kevin Parker</span>
+            <p>16 Followers<br>
+            </p>
+            <a href="#!" class="secondary-content">
+                <a class="waves-effect waves-light btn">Follow</a>                
+            </a>
+          </li>
+        </ul>
+  </mz-tab-item>
+  <mz-tab-item [label]="'Followers'">
+      <ul class="collection" style="margin-top: 20px;">
+          <li class="collection-item avatar" *ngFor="let follower of followers">
+            <img src="assets/images/kebin.jpg" alt="" class="circle">
+            <span class="title">Kevin Parker</span>
+            <p>16 Followers<br>
+            </p>
+            <a href="#!" class="secondary-content">
+                <a class="waves-effect waves-light btn">Follow</a>                
+            </a>
+          </li>
+        </ul>
+  </mz-tab-item>
   </mz-tab>
