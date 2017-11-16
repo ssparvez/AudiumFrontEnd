@@ -1,0 +1,87 @@
+<h1>Search</h1>
+
+<div class="row" *ngIf="things">
+    <div class="row">
+        <h2 style="text-align: center;">Songs</h2>
+      </div>
+  <table class="bordered responsive-table white-text">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Album</th>
+        <th>Date Added</th>
+        <th>Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let thing of things">
+        <td>adasdas</td>
+		    <td><span [routerLink]="['../artist', song?.artistId]">asdasd</span></td>
+		    <td><span [routerLink]="['../album', song?.albumId]">adsasd</span></td>
+        <td>asdasda</td>
+        <td>asdasdas</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="row">
+  <h2 style="text-align: center;">Artists</h2>
+</div>
+<div class="row">
+  <div class="col s12 m2" *ngFor="let thing of things">
+    <div class="card">
+      <div class="card-image">
+        <img src="assets/images/everything-now.jpg">
+        <span class="card-title black" id="small-card-title">
+          <h4>Everything Now</h4>
+          <h5>Arcade Fire</h5>
+        </span>
+        <a class="btn-floating halfway-fab waves-effect waves-light blue">
+          <i class="material-icons">play_arrow</i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <h2 style="text-align: center;">Albums</h2>
+</div>
+<div class="row">
+  <div class="col s12 m2" *ngFor="let thing of things">
+    <div class="card">
+      <div class="card-image">
+        <img src="assets/images/everything-now.jpg">
+        <span class="card-title black" id="small-card-title">
+          <h4>Everything Now</h4>
+          <h5>Arcade Fire</h5>
+        </span>
+        <a class="btn-floating halfway-fab waves-effect waves-light blue">
+          <i class="material-icons">play_arrow</i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <h2 style="text-align: center;">Playlists</h2>
+</div>
+<div class="row">
+  <div class="col s12 m2" *ngFor="let thing of things">
+    <div class="card">
+      <div class="card-image">
+        <img src="assets/images/everything-now.jpg">
+        <span class="card-title black" id="small-card-title">
+          <h4>Everything Now</h4>
+          <h5>Arcade Fire</h5>
+        </span>
+        <a class="btn-floating halfway-fab waves-effect waves-light blue">
+          <i class="material-icons">play_arrow</i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

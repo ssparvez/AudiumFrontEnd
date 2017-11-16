@@ -4,7 +4,7 @@
       <div class="nav-wrapper grey darken-3">
         <form>
           <div class="input-field">
-            <input id="search" type="search" required>
+            <input #search id="search" type="search" required (keyup.enter)="onEnter(search.value)">
             <label class="label-icon" for="search">
               <i class="large material-icons content-searchicon">search</i>
             </label>

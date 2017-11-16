@@ -42,11 +42,13 @@ import { AuthGuard } from "./guards/authguard.service";
 import { DataService } from "./services/data.service";
 import { CustomerAccount } from "./classes/customer-account.service";
 import { GeneralService } from "./services/general/general.service";
+import { SearchComponent } from './components/dashboard/content/search/search.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
   children: [
     {path: "home" , component: HomeComponent},
+    {path: "search", component: SearchComponent},
     {path: "songs", component: SongsComponent},
     {path: "account", component: AccountComponent},
     {path: "albums", component: AlbumsComponent},
@@ -99,7 +101,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AlbumComponent,
     PlaylistComponent,
     ProfileComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    SearchComponent
   ],
   entryComponents: [
     PaymentInfoComponent,
