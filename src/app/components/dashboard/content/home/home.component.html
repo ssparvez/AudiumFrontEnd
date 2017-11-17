@@ -1,15 +1,17 @@
 <div class="row fade-in-half-sec">
-<ng-container *ngIf="recentListens">
-<h1>Home</h1>
-
+<ng-container *ngIf="currentUser">
+  <h1 class="fade-in-half-sec">Home</h1>
+</ng-container>
+<ng-container *ngIf="currentUser">
 <div class="row">
-  <h2 style="text-align: center;">Jump Back In</h2>
+  <h2 class="fade-in-half-sec" style="text-align: center;" *ngIf="recentListens?.length > 0">Jump Back In</h2>
+  <h2 class="fade-in-half-sec" style="text-align: center;" *ngIf="recentListens?.length == 0">Start Listening</h2>
 </div>
-<div class="row">
+<div class="row fade-in-1-sec" *ngIf="recentListens?.length > 0">
   <div class="col s12 m3" *ngFor="let recent of recentListens">
-    <div class="card" *ngIf="recent">
+    <div class="card" style="background-color:transparent;" *ngIf="recent">
       <div class="card-image">
-        <div>
+        <div class="fade-in-2-sec">
           <a [routerLink]="['../album', recent?.albumId]">
             <img class="hoverable" src="assets/images/everything-now.jpg">
           </a>
@@ -18,30 +20,39 @@
           <h5><a class="album-tile" [routerLink]="['../artist', recent?.artistId]">{{recent?.artistName}}</a></h5>
         </span>
       </div>
-        <div class="btn-floating halfway-fab waves-effect waves-light hoverable play-all-bt z-depth-2">
+        <div class="btn-floating halfway-fab waves-effect waves-light hoverable play-all-bt z-depth-2 fade-in-half-sec">
           <i class="material-icons" style="color: inherit; background-color: inherit; fill: inherit;">play_arrow</i>
         </div>
       </div>
     </div>
   </div>
 </div>
+<div *ngIf="recentListens?.length == 0">
+  <div class="row fade-in-2-sec">
+    <div class="col s12">
+      <div class="card-panel large transparent z-depth-0 center">
+        <h3 class="grey-text">You haven't listened to any music yet</h3>
+      </div>
+    </div>
+  </div>
+</div>
 </ng-container>
-<ng-container *ngIf="recentListens">
+<ng-container *ngIf="currentUser && recentListens">
   <div class="row">
-    <h2 style="text-align: center;">Top Songs</h2>
+    <h2 class="fade-in-half-sec" style="text-align: center;"><br *ngIf="recentListens?.length > 0">Top Songs</h2>
   </div>
   <div class="row">
-    <table class="bordered responsive-table white-text">
+    <table class="bordered responsive-table white-text fade-in-half-sec">
       <thead>
-        <tr>
+        <tr class="fade-in-half-sec">
           <th>Title</th>
           <th>Artist</th>
           <th>Album</th>
           <th>Plays</th>
         </tr>
       </thead>
-      <tbody class="tracklist">
-        <tr *ngFor="let song of topSongs">
+      <tbody class="tracklist" *ngIf="topSongs?.length > 0">
+        <tr class="fade-in-half-sec" *ngFor="let song of topSongs">
           <td>{{song?.title}}</td>
           <td>
             <!--IN SPAN: *ngFor="let artist of song.artists; last as isLast"-->
@@ -57,30 +68,49 @@
         </tr>
       </tbody>
     </table>
+    <div *ngIf="topSongs?.length == 0">
+      <div class="row fade-in-1-sec">
+        <div class="col s12">
+          <div class="card-panel large transparent z-depth-0 center">
+            <h3 class="grey-text">No data available</h3>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </ng-container>
-<ng-container *ngIf="topSongs">
+
+<div class="row" *ngIf="currentUser && topSongs">
+  <h2 style="text-align: center;" class="fade-in-half-sec"><br>Genres</h2>
+</div>
+<ng-container *ngIf="genres?.length > 0">
   <div class="row">
-    <h2 style="text-align: center;">Genres</h2>
-  </div>
-  <div class="row">
-    <div class="col s12 m3" *ngFor="let genre of genres">
+    <div class="col s12 m3 fade-in-half-sec" *ngFor="let genre of genres">
       <a class="genre tooltipped" data-position="top" data-delay="50" data-tooltip="I am a tooltip" [routerLink]="['../home']">
-        <div class="card-panel hoverable center genre waves-effect waves-light" style="width: 100%;">
+        <div class="card-panel hoverable center genre waves-effect waves-light fade-in-half-sec" style="width: 100%;">
           <h3 class="truncate" style="color: inherit;">{{genre?.genreName}}</h3>
         </div>
       </a>
     </div>
   </div>
 </ng-container>
+<div *ngIf="genres?.length == 0">
+  <div class="row fade-in-2-sec">
+    <div class="col s12">
+      <div class="card-panel large transparent z-depth-0 center">
+        <h3 class="grey-text">No data available</h3>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div>
 
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec" *ngIf="!recentListens && !topSongs && !genres">
-    <div class="loader">Loading...</div>
-  </div>
+<div class="row fade-in-2-sec" *ngIf="!recentListens || !topSongs || !genres">
+  <div class="loader">Loading...</div>
+</div>
 
 <!--<div>Icons made by
   <a href="https://www.flaticon.com/authors/epiccoders" title="EpicCoders">EpicCoders</a> from
