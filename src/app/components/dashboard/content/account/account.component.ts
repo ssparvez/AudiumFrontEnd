@@ -59,6 +59,9 @@ export class AccountComponent implements OnInit {
       this.dialog.open(PaymentInfoComponent,{ data: {isNew: false}, width: '400px'} )
           .afterClosed()
           .subscribe(result => {
+            if ( result ) {
+              this.authService.storeInfo();
+            }
           });
   }
 
@@ -75,7 +78,17 @@ export class AccountComponent implements OnInit {
       .subscribe(
         result => {
           if(result) {
-            console.log(result);
+            this.service.deleteResource('/downgradeaccount/'+ this.currentUser.accountId).subscribe(
+              response => {
+                if (response && response.token) {
+                  localStorage.setItem('token', response.token);
+                  this.authService.storeInfo();
+                  this.toastService.show("Your account was downgraded to Basic.", 3500, 'blue');
+                } else {
+                  this.toastService.show("There was an error. Please try again.", 3000, 'blue');
+                }
+              }, (error: AppError) => {
+            });
           }
         }
       );
@@ -99,7 +112,7 @@ export class AccountComponent implements OnInit {
     this.service.update('/editcustomer', values).subscribe(
         response => {
           console.log(response);
-            let result = {
+            const result = {
                 token: response.token
             };
             if (result && result.token) {
@@ -119,6 +132,7 @@ export class AccountComponent implements OnInit {
 
         });
   }
+
 
 }
 

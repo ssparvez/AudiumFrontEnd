@@ -5,6 +5,7 @@ import {AppError} from "../../errors/AppError";
 import {PaymentInfo} from "../../classes/PaymentInfo";
 import {CustomerAccount} from "../../classes/customer-account.service";
 import {MzToastService} from "ng2-materialize/dist";
+import {AuthenticationService} from "../../services/authentication/authentication.service";
 
 @Component({
   selector: 'app-payment-info',
@@ -26,6 +27,7 @@ export class PaymentInfoComponent  implements  OnInit {
               private currentUser: CustomerAccount,
               private service: GeneralService,
               private toastService: MzToastService,
+              private authService: AuthenticationService,
               @Inject(MD_DIALOG_DATA) private data: { isNew: boolean }) {}
 
   ngOnInit() {
@@ -50,14 +52,16 @@ export class PaymentInfoComponent  implements  OnInit {
   }
 
   submitPaymentInfo() {
-      const data = {
+    const dateString = this.paymentInfo.ccExprYear + '-' + this.paymentInfo.ccExprMonth + '-01';
+    const data = {
         accountId: this.accountId,
-        creditcardexpire: this.paymentInfo.ccExprYear + '-' + this.paymentInfo.ccExprMonth + '-01',
+        creditcardexpire: new Date(dateString),
         zipCode: this.paymentInfo.zipCode,
         creditcardhash: this.paymentInfo.ccNumber
       };
+      console.log("wtf:" + data);
     if ( this.isNew === true) {
-
+      console.log(data);
       this.service.post('/upgrade',data).subscribe(
         response => {
           console.log(response);
@@ -66,9 +70,9 @@ export class PaymentInfoComponent  implements  OnInit {
           };
           if (result && result.token) {
             localStorage.setItem('token', result.token);
-            this.currentUser.role = "PremiumUser";
+            this.authService.storeInfo();
             this.toastService.show("Your membership has been upgraded!", 3000, 'blue');
-            this.closeDialog();
+            this.closeDialog(true);
           } else {
             this.validInfo = false;
           }
@@ -80,7 +84,6 @@ export class PaymentInfoComponent  implements  OnInit {
     } else {
       this.service.update('/editpaymentinfo', data).subscribe(
         response => {
-          console.log(response);
           this.toastService.show("Your payment info was changed", 3000, 'blue');
           this.closeDialog();
         },
@@ -91,8 +94,8 @@ export class PaymentInfoComponent  implements  OnInit {
     }
   }
 
-  closeDialog() {
-    this.dialogRef.close();
+  closeDialog( argument?) {
+    this.dialogRef.close(argument);
   }
 
   loadPaymentInfo() {
@@ -100,7 +103,6 @@ export class PaymentInfoComponent  implements  OnInit {
       response => {
         const info = response;
         console.log(info);
-        console.log(info['ccYear']);
         this.title = "Edit Payment Info";
         this.buttonName = "Submit";
         this.paymentInfo = new PaymentInfo(
@@ -124,4 +126,3 @@ export class PaymentInfoComponent  implements  OnInit {
   }
 
 }
-

@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
 import {Renderer2} from '@angular/core';
 import {register} from "ts-node/dist";
+import {GeneralService} from "../../services/general/general.service";
+import {AppError} from "../../errors/AppError";
 
 @Component({
   selector: 'app-login',
@@ -15,10 +17,12 @@ export class LoginComponent implements OnInit {
   registrationCheck = true;
   registerCheck: String;
   now = new Date();
-  
+  fN: string;
+  lN: string;
+
   public dateOptions: Pickadate.DateOptions = {
     clear: 'Clear', // Clear button text
-	today: '',
+	  today: '',
     close: 'Ok',
     format: 'mmm dd, yyyy',
     formatSubmit: 'yyyy-mm-dd',
@@ -38,17 +42,18 @@ export class LoginComponent implements OnInit {
     closeOnClear: false,
 	closeOnSelect: false
   };
-  
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthenticationService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private service: GeneralService
   ) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(param => {
-    
+
     if (param.get('login') === 'false') {
       this.registerCheck = 'true';
     }
@@ -56,6 +61,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(values) {
+    console.log(values);
     if (values.password === "" || values.username === "") {
       this.invalidLogin = true;
     } else {
@@ -76,14 +82,26 @@ export class LoginComponent implements OnInit {
   }
 
   signUp(values) {
-    if (this.authService.register(values)) {
-      this.registrationCheck = true;
-      this.registerCheck = 'false';
-      this.router.navigate(['/login/true']);
-      location.reload();
-    } else {
-      this.registrationCheck = false;
-    }
+     this.service.post('/register',values).subscribe(
+       response => {
+         this.registrationCheck = true;
+         this.registerCheck = 'false';
+         this.router.navigate(['/login/true']);
+         location.reload();
+       }, ( error: AppError) => {
+         this.registrationCheck = false;
+       }
+     );
+  }
+
+  formatFirstLetterFN() {
+    const value = this.fN;
+    this.fN = value.charAt(0).toUpperCase() + value.slice(1);
+  }
+
+  formatFirstLetterLN() {
+    const value = this.lN;
+    this.lN = value.charAt(0).toUpperCase() + value.slice(1);
   }
 
 }

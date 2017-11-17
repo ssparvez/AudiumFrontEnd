@@ -15,8 +15,7 @@ export class AuthenticationService {
 
   constructor(private http: Http,
               private dataService: DataService,
-              private currentUser: CustomerAccount,
-              private service: GeneralService,) { }
+              private currentUser: CustomerAccount) { }
 
 
   login(credentials) {
@@ -38,22 +37,6 @@ export class AuthenticationService {
           return false;
         }
       });
-  }
-
-   register(values) {
-     return this.service.post('/register', values).subscribe(
-      response => {
-        return response;
-      }
-      ,(error: AppError) => {
-      if ( error instanceof NotFoundError) {
-        console.log("working");
-      }
-      if ( error instanceof ServerError) {
-        console.log("sup");
-        return false;
-      }
-       });
   }
 
   logout() {

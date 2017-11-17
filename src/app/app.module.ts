@@ -20,7 +20,7 @@ import { PlaylistsComponent } from './components/dashboard/content/library/playl
 import { AccountComponent } from './components/dashboard/content/account/account.component';
 import { LoginComponent } from './components/login/login.component';
 import { FrontPageComponent } from './components/front-page/front-page.component';
-import { MdDialogModule} from '@angular/material';
+import {MdDialogModule, MdMenuModule} from '@angular/material';
 import { PaymentInfoComponent } from './modals/payment-info/payment-info.component';
 import { InputFormatDirective } from './directives/input-format.directive';
 // Services
@@ -39,6 +39,8 @@ import { AlbumComponent } from './components/dashboard/content/detailed/album/al
 import { PlaylistComponent } from './components/dashboard/content/detailed/playlist/playlist.component';
 import {ChangePasswordComponent} from "./modals/change-password/change-password.component";
 import { ConfirmDowngradeComponent } from './modals/confirm-downgrade/confirm-downgrade.component';
+import { CreatePlaylistComponent } from './modals/create-playlist/create-playlist.component';
+import { PlaylistDropdownComponent } from './dropdowns/playlist-dropdown/playlist-dropdown.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -49,7 +51,7 @@ const appRoutes: Routes = [
     {path: "albums", component: AlbumsComponent},
     {path: "artists", component: ArtistsComponent},
     {path: "playlists", component: PlaylistsComponent},
-    //DETAILED
+    // DETAILED
     {path: "artist/:id", component: ArtistComponent},
     {path: "album/:id", component: AlbumComponent},
     {path: "playlist/:id", component: PlaylistComponent}
@@ -73,6 +75,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 
 @NgModule({
   declarations: [
+    // DETAILED
+    ArtistComponent,
+    AlbumComponent,
+    PlaylistComponent,
+    //
     AppComponent,
     SidenavComponent,
     ContentComponent,
@@ -91,19 +98,20 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     InputFormatDirective,
     ChangePasswordComponent,
     ConfirmDowngradeComponent,
-    //DETAILED
-    ArtistComponent,
-    AlbumComponent,
-    PlaylistComponent,
+    CreatePlaylistComponent,
+    PlaylistDropdownComponent,
 
   ],
   entryComponents: [
     PlaylistModalComponent,
     PaymentInfoComponent,
     ChangePasswordComponent,
-    ConfirmDowngradeComponent],
+    ConfirmDowngradeComponent,
+    CreatePlaylistComponent
+  ],
   imports: [
     MdDialogModule,
+    MdMenuModule,
     BrowserModule,
     FormsModule,
     HttpModule,

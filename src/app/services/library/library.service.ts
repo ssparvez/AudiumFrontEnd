@@ -7,7 +7,8 @@ import { DataService } from '../data.service';
 @Injectable()
 export class LibraryService {
   accountId: string
-  constructor(private http: Http, public dataService: DataService) { 
+  constructor(private http: Http, public dataService: DataService) {
+
     this.accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;
   }
 
@@ -23,21 +24,21 @@ export class LibraryService {
   getAllPlaylists() {
     return this.http.get(this.dataService.connectionURL + "/accounts/" + this.accountId + "/playlists").map(res => res.json());
   }
-  
+
   getPlaylist(playlistId : number) {
     return this.http.get(this.dataService.connectionURL + "/playlist/" + playlistId).map(res => res.json());
   }
   getPlaylistSongs(playlistId : number) {
     return this.http.get(this.dataService.connectionURL + "/playlist/" + playlistId + "/songs").map(res => res.json());
   }
-  
+
   getAlbum(albumId : number) {
     return this.http.get(this.dataService.connectionURL + "/album/" + albumId).map(res => res.json());
   }
   getAlbumSongs(albumId : number) {
     return this.http.get(this.dataService.connectionURL + "/album/" + albumId + "/songs").map(res => res.json());
   }
-  
+
   getArtist(artistId : number) {
     return this.http.get(this.dataService.connectionURL + "/artist/" + artistId).map(res => res.json());
   }

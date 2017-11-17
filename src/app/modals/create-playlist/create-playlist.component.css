@@ -1,0 +1,48 @@
+.mat-dialog-title {
+    font-size: xx-large;
+    color: white;
+}
+
+/* label color */
+.input-field label {
+    font-size: x-large;
+    color: white;
+}
+/* label focus color */
+.input-field input:focus + label {
+    color: white;
+}
+
+/* label underline focus color */
+.input-field input:focus {
+    border-bottom: 1px  white;
+    box-shadow: 0 1px 0 0 #2196f3;
+}
+ .input-field  input {
+     margin-top: 5%;
+     font-size: xx-large;
+ }
+
+ .input-field input::placeholder {
+     color: #424242 ;
+
+ }
+
+
+.input-field {
+    font-size: xx-large;
+    color: white;
+}
+.cp-buttons {
+    margin-top: 25%;
+}
+
+
+button {
+    font-size: large;
+    color: white;
+}
+
+button:hover {
+    background-color: transparent;
+}

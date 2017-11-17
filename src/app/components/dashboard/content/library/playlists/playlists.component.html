@@ -3,27 +3,35 @@
     <h1>Playlists</h1>
   </div>
   <div class="right">
-    <a class="btn btn-floating btn-large blue" (click)="openAddPlaylistForm()">
-      <i class="material-icons">add</i>
+    <a class="btn btn-floating btn-large blue" >
+      <i class="material-icons" (click)="openNewPlaylistForm($event)">add</i>
     </a>
   </div>
 </div>
 <div class="row" *ngIf="playlists" style="margin-bottom:0;">
-  <div class="row" (click)="viewPlaylist(playlist?.playlistId)" *ngFor="let playlist of playlists" >
+  <div class="row" (contextmenu)="openMenu()"   *ngFor="let playlist of playlists" >
   <div  class="card horizontal grey darken-2">
-    <div class="card-image">
-      <img [routerLink]="['../playlist', playlist?.playlistId]" src="assets/images/defaults/playlist.svg" width="150" height="150">
+    <div class="card-image" (click)="viewPlaylist(playlist.playlistId)">
+      <img [routerLink]="['../playlist', playlist.playlistId]" src="assets/images/defaults/playlist.svg" width="150" height="150">
     </div>
     <div class="card-stacked">
-      <div class="card-content" [routerLink]="['../playlist', playlist?.playlistId]">
-        <h2>{{playlist?.name}}</h2>
-        <h4>{{playlist?.description}}</h4>
+      <div class="card-content" [routerLink]="['../playlist', playlist.playlistId]">
+        <h2>{{playlist.name}}</h2>
+        <h4>{{playlist.description}}</h4>
       </div>
       <div class="card-action">
-        <a href="#">Edit</a>
-        <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">play_arrow</i></a>              
+
+        <a [mdMenuTriggerFor]="playlistMenu"><i class="material-icons playlist-more-icon waves-effect">more_horiz</i></a>
+        <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">play_arrow</i></a>
+
       </div>
     </div>
   </div>
+
 </div>
 </div>
+<md-menu #playlistMenu="mdMenu">
+  <button md-menu-item> Edit </button>
+  <button md-menu-item> Make public </button>
+  <button md-menu-item> Delete </button>
+</md-menu>

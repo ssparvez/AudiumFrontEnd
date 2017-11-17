@@ -69,4 +69,22 @@ h5 {
 .select-wrapper ul li>span {
   color: grey;
 }
+.mat-dialog-container {
+    background-color: #212121;
+}
+.dropdown-content li  {
+    background-color: #424242 ;
+}
 
+.dropdown-content li>a {
+    color: #bdbdbd    !important; ;
+}
+
+.mat-menu-content {
+    color: white;
+    background-color: #424242;
+}
+
+.mat-menu-content > button {
+    color: #bdbdbd;
+}

@@ -1,0 +1,21 @@
+<div class="row center">
+  <div mat-dialog-title> Create new playlist</div>
+    <div class="input-field col s12">
+      <input ngModel required="required"
+             name="playlistName" id="playlistName"
+             type="text"
+             placeholder="Start Typing..."
+             [(ngModel)]="playlist.name"
+      >
+      <label class="active" for="playlistName">Playlist Name </label>
+
+  </div>
+  <div class="row center cp-buttons">
+    <button mz-button class="waves-effect blue-text" [flat]="true"  (click)="createPlaylist()">
+      Create
+    </button>
+    <button mz-button md-dialog-close [flat]="true" class="waves-effect">
+      Cancel
+    </button>
+  </div>
+</div>

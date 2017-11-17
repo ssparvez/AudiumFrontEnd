@@ -1,11 +1,11 @@
 /* label color */
 .input-field label {
 
-  color: grey;
+  color: white;
 }
 /* label focus color */
 .input-field input:focus + label {
-  color: grey;
+  color: white;
 }
 
 /* label underline focus color */
@@ -15,7 +15,7 @@
 }
 
 .input-field {
-  color: grey;
+  color: white;
 }
 
 .select-wrapper ul li>span {
@@ -29,4 +29,8 @@ button:hover {
 .payment-info-text {
     font-size: large;
 
+}
+
+.payment-error-cpl{
+    padding: 8px;
 }

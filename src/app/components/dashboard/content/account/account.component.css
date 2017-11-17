@@ -4,24 +4,30 @@
 }
 
 .account-btn {
-
-  border-radius: 20vw;
-  background-color: #2196f3;
-  width: 100%;
+    border-radius: 20vw;
+    background-color: #2196f3;
+    width: 100%;
+    font-size: large;
 }
-
-.account-box {
-  margin-top: 5%;
-
-}
-
 
 .account-btn-pssw {
-  width: 75%;
+    width: 75%;
+    font-size: large;
+}
+
+.account-btn-ug,.account-btn-dg {
+    width: 100%;
+    border-radius: 20vw;
+    margin-top: 10%;
+    font-size: large;
+    font-weight: bold;
 }
 
 .account-btn-dg {
-  border-radius: 20vw;
+    color: white;
+}
+.account-btn-ug {
+    color: #1b5e20;
 }
 
 .account-subtext{
@@ -34,10 +40,8 @@
 
 .account-profilepic {
   height: 5%;
-  width: 12vw;
+  width: 10vw;
   border-radius: 50%;
-
-
 }
 
 .account-username {
@@ -75,3 +79,23 @@
     color: white;
     background-color: white;
 }
+
+.account-text {
+    font-size: x-large;
+}
+
+.account-subtxt {
+    font-size: large;
+    color: #ccc;
+}
+.account-membtxt {
+    font-size: x-large;
+}
+.account-membtxt2 {
+    font-size: xx-large;
+}
+
+.tst {
+    width: 96%;
+}
+
