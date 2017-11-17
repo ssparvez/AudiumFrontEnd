@@ -1,61 +1,86 @@
+<div class="row fade-in-half-sec">
+<ng-container *ngIf="recentListens">
 <h1>Home</h1>
 
 <div class="row">
   <h2 style="text-align: center;">Jump Back In</h2>
 </div>
 <div class="row">
-  <div class="col s12 m3" *ngFor="let recent of recents">
-    <div class="card">
+  <div class="col s12 m3" *ngFor="let recent of recentListens">
+    <div class="card" *ngIf="recent">
       <div class="card-image">
-        <img src="assets/images/everything-now.jpg">
+        <div>
+          <a [routerLink]="['../album', recent?.albumId]">
+            <img class="hoverable" src="assets/images/everything-now.jpg">
+          </a>
         <span class="card-title black" id="small-card-title">
-          <h4>Everything Now</h4>
-          <h5>Arcade Fire</h5>
+          <h4><a class="album-tile" [routerLink]="['../album', recent?.albumId]">{{recent?.albumTitle}}</a></h4>
+          <h5><a class="album-tile" [routerLink]="['../artist', recent?.artistId]">{{recent?.artistName}}</a></h5>
         </span>
-        <a class="btn-floating halfway-fab waves-effect waves-light blue">
-          <i class="material-icons">play_arrow</i>
-        </a>
+      </div>
+        <div class="btn-floating halfway-fab waves-effect waves-light hoverable play-all-bt z-depth-2">
+          <i class="material-icons" style="color: inherit; background-color: inherit; fill: inherit;">play_arrow</i>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<div class="row">
-  <h2 style="text-align: center;">Top 5 Songs</h2>
-</div>
-<div class="row">
-  <table class="bordered responsive-table highlight white-text">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Artist</th>
-        <th>Album</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let song of topSongs">
-        <td><!--{{song.title}}-->Everything Now</td>
-        <td>
-          <!--IN SPAN: *ngFor="let artist of song.artists; last as isLast"-->
-          <span><!--{{artist.name}}{{isLast ? '' : ', '}}-->Arcade Fire</span>
-        </td>
-        <td>
-          <!-- IN SPAN: *ngFor="let album of song.albums; last as isLast" -->
-          <span><!--{{album.title}}{{isLast ? '' : ', '}}-->Everything Now</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="row">
-  <h2 style="text-align: center;">Genres</h2>
-</div>
-<div class="row">
-  <div class="col s12 m3" *ngFor="let genre of genres">
-    <div class="card-panel teal center">
-      <h3>{{genre.name}}</h3>
+</ng-container>
+<ng-container *ngIf="recentListens">
+  <div class="row">
+    <h2 style="text-align: center;">Top Songs</h2>
+  </div>
+  <div class="row">
+    <table class="bordered responsive-table white-text">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Artist</th>
+          <th>Album</th>
+          <th>Plays</th>
+        </tr>
+      </thead>
+      <tbody class="tracklist">
+        <tr *ngFor="let song of topSongs">
+          <td>{{song?.title}}</td>
+          <td>
+            <!--IN SPAN: *ngFor="let artist of song.artists; last as isLast"-->
+            <!--{{artist.name}}{{isLast ? '' : ', '}}-->
+            <a [routerLink]="['../artist', song?.artistId]">{{song?.artistName}}</a>
+          </td>
+          <td>
+            <!-- IN SPAN: *ngFor="let album of song.albums; last as isLast" -->
+            <!--{{album.title}}{{isLast ? '' : ', '}}-->
+            <a [routerLink]="['../album', song?.albumId]">{{song?.albumTitle}}</a>
+          </td>
+          <td>{{song?.playCount}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+<ng-container *ngIf="topSongs">
+  <div class="row">
+    <h2 style="text-align: center;">Genres</h2>
+  </div>
+  <div class="row">
+    <div class="col s12 m3" *ngFor="let genre of genres">
+      <a class="genre tooltipped" data-position="top" data-delay="50" data-tooltip="I am a tooltip" [routerLink]="['../home']">
+        <div class="card-panel hoverable center genre waves-effect waves-light" style="width: 100%;">
+          <h3 class="truncate" style="color: inherit;">{{genre?.genreName}}</h3>
+        </div>
+      </a>
     </div>
   </div>
+</ng-container>
+
 </div>
+
+
+<!-- Loading animation -->
+<div class="row fade-in-2-sec" *ngIf="!recentListens && !topSongs && !genres">
+    <div class="loader">Loading...</div>
+  </div>
 
 <!--<div>Icons made by
   <a href="https://www.flaticon.com/authors/epiccoders" title="EpicCoders">EpicCoders</a> from

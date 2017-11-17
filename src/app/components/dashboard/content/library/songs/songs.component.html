@@ -1,32 +1,52 @@
-<div class="row">
+
+<div class="row fade-in-half-sec">
   <div class="left">
     <h1>Songs</h1>
   </div>
-  <div class="right">
+  <div class="right" *ngIf="songs?.length > 0">
     <a class="btn btn-floating btn-large blue pulse" (click)="playAllSongs()">
       <i class="material-icons">play_arrow</i>
     </a>
   </div>
 </div>
-<div class="row" style="margin-bottom:0;">
-  <table class="bordered responsive-table highlight white-text">
+<div class="row" style="margin-bottom:0;" *ngIf="songs">
+  <table class="bordered responsive-table white-text fade-in-half-sec" *ngIf="songs?.length > 0">
     <thead>
       <tr>
         <th>Title</th>
         <th>Artist</th>
         <th>Album</th>
-        <th>Date Added</th>
         <th>Duration</th>
+        <th style="text-align: center">Date Added</th>
       </tr>
     </thead>
-    <tbody *ngIf="songs">
+    <tbody class="tracklist">
       <tr *ngFor="let song of songs">
         <td>{{song?.title}}</td>
-		    <td><span [routerLink]="['../artist', song?.artistId]">{{song?.artistName}}</span></td>
-		    <td><span [routerLink]="['../album', song?.albumId]">{{song?.albumTitle}}</span></td>
-        <td>{{song?.timeAdded | timeAgo}}</td>
+		    <td *ngIf="song"><a [routerLink]="['../artist', song?.artistId]">{{song?.artistName}}</a></td>
+        <td *ngIf="song"><a [routerLink]="['../album', song?.albumId]">{{song?.albumTitle}}</a></td>
         <td>{{song?.duration}}</td>
+        <td style="text-align: center">{{song?.timeAdded | timeAgo}}</td>
       </tr>
     </tbody>
   </table>
+</div>
+
+
+<div class="row fade-in-2-sec" *ngIf="songs?.length == 0">
+  <div class="col s12">
+    <div class="card-panel large transparent z-depth-0">
+      <div class="row"></div>
+    </div>
+  </div>
+  <div class="col s12">
+    <div class="card-panel large transparent z-depth-0 center">
+      <h2 class="grey-text">No songs in library</h2>
+    </div>
+  </div>
+</div>
+
+<!-- Loading animation -->
+<div class="row fade-in-2-sec" *ngIf="!songs">
+  <div class="loader">Loading...</div>
 </div>

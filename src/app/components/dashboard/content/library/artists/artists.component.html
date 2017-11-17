@@ -1,18 +1,44 @@
-<div class="row">
-  <h1>Artists</h1>
+<div class="row fade-in-half-sec">
+  <h1 class="col s12">Artists</h1>
 </div>
-<div class="row" *ngIf="artists" style="margin-bottom:0;">
-  <div class="col s12 m3" *ngFor="let artist of artists">
-    <div class="card">
-      <div class="card-image">
-        <a [routerLink]="['../artist', artist?.artistId]"><img src="assets/images/defaults/artist.svg"></a>
-        <span class="card-title black" id="small-card-title" [routerLink]="['../artist', artist?.artistId]">
-          <h4><a [routerLink]="['../artist', artist?.artistId]">{{artist?.artistName}}</a></h4>
-        </span>
-        <a class="btn-floating halfway-fab waves-effect waves-light blue">
-          <i class="material-icons">play_arrow</i>
-        </a>
+
+<div class="col s12 fade-in-half-sec">
+  <ng-container  *ngIf="artists">
+    <div class="row fade-in-half-sec" style="margin-bottom:0;"  *ngIf="artists?.length > 0">
+      <div class="col s12 m3" *ngFor="let artist of artists">
+        <div class="card hoverable fade-in-half-sec" *ngIf="artist">
+          <div class="card-image">
+            <a [routerLink]="['../artist', artist?.artistId]"><img src="assets/images/defaults/artist.svg"></a>
+            <span class="card-title black" id="small-card-title">
+              <h4><a [routerLink]="['../artist', artist?.artistId]">{{artist?.artistName}}</a></h4>
+            </span>
+            <a class="btn-floating halfway-fab waves-effect waves-light blue">
+              <i class="material-icons">play_arrow</i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<ng-container  *ngIf="artists?.length == 0">
+  <div class="row fade-in-2-sec" >
+    <div class="col s12">
+      <div class="card-panel large transparent z-depth-0">
+        <div class="row"></div>
+      </div>
+    </div>
+    <div class="col s12">
+      <div class="card-panel large transparent z-depth-0 center">
+        <h2 class="grey-text">No artists followed</h2>
       </div>
     </div>
   </div>
+</ng-container>
+
+<!-- Loading animation -->
+<div class="row fade-in-2-sec" *ngIf="!artists">
+  <div class="loader">Loading...</div>
 </div>
+

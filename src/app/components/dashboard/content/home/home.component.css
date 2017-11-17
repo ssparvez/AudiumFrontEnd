@@ -1,0 +1,10 @@
+
+.genre {
+    background-color: rgb(33,150,243);
+}
+
+.genre:hover {
+    /*color: #ffab00;*/
+    color: #ffca60;
+    background-color: rgb(50, 160, 245);
+}

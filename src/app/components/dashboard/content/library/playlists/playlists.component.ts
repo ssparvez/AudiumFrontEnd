@@ -22,7 +22,7 @@ export class PlaylistsComponent implements OnInit {
       console.log(this.playlists);
     });
   }
-  
+
   viewPlaylist(playlistId : number) {
 	console.log("playlist #" + playlistId);
     this.router.navigate(['/dash/playlist/', playlistId]);
@@ -44,7 +44,7 @@ interface Playlist {
 }
 
 interface Song {
-  id: number,
+  songId: number,
   title: string,
   artistId: number,
   artistName: string,

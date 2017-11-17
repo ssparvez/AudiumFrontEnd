@@ -7,13 +7,15 @@ import { ActivatedRoute, Router } from "@angular/router";
   templateUrl: './album.component.html',
   styleUrls: ['./album.component.css']
 })
+
 export class AlbumComponent implements OnInit {
-  
+
   private id;
   album: Album;
+
   constructor(
     private route: ActivatedRoute,
-	private router: Router,
+	  private router: Router,
     private libraryService : LibraryService
   ) { }
 
@@ -23,7 +25,7 @@ export class AlbumComponent implements OnInit {
       console.log(this.id);
       this.libraryService.getAlbum(this.id).subscribe((album) => {
         this.album = album;
-		this.libraryService.getAlbumSongs(this.id).subscribe((songs) => {
+		    this.libraryService.getAlbumSongs(this.id).subscribe((songs) => {
           this.album.songs = songs;
         });
       });
@@ -35,14 +37,14 @@ export class AlbumComponent implements OnInit {
 interface Album {
   albumId: number,
   albumTitle: string,
-  year: string,
+  releaseYear: string,
   artistId: number,
   artistName: string,
   songs: Song[]
 }
 
 interface Song {
-  id: number,
+  songId: number,
   title: string,
   artistId: number,
   artistName: string,
