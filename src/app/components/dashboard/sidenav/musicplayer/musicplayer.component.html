@@ -5,7 +5,7 @@
     </a>
     <span class="card-title black" id="music-card-title">
       <div class="row" style="margin-bottom: 0px;">
-        <div class="left">
+        <div class="left" style="height: 50px;">
           <h5>
             <a [routerLink]="['artist', 1]">{{songQueue[queueIndex].artist}}</a>
           </h5>
@@ -13,29 +13,19 @@
         </div>
         <!-- Music controls -->
         <div class="right">
-          <a [routerLink]="" (click)="togglePrevious()" aria-hidden="true">
-            <i class="material-icons white-text" style="vertical-align: middle;">skip_previous</i>
-          </a>
+          <i (click)="togglePrevious()"class="material-icons" style="vertical-align: middle;">skip_previous</i>
           <a class="btn btn-floating btn-small white pulse" (click)="togglePlayback()" aria-hidden="true" [ngClass]="{'pulse': !isPlaying, '': !isPlaying}">
             <i class="material-icons blue-text">{{playIcon}}</i>
           </a>
-          <a [routerLink]="" (click)="toggleNext()" aria-hidden="true">
-            <i class="material-icons white-text" style="vertical-align: middle;">skip_next</i>
-          </a>
+          <i (click)="toggleNext()" class="material-icons" style="vertical-align: middle;">skip_next</i>
         </div>
       </div>
       <div class="row" style="margin-bottom: 0px;">
-        <a style="cursor: pointer;" (click)="toggleShuffle()" aria-hidden="true">
-          <i class="material-icons" [ngClass]="{'white-text': !isShuffled, 'blue-text': !isShuffled}" style="vertical-align: middle;">shuffle</i>
-        </a>
-        <a style="cursor: pointer;" (click)="toggleRepeat()" aria-hidden="true">
-          <i class="material-icons" [ngClass]="{'white-text': !isRepeated, 'blue-text': !isRepeated}" style="vertical-align: middle;">{{repeatIcon}}</i>
-        </a>
-        <a style="cursor: pointer;" aria-hidden="true">
-          <i (click)="toggleMute()" class="material-icons white-text" style="vertical-align: middle;">{{soundIcon}}</i>
-        </a>
+        <i (click)="toggleShuffle()" class="material-icons" [ngClass]="{'white-text': !isShuffled, 'blue-text': isShuffled}">shuffle</i>
+        <i (click)="toggleRepeat()" class="material-icons" [ngClass]="{'white-text': !isRepeated, 'blue-text': isRepeated}">{{repeatIcon}}</i>
+        <i (click)="toggleMute()" class="material-icons">{{soundIcon}}</i>
         <span class="volume-slider">
-          <input #ref (change)="changeVolume(ref.value)" class="browser-default volume-slider" type=range min=0 max=100 value={{volumeLevel*100}}
+          <input #ref (change)="changeVolume(ref.value)" class="volume-slider" type=range min=0 max=100 value={{volumeLevel*100}}
             id=fader step=1>
         </span>
       </div>
