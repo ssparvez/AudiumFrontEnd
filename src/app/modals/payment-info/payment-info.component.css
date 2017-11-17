@@ -34,3 +34,7 @@ button:hover {
 .payment-error-cpl{
     padding: 8px;
 }
+
+button {
+    color: white;
+}
