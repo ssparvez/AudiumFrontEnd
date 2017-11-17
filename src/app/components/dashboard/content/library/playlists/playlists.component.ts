@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LibraryService } from '../../../../../services/library/library.service';
 import { MzModalService, MzToastService } from 'ng2-materialize';
-import { PlaylistModalComponent } from './playlist-modal/playlist-modal.component';
 import { Router } from "@angular/router";
 import {GeneralService} from "../../../../../services/general/general.service";
 import {MdDialog} from "@angular/material";
@@ -21,7 +20,6 @@ export class PlaylistsComponent implements OnInit {
   constructor(
     private router: Router,
     private libraryService: LibraryService,
-    private modalService: MzModalService,
     private dialog: MdDialog,
     private toastService: MzToastService
   ) { }
@@ -39,9 +37,6 @@ export class PlaylistsComponent implements OnInit {
     this.router.navigate(['/dash/playlist/', playlistId]);
   }
 
-  openAddPlaylistForm() {
-    this.modalService.open(PlaylistModalComponent);
-  }
 
   openNewPlaylistForm() {
     this.dialog.open(CreatePlaylistComponent,{ data: {accountId: this.currentUser['_accountId'],
@@ -72,14 +67,13 @@ interface Playlist {
 }
 
 interface Song {
-  id: number;
-  title: string;
-  artistId: number;
-  artistName: string;
-  albumId: number;
-  albumTitle: string;
-  duration: number;
-  isExplicit: boolean;
-  timeAdded: number;
+  songId: number,
+  title: string,
+  artistId: number,
+  artistName: string,
+  albumId: number,
+  albumTitle: string,
+  duration: number,
+  isExplicit: boolean,
+  timeAdded: number
 }
-

@@ -6,16 +6,16 @@ import { ActivatedRoute, Router } from "@angular/router";
   selector: 'app-playlist',
   templateUrl: './playlist.component.html',
   styleUrls: ['./playlist.component.css']
-  
 })
+
 export class PlaylistComponent implements OnInit {
 
   private id;
   playlist: Playlist
-  
+
   constructor(
     private route: ActivatedRoute,
-	private router: Router,
+	  private router: Router,
     private libraryService : LibraryService
   ) { }
 
@@ -25,7 +25,7 @@ export class PlaylistComponent implements OnInit {
       console.log(this.id);
       this.libraryService.getPlaylist(this.id).subscribe((playlist) => {
         this.playlist = playlist;
-		this.libraryService.getPlaylistSongs(this.id).subscribe((songs) => {
+		    this.libraryService.getPlaylistSongs(this.id).subscribe((songs) => {
           this.playlist.songs = songs;
         });
       });
@@ -45,7 +45,7 @@ interface Playlist {
 }
 
 interface Song {
-  id: number,
+  songId: number,
   title: string,
   artistId: number,
   artistName: string,

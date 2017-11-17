@@ -14,7 +14,7 @@ export class ArtistComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-	private libraryService : LibraryService
+    private libraryService : LibraryService
   ) {}
 
 
@@ -24,11 +24,11 @@ export class ArtistComponent implements OnInit {
       console.log(this.id);
       this.libraryService.getArtist(this.id).subscribe((artist) => {
         this.artist = artist;
-		this.libraryService.getArtistAlbums(this.id).subscribe((albums) => {
-          this.artist.albums = albums;
-        });
-		this.libraryService.getArtistSongs(this.id).subscribe((songs) => {
+		    this.libraryService.getArtistSongs(this.id).subscribe((songs) => {
           this.artist.songs = songs;
+          this.libraryService.getArtistAlbums(this.id).subscribe((albums) => {
+            this.artist.albums = albums;
+          });
         });
       });
     });
@@ -47,14 +47,14 @@ interface Artist {
 interface Album {
   albumId: number,
   albumTitle: string,
-  year: string,
+  releaseYear: string,
   artistId: number,
   artistName: string,
   songs: Song[]
 }
 
 interface Song {
-  id: number,
+  songId: number,
   title: string,
   artistId: number,
   artistName: string,
@@ -62,5 +62,8 @@ interface Song {
   albumTitle: string,
   duration: number,
   isExplicit: boolean,
+  year: string,
+  genreId: number,
+  genreName: string,
   playCount: number
 }

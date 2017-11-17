@@ -1,0 +1,55 @@
+<div class="card">
+    <div class="card-image">
+      <img class="responsive-img" src="assets/images/parallax.png">
+      <span class="card-title black" id="large-card-title">
+        <h1 style="display: inline; vertical-align: middle;">User name</h1>
+        <a style="margin-left: 20px;" class="waves-effect waves-light btn">Follow</a>
+      </span>
+      <a class="btn-floating halfway-fab waves-effect waves-light blue">
+        <i class="material-icons">play_arrow</i>
+      </a>
+    </div>
+  </div>
+  
+  <mz-tab
+  [fixedTabWidth]="'true'"
+  [responsiveThreshold]="'true'"
+  >
+  <mz-tab-item [label]="'Overview'">
+    <div class="row" style="margin-top: 20px;">
+      <h2 style="text-align: center;">Recently Played</h2>
+    </div>
+  </mz-tab-item>
+  <mz-tab-item [label]="'Library'">
+      <div class="row" style="margin-top: 20px;">
+          <h2 style="text-align: center;">Playlists</h2>
+      </div>
+
+  </mz-tab-item>
+  <mz-tab-item [label]="'Following'">
+      <ul class="collection" style="margin-top: 20px; border:none;">
+          <li class="collection-item avatar grey darken-4" *ngFor="let follower of followers">
+            <img src="assets/images/kebin.jpg" alt="" class="circle">
+            <span class="title white-text">Kevin Parker</span>
+            <p class="white-text">16 Followers<br>
+            </p>
+            <a href="#!" class="secondary-content">
+                <a class="waves-effect waves-light btn">Follow</a>                
+            </a>
+          </li>
+        </ul>
+  </mz-tab-item>
+  <mz-tab-item [label]="'Followers'">
+      <ul class="collection" style="margin-top: 20px; border: none;">
+          <li class="collection-item avatar grey darken-4" *ngFor="let follower of followers">
+            <img src="assets/images/kebin.jpg" alt="" class="circle">
+            <span class="title white-text">Kevin Parker</span>
+            <p class="white-text">16 Followers<br>
+            </p>
+            <a href="#!" class="secondary-content">
+                <a class="waves-effect waves-light btn">Follow</a>                
+            </a>
+          </li>
+        </ul>
+  </mz-tab-item>
+  </mz-tab>

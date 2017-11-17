@@ -18,13 +18,12 @@ export class AlbumsComponent implements OnInit {
   ngOnInit() {
     this.libraryService.getAllAlbums().subscribe((albums) => {
       this.albums = albums;
-      console.log(this.albums);
     });
   }
   updateUrl() {
-    
+
   }
-  
+
   viewAlbum(albumId : number) {
 	console.log("album #" + albumId);
     this.router.navigate(['/dash/album/', albumId]);
@@ -34,14 +33,14 @@ export class AlbumsComponent implements OnInit {
 interface Album {
   albumId: number,
   albumTitle: string,
-  year: string,
+  releaseYear: string,
   artistId: number,
   artistName: string,
   songs: Song[]
 }
 
 interface Song {
-  id: number,
+  songId: number,
   title: string,
   artistId: number,
   artistName: string,

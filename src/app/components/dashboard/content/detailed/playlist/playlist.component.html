@@ -1,19 +1,25 @@
-<div class="row">
+<div class="row fade-in-half-sec" *ngIf="playlist">
   <div class="col s6 m4">
     <div class="card">
       <div class="card-image">
         <img src="assets/images/defaults/playlist.svg">
-        <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">play_arrow</i></a>
+        <a class="btn-floating halfway-fab waves-effect waves-light blue" *ngIf="playlist?.songs?.length > 0"><i class="material-icons">play_arrow</i></a>
       </div>
     </div>
   </div>
   <div class="col s6 m8">
-    <h4>Playlist</h4>
-    <h1>{{playlist?.name}}</h1>
-    <h2>by <span [routerLink]="['../../profile', playlist?.accountId]">{{playlist?.username}}</span></h2>
+    <div class="row" style="margin-top: 10px;"> <h4>Playlist</h4></div>
+    <div class="row" style="margin-bottom: 0px; padding-bottom: 0px;"><h1 style="margin-bottom: 10px;">{{playlist?.name}}</h1></div>
+    <div class="row creator" *ngIf="playlist" style="margin-bottom: 5px;"><h2>by <a [routerLink]="['../../profile', playlist?.accountId]">{{playlist?.username}}</a></h2></div>
+    <div class="row" *ngIf="playlist?.description.length > 0"><h3>{{playlist?.description}}</h3></div>
+    <div class="row">
+      <div class="chip fade-in-half-sec" *ngIf="playlist?.songs">
+        {{playlist?.songs?.length}} song<span *ngIf="playlist?.songs?.length != 1">s</span>
+      </div>
+    </div>
   </div>
 </div>
-<div class="row">
+<div class="row fade-in-1-sec" *ngIf="playlist?.songs">
   <table class="bordered responsive-table white-text">
     <thead>
       <tr>
@@ -24,13 +30,32 @@
       </tr>
     </thead>
 
-    <tbody *ngIf="playlist && playlist.songs">
+    <tbody class="tracklist" *ngIf="playlist">
       <tr *ngFor="let song of playlist.songs">
       <td>{{song?.title}}</td>
-      <td><span [routerLink]="['../../artist', song?.artistId]">{{song?.artistName}}</span></td>
-      <td><span [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</span></td>
-      <td>{{song?.timeAdded | date}}</td>
+      <td><a [routerLink]="['../../artist', song?.artistId]">{{song?.artistName}}</a></td>
+      <td><a [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</a></td>
+      <td>{{song?.timeAdded | timeAgo}}</td>
       </tr>
     </tbody>
   </table>
+</div>
+
+
+<div class="row fade-in-2-sec" *ngIf="playlist?.songs?.length == 0">
+  <div class="col s12">
+    <div class="card-panel large transparent z-depth-0">
+      <div class="row"></div>
+    </div>
+  </div>
+  <div class="col s12">
+    <div class="card-panel large transparent z-depth-0 center">
+      <h2 class="grey-text">No songs in playlist</h2>
+    </div>
+  </div>
+</div>
+
+<!-- Loading animation -->
+<div class="row fade-in-2-sec" *ngIf="!playlist">
+  <div class="loader">Loading...</div>
 </div>

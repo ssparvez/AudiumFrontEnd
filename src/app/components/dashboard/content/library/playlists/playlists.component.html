@@ -1,13 +1,33 @@
 <div class="row">
-  <div class="left">
+  <div class="left fade-in-half-sec">
     <h1>Playlists</h1>
   </div>
   <div class="right">
-    <a class="btn btn-floating btn-large blue" >
+    <a class="btn btn-floating btn-large blue fade-in-half-sec" >
       <i class="material-icons" (click)="openNewPlaylistForm($event)">add</i>
     </a>
   </div>
 </div>
+<div class="row" style="margin-bottom:0;" *ngIf="playlists">
+  <div class="row fade-in-1-sec" *ngFor="let playlist of playlists" >
+    <a [routerLink]="['../playlist', playlist?.playlistId]">
+      <div  class="card horizontal hoverable grey darken-2">
+        <div class="card-image" *ngIf="playlist">
+          <a [routerLink]="['../playlist', playlist?.playlistId]"><img src="assets/images/defaults/playlist.svg" width="150" height="150"></a>
+        </div>
+        <div class="card-stacked" *ngIf="playlist">
+          <div class="card-content" >
+            <h2>{{playlist?.name}}</h2>
+            <h4>{{playlist?.description}}</h4>
+          </div>
+          <div class="card-action">
+            <a href="#">Edit</a>
+            <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">play_arrow</i></a>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
 <div class="row" *ngIf="playlists" style="margin-bottom:0;">
   <div class="row" (contextmenu)="openMenu()"   *ngFor="let playlist of playlists" >
   <div  class="card horizontal grey darken-2">
@@ -29,6 +49,23 @@
   </div>
 
 </div>
+</div>
+<div class="row fade-in-2-sec" *ngIf="playlists?.length == 0">
+  <div class="col s12">
+    <div class="card-panel large transparent z-depth-0">
+      <div class="row"></div>
+    </div>
+  </div>
+  <div class="col s12">
+    <div class="card-panel large transparent z-depth-0 center">
+      <h2 class="grey-text">You haven't created or followed any playlists</h2>
+    </div>
+  </div>
+</div>
+
+<!-- Loading animation -->
+<div class="row fade-in-2-sec" *ngIf="!playlists">
+  <div class="loader">Loading...</div>
 </div>
 <md-menu #playlistMenu="mdMenu">
   <button md-menu-item> Edit </button>

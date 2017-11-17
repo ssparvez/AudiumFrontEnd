@@ -26,7 +26,7 @@ export class SongsComponent implements OnInit {
 }
 
 interface Song {
-  id: number,
+  songId: number,
   title: string,
   //artists: Artist [],
   //album: Album []

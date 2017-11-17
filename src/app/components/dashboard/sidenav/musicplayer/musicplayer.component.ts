@@ -26,6 +26,7 @@ export class MusicplayerComponent implements OnInit {
   ngOnInit() {
    this.songQueue = [
       new Song(1, "The Less I Know the Better", "Tame Impala", '../../../../../assets/songs/TheLessIKnowTheBetter.m4a', "../../../../../assets/images/currents.jpg"),
+      //new Song(1, "The Less I Know the Better", "Tame Impala", '../../../../../assets/songs/TheLessIKnowTheBetter.m4a', "../../../../../assets/images/currents.jpg"),
       new Song(2, "Intro", "The xx", '../../../../../assets/songs/Intro.mp3', '../../../../../assets/images/xx.png'),
       new Song(3, "Feels Good Inc.", "Gorillaz", '../../../../../assets/songs/FeelsGoodInc.mp3', '../../../../../assets/images/demondays.jpeg'),
       new Song(4, "song 4", "Gorillaz", '../../../../../assets/songs/FeelsGoodInc.mp3', '../../../../../assets/images/demondays.jpeg')
@@ -34,12 +35,12 @@ export class MusicplayerComponent implements OnInit {
     for(let song of this.songQueue) {
       song.sound = new Howl({
         src: [song.url],
-        onend: () => { 
-          switch(this.repeatLevel) { 
-            case 0: { 
-              this.toggleNext(); 
-               break; 
-            } 
+        onend: () => {
+          switch(this.repeatLevel) {
+            case 0: {
+              this.toggleNext();
+               break;
+            }
             case 1: { // if last song, restart queue
                if(this.queueIndex == this.songQueue.length - 1) {
                 this.songQueue[this.queueIndex].sound.stop();
@@ -49,14 +50,14 @@ export class MusicplayerComponent implements OnInit {
                else {
                  this.toggleNext();
                }
-               break; 
-            } 
-            case 2: { 
+               break;
+            }
+            case 2: {
                this.songQueue[this.queueIndex].sound.stop();
                this.songQueue[this.queueIndex].sound.play();
-               break; 
-            } 
-         } 
+               break;
+            }
+         }
         }
       });
     }
@@ -104,7 +105,7 @@ export class MusicplayerComponent implements OnInit {
       this.volumeLevel = 0;
       this.isMuted = true;
     }
-    this.songQueue[this.queueIndex].sound.volume(this.volumeLevel);    
+    this.songQueue[this.queueIndex].sound.volume(this.volumeLevel);
   }
 
   changeVolume(value: number) {
@@ -163,7 +164,7 @@ export class MusicplayerComponent implements OnInit {
 }
 
 class Song {
-  id: number;
+  songId: number;
   title: string;
   artist: string;
   playing = false;
@@ -171,8 +172,8 @@ class Song {
   url: string;
   albumArtUrl: string;
 
-  constructor(id, title, artist,url, albumArtUrl) {
-    this.id = id;
+  constructor(songId, title, artist,url, albumArtUrl) {
+    this.songId = songId;
     this.title = title;
     this.artist = artist;
     this.url = url;

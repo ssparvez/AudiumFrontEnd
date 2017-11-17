@@ -1,57 +1,61 @@
-<div class="card">
+<div class="row fade-in-1-sec">
+<div class="card col s12 z-depth-0" style="background-color: transparent; color: transparent;">
   <div class="card-image">
-    <img src="assets/images/parallax.png">
-    <span class="card-title black" id="large-card-title">
-	  <h4>Artist</h4>
-      <h1>{{artist?.artistName}}</h1>
+    <img class="responsive-img" src="assets/images/parallax.png">
+    <span class="card-title black fade-in-half-sec" id="large-card-title">
+      <h1 class="fade-in-1-sec" style="display: inline; vertical-align: middle;">{{artist?.artistName}}</h1>
+      <a style="margin-left: 20px;" class="waves-effect waves-light btn" *ngIf="artist">Follow</a>
     </span>
-    <a class="btn-floating halfway-fab waves-effect waves-light blue">
+    <a class="btn-floating halfway-fab waves-effect waves-light blue hoverable" style="background-color: transparent;" *ngIf="artist?.songs?.length > 0">
       <i class="material-icons">play_arrow</i>
     </a>
   </div>
 </div>
 
+
+<ng-container *ngIf="artist && artist?.songs">
+
 <mz-tab
 [fixedTabWidth]="'true'"
 [responsiveThreshold]="'true'"
 >
-<mz-tab-item [label]="'Overview'">
-  <div class="row" style="margin-top: 40px;">
-    <h2 style="text-align: center;">Popular</h2>
+<mz-tab-item class="fade-in-half-sec" [label]="'Overview'" [active]="true">
+  <div class="row fade-in-half-sec" style="margin-top: 30px;">
+    <h2 style="text-align: center;">Popular Songs</h2>
   </div>
-  <div class="row">
-    <table class="bordered responsive-table highlight white-text">
+  <div class="row fade-in-1-sec">
+    <table class="bordered responsive-table white-text" *ngIf="artist">
       <thead>
         <tr>
           <th>Title</th>
           <th>Album</th>
-		  <th>Plays</th>
+		      <th style="text-align: center">Plays</th>
         </tr>
       </thead>
-      <tbody *ngIf="artist && artist.songs">
-        <tr *ngFor="let song of artist.songs">
+      <tbody class="tracklist" *ngIf="artist?.songs">
+        <tr *ngFor="let song of artist?.songs">
           <td>{{song?.title}}</td>
-          <td>
-            <span [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</span>
+          <td *ngIf="song">
+            <a [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</a>
           </td>
-		  <td>{{song?.playCount}}</td>
+		      <td style="text-align: center">{{song?.playCount}}</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div class="row" style="margin-top: 20px;">
+  <div class="row fade-in-half-sec" style="margin-top: 20px;" *ngIf="artist?.songs">
     <h2 style="text-align: center;">Albums</h2>
   </div>
-  <div class="row" *ngIf="artist && artist.albums">
-    <div class="col s12 m3" *ngFor="let album of artist.albums">
-      <div class="card">
-        <div class="card-image">
-          <img [routerLink]="['../../album', album?.albumId]" src="assets/images/defaults/album.svg">
-          <span class="card-title black" id="small-card-title" [routerLink]="['../../album', album?.albumId]">
-            <h4>{{album?.albumTitle}}</h4>
-			<h5>{{album?.year.substring(0,4)}}</h5>
+  <div class="row fade-in-half-sec" *ngIf="artist?.songs && artist?.albums">
+    <div class="col s12 m3 fade-in-1-sec" *ngFor="let album of artist?.albums">
+      <div class="card hoverable">
+        <div class="card-image" *ngIf="album">
+          <a [routerLink]="['../../album', album?.albumId]"><img src="assets/images/defaults/album.svg"></a>
+          <span class="card-title black" id="small-card-title">
+            <h4 class="truncate" *ngIf="album"><a [routerLink]="['../../album', album?.albumId]">{{album?.albumTitle}}</a></h4>
+            <h5 class="truncate">{{album?.releaseYear?.substring(0,4)}}</h5>
           </span>
-          <a class="btn-floating halfway-fab waves-effect waves-light blue">
+          <a class="btn-floating halfway-fab waves-effect waves-light blue" *ngIf="artist && artist.songs">
             <i class="material-icons">play_arrow</i>
           </a>
         </div>
@@ -59,8 +63,29 @@
     </div>
   </div>
 </mz-tab-item>
-<mz-tab-item [label]="'About'"><h3><p>{{artist?.bio}}</p></h3>
+<mz-tab-item [label]="'About'" class="fade-in-half-sec"><h3><p>{{artist?.bio}}</p></h3>
 </mz-tab-item>
-<mz-tab-item [label]="'Related Artists'"><h3>Related Artists</h3></mz-tab-item>
-<mz-tab-item [label]="'Events'"><h3>Events</h3></mz-tab-item>
+<mz-tab-item [label]="'Related Artists'" class="fade-in-half-sec"><h3 *ngIf="artist"><p>Related Artists</p></h3></mz-tab-item>
+<mz-tab-item [label]="'Events'" class="fade-in-half-sec" style="background-color: transparent;"><h3>Events</h3></mz-tab-item>
 </mz-tab>
+
+
+<div class="row fade-in-2-sec" *ngIf="artist?.songs?.length == 0 && artist?.albums?.length == 0">
+  <div class="col s12">
+    <div class="card-panel large transparent z-depth-0">
+      <div class="row"></div>
+    </div>
+  </div>
+  <div class="col s12">
+    <div class="card-panel large transparent z-depth-0 center">
+      <h2 class="grey-text">No songs or albums by this artist</h2>
+    </div>
+  </div>
+</div>
+</ng-container>
+
+<!-- Loading animation -->
+<div class="row fade-in-2-sec" *ngIf="!artist">
+  <div class="loader">Loading...</div>
+</div>
+</div>

@@ -31,6 +31,7 @@
     "mdi": "^2.0.46",
     "ng2-timeago": "^1.0.7",
     "rxjs": "^5.4.2",
+    "time-ago-pipe": "^1.2.1",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

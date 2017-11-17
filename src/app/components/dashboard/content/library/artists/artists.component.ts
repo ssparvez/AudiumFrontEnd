@@ -12,14 +12,14 @@ export class ArtistsComponent implements OnInit {
   constructor(
     private router: Router,
     private libraryService: LibraryService
-  ) {
-    this.libraryService.getAllArtists().subscribe((artists) => {
-      this.artists = artists;
-      console.log(this.artists);
-    });
-   }
+  ) {}
 
   ngOnInit() {
+    this.libraryService.getAllArtists().subscribe((artists) => {
+      if(artists != null){
+        this.artists = artists;
+      }
+    });
   }
 
 }
@@ -35,14 +35,14 @@ interface Artist {
 interface Album {
   albumId: number,
   albumTitle: string,
-  year: string,
+  releaseYear: string,
   artistId: number,
   artistName: string,
   songs: Song[]
 }
 
 interface Song {
-  id: number,
+  songId: number,
   title: string,
   artistId: number,
   artistName: string,
