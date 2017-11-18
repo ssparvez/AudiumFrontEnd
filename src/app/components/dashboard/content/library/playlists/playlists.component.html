@@ -12,8 +12,8 @@
   <div class="row fade-in-1-sec" (contextmenu)="openMenu()" *ngFor="let playlist of playlists; let i = index;" [attr.data-index]="i" >
     <md-menu #menu="mdMenu">
       <button md-menu-item (click)="openMenu(playlist)"> Edit </button>
-      <button md-menu-item *ngIf="!playlist.isPublic"> Make public </button>
-      <button md-menu-item *ngIf="!playlist.isPublic"> Make private </button>
+      <button md-menu-item *ngIf="playlist.isPublic == false"> Make public </button>
+      <button md-menu-item *ngIf="playlist.isPublic == true"> Make private </button>
       <button md-menu-item> Delete </button>
     </md-menu>
     <div class="card horizontal hoverable grey darken-2">
