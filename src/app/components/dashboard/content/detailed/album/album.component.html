@@ -30,7 +30,9 @@
 			          <td>{{song?.trackNumber}}</td>
                 <td>{{song?.title}}</td>
                 <td><a [routerLink]="['../../artist', song?.artistId]">{{song?.artistName}}</a></td>
-                <td><span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span><span *ngIf="song?.duration?.substring(3,4) != '0'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}</td>
+                <td>
+                  <span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span><span *ngIf="song?.duration?.substring(3,4) != '0' || song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}
+                </td>
             </tr>
         </tbody>
     </table>

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import {JwtHelper, tokenNotExpired} from "angular2-jwt";
+import { JwtHelper, tokenNotExpired } from "angular2-jwt";
 import { Http, RequestOptions, Headers } from '@angular/http';
-import {CustomerAccount} from "../../classes/customer-account.service";
-import {GeneralService} from "../general/general.service";
-import {DataService} from "../data.service";
+import { CustomerAccount } from "../../classes/customer-account.service";
+import { GeneralService } from "../general/general.service";
+import { DataService } from "../data.service";
 // Errors
-import {AppError} from "../../errors/AppError";
-import {NotFoundError} from "../../errors/not-found-error";
-import {ServerError} from "../../errors/server-error";
+import { AppError } from "../../errors/AppError";
+import { NotFoundError } from "../../errors/not-found-error";
+import { ServerError } from "../../errors/server-error";
 
 @Injectable()
 export class AuthenticationService {

@@ -9,33 +9,50 @@
   </div>
 </div>
 <div class="row" style="margin-bottom:0;" *ngIf="playlists">
-<div class="row" *ngIf="playlists" style="margin-bottom:0;">
-  <div class="row" (contextmenu)="openMenu()"   *ngFor="let playlist of playlists" >
+  <div class="row fade-in-1-sec" (contextmenu)="openMenu()" *ngFor="let playlist of playlists; let i = index;" [attr.data-index]="i" >
     <md-menu #menu="mdMenu">
       <button md-menu-item (click)="openMenu(playlist)"> Edit </button>
       <button md-menu-item *ngIf="!playlist.isPublic"> Make public </button>
       <button md-menu-item *ngIf="!playlist.isPublic"> Make private </button>
       <button md-menu-item> Delete </button>
     </md-menu>
-  <div  class="card horizontal grey darken-2">
-    <div class="card-image" (click)="viewPlaylist(playlist.playlistId)">
-      <img [routerLink]="['../playlist', playlist.playlistId]" src="assets/images/defaults/playlist.svg" width="150" height="150">
-    </div>
-    <div class="card-stacked">
-      <div class="card-content" [routerLink]="['../playlist', playlist.playlistId]">
-        <h2>{{playlist.name}}</h2>
-        <h4>{{playlist.description}}</h4>
+    <div class="card horizontal hoverable grey darken-2">
+      <div class="card-image" *ngIf="playlist">
+        <a [routerLink]="['../playlist', playlist?.playlistId]" (mouseenter)="emulateContentHover(i, true)" (mouseleave)="emulateContentHover(i, false)">
+          <img src="assets/images/defaults/playlist.svg" width="150" height="150">
+        </a>
       </div>
-      <div class="card-action">
-
-        <a [mdMenuTriggerFor]="menu"><i class="material-icons playlist-more-icon waves-effect">more_horiz</i></a>
-        <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">play_arrow</i></a>
+      <div class="card-stacked" *ngIf="playlist">
+        <a [routerLink]="['../playlist', playlist?.playlistId]" style="display:flex !important;">
+          <div class="card-content {{emulateCardContentHover[i]}}" (mouseenter)="emulateContentHover(i, true)" (mouseleave)="emulateContentHover(i, false)">
+              <h2 class="col s11 truncate" style="color: inherit; padding-bottom: 28px;">{{playlist?.name}}</h2>
+              <span class="col s1 right right-align grey-text {{emulateCardContentHoverIcon[i]}}" *ngIf="playlist?.accountId == currentAccountId">
+                <i class="material-icons">star</i>
+              </span>
+            <!-- <h4>{{playlist?.description}}</h4> --> <!-- Might add support for playlist descriptions later if we have time -->
+          </div>
+        </a>
+        <div class="card-action" style="padding: 2px 24px;" *ngIf="currentUser && playlist?.accountId == currentAccountId">
+          <a [mdMenuTriggerFor]="menu">
+            <div class="chip waves-effect hoverable" style="background-color: transparent;">
+              <i class="material-icons playlist-more-icon">more_horiz</i>
+            </div>
+          </a>
+          <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">play_arrow</i></a>
+        </div>
+        <div class="card-action" style="padding: 2px 24px;" *ngIf="currentUser && playlist?.accountId != currentAccountId">
+          <a>
+            <div class="chip waves-effect hoverable" style="background-color: transparent;">
+              <i class="material-icons playlist-more-icon">more_horiz</i>
+            </div>
+          </a>
+          <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">play_arrow</i></a>
+        </div>
       </div>
     </div>
   </div>
 </div>
-</div>
-</div>
+
 <div class="row fade-in-2-sec" *ngIf="playlists?.length == 0">
   <div class="col s12">
     <div class="card-panel large transparent z-depth-0">
@@ -53,5 +70,4 @@
 <div class="row fade-in-2-sec" *ngIf="!playlists">
   <div class="loader">Loading...</div>
 </div>
-
 
