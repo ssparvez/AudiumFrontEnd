@@ -2,3 +2,15 @@
     font-size: xx-large;
     color: white;
 }
+
+.playlists-context-menu:hover {
+    color: white;
+}
+
+.card-content {
+    color: rgb(236, 236, 236);
+}
+
+.card-content:hover, .card-content-emulated-hover {
+    color: white;
+}

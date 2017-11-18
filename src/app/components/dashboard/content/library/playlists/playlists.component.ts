@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { LibraryService } from '../../../../../services/library/library.service';
 import { MzModalService, MzToastService } from 'ng2-materialize';
 import { Router } from "@angular/router";
-import {GeneralService} from "../../../../../services/general/general.service";
-import {MdDialog} from "@angular/material";
-import {CreatePlaylistComponent} from "../../../../../modals/create-playlist/create-playlist.component";
+import { GeneralService } from "../../../../../services/general/general.service";
+import { MdDialog } from "@angular/material";
+import { CreatePlaylistComponent } from "../../../../../modals/create-playlist/create-playlist.component";
 
 
 @Component({
@@ -15,21 +15,34 @@ import {CreatePlaylistComponent} from "../../../../../modals/create-playlist/cre
 export class PlaylistsComponent implements OnInit {
 
   playlists: Playlist[];
-  currentUser: JSON;
+  public currentUser: JSON;
+  public currentAccountId: number;
+  public emulateCardContentHover: string[];
+  public emulateCardContentHoverIcon: string[];
 
   constructor(
     private router: Router,
     private libraryService: LibraryService,
     private dialog: MdDialog,
     private toastService: MzToastService
-  ) { }
+  )
+  {
+    this.emulateCardContentHover = [];
+    this.emulateCardContentHoverIcon = [];
+    this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    this.currentAccountId = this.currentUser['_accountId'];
+  }
 
   ngOnInit() {
     this.libraryService.getAllPlaylists().subscribe((playlists) => {
       this.playlists = playlists;
+      for (let playlist of playlists){
+        this.emulateCardContentHover.push('');
+        this.emulateCardContentHoverIcon.push('text-darken-1');
+      }
       console.log(this.playlists);
     });
-    this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+
   }
 
   viewPlaylist(playlistId: number) {
@@ -52,7 +65,17 @@ export class PlaylistsComponent implements OnInit {
 
   openMenu() {
     console.log('hi');
-    return false;
+    return true;
+  }
+
+  emulateContentHover(index: number, emulate: boolean) {
+    if (emulate) {
+      this.emulateCardContentHover[index] = 'card-content-emulated-hover';
+      this.emulateCardContentHoverIcon[index] = '';
+    }else{
+      this.emulateCardContentHover[index] = '';
+      this.emulateCardContentHoverIcon[index] = 'text-darken-1';
+    }
   }
 }
 
