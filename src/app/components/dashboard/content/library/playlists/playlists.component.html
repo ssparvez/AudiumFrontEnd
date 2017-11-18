@@ -10,12 +10,6 @@
 </div>
 <div class="row" style="margin-bottom:0;" *ngIf="playlists">
   <div class="row fade-in-1-sec" (contextmenu)="openMenu()" *ngFor="let playlist of playlists; let i = index;" [attr.data-index]="i" >
-    <md-menu #menu="mdMenu">
-      <button md-menu-item (click)="openMenu(playlist)"> Edit </button>
-      <button md-menu-item *ngIf="playlist.isPublic == false"> Make public </button>
-      <button md-menu-item *ngIf="playlist.isPublic == true"> Make private </button>
-      <button md-menu-item> Delete </button>
-    </md-menu>
     <div class="card horizontal hoverable grey darken-2">
       <div class="card-image" *ngIf="playlist">
         <a [routerLink]="['../playlist', playlist?.playlistId]" (mouseenter)="emulateContentHover(i, true)" (mouseleave)="emulateContentHover(i, false)">
@@ -33,7 +27,13 @@
           </div>
         </a>
         <div class="card-action" style="padding: 2px 24px;" *ngIf="currentUser && playlist?.accountId == currentAccountId">
-          <a [mdMenuTriggerFor]="menu">
+          <md-menu #creatorMenu="mdMenu">
+            <button md-menu-item (click)="openMenu(playlist)"> Edit </button>
+            <button md-menu-item *ngIf="playlist?.isPublic == false"> Make public </button>
+            <button md-menu-item *ngIf="playlist?.isPublic == true"> Make private </button>
+            <button md-menu-item> Delete </button>
+          </md-menu>
+          <a [mdMenuTriggerFor]="creatorMenu">
             <div class="chip waves-effect hoverable" style="background-color: transparent;">
               <i class="material-icons playlist-more-icon">more_horiz</i>
             </div>
@@ -41,7 +41,10 @@
           <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">play_arrow</i></a>
         </div>
         <div class="card-action" style="padding: 2px 24px;" *ngIf="currentUser && playlist?.accountId != currentAccountId">
-          <a>
+          <md-menu #followerMenu="mdMenu">
+              <button md-menu-item class="playlists-context-menu"> Unfollow </button>
+          </md-menu>
+          <a [mdMenuTriggerFor]="followerMenu">
             <div class="chip waves-effect hoverable" style="background-color: transparent;">
               <i class="material-icons playlist-more-icon">more_horiz</i>
             </div>

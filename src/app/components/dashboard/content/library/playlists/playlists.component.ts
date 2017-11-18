@@ -65,7 +65,7 @@ export class PlaylistsComponent implements OnInit {
 
   openMenu(value) {
     console.log(value);
-    return false;
+    return true; // Returning false from this function causes issues with right-click context menu
   }
 
   emulateContentHover(index: number, emulate: boolean) {
