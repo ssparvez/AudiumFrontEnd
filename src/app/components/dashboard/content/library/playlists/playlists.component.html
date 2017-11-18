@@ -11,6 +11,12 @@
 <div class="row" style="margin-bottom:0;" *ngIf="playlists">
 <div class="row" *ngIf="playlists" style="margin-bottom:0;">
   <div class="row" (contextmenu)="openMenu()"   *ngFor="let playlist of playlists" >
+    <md-menu #menu="mdMenu">
+      <button md-menu-item (click)="openMenu(playlist)"> Edit </button>
+      <button md-menu-item *ngIf="!playlist.isPublic"> Make public </button>
+      <button md-menu-item *ngIf="!playlist.isPublic"> Make private </button>
+      <button md-menu-item> Delete </button>
+    </md-menu>
   <div  class="card horizontal grey darken-2">
     <div class="card-image" (click)="viewPlaylist(playlist.playlistId)">
       <img [routerLink]="['../playlist', playlist.playlistId]" src="assets/images/defaults/playlist.svg" width="150" height="150">
@@ -22,13 +28,12 @@
       </div>
       <div class="card-action">
 
-        <a [mdMenuTriggerFor]="playlistMenu"><i class="material-icons playlist-more-icon waves-effect">more_horiz</i></a>
+        <a [mdMenuTriggerFor]="menu"><i class="material-icons playlist-more-icon waves-effect">more_horiz</i></a>
         <a class="btn-floating halfway-fab waves-effect waves-light blue"><i class="material-icons">play_arrow</i></a>
-
       </div>
     </div>
   </div>
-
+</div>
 </div>
 </div>
 <div class="row fade-in-2-sec" *ngIf="playlists?.length == 0">
@@ -48,9 +53,5 @@
 <div class="row fade-in-2-sec" *ngIf="!playlists">
   <div class="loader">Loading...</div>
 </div>
-<md-menu #playlistMenu="mdMenu">
-  <button md-menu-item> Edit </button>
-  <button md-menu-item> Make public </button>
-  <button md-menu-item> Delete </button>
-</md-menu>
+
 

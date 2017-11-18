@@ -50,10 +50,12 @@ export class PlaylistsComponent implements OnInit {
       });
   }
 
-  openMenu() {
-    console.log('hi');
+  openMenu(value) {
+    console.log(value);
     return false;
   }
+
+
 }
 
 interface Playlist {

@@ -55,11 +55,10 @@ export class PaymentInfoComponent  implements  OnInit {
     const dateString = this.paymentInfo.ccExprYear + '-' + this.paymentInfo.ccExprMonth + '-01';
     const data = {
         accountId: this.accountId,
-        creditcardexpire: new Date(dateString),
+        creditCardExpiration: new Date(dateString),
         zipCode: this.paymentInfo.zipCode,
-        creditcardhash: this.paymentInfo.ccNumber
+        creditCardHash: this.paymentInfo.ccNumber
       };
-      console.log("wtf:" + data);
     if ( this.isNew === true) {
       console.log(data);
       this.service.post('/upgrade',data).subscribe(
