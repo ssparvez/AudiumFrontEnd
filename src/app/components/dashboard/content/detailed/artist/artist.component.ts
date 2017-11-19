@@ -12,6 +12,8 @@ export class ArtistComponent implements OnInit {
 
   private id;
   artist: Artist;
+  // generic placeholder object
+  things = [1,2,3,4,5]
   constructor(
     private route: ActivatedRoute,
     private router: Router,
