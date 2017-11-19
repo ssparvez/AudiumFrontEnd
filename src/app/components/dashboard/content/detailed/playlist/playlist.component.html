@@ -1,6 +1,6 @@
 <div class="row fade-in-half-sec" *ngIf="playlist">
   <div class="col s6 m4">
-    <div class="card">
+    <div class="card transparent">
       <div class="card-image">
         <img src="assets/images/defaults/playlist.svg">
         <a class="btn-floating halfway-fab waves-effect waves-light blue" *ngIf="playlist?.songs?.length > 0"><i class="material-icons">play_arrow</i></a>
@@ -32,7 +32,10 @@
 
     <tbody class="tracklist" *ngIf="playlist">
       <tr *ngFor="let song of playlist.songs">
-      <td>{{song?.title}}</td>
+      <td>
+        {{song?.title}}
+        <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
+      </td>
       <td><a [routerLink]="['../../artist', song?.artistId]">{{song?.artistName}}</a></td>
       <td><a [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</a></td>
       <td>{{song?.timeAdded | timeAgo}}</td>

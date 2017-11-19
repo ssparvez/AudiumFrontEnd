@@ -53,7 +53,10 @@
       </thead>
       <tbody class="tracklist" *ngIf="topSongs?.length > 0">
         <tr class="fade-in-half-sec" *ngFor="let song of topSongs">
-          <td>{{song?.title}}</td>
+          <td>
+            {{song?.title}}
+            <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
+          </td> 
           <td>
             <!--IN SPAN: *ngFor="let artist of song.artists; last as isLast"-->
             <!--{{artist.name}}{{isLast ? '' : ', '}}-->
