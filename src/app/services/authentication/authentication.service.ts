@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { JwtHelper, tokenNotExpired } from "angular2-jwt";
 import { Http, RequestOptions, Headers } from '@angular/http';
-import { CustomerAccount } from "../../classes/customer-account.service";
+import { CustomerAccount } from "../../classes/CustomerAccount";
 import { GeneralService } from "../general/general.service";
 import { DataService } from "../data.service";
 // Errors

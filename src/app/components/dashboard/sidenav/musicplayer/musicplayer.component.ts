@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PlayerService} from '../../../../services/player/player.service';
 import { Howl } from 'howler';
+import { Song } from '../../../../classes/Song';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { Howl } from 'howler';
   styleUrls: ['./musicplayer.component.css']
 })
 export class MusicplayerComponent implements OnInit {
-  songQueue: Song[];
+  songQueue: any[];
   queueIndex = 0;
   playIcon = "play_arrow";
   soundIcon = "volume_up";
@@ -24,12 +25,11 @@ export class MusicplayerComponent implements OnInit {
 
   constructor(private playerService : PlayerService) { }
   ngOnInit() {
-   this.songQueue = [
-      new Song(1, "The Less I Know the Better", "Tame Impala", '../../../../../assets/songs/TheLessIKnowTheBetter.m4a', "../../../../../assets/images/currents.jpg"),
-      //new Song(1, "The Less I Know the Better", "Tame Impala", '../../../../../assets/songs/TheLessIKnowTheBetter.m4a', "../../../../../assets/images/currents.jpg"),
-      new Song(2, "Intro", "The xx", '../../../../../assets/songs/Intro.mp3', '../../../../../assets/images/xx.png'),
-      new Song(3, "Feels Good Inc.", "Gorillaz", '../../../../../assets/songs/FeelsGoodInc.mp3', '../../../../../assets/images/demondays.jpeg'),
-      new Song(4, "song 4", "Gorillaz", '../../../../../assets/songs/FeelsGoodInc.mp3', '../../../../../assets/images/demondays.jpeg')
+    this.songQueue = [
+      {songId: 1, title: "The Less I Know the Better", artistName: "Tame Impala", url: '../../../../../assets/songs/TheLessIKnowTheBetter.m4a', albumArtUrl: "../../../../../assets/images/currents.jpg"},
+      {songId: 2, title: "Intro", artistName: "The xx", url: '../../../../../assets/songs/Intro.mp3', albumArtUrl: '../../../../../assets/images/xx.png'},
+      {songId: 3, title: "Feels Good Inc.", artistName: "Gorillaz", url: '../../../../../assets/songs/FeelsGoodInc.mp3', albumArtUrl: '../../../../../assets/images/demondays.jpeg'},
+      {songId: 4, title: "song 4", artistName: "Gorillaz", url: '../../../../../assets/songs/FeelsGoodInc.mp3', albumArtUrl: '../../../../../assets/images/demondays.jpeg'}
     ];
     // init the songs
     for(let song of this.songQueue) {
@@ -163,20 +163,20 @@ export class MusicplayerComponent implements OnInit {
   }
 }
 
-class Song {
-  songId: number;
-  title: string;
-  artist: string;
-  playing = false;
-  sound: Howl;
-  url: string;
-  albumArtUrl: string;
+// class Song {
+//   songId: number;
+//   title: string;
+//   artist: string;
+//   playing = false;
+//   sound: Howl;
+//   url: string;
+//   albumArtUrl: string;
 
-  constructor(songId, title, artist,url, albumArtUrl) {
-    this.songId = songId;
-    this.title = title;
-    this.artist = artist;
-    this.url = url;
-    this.albumArtUrl = albumArtUrl;
-  }
-}
+//   constructor(songId, title, artist,url, albumArtUrl) {
+//     this.songId = songId;
+//     this.title = title;
+//     this.artist = artist;
+//     this.url = url;
+//     this.albumArtUrl = albumArtUrl;
+//   }
+// }

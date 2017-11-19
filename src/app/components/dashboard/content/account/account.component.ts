@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CustomerAccount} from "../../../../classes/customer-account.service";
+import { CustomerAccount } from "../../../../classes/CustomerAccount";
 import { PaymentInfoComponent } from "../../../../modals/payment-info/payment-info.component";
 import {DataService} from "../../../../services/data.service";
 import {GeneralService} from "../../../../services/general/general.service";

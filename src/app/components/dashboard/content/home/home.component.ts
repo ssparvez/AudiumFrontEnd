@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../../../../services/home/home.service'
 import { GeneralService } from '../../../../services/general/general.service';
 import { AuthenticationService } from '../../../../services/authentication/authentication.service';
-import { CustomerAccount } from "../../../../classes/customer-account.service";
+import { CustomerAccount } from "../../../../classes/CustomerAccount";
 import { Router } from "@angular/router";
 import { Observable } from 'rxjs/Rx';
+import { Song } from '../../../../classes/Song';
+import { Genre } from '../../../../classes/Genre';
 
 @Component({
   selector: 'app-home',
@@ -56,42 +58,3 @@ export class HomeComponent implements OnInit {
     }
   }
 }
-
-interface Genre {
-  genreId: string,
-  genreName: string
-}
-
-
-interface Artist {
-  artistId: number,
-  artistName: string,
-  bio: string,
-  albums: Album[],
-  songs: Song[]
-}
-
-interface Album {
-  albumId: number,
-  albumTitle: string,
-  releaseYear: string,
-  artistId: number,
-  artistName: string,
-  songs: Song[]
-}
-
-interface Song {
-  songId: number,
-  title: string,
-  artistId: number,
-  artistName: string,
-  albumId: number,
-  albumTitle: string,
-  duration: number,
-  isExplicit: boolean,
-  year: string,
-  genreId: number,
-  genreName: string,
-  playCount: number
-}
-

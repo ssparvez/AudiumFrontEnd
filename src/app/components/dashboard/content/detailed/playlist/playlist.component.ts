@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LibraryService } from '../../../../../services/library/library.service';
 import { ActivatedRoute, Router } from "@angular/router";
+import { Song } from '../../../../../classes/Song'
 
 @Component({
   selector: 'app-playlist',
@@ -42,16 +43,4 @@ interface Playlist {
   accountId: number,
   username: string,
   songs: Song[]
-}
-
-interface Song {
-  songId: number,
-  title: string,
-  artistId: number,
-  artistName: string,
-  albumId: number,
-  albumTitle: string,
-  duration: number,
-  isExplicit: boolean,
-  timeAdded: number
 }

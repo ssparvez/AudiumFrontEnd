@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { GeneralService } from "../../../../../services/general/general.service";
 import { MdDialog } from "@angular/material";
 import { CreatePlaylistComponent } from "../../../../../modals/create-playlist/create-playlist.component";
+import { Song } from '../../../../../classes/Song';
 
 
 @Component({
@@ -89,16 +90,4 @@ interface Playlist {
   accountId: number;
   username: string;
   songs: Song[];
-}
-
-interface Song {
-  songId: number,
-  title: string,
-  artistId: number,
-  artistName: string,
-  albumId: number,
-  albumTitle: string,
-  duration: number,
-  isExplicit: boolean,
-  timeAdded: number
 }

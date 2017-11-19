@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MzToastService } from 'ng2-materialize';
 import { LibraryService } from '../../../../../services/library/library.service';
+import { Song } from '../../../../../classes/Song';
 
 @Component({
   selector: 'app-songs',
@@ -23,18 +24,4 @@ export class SongsComponent implements OnInit {
     this.toastService.show('Playing Song!', 4000, 'blue');
   }
 
-}
-
-interface Song {
-  songId: number,
-  title: string,
-  //artists: Artist [],
-  //album: Album []
-  artistId: number,
-  artistName: string,
-  albumId: number,
-  albumTitle: string,
-  duration: number,
-  isExplicit: boolean,
-  timeAdded: number
 }

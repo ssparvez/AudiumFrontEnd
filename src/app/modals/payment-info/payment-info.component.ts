@@ -3,7 +3,7 @@ import {MdDialogRef,  MD_DIALOG_DATA} from "@angular/material";
 import {GeneralService} from "../../services/general/general.service";
 import {AppError} from "../../errors/AppError";
 import {PaymentInfo} from "../../classes/PaymentInfo";
-import {CustomerAccount} from "../../classes/customer-account.service";
+import {CustomerAccount} from "../../classes/CustomerAccount";
 import {MzToastService} from "ng2-materialize/dist";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
 
