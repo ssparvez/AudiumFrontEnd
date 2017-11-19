@@ -24,4 +24,8 @@ export class SongsComponent implements OnInit {
     this.toastService.show('Playing Song!', 4000, 'blue');
   }
 
+  playSong(songId: number) {
+    console.log(songId);
+  }
+
 }

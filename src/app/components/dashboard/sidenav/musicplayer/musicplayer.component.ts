@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PlayerService} from '../../../../services/player/player.service';
 import { Howl } from 'howler';
 import { Song } from '../../../../classes/Song';
+import { Observable, Subscription } from 'rxjs/Rx';
+
 
 
 @Component({
@@ -23,6 +25,7 @@ export class MusicplayerComponent implements OnInit {
   volumeLevel = 1;
   previousVolumeLevel = 1;
   repeatLevel = 0;
+  value = 0;
 
   constructor(private playerService : PlayerService) { }
   ngOnInit() {
@@ -59,6 +62,9 @@ export class MusicplayerComponent implements OnInit {
                break;
             }
          }
+        },
+        onseek: () => {
+          this.value = this.songQueue[this.queueIndex].seek();
         }
       });
     }
@@ -158,5 +164,10 @@ export class MusicplayerComponent implements OnInit {
       }
     }
     console.log("toggle level:" + this.repeatLevel);
+  }
+
+  seekTrack(value: number): void {
+    this.songQueue[this.queueIndex].sound.seek(value);
+    console.log(this.songQueue[this.queueIndex].sound.seek())
   }
 }

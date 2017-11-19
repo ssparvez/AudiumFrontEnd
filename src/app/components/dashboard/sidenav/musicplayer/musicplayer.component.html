@@ -3,32 +3,40 @@
     <a [routerLink]="['album', 1]">
       <img src={{songQueue[queueIndex].albumArtUrl}}>
     </a>
-    <span class="card-title black" id="music-card-title">
-      <div class="row" style="margin-bottom: 0px;">
-        <div class="left" style="height: 50px;">
-          <h5>
-            <a [routerLink]="['artist', 1]">{{songQueue[queueIndex].artistName}}</a>
-          </h5>
-          <h4>{{songQueue[queueIndex].title}}</h4>
+    <span class="card-title black" id="music-card-title">        
+      <div style="padding: 0px 24px;">          
+          <span class="track-slider">
+              <input #ref1 (change)="seekTrack(ref1.value)" class="track-slider" type=range  value={{songQueue[queueIndex].sound.seek()}} min=0 max={{songQueue[queueIndex].sound.duration()}}
+                id=fader step=1>
+            </span>
+        <div class="row" style="margin-bottom: 0px;">
+          <div class="left" style="height: 50px;">
+            <h5>
+              <a [routerLink]="['artist', 1]">{{songQueue[queueIndex].artistName}}</a>
+            </h5>
+            <h4>{{songQueue[queueIndex].title}}</h4>
+          </div>
+          <!-- Music controls -->
+          <div class="right">
+            <i (click)="togglePrevious()" class="material-icons" style="vertical-align: middle;">skip_previous</i>
+            <a class="btn btn-floating btn-small white pulse" (click)="togglePlayback()" aria-hidden="true" [ngClass]="{'pulse': !isPlaying, '': !isPlaying}">
+              <i class="material-icons blue-text">{{playIcon}}</i>
+            </a>
+            <i (click)="toggleNext()" class="material-icons" style="vertical-align: middle;">skip_next</i>
+          </div>
         </div>
-        <!-- Music controls -->
-        <div class="right">
-          <i (click)="togglePrevious()"class="material-icons" style="vertical-align: middle;">skip_previous</i>
-          <a class="btn btn-floating btn-small white pulse" (click)="togglePlayback()" aria-hidden="true" [ngClass]="{'pulse': !isPlaying, '': !isPlaying}">
-            <i class="material-icons blue-text">{{playIcon}}</i>
-          </a>
-          <i (click)="toggleNext()" class="material-icons" style="vertical-align: middle;">skip_next</i>
+        <div class="row" style="margin-bottom: 0px;">
+          <i (click)="toggleShuffle()" class="material-icons" [ngClass]="{'white-text': !isShuffled, 'blue-text': isShuffled}">shuffle</i>
+          <i (click)="toggleRepeat()" class="material-icons" [ngClass]="{'white-text': !isRepeated, 'blue-text': isRepeated}">{{repeatIcon}}</i>
+          <h4 style="display: inline; vertical-align: middle;">
+            <a [routerLink]="['song', 1, 'lyrics']">LYRICS</a>
+          </h4>
+          <i (click)="toggleMute()" class="material-icons" style="margin-left: 16px;">{{soundIcon}}</i>
+          <span class="volume-slider">
+            <input #ref2 [(ngModel)]="mymodel2" (ngModelChange)="changeVolume($event)" class="volume-slider" type=range min=0 max=100 value={{volumeLevel*100}}
+              id=fader step=1>
+          </span>
         </div>
-      </div>
-      <div class="row" style="margin-bottom: 0px;">
-        <i (click)="toggleShuffle()" class="material-icons" [ngClass]="{'white-text': !isShuffled, 'blue-text': isShuffled}">shuffle</i>
-        <i (click)="toggleRepeat()" class="material-icons" [ngClass]="{'white-text': !isRepeated, 'blue-text': isRepeated}">{{repeatIcon}}</i>
-        <h4 style="display: inline; vertical-align: middle;"><a [routerLink]="['song', 1, 'lyrics']">LYRICS</a></h4>
-        <i (click)="toggleMute()" class="material-icons" style="margin-left: 16px;">{{soundIcon}}</i>
-        <span class="volume-slider">
-          <input #ref (change)="changeVolume(ref.value)" class="volume-slider" type=range min=0 max=100 value={{volumeLevel*100}}
-            id=fader step=1>
-        </span>
       </div>
     </span>
   </div>
