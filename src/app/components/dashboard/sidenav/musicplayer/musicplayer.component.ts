@@ -11,6 +11,7 @@ import { Song } from '../../../../classes/Song';
 })
 export class MusicplayerComponent implements OnInit {
   songQueue: any[];
+  previousQueue: any[];
   queueIndex = 0;
   playIcon = "play_arrow";
   soundIcon = "volume_up";
@@ -124,17 +125,14 @@ export class MusicplayerComponent implements OnInit {
       }
       this.isMuted = false;
     }
-    // let max = 100;
-    // let min = 0;
-    // var percent = Math.ceil(((value - min) / (max - min)) * 100);
-    // console.log(min);
-    // $('span.volume-slider input[type="range"]::-ms-fill-lower').css('background', '-(left, #e74c3c 0%, #e74c3c ' + percent + '%, #999 ' + percent + '%)');
   }
 
   toggleShuffle(): void {
     if(this.isShuffled) {
+      this.songQueue = this.previousQueue.map(x => Object.assign({}, x)); // copy array
       this.isShuffled = false;
     } else {
+      this.previousQueue = this.songQueue.map(x => Object.assign({}, x));
       // fisher-yates shuffle
       for (let i = this.songQueue.length - 1; i > this.queueIndex; i--) {
         let j = Math.floor(Math.random() * (i - this.queueIndex)) + this.queueIndex + 1;
@@ -162,21 +160,3 @@ export class MusicplayerComponent implements OnInit {
     console.log("toggle level:" + this.repeatLevel);
   }
 }
-
-// class Song {
-//   songId: number;
-//   title: string;
-//   artist: string;
-//   playing = false;
-//   sound: Howl;
-//   url: string;
-//   albumArtUrl: string;
-
-//   constructor(songId, title, artist,url, albumArtUrl) {
-//     this.songId = songId;
-//     this.title = title;
-//     this.artist = artist;
-//     this.url = url;
-//     this.albumArtUrl = albumArtUrl;
-//   }
-// }

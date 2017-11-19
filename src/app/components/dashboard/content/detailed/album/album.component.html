@@ -1,46 +1,67 @@
 <div class="row fade-in-half-sec">
-    <div class="col s6 m4">
-        <div class="card transparent fade-in-1-sec">
-            <div class="card-image">
-                <img style="z-index: 1" src="assets/images/defaults/album.svg">
-                <a class="btn-floating halfway-fab waves-effect waves-light blue" *ngIf="album?.songs?.length > 0"><i class="material-icons">play_arrow</i></a>
-            </div>
-        </div>
+  <div class="col s6 m4">
+    <div class="card transparent fade-in-1-sec">
+      <div class="card-image">
+        <img style="z-index: 1" src="assets/images/defaults/album.svg">
+        <a class="btn-floating halfway-fab waves-effect waves-light blue" *ngIf="album?.songs?.length > 0">
+          <i class="material-icons">play_arrow</i>
+        </a>
+      </div>
     </div>
-    <div *ngIf="album" class="creator col s6 m8 fade-in-1-sec">
-        <h4>Album</h4>
-        <h1>{{album?.albumTitle}}</h1>
-        <h2><a [routerLink]="['../../artist', album?.artistId]">{{album?.artistName}}</a></h2>
-		    <h3>{{album?.releaseYear.substring(0,4)}}</h3>
+  </div>
+  <div *ngIf="album" class="creator col s6 m8 fade-in-1-sec">
+    <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+      <h4>Album</h4>
     </div>
+    <div class="row" style="margin-bottom: 0px; padding-bottom: 0px;">
+      <h1>{{album?.albumTitle}}</h1>
+    </div>
+    <div class="row">
+      <h2>
+        <a [routerLink]="['../../artist', album?.artistId]">{{album?.artistName}}</a>
+      </h2>
+    </div>
+    <div class="row">
+      <h3></h3>
+    </div>
+    <div class="row">
+      <div class="chip fade-in-half-sec" *ngIf="album?.releaseYear">
+        {{album?.releaseYear.substring(0,4)}}
+      </div>
+      <div class="chip fade-in-half-sec" *ngIf="album?.songs">
+        {{album?.songs?.length}} song<span *ngIf="album?.songs?.length != 1">s</span>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="row fade-in-1-sec">
-    <table class="bordered responsive-table white-text" *ngIf="album && album?.songs">
-        <thead>
-            <tr>
-			    <th>Track</th>
-                <th>Title</th>
-                <th>Artist</th>
-                <th>Duration</th>
-            </tr>
-        </thead>
+  <table class="bordered responsive-table white-text" *ngIf="album && album?.songs">
+    <thead>
+      <tr>
+        <th>Track</th>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Duration</th>
+      </tr>
+    </thead>
 
-        <tbody class="tracklist">
-            <tr *ngFor="let song of album?.songs">
-			          <td>{{song?.trackNumber}}</td>
-                <td>
-                    {{song?.title}}
-                    <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
-                </td>
-                <td>
-                    <a [routerLink]="['../../artist', song?.artistId]">{{song?.artistName}}</a>
-                </td>
-                <td>
-                  <span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span><span *ngIf="song?.duration?.substring(3,4) != '0' || song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <tbody class="tracklist">
+      <tr *ngFor="let song of album?.songs">
+        <td>{{song?.trackNumber}}</td>
+        <td>
+          {{song?.title}}
+          <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
+        </td>
+        <td>
+          <a [routerLink]="['../../artist', song?.artistId]">{{song?.artistName}}</a>
+        </td>
+        <td>
+          <span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span>
+          <span *ngIf="song?.duration?.substring(3,4) != '0' || song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <div class="row fade-in-2-sec" *ngIf="album?.songs?.length == 0">
