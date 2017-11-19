@@ -4,12 +4,12 @@
 </ng-container>
 <ng-container *ngIf="currentUser">
 <div class="row">
-  <h2 class="fade-in-half-sec" style="text-align: center;" *ngIf="recentListens?.length > 0">Jump Back In</h2>
-  <h2 class="fade-in-half-sec" style="text-align: center;" *ngIf="recentListens?.length == 0">Start Listening</h2>
+  <h2 class="center fade-in-half-sec" *ngIf="recentListens?.length > 0">Jump Back In</h2>
+  <h2 class="center fade-in-half-sec" *ngIf="recentListens?.length == 0">Start Listening</h2>
 </div>
 <div class="row fade-in-1-sec" *ngIf="recentListens?.length > 0">
   <div class="col s12 m3" *ngFor="let recent of recentListens">
-    <div class="card" style="background-color:transparent;" *ngIf="recent">
+    <div class="card transparent" *ngIf="recent">
       <div class="card-image">
         <div class="fade-in-2-sec">
           <a [routerLink]="['../album', recent?.albumId]">
@@ -39,7 +39,7 @@
 </ng-container>
 <ng-container *ngIf="currentUser && recentListens">
   <div class="row">
-    <h2 class="fade-in-half-sec" style="text-align: center;"><br *ngIf="recentListens?.length > 0">Top Songs</h2>
+    <h2 class="center fade-in-half-sec"><br *ngIf="recentListens?.length > 0">Top Songs</h2>
   </div>
   <div class="row">
     <table class="bordered responsive-table white-text fade-in-half-sec">
@@ -81,7 +81,7 @@
 </ng-container>
 
 <div class="row" *ngIf="currentUser && topSongs">
-  <h2 style="text-align: center;" class="fade-in-half-sec"><br>Genres</h2>
+  <h2 class="center fade-in-half-sec"><br>Genres</h2>
 </div>
 <ng-container *ngIf="genres?.length > 0">
   <div class="row">

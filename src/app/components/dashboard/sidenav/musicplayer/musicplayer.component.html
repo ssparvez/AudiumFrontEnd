@@ -23,7 +23,8 @@
       <div class="row" style="margin-bottom: 0px;">
         <i (click)="toggleShuffle()" class="material-icons" [ngClass]="{'white-text': !isShuffled, 'blue-text': isShuffled}">shuffle</i>
         <i (click)="toggleRepeat()" class="material-icons" [ngClass]="{'white-text': !isRepeated, 'blue-text': isRepeated}">{{repeatIcon}}</i>
-        <i (click)="toggleMute()" class="material-icons">{{soundIcon}}</i>
+        <h4 style="display: inline; vertical-align: middle;"><a [routerLink]="['song', 1, 'lyrics']">LYRICS</a></h4>
+        <i (click)="toggleMute()" class="material-icons" style="margin-left: 16px;">{{soundIcon}}</i>
         <span class="volume-slider">
           <input #ref (change)="changeVolume(ref.value)" class="volume-slider" type=range min=0 max=100 value={{volumeLevel*100}}
             id=fader step=1>
