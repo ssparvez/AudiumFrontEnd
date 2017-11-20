@@ -15,6 +15,7 @@ img {
 }
 #music-card-title {
     background-color: rgba(0,0,0, 0.8) !important;
+    padding: 0px;
     width: 300px;
     height: 150px;
 }
@@ -30,27 +31,29 @@ img {
     width: 100%;
 }
 
-span.volume-slider input[type='range'] {
-	height: 2px;
-	width: 150px;
+span.volume-slider input[type='range'], span.track-slider input[type='range'] {
 	background: #999;
 	-webkit-appearance: none;
 	border: none;
     outline: 0;
     vertical-align: middle;
-    margin-left: 8px;
 }
 
-span.volume-slider input[type=range]::-webkit-slider-thumb {
+span.volume-slider input[type='range'] {
+    width: 88px;
+}
+
+span.volume-slider input[type=range]::-webkit-slider-thumb, span.track-slider input[type=range]::-webkit-slider-thumb  {
   -webkit-appearance: none;
-  height: 15px;
-  width: 15px;
-  border-radius: 30px;
+  height: 12px;
+  width: 12px;
+  border-radius: 24px;
   background: #ffffff;
   cursor: pointer;
 }
 
-span.volume-slider input[type=range]::-webkit-slider-runnable-track {
+span.track-slider input[type=range]::-webkit-slider-thumb {
+    background: #2196f3;
 }
 
 span.volume-slider input[type="range"]::-ms-fill-lower {

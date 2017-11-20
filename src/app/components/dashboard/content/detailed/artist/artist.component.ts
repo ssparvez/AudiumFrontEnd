@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { LibraryService } from '../../../../../services/library/library.service';
+import { Artist } from '../../../../../classes/Artist';
 
 @Component({
   selector: 'app-artist',
@@ -11,6 +12,8 @@ export class ArtistComponent implements OnInit {
 
   private id;
   artist: Artist;
+  // generic placeholder object
+  things = [1,2,3,4,5]
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -26,6 +29,7 @@ export class ArtistComponent implements OnInit {
         this.artist = artist;
 		    this.libraryService.getArtistSongs(this.id).subscribe((songs) => {
           this.artist.songs = songs;
+          console.log(this.artist.songs);
           this.libraryService.getArtistAlbums(this.id).subscribe((albums) => {
             this.artist.albums = albums;
           });
@@ -34,36 +38,4 @@ export class ArtistComponent implements OnInit {
     });
   }
 
-}
-
-interface Artist {
-  artistId: number,
-  artistName: string,
-  bio: string,
-  albums: Album[],
-  songs: Song[]
-}
-
-interface Album {
-  albumId: number,
-  albumTitle: string,
-  releaseYear: string,
-  artistId: number,
-  artistName: string,
-  songs: Song[]
-}
-
-interface Song {
-  songId: number,
-  title: string,
-  artistId: number,
-  artistName: string,
-  albumId: number,
-  albumTitle: string,
-  duration: number,
-  isExplicit: boolean,
-  year: string,
-  genreId: number,
-  genreName: string,
-  playCount: number
 }

@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PlayerService} from '../../../../services/player/player.service';
 import { Howl } from 'howler';
+import { Song } from '../../../../classes/Song';
+import { Observable, Subscription } from 'rxjs/Rx';
+
 
 
 @Component({
@@ -9,7 +12,8 @@ import { Howl } from 'howler';
   styleUrls: ['./musicplayer.component.css']
 })
 export class MusicplayerComponent implements OnInit {
-  songQueue: Song[];
+  songQueue: any[];
+  previousQueue: any[];
   queueIndex = 0;
   playIcon = "play_arrow";
   soundIcon = "volume_up";
@@ -21,15 +25,15 @@ export class MusicplayerComponent implements OnInit {
   volumeLevel = 1;
   previousVolumeLevel = 1;
   repeatLevel = 0;
+  value = 0;
 
   constructor(private playerService : PlayerService) { }
   ngOnInit() {
-   this.songQueue = [
-      new Song(1, "The Less I Know the Better", "Tame Impala", '../../../../../assets/songs/TheLessIKnowTheBetter.m4a', "../../../../../assets/images/currents.jpg"),
-      //new Song(1, "The Less I Know the Better", "Tame Impala", '../../../../../assets/songs/TheLessIKnowTheBetter.m4a', "../../../../../assets/images/currents.jpg"),
-      new Song(2, "Intro", "The xx", '../../../../../assets/songs/Intro.mp3', '../../../../../assets/images/xx.png'),
-      new Song(3, "Feels Good Inc.", "Gorillaz", '../../../../../assets/songs/FeelsGoodInc.mp3', '../../../../../assets/images/demondays.jpeg'),
-      new Song(4, "song 4", "Gorillaz", '../../../../../assets/songs/FeelsGoodInc.mp3', '../../../../../assets/images/demondays.jpeg')
+    this.songQueue = [
+      {songId: 1, title: "The Less I Know the Better", artistName: "Tame Impala", url: '../../../../../assets/songs/TheLessIKnowTheBetter.m4a', albumArtUrl: "../../../../../assets/images/currents.jpg"},
+      {songId: 2, title: "Intro", artistName: "The xx", url: '../../../../../assets/songs/Intro.mp3', albumArtUrl: '../../../../../assets/images/xx.png'},
+      {songId: 3, title: "Feels Good Inc.", artistName: "Gorillaz", url: '../../../../../assets/songs/FeelsGoodInc.mp3', albumArtUrl: '../../../../../assets/images/demondays.jpeg'},
+      {songId: 4, title: "song 4", artistName: "Gorillaz", url: '../../../../../assets/songs/FeelsGoodInc.mp3', albumArtUrl: '../../../../../assets/images/demondays.jpeg'}
     ];
     // init the songs
     for(let song of this.songQueue) {
@@ -58,6 +62,9 @@ export class MusicplayerComponent implements OnInit {
                break;
             }
          }
+        },
+        onseek: () => {
+          this.value = this.songQueue[this.queueIndex].seek();
         }
       });
     }
@@ -124,17 +131,14 @@ export class MusicplayerComponent implements OnInit {
       }
       this.isMuted = false;
     }
-    // let max = 100;
-    // let min = 0;
-    // var percent = Math.ceil(((value - min) / (max - min)) * 100);
-    // console.log(min);
-    // $('span.volume-slider input[type="range"]::-ms-fill-lower').css('background', '-(left, #e74c3c 0%, #e74c3c ' + percent + '%, #999 ' + percent + '%)');
   }
 
   toggleShuffle(): void {
     if(this.isShuffled) {
+      this.songQueue = this.previousQueue.map(x => Object.assign({}, x)); // copy array
       this.isShuffled = false;
     } else {
+      this.previousQueue = this.songQueue.map(x => Object.assign({}, x));
       // fisher-yates shuffle
       for (let i = this.songQueue.length - 1; i > this.queueIndex; i--) {
         let j = Math.floor(Math.random() * (i - this.queueIndex)) + this.queueIndex + 1;
@@ -161,22 +165,9 @@ export class MusicplayerComponent implements OnInit {
     }
     console.log("toggle level:" + this.repeatLevel);
   }
-}
 
-class Song {
-  songId: number;
-  title: string;
-  artist: string;
-  playing = false;
-  sound: Howl;
-  url: string;
-  albumArtUrl: string;
-
-  constructor(songId, title, artist,url, albumArtUrl) {
-    this.songId = songId;
-    this.title = title;
-    this.artist = artist;
-    this.url = url;
-    this.albumArtUrl = albumArtUrl;
+  seekTrack(value: number): void {
+    this.songQueue[this.queueIndex].sound.seek(value);
+    console.log(this.songQueue[this.queueIndex].sound.seek())
   }
 }

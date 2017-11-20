@@ -17,18 +17,21 @@
         <th>Artist</th>
         <th>Album</th>
         <th>Duration</th>
-        <th style="text-align: center">Date Added</th>
+        <th class="center">Date Added</th>
       </tr>
     </thead>
     <tbody class="tracklist">
-      <tr *ngFor="let song of songs">
-        <td>{{song?.title}}</td>
+      <tr *ngFor="let song of songs" (dblclick)="playSong(song.songId)">
+        <td>
+          {{song?.title}}
+          <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
+        </td>
 		    <td *ngIf="song"><a [routerLink]="['../artist', song?.artistId]">{{song?.artistName}}</a></td>
         <td *ngIf="song"><a [routerLink]="['../album', song?.albumId]">{{song?.albumTitle}}</a></td>
         <td>
           <span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span><span *ngIf="song?.duration?.substring(3,4) != '0' || song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}
         </td>
-        <td style="text-align: center">{{song?.timeAdded | timeAgo}}</td>
+        <td class="center">{{song?.timeAdded | timeAgo}}</td>
       </tr>
     </tbody>
   </table>

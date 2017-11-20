@@ -41,12 +41,13 @@ import { AuthenticationService } from "./services/authentication/authentication.
 import { PlayerService } from './services/player/player.service';
 import { AuthGuard } from "./guards/authguard.service";
 import { DataService } from "./services/data.service";
-import { CustomerAccount } from "./classes/customer-account.service";
+import { CustomerAccount } from "./classes/CustomerAccount";
 import { GeneralService } from "./services/general/general.service";
 import { SearchComponent } from './components/dashboard/content/search/search.component';
 import {ContextMenuModule, ContextMenuService} from "ngx-contextmenu";
 import { PlaylistMenuComponent } from './menus/playlist-menu/playlist-menu.component';
 import { SongMenuComponent } from './menus/song-menu/song-menu.component';
+import { LyricsComponent } from './components/dashboard/content/lyrics/lyrics.component';
 
 
 const appRoutes: Routes = [
@@ -59,13 +60,13 @@ const appRoutes: Routes = [
     {path: "albums", component: AlbumsComponent},
     {path: "artists", component: ArtistsComponent},
     {path: "playlists", component: PlaylistsComponent},
+    {path: "song/:id/lyrics", component: LyricsComponent},
     // DETAILED
     {path: "artist/:id", component: ArtistComponent},
     {path: "album/:id", component: AlbumComponent},
     {path: "playlist/:id", component: PlaylistComponent},
     {path: "profile/:id", component: ProfileComponent}
     ]
-
   },
   {path: "login/:login", component: LoginComponent},
   {path: "", component: FrontPageComponent}
@@ -112,6 +113,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     CreatePlaylistComponent,
     PlaylistMenuComponent,
     SongMenuComponent,
+    LyricsComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,

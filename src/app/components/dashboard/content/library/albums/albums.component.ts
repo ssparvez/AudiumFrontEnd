@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LibraryService } from '../../../../../services/library/library.service';
 import { Router } from "@angular/router";
+import { Album } from '../../../../../classes/Album';
 
 @Component({
   selector: 'app-albums',
@@ -18,6 +19,7 @@ export class AlbumsComponent implements OnInit {
   ngOnInit() {
     this.libraryService.getAllAlbums().subscribe((albums) => {
       this.albums = albums;
+      console.log(this.albums);
     });
   }
   updateUrl() {
@@ -29,25 +31,3 @@ export class AlbumsComponent implements OnInit {
     this.router.navigate(['/dash/album/', albumId]);
   }
 }
-
-interface Album {
-  albumId: number,
-  albumTitle: string,
-  releaseYear: string,
-  artistId: number,
-  artistName: string,
-  songs: Song[]
-}
-
-interface Song {
-  songId: number,
-  title: string,
-  artistId: number,
-  artistName: string,
-  albumId: number,
-  albumTitle: string,
-  duration: number,
-  isExplicit: boolean,
-  trackNumber: number
-}
-

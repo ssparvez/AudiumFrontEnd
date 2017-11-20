@@ -40,5 +40,9 @@ mz-sidenav-collapsible span {
   margin-left: 11%;
 }
 
+span.thumb.active {
+  display: none;
+}
+
 
 

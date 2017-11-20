@@ -25,6 +25,10 @@ export class LibraryService {
     return this.http.get(this.dataService.connectionURL + "/accounts/" + this.accountId + "/playlists").map(res => res.json());
   }
 
+  getSong(songId: number) {
+    return this.http.get(this.dataService.connectionURL + "/songs/" + songId).map(res => res.json());
+  }
+
   getPlaylist(playlistId: number) {
     return this.http.get(this.dataService.connectionURL + "/playlist/" + playlistId).map(res => res.json());
   }
