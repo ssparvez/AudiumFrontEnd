@@ -1,0 +1,14 @@
+<context-menu #ownerMenu>
+  <ng-template *ngFor="let action of ownerMenuActions" contextMenuItem let-item
+               [enabled]="action.enabled" [visible]="action.visible"
+               (execute)="action.click($event.item)">
+    {{ action.html() }}
+  </ng-template>
+</context-menu>
+<context-menu #regularMenu>
+  <ng-template *ngFor="let action of regularMenuActions" contextMenuItem let-item
+               [enabled]="action.enabled" [visible]="action.visible"
+               (execute)="action.click($event.item)">
+    {{ action.html() }}
+  </ng-template>
+</context-menu>

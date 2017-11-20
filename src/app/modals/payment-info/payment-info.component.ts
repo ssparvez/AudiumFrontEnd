@@ -1,11 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MdDialogRef,  MD_DIALOG_DATA} from "@angular/material";
+
 import {GeneralService} from "../../services/general/general.service";
 import {AppError} from "../../errors/AppError";
 import {PaymentInfo} from "../../classes/PaymentInfo";
 import {CustomerAccount} from "../../classes/customer-account.service";
 import {MzToastService} from "ng2-materialize/dist";
 import {AuthenticationService} from "../../services/authentication/authentication.service";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'app-payment-info',
@@ -23,12 +24,12 @@ export class PaymentInfoComponent  implements  OnInit {
   buttonName: string;
   validInfo = true;
 
-  constructor(private dialogRef:MdDialogRef<PaymentInfoComponent>,
+  constructor(private dialogRef:MatDialogRef<PaymentInfoComponent>,
               private currentUser: CustomerAccount,
               private service: GeneralService,
               private toastService: MzToastService,
               private authService: AuthenticationService,
-              @Inject(MD_DIALOG_DATA) private data: { isNew: boolean }) {}
+              @Inject(MAT_DIALOG_DATA) private data: { isNew: boolean }) {}
 
   ngOnInit() {
     this.loadDate();

@@ -275,10 +275,30 @@ tbody.tracklist tr td a:hover {
 .mat-menu-content > button {
     color: #bdbdbd;
 }
+.mat-menu-content > div > button {
+    color: #bdbdbd;
+}
 
 .mat-dialog-container {
     background-color: #212121;
 }
 .dropdown-content li  {
     background-color: #424242 ;
+}
+
+.ngx-contextmenu .dropdown-menu {
+    background-color: #424242;
+    padding: 0;
+}
+
+.ngx-contextmenu li:first-child {
+    border-top:none;
+}
+.ngx-contextmenu a {
+    color:white;
+    display: block;
+    padding: 0.5em 1em;
+}
+.ngx-contextmenu a:hover {
+    background-color: #616161;
 }

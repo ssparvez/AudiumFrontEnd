@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MD_DIALOG_DATA, MdDialogRef} from "@angular/material";
 import {MzToastService} from "ng2-materialize/dist";
 import {GeneralService} from "../../services/general/general.service";
 import {AppError} from "../../errors/AppError";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'app-change-password',
@@ -13,10 +13,10 @@ export class ChangePasswordComponent implements OnInit {
 
   validInfo = true;
 
-  constructor(private dialogRef:MdDialogRef<ChangePasswordComponent>,
+  constructor(private dialogRef:MatDialogRef<ChangePasswordComponent>,
               private service: GeneralService,
               private toastService: MzToastService,
-              @Inject(MD_DIALOG_DATA) private data: {accountId: number}) { }
+              @Inject(MAT_DIALOG_DATA) private data: {accountId: number}) { }
 
   ngOnInit() {
 

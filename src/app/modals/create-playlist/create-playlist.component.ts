@@ -1,8 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MD_DIALOG_DATA, MdDialogRef} from "@angular/material";
+
 import {Playlist} from "../../classes/Playlist";
 import {GeneralService} from "../../services/general/general.service";
 import {AppError} from "../../errors/AppError";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'app-create-playlist',
@@ -13,19 +14,21 @@ export class CreatePlaylistComponent implements OnInit {
 
   playlist: Playlist;
 
-  constructor(private dialogRef:MdDialogRef<CreatePlaylistComponent>,
+  constructor(private dialogRef:MatDialogRef<CreatePlaylistComponent>,
               private service: GeneralService,
-              @Inject(MD_DIALOG_DATA) private data: {accountId: number, username: string}) { }
+              @Inject(MAT_DIALOG_DATA) private data: {accountId: number, username: string}) { }
 
   ngOnInit() {
-    this.playlist = {name: "", description: "", isPublic: false,
-                      creator: {accountId: this.data.accountId}};
+    this.playlist = {name: "", description: "", isPublic: false, accountId: this.data.accountId, username: this.data.username};
   }
 
   createPlaylist():void {
     if ( this.playlist.name !== "") {
-      this.service.post('/playlist/newplaylist', this.playlist).subscribe(
+      const playlistToSend = {name: this.playlist.name, description: this.playlist.description, isPublic: false,
+        creator: {accountId: this.playlist.accountId, username: this.playlist.username}};
+      this.service.post('/playlist/newplaylist', playlistToSend).subscribe(
         response => {
+          console.log(response);
           this.closeDialog({isValid: true, playlistAdded: response});
         }, (error: AppError) => {
 

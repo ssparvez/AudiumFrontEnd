@@ -1,17 +1,17 @@
 <div class="row center">
-  <div class="row">
-    Are you sure you want to downgrade?
+  <div class="row confirm-message">
+    {{message}}
   </div>
-  <md-dialog-actions class="center">
-    <div class="col offset-s1">
+  <mat-dialog-actions class="center">
+    <div class="col offset-s3">
       <button mz-button
               type='button'
               [flat]="true"
               class=" waves-effect"
               [mat-dialog-close]="true">Yes</button>
-      <button mz-button  md-dialog-close
+      <button mz-button  mat-dialog-close
               [flat]="true"
               class="waves-effect" (click)="onNoClick()">No</button>
     </div>
-  </md-dialog-actions>
+  </mat-dialog-actions>
 </div>

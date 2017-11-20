@@ -1,0 +1,14 @@
+<context-menu #playlistSongMenu>
+  <ng-template *ngFor="let action of playlistMenuActions" contextMenuItem let-item
+               [enabled]="action.enabled" [visible]="action.visible"
+               (execute)="action.click($event.item)">
+    {{ action.html() }}
+  </ng-template>
+</context-menu>
+<context-menu #outsideMenu>
+  <ng-template *ngFor="let action of regularMenuActions" contextMenuItem let-item
+               [enabled]="action.enabled" [visible]="action.visible"
+               (execute)="action.click($event.item)">
+    {{ action.html() }}
+  </ng-template>
+</context-menu>

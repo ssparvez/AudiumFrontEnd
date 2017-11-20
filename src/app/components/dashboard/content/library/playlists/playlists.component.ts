@@ -1,16 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { LibraryService } from '../../../../../services/library/library.service';
-import { MzModalService, MzToastService } from 'ng2-materialize';
+import { MzToastService } from 'ng2-materialize';
 import { Router } from "@angular/router";
 import { GeneralService } from "../../../../../services/general/general.service";
-import { MdDialog } from "@angular/material";
 import { CreatePlaylistComponent } from "../../../../../modals/create-playlist/create-playlist.component";
-
+import {AppError} from "../../../../../errors/AppError";
+import {animate, style, transition, trigger} from "@angular/animations";
+import {MatDialog} from "@angular/material";
+import {Playlist} from "../../../../../classes/Playlist";
 
 @Component({
   selector: 'app-playlists',
   templateUrl: './playlists.component.html',
-  styleUrls: ['./playlists.component.css']
+  styleUrls: ['./playlists.component.css'],
+  animations: [
+    trigger('fade',[
+      transition('void => *',[
+        animate(600, style({opacity: 0}))
+      ]),
+      transition('* => void',[
+      animate(600, style({opacity: 0}))
+      ])
+    ])
+  ]
 })
 export class PlaylistsComponent implements OnInit {
 
@@ -20,28 +32,30 @@ export class PlaylistsComponent implements OnInit {
   public emulateCardContentHover: string[];
   public emulateCardContentHoverIcon: string[];
 
-  constructor(
-    private router: Router,
-    private libraryService: LibraryService,
-    private dialog: MdDialog,
-    private toastService: MzToastService
-  )
-  {
+
+  constructor(private router: Router,
+              private libraryService: LibraryService,
+              private dialog: MatDialog,
+              private toastService: MzToastService,
+              private service: GeneralService,) {
+
     this.emulateCardContentHover = [];
     this.emulateCardContentHoverIcon = [];
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     this.currentAccountId = this.currentUser['_accountId'];
+
   }
 
   ngOnInit() {
     this.libraryService.getAllPlaylists().subscribe((playlists) => {
       this.playlists = playlists;
-      for (let playlist of playlists){
+      for (let playlist of playlists) {
         this.emulateCardContentHover.push('');
         this.emulateCardContentHoverIcon.push('text-darken-1');
       }
       console.log(this.playlists);
     });
+    //this.playlistMenu.setPlaylists(this.playlists);
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
   }
 
@@ -52,53 +66,35 @@ export class PlaylistsComponent implements OnInit {
 
 
   openNewPlaylistForm() {
-    this.dialog.open(CreatePlaylistComponent,{ data: {accountId: this.currentUser['_accountId'],
-      username: this.currentUser['_username']}, width: '600px'} )
+    this.dialog.open(CreatePlaylistComponent, {
+      data: {
+        accountId: this.currentUser['_accountId'],
+        username: this.currentUser['_username']
+      }, width: '600px'
+    })
       .afterClosed()
       .subscribe(result => {
-        if ( result.isValid ) {
+        if (result.isValid) {
           this.playlists.unshift(result.playlistAdded);
+          //console.log(result.playlistAdded);
           this.toastService.show("Playlist was created", 3000, 'blue');
         }
       });
-  }
-
-  openMenu(value) {
-    console.log(value);
-    return false;
   }
 
   emulateContentHover(index: number, emulate: boolean) {
     if (emulate) {
       this.emulateCardContentHover[index] = 'card-content-emulated-hover';
       this.emulateCardContentHoverIcon[index] = '';
-    }else{
+    } else {
       this.emulateCardContentHover[index] = '';
       this.emulateCardContentHoverIcon[index] = 'text-darken-1';
     }
   }
 
-
+  checkOwnership(playlistOwner): boolean {
+    return ( this.currentAccountId === playlistOwner);
+  }
 }
 
-interface Playlist {
-  playlistId: number;
-  name: string;
-  description: string;
-  isPublic: boolean;
-  accountId: number;
-  username: string;
-  songs: Song[];
-}
 
-interface Song {
-  songId: number,
-  title: string,
-  artistId: number,
-  artistName: string,
-  albumId: number,
-  albumTitle: string,
-  duration: number,
-  isExplicit: boolean,
-  timeAdded: number
-}

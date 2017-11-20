@@ -1,0 +1,11 @@
+button:hover {
+    background-color: #2196f3;
+}
+button {
+    color: white;
+}
+
+.confirm-message {
+    color: white;
+    font-size: x-large;
+}

@@ -6,10 +6,10 @@ import { MaterializeModule } from 'ng2-materialize';
 import { RouterModule, Routes } from '@angular/router';
 import {Http, HttpModule, RequestOptions} from '@angular/http';
 import { FormsModule } from '@angular/forms';
-import {MdDialogModule, MdMenuModule} from '@angular/material';
 import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt/angular2-jwt';
 import { TimeAgoPipe } from 'time-ago-pipe';
-
+import {MatDialogModule} from "@angular/material";
+import {MatMenuModule} from "@angular/material/";
 // Components
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -30,7 +30,7 @@ import { ProfileComponent } from './components/dashboard/content/detailed/profil
 import { AlbumComponent } from './components/dashboard/content/detailed/album/album.component';
 import { PlaylistComponent } from './components/dashboard/content/detailed/playlist/playlist.component';
 import { ChangePasswordComponent } from "./modals/change-password/change-password.component";
-import { ConfirmDowngradeComponent } from './modals/confirm-downgrade/confirm-downgrade.component';
+import { ConfirmComponent } from './modals/confirm-modal/confirm.component';
 import { CreatePlaylistComponent } from './modals/create-playlist/create-playlist.component';
 
 import { InputFormatDirective } from './directives/input-format.directive';
@@ -44,6 +44,9 @@ import { DataService } from "./services/data.service";
 import { CustomerAccount } from "./classes/customer-account.service";
 import { GeneralService } from "./services/general/general.service";
 import { SearchComponent } from './components/dashboard/content/search/search.component';
+import {ContextMenuModule, ContextMenuService} from "ngx-contextmenu";
+import { PlaylistMenuComponent } from './menus/playlist-menu/playlist-menu.component';
+import { SongMenuComponent } from './menus/song-menu/song-menu.component';
 
 
 const appRoutes: Routes = [
@@ -105,18 +108,21 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     PaymentInfoComponent,
     InputFormatDirective,
     ChangePasswordComponent,
-    ConfirmDowngradeComponent,
+    ConfirmComponent,
     CreatePlaylistComponent,
+    PlaylistMenuComponent,
+    SongMenuComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,
     ChangePasswordComponent,
-    ConfirmDowngradeComponent,
+    ConfirmComponent,
     CreatePlaylistComponent
   ],
   imports: [
-    MdDialogModule,
-    MdMenuModule,
+    ContextMenuModule,
+    MatDialogModule,
+    MatMenuModule,
     BrowserModule,
     FormsModule,
     HttpModule,
@@ -125,6 +131,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     RouterModule.forRoot(appRoutes),
   ],
   providers: [
+    ContextMenuService,
     GeneralService,
     DataService,
     LibraryService,

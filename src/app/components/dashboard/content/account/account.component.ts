@@ -6,10 +6,10 @@ import {GeneralService} from "../../../../services/general/general.service";
 import {AuthenticationService} from "../../../../services/authentication/authentication.service";
 import {AppError} from "../../../../errors/AppError";
 import {NotFoundError} from "../../../../errors/not-found-error";
-import {MdDialog} from "@angular/material";
 import {MzToastService} from "ng2-materialize/dist";
 import {ChangePasswordComponent} from "../../../../modals/change-password/change-password.component";
-import {ConfirmDowngradeComponent} from "../../../../modals/confirm-downgrade/confirm-downgrade.component";
+import {ConfirmComponent} from "../../../../modals/confirm-modal/confirm.component";
+import {MatDialog} from  "@angular/material";
 
 @Component({
   selector: 'app-account',
@@ -36,7 +36,7 @@ export class AccountComponent implements OnInit {
                private dataService:DataService,
                private service: GeneralService,
                private authService: AuthenticationService,
-               private dialog: MdDialog,
+               private dialog: MatDialog,
                private toastService: MzToastService) { }
 
   ngOnInit() {
@@ -73,7 +73,7 @@ export class AccountComponent implements OnInit {
   }
 
   downgradeAccount() {
-    this.dialog.open(ConfirmDowngradeComponent, {height: '150px'})
+    this.dialog.open(ConfirmComponent, {  data: {message: "Are you sure you want to downgrade?"}, height: '180px'})
       .afterClosed()
       .subscribe(
         result => {

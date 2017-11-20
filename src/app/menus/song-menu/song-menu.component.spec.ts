@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConfirmDowngradeComponent } from './confirm-downgrade.component';
+import { SongMenuComponent } from './song-menu.component';
 
-describe('ConfirmDowngradeComponent', () => {
-  let component: ConfirmDowngradeComponent;
-  let fixture: ComponentFixture<ConfirmDowngradeComponent>;
+describe('SongMenuComponent', () => {
+  let component: SongMenuComponent;
+  let fixture: ComponentFixture<SongMenuComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfirmDowngradeComponent ]
+      declarations: [ SongMenuComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConfirmDowngradeComponent);
+    fixture = TestBed.createComponent(SongMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
