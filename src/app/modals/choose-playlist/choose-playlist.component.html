@@ -1,0 +1,39 @@
+<div class="white-text darken-2 center playlist-add-title">Add to playlist</div><br><br>
+
+<div class="row" style="margin-bottom:0;" *ngIf="playlists">
+  <div class="col s2 playlist-container fade-in-1-sec center" @fade *ngFor="let playlist of playlists; let i = index;"
+       (contextmenu)="playlistMenu.onContextMenu($event, playlist)" [attr.data-index]="i" >
+    <div class="card hoverable grey darken-2" *ngIf="playlists">
+      <div class="card-image" *ngIf="playlist">
+          <img src="assets/images/defaults/playlist.svg" width="150">
+      </div>
+      <div class="playlist-add-div" >
+        <a class="add-button" (click)="addSongToPlaylist(playlist.playlistId)">
+          <i class="material-icons add-icon large">control_point</i>
+        </a>
+      </div>
+      <div class="playlist-name-div col s12 center">
+          <div class="col s11 truncate playlist-name" style="color: inherit; padding-bottom: 28px;">{{playlist?.name}}
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row fade-in-2-sec" *ngIf="playlists?.length == 0">
+  <div class="col s12">
+    <div class="card-panel large transparent z-depth-0">
+      <div class="row"></div>
+    </div>
+  </div>
+  <div class="col s12">
+    <div class="card-panel large transparent z-depth-0 center">
+      <h2 class="grey-text">You haven't created or followed any playlists</h2>
+    </div>
+  </div>
+</div>
+
+<!-- Loading animation -->
+<div class="row fade-in-2-sec" *ngIf="!playlists">
+  <div class="loader">Loading...</div>
+</div>
+<app-playlist-menu #playlistMenu [playlists]="playlists" [detailed]="false"></app-playlist-menu>
