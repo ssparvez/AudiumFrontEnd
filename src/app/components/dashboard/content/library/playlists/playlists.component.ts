@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LibraryService } from '../../../../../services/library/library.service';
 import { MzModalService, MzToastService } from 'ng2-materialize';
 import { Router } from "@angular/router";
 import { GeneralService } from "../../../../../services/general/general.service";
@@ -23,7 +22,7 @@ export class PlaylistsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private libraryService: LibraryService,
+    private generalService: GeneralService,
     private dialog: MdDialog,
     private toastService: MzToastService
   )
@@ -35,7 +34,7 @@ export class PlaylistsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.libraryService.getAllPlaylists().subscribe((playlists) => {
+    this.generalService.get("/accounts/" + this.currentAccountId + "/playlists").subscribe((playlists) => {
       this.playlists = playlists;
       for (let playlist of playlists){
         this.emulateCardContentHover.push('');

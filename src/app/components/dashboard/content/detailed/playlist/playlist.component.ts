@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LibraryService } from '../../../../../services/library/library.service';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Song } from '../../../../../classes/Song'
+import { GeneralService } from '../../../../../services/general/general.service';
 
 @Component({
   selector: 'app-playlist',
@@ -17,16 +17,16 @@ export class PlaylistComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
 	  private router: Router,
-    private libraryService : LibraryService
+    private generalService : GeneralService
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe(param => {
       this.id = + param['id'];
       console.log(this.id);
-      this.libraryService.getPlaylist(this.id).subscribe((playlist) => {
+      this.generalService.get("/playlists/" + this.id).subscribe((playlist) => {
         this.playlist = playlist;
-		    this.libraryService.getPlaylistSongs(this.id).subscribe((songs) => {
+		    this.generalService.get("/playlists/" + this.id + "/songs").subscribe((songs) => {
           this.playlist.songs = songs;
         });
       });

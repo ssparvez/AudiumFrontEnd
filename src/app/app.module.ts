@@ -35,8 +35,6 @@ import { CreatePlaylistComponent } from './modals/create-playlist/create-playlis
 
 import { InputFormatDirective } from './directives/input-format.directive';
 // Services
-import { HomeService } from "./services/home/home.service";
-import { LibraryService } from "./services/library/library.service";
 import { AuthenticationService } from "./services/authentication/authentication.service";
 import { PlayerService } from './services/player/player.service';
 import { AuthGuard } from "./guards/authguard.service";
@@ -129,12 +127,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   providers: [
     GeneralService,
     DataService,
-    LibraryService,
     AuthenticationService,
     PlayerService,
     AuthGuard,
     AuthHttp,
-    HomeService,
     CustomerAccount,
     {
       provide: AuthHttp,

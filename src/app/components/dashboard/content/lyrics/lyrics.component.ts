@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Song } from '../../../../classes/Song';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LibraryService } from '../../../../services/library/library.service';
+import { GeneralService } from '../../../../services/general/general.service';
 
 @Component({
   selector: 'app-lyrics',
@@ -16,7 +16,7 @@ export class LyricsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
 	  private router: Router,
-    private libraryService : LibraryService
+    private generalService : GeneralService
   ) { }
 
   ngOnInit() {
@@ -24,7 +24,7 @@ export class LyricsComponent implements OnInit {
       this.id = + param['id'];
       console.log(this.id);
       // feel free to change if getting song is redundant
-      this.libraryService.getSong(this.id).subscribe((song) => {
+      this.generalService.get("/songs/" + this.id).subscribe((song) => {
         this.song = song;
 		    // this.libraryService.getSongLyrics(this.id).subscribe((lyrics) => {
         //   this.song.lyrics = lyrics;
