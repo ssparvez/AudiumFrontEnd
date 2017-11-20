@@ -17,7 +17,7 @@ export class ArtistsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;    
+    this.accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;
     this.generalService.get("/accounts/" + this.accountId + "/artists").subscribe((artists) => {
       this.artists = artists
       console.log(this.artists);

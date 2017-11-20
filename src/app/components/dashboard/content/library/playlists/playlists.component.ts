@@ -33,7 +33,6 @@ export class PlaylistsComponent implements OnInit {
 
 
   constructor(private router: Router,
-              private libraryService: LibraryService,
               private dialog: MatDialog,
               private toastService: MzToastService,
               private service: GeneralService,) {

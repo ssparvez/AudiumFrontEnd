@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LibraryService } from '../../../../../services/library/library.service';
 import { Router } from "@angular/router";
 import { Album } from '../../../../../classes/Album';
 import { GeneralService } from '../../../../../services/general/general.service';
@@ -18,7 +17,7 @@ export class AlbumsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;    
+    this.accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;
     this.generalService.get("/accounts/" + this.accountId + "/albums").subscribe((albums) => {
       this.albums = albums
       console.log(this.albums);
