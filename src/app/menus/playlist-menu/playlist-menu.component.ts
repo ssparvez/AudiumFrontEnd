@@ -54,6 +54,12 @@ export class PlaylistMenuComponent implements OnInit {
       enabled: (item) => true,
       visible: (item) => item.followed === false
     },
+    {
+      html:(item) => 'Unfollow playlist',
+      click:(item) => console.log('edit'),
+      enabled: (item) => true,
+      visible: (item) => item.followed === true || item.followed == null
+    }
   ];
 
   constructor(private service: GeneralService,

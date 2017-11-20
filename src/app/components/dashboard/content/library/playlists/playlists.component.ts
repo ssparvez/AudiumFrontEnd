@@ -55,7 +55,6 @@ export class PlaylistsComponent implements OnInit {
       }
       console.log(this.playlists);
     });
-    //this.playlistMenu.setPlaylists(this.playlists);
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
   }
 
@@ -74,9 +73,8 @@ export class PlaylistsComponent implements OnInit {
     })
       .afterClosed()
       .subscribe(result => {
-        if (result.isValid) {
+        if (result && result.isValid) {
           this.playlists.unshift(result.playlistAdded);
-          //console.log(result.playlistAdded);
           this.toastService.show("Playlist was created", 3000, 'blue');
         }
       });

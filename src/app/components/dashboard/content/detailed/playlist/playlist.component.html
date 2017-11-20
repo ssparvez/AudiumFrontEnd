@@ -8,10 +8,20 @@
     </div>
   </div>
   <div class="col s6 m8">
-    <div class="row" style="margin-top: 10px;"> <h4>Playlist</h4></div>
-    <div class="row" style="margin-bottom: 0px; padding-bottom: 0px;"><h1 style="margin-bottom: 10px;">{{playlist?.name}}</h1></div>
-    <div class="row creator" *ngIf="playlist" style="margin-bottom: 5px;"><div class="playlist-detailed-creator">by <a [routerLink]="['../../profile', playlist?.accountId]">{{playlist?.username}}</a></div></div>
-    <div class="row" *ngIf="playlist?.description.length > 0"><h3>{{playlist?.description}}</h3></div>
+    <div class="row" style="margin-top: 10px;">
+      <h4>Playlist</h4>
+    </div>
+    <div class="row" style="margin-bottom: 0px; padding-bottom: 0px;">
+      <h1 style="margin-bottom: 10px;">{{playlist?.name}}</h1>
+    </div>
+    <div class="row creator" *ngIf="playlist" style="margin-bottom: 5px;">
+      <div class="playlist-detailed-creator">by
+        <a [routerLink]="['../../profile', playlist?.accountId]">{{playlist?.username}}</a>
+      </div>
+    </div>
+    <div class="row" *ngIf="playlist?.description.length > 0">
+      <h3>{{playlist?.description}}</h3>
+    </div>
     <div class="row">
       <div class="chip fade-in-half-sec white">
         {{numberOfSongs}} song<span *ngIf="numberOfSongs != 1">s</span>
@@ -75,7 +85,9 @@
 </div>
 
   <app-playlist-menu #playlistMenu [playlists]="playlist" [detailed]="true"></app-playlist-menu>
-  <app-song-menu #songMenu [songs]="songsInPlaylist" [detailed]="true" [currentPlaylist]="playlist?.playlistId"
+  <app-song-menu #songMenu
+                 [songs]="songsInPlaylist" [detailed]="true"
+                 [currentPlaylist]="playlist?.playlistId"
                  [playlistOwner]="playlist?.accountId" >
 
   </app-song-menu>

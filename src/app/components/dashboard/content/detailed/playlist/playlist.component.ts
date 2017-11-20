@@ -51,7 +51,7 @@ export class PlaylistComponent implements OnInit {
   }
 
   isOwnerOfPlaylist() {
-    return (this.playlist.accountId = this.currentAccountId);
+    return (this.playlist.accountId === this.currentAccountId);
   }
 
   isFollowing() {
