@@ -46,6 +46,7 @@ import {ContextMenuModule, ContextMenuService} from "ngx-contextmenu";
 import { PlaylistMenuComponent } from './menus/playlist-menu/playlist-menu.component';
 import { SongMenuComponent } from './menus/song-menu/song-menu.component';
 import { LyricsComponent } from './components/dashboard/content/lyrics/lyrics.component';
+import { ChoosePlaylistComponent } from './modals/choose-playlist/choose-playlist.component';
 
 
 const appRoutes: Routes = [
@@ -112,12 +113,14 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     PlaylistMenuComponent,
     SongMenuComponent,
     LyricsComponent,
+    ChoosePlaylistComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,
     ChangePasswordComponent,
     ConfirmComponent,
-    CreatePlaylistComponent
+    CreatePlaylistComponent,
+    ChoosePlaylistComponent
   ],
   imports: [
     ContextMenuModule,

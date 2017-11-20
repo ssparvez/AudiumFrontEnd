@@ -6,7 +6,7 @@
   </ng-template>
 </context-menu>
 <context-menu #outsideMenu>
-  <ng-template *ngFor="let action of regularMenuActions" contextMenuItem let-item
+  <ng-template *ngFor="let action of outsideMenuActions" contextMenuItem let-item
                [enabled]="action.enabled" [visible]="action.visible"
                (execute)="action.click($event.item)">
     {{ action.html() }}

@@ -85,10 +85,8 @@
 </div>
 
   <app-playlist-menu #playlistMenu [playlists]="playlist" [detailed]="true"></app-playlist-menu>
-  <app-song-menu #songMenu
-                 [songs]="songsInPlaylist" [detailed]="true"
+  <app-song-menu #songMenu [songs]="songsInPlaylist" [detailed]="true"
                  [currentPlaylist]="playlist?.playlistId"
                  [playlistOwner]="playlist?.accountId" >
-
   </app-song-menu>
 

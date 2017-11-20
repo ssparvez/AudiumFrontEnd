@@ -19,7 +19,6 @@ export class CreatePlaylistComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) private data: {accountId: number, username: string}) { }
 
   ngOnInit() {
-    console.log(this.data.accountId);
     this.playlist = {name: "", description: "", isPublic: false, accountId: this.data.accountId, username: this.data.username};
   }
 

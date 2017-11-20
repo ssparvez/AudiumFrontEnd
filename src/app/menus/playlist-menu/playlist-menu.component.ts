@@ -8,6 +8,7 @@ import {MatDialog} from "@angular/material";
 import {MzToastService} from "ng2-materialize";
 import {Router} from "@angular/router";
 import {animate, transition, trigger, style} from "@angular/animations";
+import {ChoosePlaylistComponent} from "../../modals/choose-playlist/choose-playlist.component";
 
 @Component({
   selector: 'app-playlist-menu',
@@ -131,6 +132,7 @@ export class PlaylistMenuComponent implements OnInit {
       }
     );
   }
+
 
   checkOwnership(playlistOwner): boolean {
     return ( this.currentAccountId === playlistOwner);
