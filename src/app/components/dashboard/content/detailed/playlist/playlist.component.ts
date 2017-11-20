@@ -24,7 +24,7 @@ export class PlaylistComponent implements OnInit {
 
   private id;
   public playlist: Playlist;
-  songsInPlaylist: Song[];
+  songsInPlaylist: Song[] = null;
   private currentUser;
   private currentAccountId;
   public numberOfSongs = 0;

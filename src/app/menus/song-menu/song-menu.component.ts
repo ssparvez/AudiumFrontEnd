@@ -5,6 +5,8 @@ import {ContextMenuComponent, ContextMenuService} from "ngx-contextmenu";
 import {MzToastService} from "ng2-materialize";
 import {Playlist} from "../../classes/Playlist";
 import {AppError} from "../../errors/AppError";
+import {ChoosePlaylistComponent} from "../../modals/choose-playlist/choose-playlist.component";
+import {MatDialog} from "@angular/material";
 
 @Component({
   selector: 'app-song-menu',
@@ -26,20 +28,33 @@ export class SongMenuComponent implements OnInit {
       html:(item) => 'Remove from playlist',
       click:(item) => this.removeSongFromPlaylist(item),
       enabled: (item) => true,
-      visible: (item) => this.detailed === true && this.checkOwnership()
+      visible: (item) => this.checkOwnership()
     },
-  ];
-  public regularMenuActions = [
     {
       html:(item) => 'Add to playlist',
+      click:(item) => this.openPlaylistChoices(item),
+      enabled: (item) => true,
+      visible: (item) => !this.checkOwnership()
+    },
+  ];
+  public outsideMenuActions = [
+    {
+      html:(item) => 'Save song',
       click:(item) => console.log('edit'),
       enabled: (item) => true,
-      visible: (item) => this.detailed === false
+      visible: (item) => !this.checkOwnership()
+    },
+    {
+      html:(item) => 'Add to playlist',
+      click:(item) => this.openPlaylistChoices(item),
+      enabled: (item) => true,
+      visible: (item) => !this.checkOwnership()
     },
   ];
 
   constructor(private service: GeneralService,
               private contextMenuService: ContextMenuService,
+              private dialog: MatDialog,
               private toastService: MzToastService,) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     this.currentAccountId = this.currentUser['_accountId'];
@@ -67,7 +82,7 @@ export class SongMenuComponent implements OnInit {
 
 
   public removeSongFromPlaylist(songToRemove: Song) {
-   this.service.deleteResource('/account/' + this.currentAccountId + '/playlist/' + this.currentPlaylist +
+   this.service.deleteResource('/accounts/' + this.currentAccountId + '/playlist/' + this.currentPlaylist +
      '/remove/song/' + songToRemove.songId)
      .subscribe(
        response => {
@@ -79,6 +94,24 @@ export class SongMenuComponent implements OnInit {
      );
 
   }
+
+  openPlaylistChoices(song: Song) {
+    this.dialog.open(ChoosePlaylistComponent, {
+      data: {
+        accountId: this.currentAccountId,
+        songId: song.songId
+      }
+    }).afterClosed()
+      .subscribe(
+        result => {
+          if (result) {
+            this.toastService.show("Song was added to your playlist", 3000, 'blue');
+          } else {
+            this.toastService.show("Song was not added", 3000, 'blue');
+          }
+        });
+  }
+
 
   checkOwnership() {
     return (this.currentAccountId === this.playlistOwner);
