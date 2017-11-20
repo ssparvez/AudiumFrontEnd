@@ -3,12 +3,12 @@
     <a [routerLink]="['album', songQueue[queueIndex].albumId]">
       <img src="assets/images/defaults/album.svg">
     </a>
-    <span class="card-title black" id="music-card-title">        
-      <div style="padding: 0px 24px;">          
-          <span class="track-slider">
-              <input #ref1 (change)="seekTrack(ref1.value)" class="track-slider" type=range  value=0 min=0 max={{songQueue[queueIndex].sound.duration()}}
-                id=fader step=1>
-            </span>
+    <span class="card-title black" id="music-card-title">
+      <div style="padding: 0px 24px;">
+        <span class="track-slider">
+          <input #ref1 (change)="seekTrack(ref1.value)" class="track-slider" type=range value=0 min=0 max={{songQueue[queueIndex].sound.duration()}}
+            id=fader step=1>
+        </span>
         <div class="row" style="margin-bottom: 0px;">
           <div class="left" style="height: 50px;">
             <h5>
@@ -33,8 +33,8 @@
           </h4>
           <i (click)="toggleMute()" class="material-icons" style="margin-left: 16px;">{{soundIcon}}</i>
           <span class="volume-slider">
-            <input #ref2 [(ngModel)]="mymodel2" (ngModelChange)="changeVolume($event)" class="volume-slider" type=range min=0 max=100 value={{volumeLevel*100}}
-              id=fader step=1>
+            <input #ref2 [(ngModel)]="mymodel2" (ngModelChange)="changeVolume($event)" class="volume-slider" type=range min=0 max=100
+              value={{volumeLevel*100}} id=fader step=1>
           </span>
         </div>
       </div>
@@ -45,17 +45,12 @@
 <ng-template #other_content>
   <div class="card grey darken-3">
     <div class="card-image">
-        <img src="assets/images/defaults/album.svg">
-        <span class="card-title black" id="music-card-title">        
-            <div class="row" style="margin-bottom: 0px;">
-                  <h2>
-                    Start listening...
-                  </h2>
-              </div>
-        </span>
+      <img src="assets/images/defaults/album.svg">
+      <span class="card-title black" id="music-card-title">
+        <div class="row" style="margin-bottom: 0px; margin-top: 50px;">
+          <h2 class="center">Start listening...</h2>
+        </div>
+      </span>
     </div>
-    </div>
-    
-
+  </div>
 </ng-template>
-

@@ -1,9 +1,9 @@
 <h1>Search</h1>
 
 <div class="row" *ngIf="songs?.length > 0">
-    <div class="row">
-        <h2 class="center">Songs</h2>
-      </div>
+  <div class="row">
+    <h2 class="center">Songs</h2>
+  </div>
   <table class="bordered responsive-table white-text">
     <thead>
       <tr>
@@ -16,8 +16,12 @@
     <tbody>
       <tr *ngFor="let song of songs">
         <td>{{song.title}}</td>
-		    <td><span [routerLink]="['../artist', 1]">{{song.artistName}}</span></td>
-		    <td><span [routerLink]="['../album', 1]">{{song.albumName}}</span></td>
+        <td>
+          <span [routerLink]="['../../artist', 1]">{{song.artistName}}</span>
+        </td>
+        <td>
+          <span [routerLink]="['../../album', 1]">{{song.albumName}}</span>
+        </td>
         <td>{{song.duration}}</td>
       </tr>
     </tbody>
@@ -33,7 +37,7 @@
       <div class="card-image">
         <img src="assets/images/everything-now.jpg">
         <span class="card-title black" id="small-card-title">
-          <h4>{{artist.name}}</h4>
+          <h4><a [routerLink]="['../../artist', artist.artistId]">{{artist.artistName}}</a></h4>
         </span>
         <a class="btn-floating halfway-fab waves-effect waves-light blue">
           <i class="material-icons">play_arrow</i>
@@ -52,8 +56,8 @@
       <div class="card-image">
         <img src="assets/images/everything-now.jpg">
         <span class="card-title black" id="small-card-title">
-          <h4>{{album.albumTitle}}</h4>
-          <h5>{{album.artist.artistName}}</h5>
+          <h4><a [routerLink]="['../../album', album.albumId]">{{album.albumTitle}}</a></h4>
+          <h5><a [routerLink]="['../../artist', album.artist.artistId]">{{album.artist.artistName}}</a></h5>
         </span>
         <a class="btn-floating halfway-fab waves-effect waves-light blue">
           <i class="material-icons">play_arrow</i>
@@ -72,8 +76,8 @@
       <div class="card-image">
         <img src="assets/images/everything-now.jpg">
         <span class="card-title black" id="small-card-title">
-          <h4>{{playlist.name}}</h4>
-          <h5>by {{playlist.creator.username}}</h5>
+          <h4><a [routerLink]="['../../playlist', playlist.playlistId]">{{playlist.name}}</a></h4>
+          <h5>by <a [routerLink]="['../../profile', playlist.creator.accountId]">{{playlist.creator.username}}</a></h5>
         </span>
         <a class="btn-floating halfway-fab waves-effect waves-light blue">
           <i class="material-icons">play_arrow</i>
@@ -81,4 +85,27 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="row" *ngIf="profiles?.length > 0">
+  <h2 class="center">Profiles</h2>
+</div>
+<div class="row">
+  <ul class="collection" style="margin-top: 20px; border: none;">
+    <li class="collection-item avatar grey darken-4" *ngFor="let profile of profiles">
+      <img src="assets/images/defaults/user_profile.svg" alt="" class="circle">
+      <span class="title white-text"><a [routerLink]="['../../profile', profile.accountId]">{{profile.username}}</a></span>
+      <p class="white-text">16 Followers
+        <br>
+      </p>
+      <a href="#!" class="secondary-content">
+        <a class="waves-effect waves-light btn">Follow</a>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<!-- Loading animation -->
+<div class="row fade-in-2-sec" *ngIf="!songs || !albums || !artists || !playlists || !profiles">
+  <div class="loader">Loading...</div>
 </div>

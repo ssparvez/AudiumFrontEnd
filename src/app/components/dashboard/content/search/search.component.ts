@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GeneralService } from '../../../../services/general/general.service';
 import { AppError } from '../../../../errors/AppError';
 import { Playlist } from '../../../../classes/Playlist';
+import { CustomerAccount } from '../../../../classes/CustomerAccount';
 
 @Component({
   selector: 'app-search',
@@ -17,7 +18,8 @@ export class SearchComponent implements OnInit {
   songs : Song[];
   artists : Artist[];  
   albums : Album[];
-  playlists: Playlist[];
+  playlists : Playlist[];
+  profiles : CustomerAccount[];
 
   things: number[];
   constructor(private route: ActivatedRoute, private generalService: GeneralService) { }
@@ -39,6 +41,10 @@ export class SearchComponent implements OnInit {
             this.generalService.get("/search/playlists/" + this.keywords).subscribe((playlists) => {
               this.playlists = playlists;
               console.log(this.playlists);
+              this.generalService.get("/search/profiles/" + this.keywords).subscribe((profiles) => {
+                this.profiles = profiles;
+                console.log(this.profiles);
+              });
             });
           });
         });
