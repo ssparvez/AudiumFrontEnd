@@ -1,18 +1,18 @@
-<div class="card grey darken-3">
+<div class="card grey darken-3" *ngIf="songQueue != null && songQueue.length > 0; else other_content">
   <div class="card-image">
-    <a [routerLink]="['album', 1]">
-      <img src={{songQueue[queueIndex].albumArtUrl}}>
+    <a [routerLink]="['album', songQueue[queueIndex].albumId]">
+      <img src="assets/images/defaults/album.svg">
     </a>
     <span class="card-title black" id="music-card-title">        
       <div style="padding: 0px 24px;">          
           <span class="track-slider">
-              <input #ref1 (change)="seekTrack(ref1.value)" class="track-slider" type=range  value={{songQueue[queueIndex].sound.seek()}} min=0 max={{songQueue[queueIndex].sound.duration()}}
+              <input #ref1 (change)="seekTrack(ref1.value)" class="track-slider" type=range  value=0 min=0 max={{songQueue[queueIndex].sound.duration()}}
                 id=fader step=1>
             </span>
         <div class="row" style="margin-bottom: 0px;">
           <div class="left" style="height: 50px;">
             <h5>
-              <a [routerLink]="['artist', 1]">{{songQueue[queueIndex].artistName}}</a>
+              <a [routerLink]="['artist', songQueue[queueIndex].artistId]">{{songQueue[queueIndex].artistName}}</a>
             </h5>
             <h4>{{songQueue[queueIndex].title}}</h4>
           </div>
@@ -29,7 +29,7 @@
           <i (click)="toggleShuffle()" class="material-icons" [ngClass]="{'white-text': !isShuffled, 'blue-text': isShuffled}">shuffle</i>
           <i (click)="toggleRepeat()" class="material-icons" [ngClass]="{'white-text': !isRepeated, 'blue-text': isRepeated}">{{repeatIcon}}</i>
           <h4 style="display: inline; vertical-align: middle;">
-            <a [routerLink]="['song', 1, 'lyrics']">LYRICS</a>
+            <a [routerLink]="['song', songQueue[queueIndex].songId, 'lyrics']">LYRICS</a>
           </h4>
           <i (click)="toggleMute()" class="material-icons" style="margin-left: 16px;">{{soundIcon}}</i>
           <span class="volume-slider">
@@ -41,3 +41,21 @@
     </span>
   </div>
 </div>
+
+<ng-template #other_content>
+  <div class="card grey darken-3">
+    <div class="card-image">
+        <img src="assets/images/defaults/album.svg">
+        <span class="card-title black" id="music-card-title">        
+            <div class="row" style="margin-bottom: 0px;">
+                  <h2>
+                    Start listening...
+                  </h2>
+              </div>
+        </span>
+    </div>
+    </div>
+    
+
+</ng-template>
+

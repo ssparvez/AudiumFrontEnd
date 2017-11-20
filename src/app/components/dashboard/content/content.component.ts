@@ -14,7 +14,7 @@ export class ContentComponent implements OnInit {
   }
 
   onEnter(keywords: string) {
-    this.router.navigate(['/dash/search/']);
+    this.router.navigate(['/dash/search/', keywords]);
     console.log(keywords);
   }
 }

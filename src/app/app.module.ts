@@ -35,8 +35,6 @@ import { CreatePlaylistComponent } from './modals/create-playlist/create-playlis
 
 import { InputFormatDirective } from './directives/input-format.directive';
 // Services
-import { HomeService } from "./services/home/home.service";
-import { LibraryService } from "./services/library/library.service";
 import { AuthenticationService } from "./services/authentication/authentication.service";
 import { PlayerService } from './services/player/player.service';
 import { AuthGuard } from "./guards/authguard.service";
@@ -54,7 +52,7 @@ const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
   children: [
     {path: "home" , component: HomeComponent},
-    {path: "search", component: SearchComponent},
+    {path: "search/:keywords", component: SearchComponent},
     {path: "songs", component: SongsComponent},
     {path: "account", component: AccountComponent},
     {path: "albums", component: AlbumsComponent},
@@ -136,12 +134,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ContextMenuService,
     GeneralService,
     DataService,
-    LibraryService,
     AuthenticationService,
     PlayerService,
     AuthGuard,
     AuthHttp,
-    HomeService,
     CustomerAccount,
     {
       provide: AuthHttp,

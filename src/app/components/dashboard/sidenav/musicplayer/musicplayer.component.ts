@@ -2,8 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PlayerService} from '../../../../services/player/player.service';
 import { Howl } from 'howler';
 import { Song } from '../../../../classes/Song';
-import { Observable, Subscription } from 'rxjs/Rx';
-
 
 
 @Component({
@@ -29,16 +27,33 @@ export class MusicplayerComponent implements OnInit {
 
   constructor(private playerService : PlayerService) { }
   ngOnInit() {
-    this.songQueue = [
-      {songId: 1, title: "The Less I Know the Better", artistName: "Tame Impala", url: '../../../../../assets/songs/TheLessIKnowTheBetter.m4a', albumArtUrl: "../../../../../assets/images/currents.jpg"},
-      {songId: 2, title: "Intro", artistName: "The xx", url: '../../../../../assets/songs/Intro.mp3', albumArtUrl: '../../../../../assets/images/xx.png'},
-      {songId: 3, title: "Feels Good Inc.", artistName: "Gorillaz", url: '../../../../../assets/songs/FeelsGoodInc.mp3', albumArtUrl: '../../../../../assets/images/demondays.jpeg'},
-      {songId: 4, title: "song 4", artistName: "Gorillaz", url: '../../../../../assets/songs/FeelsGoodInc.mp3', albumArtUrl: '../../../../../assets/images/demondays.jpeg'}
-    ];
+    this.songQueue = null;
+    this.playerService.songSubject.subscribe((data) => {
+      console.log(data)
+      if(data != null) {
+        // destroy old queue first???
+        //this.songQueue = null;
+        this.songQueue = data.map(x => Object.assign({}, x));;
+        this.initSongs();
+        this.togglePlay();
+      }
+      
+    });
+
+    // this.songQueue = [
+    //   {songId: 1, title: "The Less I Know the Better", artistName: "Tame Impala", url: '../../../../../assets/songs/TheLessIKnowTheBetter.m4a', albumArtUrl: "../../../../../assets/images/currents.jpg"},
+    //   {songId: 2, title: "Intro", artistName: "The xx", url: '../../../../../assets/songs/Intro.mp3', albumArtUrl: '../../../../../assets/images/xx.png'},
+    //   {songId: 3, title: "Feels Good Inc.", artistName: "Gorillaz", url: '../../../../../assets/songs/FeelsGoodInc.mp3', albumArtUrl: '../../../../../assets/images/demondays.jpeg'},
+    //   {songId: 4, title: "song 4", artistName: "Gorillaz", url: '../../../../../assets/songs/FeelsGoodInc.mp3', albumArtUrl: '../../../../../assets/images/demondays.jpeg'}
+    // ];
     // init the songs
+    //this.initSongs();
+    //console.log(this.songQueue);
+  }
+  initSongs(): void { // attaches howl object to each song
     for(let song of this.songQueue) {
       song.sound = new Howl({
-        src: [song.url],
+        src: ['../../../../../assets/songs/TheLessIKnowTheBetter.m4a'],
         onend: () => {
           switch(this.repeatLevel) {
             case 0: {
@@ -62,13 +77,9 @@ export class MusicplayerComponent implements OnInit {
                break;
             }
          }
-        },
-        onseek: () => {
-          this.value = this.songQueue[this.queueIndex].seek();
         }
       });
     }
-    console.log(this.songQueue);
   }
 
   togglePlayback():void {
@@ -168,6 +179,7 @@ export class MusicplayerComponent implements OnInit {
 
   seekTrack(value: number): void {
     this.songQueue[this.queueIndex].sound.seek(value);
+    this.value = value;
     console.log(this.songQueue[this.queueIndex].sound.seek())
   }
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HomeService } from '../../../../services/home/home.service'
 import { GeneralService } from '../../../../services/general/general.service';
 import { AuthenticationService } from '../../../../services/authentication/authentication.service';
 import { CustomerAccount } from "../../../../classes/CustomerAccount";
@@ -18,7 +17,6 @@ export class HomeComponent implements OnInit {
   topSongs: Song[];
   genres: Genre[];
   constructor(
-    private homeService : HomeService,
     private generalService : GeneralService,
     private authenticationService : AuthenticationService,
     private currentUser : CustomerAccount,
@@ -45,7 +43,7 @@ export class HomeComponent implements OnInit {
               }else{
                 this.topSongs = [];
               }
-              this.homeService.getAllGenres()
+              this.generalService.get("/genres")
                 .catch(error => Observable.throw(new Error(error.status))).subscribe((genres) => {
                   if(genres != null){
                     this.genres = genres;

@@ -1,5 +1,4 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import { LibraryService } from '../../../../../services/library/library.service';
 import { MzToastService } from 'ng2-materialize';
 import { Router } from "@angular/router";
 import { GeneralService } from "../../../../../services/general/general.service";
@@ -19,7 +18,7 @@ import {Playlist} from "../../../../../classes/Playlist";
         animate(600, style({opacity: 0}))
       ]),
       transition('* => void',[
-      animate(600, style({opacity: 0}))
+        animate(600, style({opacity: 0}))
       ])
     ])
   ]
@@ -47,7 +46,7 @@ export class PlaylistsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.libraryService.getAllPlaylists().subscribe((playlists) => {
+    this.service.get("/accounts/" + this.currentAccountId + "/playlists").subscribe((playlists) => {
       this.playlists = playlists;
       for (let playlist of playlists) {
         this.emulateCardContentHover.push('');
