@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MzToastService } from 'ng2-materialize';
-import { LibraryService } from '../../../../../services/library/library.service';
 import { Song } from '../../../../../classes/Song';
+import { PlayerService } from '../../../../../services/player/player.service'
+import { GeneralService } from '../../../../../services/general/general.service';
 
 @Component({
   selector: 'app-songs',
@@ -9,12 +10,17 @@ import { Song } from '../../../../../classes/Song';
   styleUrls: ['./songs.component.css']
 })
 export class SongsComponent implements OnInit {
-
+  accountId: number;
   songs: Song []; // Store retrieved songs in this var
-  constructor(private toastService: MzToastService, private libraryService: LibraryService) { }
+  constructor(
+    private toastService: MzToastService, 
+    private generalService: GeneralService, 
+    private playerService: PlayerService
+  ) { }
 
   ngOnInit() {
-    this.libraryService.getAllSongs().subscribe((songs) => {
+    this.accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;    
+    this.generalService.get("/accounts/" + this.accountId + "/songs").subscribe((songs) => {
       this.songs = songs
       console.log(this.songs);
     });
@@ -24,7 +30,9 @@ export class SongsComponent implements OnInit {
     this.toastService.show('Playing Song!', 4000, 'blue');
   }
 
-  playSong(songId: number) {
+  playSongs(songId: number) {
+    // initialize howl here?
+    this.playerService.playSongs(songId, this.songs);
     console.log(songId);
   }
 

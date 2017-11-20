@@ -60,6 +60,6 @@ span.volume-slider input[type="range"]::-ms-fill-lower {
     background: red;
 }
 
-span.volume-slider input[type=range]+.thumb {
-    display: none !important;
+input[type=range] + .thumb.active {
+    display: none !important; /* make sure this is in materialize.min.css */
 }

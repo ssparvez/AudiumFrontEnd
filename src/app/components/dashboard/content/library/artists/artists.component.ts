@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LibraryService } from '../../../../../services/library/library.service';
 import { Router } from "@angular/router";
 import { Artist } from '../../../../../classes/Artist';
+import { GeneralService } from '../../../../../services/general/general.service';
 
 @Component({
   selector: 'app-artists',
@@ -9,17 +9,18 @@ import { Artist } from '../../../../../classes/Artist';
   styleUrls: ['./artists.component.css']
 })
 export class ArtistsComponent implements OnInit {
+  accountId: number;
   artists: Artist[]
   constructor(
     private router: Router,
-    private libraryService: LibraryService
+    private generalService: GeneralService
   ) {}
 
   ngOnInit() {
-    this.libraryService.getAllArtists().subscribe((artists) => {
-      if(artists != null){
-        this.artists = artists;
-      }
+    this.accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;    
+    this.generalService.get("/accounts/" + this.accountId + "/artists").subscribe((artists) => {
+      this.artists = artists
+      console.log(this.artists);
     });
   }
 }

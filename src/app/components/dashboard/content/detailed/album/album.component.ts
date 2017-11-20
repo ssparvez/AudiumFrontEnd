@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LibraryService } from '../../../../../services/library/library.service';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { Album } from '../../../../../classes/Album';
+import { GeneralService } from '../../../../../services/general/general.service';
 
 @Component({
   selector: 'app-album',
@@ -16,17 +16,16 @@ export class AlbumComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-	  private router: Router,
-    private libraryService : LibraryService
+    private generalService : GeneralService
   ) { }
 
   ngOnInit() {
     this.route.params.subscribe(param => {
       this.id = + param['id'];
       console.log(this.id);
-      this.libraryService.getAlbum(this.id).subscribe((album) => {
+      this.generalService.get("/albums/" + this.id).subscribe((album) => {
         this.album = album;
-		    this.libraryService.getAlbumSongs(this.id).subscribe((songs) => {
+		    this.generalService.get( "/albums/" + this.id + "/songs").subscribe((songs) => {
           this.album.songs = songs;
         });
       });

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LibraryService } from '../../../../../services/library/library.service';
 import { Router } from "@angular/router";
 import { Album } from '../../../../../classes/Album';
+import { GeneralService } from '../../../../../services/general/general.service';
 
 @Component({
   selector: 'app-albums',
@@ -9,16 +10,17 @@ import { Album } from '../../../../../classes/Album';
   styleUrls: ['./albums.component.css']
 })
 export class AlbumsComponent implements OnInit {
-
+  accountId: number
   albums: Album[]
   constructor(
     private router: Router,
-    private libraryService : LibraryService
+    private generalService : GeneralService
   ) { }
 
   ngOnInit() {
-    this.libraryService.getAllAlbums().subscribe((albums) => {
-      this.albums = albums;
+    this.accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;    
+    this.generalService.get("/accounts/" + this.accountId + "/albums").subscribe((albums) => {
+      this.albums = albums
       console.log(this.albums);
     });
   }

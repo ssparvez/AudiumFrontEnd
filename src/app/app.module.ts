@@ -51,7 +51,7 @@ const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
   children: [
     {path: "home" , component: HomeComponent},
-    {path: "search", component: SearchComponent},
+    {path: "search/:keywords", component: SearchComponent},
     {path: "songs", component: SongsComponent},
     {path: "account", component: AccountComponent},
     {path: "albums", component: AlbumsComponent},
