@@ -1,7 +1,7 @@
 <div class="card grey darken-3" *ngIf="songQueue != null && songQueue.length > 0; else other_content">
   <div class="card-image">
     <a [routerLink]="['album', songQueue[queueIndex].albumId]">
-        <img src="{{imagePath}}/album_arts/{{songQueue[queueIndex].albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'">
+        <img src="{{mediaPath}}/images/album_arts/{{songQueue[queueIndex].albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'">
     </a>
     <span class="card-title black" id="music-card-title">
       <div style="padding: 0px 24px;">

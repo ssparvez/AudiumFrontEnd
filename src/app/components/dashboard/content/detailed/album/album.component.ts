@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Album } from '../../../../../classes/Album';
 import { GeneralService } from '../../../../../services/general/general.service';
 import { PlayerService } from '../../../../../services/player/player.service';
+import { DataService } from '../../../../../services/data.service';
 
 @Component({
   selector: 'app-album',
@@ -11,17 +12,19 @@ import { PlayerService } from '../../../../../services/player/player.service';
 })
 
 export class AlbumComponent implements OnInit {
-  imagePath = "https://s3.us-east-2.amazonaws.com/assets.audium.io/images"  
+  mediaPath: string;
   private id;
   album: Album;
 
   constructor(
     private route: ActivatedRoute,
-    private generalService : GeneralService,
-    private playerService : PlayerService
+    private generalService: GeneralService,
+    private playerService: PlayerService,
+    private dataService: DataService
   ) { }
 
   ngOnInit() {
+    this.mediaPath = this.dataService.mediaURL;
     this.route.params.subscribe(param => {
       this.id = + param['id'];
       console.log(this.id);

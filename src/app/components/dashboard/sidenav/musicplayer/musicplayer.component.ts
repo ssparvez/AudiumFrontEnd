@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PlayerService} from '../../../../services/player/player.service';
 import { Howl } from 'howler';
 import { Song } from '../../../../classes/Song';
+import { DataService } from '../../../../services/data.service';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { Song } from '../../../../classes/Song';
   styleUrls: ['./musicplayer.component.css']
 })
 export class MusicplayerComponent implements OnInit {
-  imagePath = "https://s3.us-east-2.amazonaws.com/assets.audium.io/images"  
+  mediaPath: string;
   songQueue: any[];
   previousQueue: any[];
   queueIndex = 0;
@@ -26,8 +27,9 @@ export class MusicplayerComponent implements OnInit {
   repeatLevel = 0;
   value = 0;
 
-  constructor(private playerService : PlayerService) { }
+  constructor(private playerService: PlayerService, private dataService: DataService) { }
   ngOnInit() {
+    this.mediaPath = this.dataService.mediaURL;
     this.songQueue = [];
     this.playerService.songQueueSubject.subscribe((songs) => {
       console.log(songs)
