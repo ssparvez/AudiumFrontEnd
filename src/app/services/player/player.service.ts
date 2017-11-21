@@ -11,9 +11,9 @@ export class PlayerService {
 
   constructor() { }
 
-  playSongs(songId: number, songs : Song[]) {
+  playSongs(index: number, songs : Song[]) {
     this.songQueueSubject.next(songs);
-    this.queueIndexSubject.next(songId);
+    this.queueIndexSubject.next(index);
   }
 
 }

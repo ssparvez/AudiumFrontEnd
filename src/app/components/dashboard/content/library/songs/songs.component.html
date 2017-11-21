@@ -4,7 +4,7 @@
     <h1>Songs</h1>
   </div>
   <div class="right" *ngIf="songs?.length > 0">
-    <a class="btn btn-floating btn-large blue pulse" (click)="playAllSongs()">
+    <a class="btn btn-floating btn-large blue pulse" (click)="playLibrarySongs(0)">
       <i class="material-icons">play_arrow</i>
     </a>
   </div>
@@ -21,7 +21,7 @@
       </tr>
     </thead>
     <tbody class="tracklist">
-      <tr *ngFor="let song of songs" (dblclick)="playSongs(song.songId)">
+      <tr *ngFor="let song of songs; let i = index" (dblclick)="playLibrarySongs(i)">
         <td>
           {{song?.title}}
           <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>

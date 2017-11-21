@@ -12,7 +12,7 @@
             <span class="card-title black" id="small-card-title">
               <h4><a [routerLink]="['../artist', artist?.artistId]">{{artist?.artistName}}</a></h4>
             </span>
-            <a class="btn-floating halfway-fab waves-effect waves-light blue">
+            <a (click)="playSongs(artist?.artistId)"class="btn-floating halfway-fab waves-effect waves-light blue">
               <i class="material-icons">play_arrow</i>
             </a>
           </div>

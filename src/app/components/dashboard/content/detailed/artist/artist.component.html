@@ -1,20 +1,18 @@
 <div class="row fade-in-1-sec">
-  <div class="card col s12 z-depth-0" style="background-color: transparent; color: transparent;">
+  <div class="card col s12 z-depth-0 transparent">
     <div class="card-image">
       <img class="responsive-img" src="assets/images/parallax.png">
       <span class="card-title black fade-in-half-sec" id="large-card-title">
         <h1 class="fade-in-1-sec" style="display: inline; vertical-align: middle;">{{artist?.artistName}}</h1>
         <a style="margin-left: 20px;" class="waves-effect waves-light btn" *ngIf="artist">Follow</a>
       </span>
-      <a class="btn-floating halfway-fab waves-effect waves-light blue hoverable" style="background-color: transparent;" *ngIf="artist?.songs?.length > 0">
+      <a (click)="playArtistSongs(0, artist?.songs)" class="btn-floating halfway-fab waves-effect waves-light blue hoverable" *ngIf="artist?.songs?.length > 0">
         <i class="material-icons">play_arrow</i>
       </a>
     </div>
   </div>
-
-
+  
   <ng-container *ngIf="artist && artist?.songs">
-
     <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'">
       <mz-tab-item class="fade-in-half-sec" [label]="'Overview'" [active]="true">
         <div class="row fade-in-half-sec" style="margin-top: 30px;">
@@ -30,7 +28,7 @@
               </tr>
             </thead>
             <tbody class="tracklist" *ngIf="artist?.songs">
-              <tr *ngFor="let song of artist?.songs">
+              <tr *ngFor="let song of artist?.songs; let i = index" (dblclick)="playArtistSongs(i, artist?.songs)">
                 <td>{{song?.title}}</td>
                 <td *ngIf="song">
                   <a [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</a>
@@ -56,7 +54,7 @@
                   </h4>
                   <h5 class="truncate">{{album?.releaseYear?.substring(0,4)}}</h5>
                 </span>
-                <a class="btn-floating halfway-fab waves-effect waves-light blue" *ngIf="artist && artist.songs">
+                <a (click)="playAlbumSongs(album?.albumId)" class="btn-floating halfway-fab waves-effect waves-light blue" *ngIf="artist && artist.songs">
                   <i class="material-icons">play_arrow</i>
                 </a>
               </div>

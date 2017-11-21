@@ -7,6 +7,7 @@ import { GeneralService } from '../../../../services/general/general.service';
 import { AppError } from '../../../../errors/AppError';
 import { Playlist } from '../../../../classes/Playlist';
 import { CustomerAccount } from '../../../../classes/CustomerAccount';
+import { PlayerService } from '../../../../services/player/player.service';
 
 @Component({
   selector: 'app-search',
@@ -22,7 +23,11 @@ export class SearchComponent implements OnInit {
   profiles : CustomerAccount[];
 
   things: number[];
-  constructor(private route: ActivatedRoute, private generalService: GeneralService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private generalService: GeneralService,
+    private playerService: PlayerService
+  ) { }
 
   ngOnInit() {
     this.things = [1,2,3,4,5,6]
@@ -52,6 +57,28 @@ export class SearchComponent implements OnInit {
       });
       
       
+    });
+  }
+
+  playSongs(index: number): void {
+    this.playerService.playSongs(index, this.songs);
+  }
+
+  playArtistSongs(artistId: number): void {
+    this.generalService.get("/artists/" + artistId + "/songs").subscribe((songs) => {
+      this.playerService.playSongs(0, songs);
+    });
+  }
+
+  playAlbumSongs(albumId: number): void {
+    this.generalService.get("/albums/" + albumId + "/songs").subscribe((songs) => {
+      this.playerService.playSongs(0, songs);
+    });
+  }
+
+  playPlaylistSongs(playlistId: number): void {
+    this.generalService.get("/playlist/" + playlistId + "/songs").subscribe((songs) => {
+      this.playerService.playSongs(0, songs);
     });
   }
 

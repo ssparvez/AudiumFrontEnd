@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { Observable } from 'rxjs/Rx';
 import { Song } from '../../../../classes/Song';
 import { Genre } from '../../../../classes/Genre';
+import { PlayerService } from '../../../../services/player/player.service';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +20,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private generalService : GeneralService,
     private authenticationService : AuthenticationService,
+    private playerService : PlayerService,
     private currentUser : CustomerAccount,
     private router : Router
   ) { }
@@ -54,5 +56,11 @@ export class HomeComponent implements OnInit {
           });
       });
     }
+  }
+
+  playRecentSongs(albumId: number) : void {
+    this.generalService.get( "/albums/" + albumId + "/songs").subscribe((songs) => {
+      this.playerService.playSongs(0, songs);
+    });
   }
 }

@@ -20,7 +20,7 @@
           <h5><a class="album-tile" [routerLink]="['../artist', recent?.artistId]">{{recent?.artistName}}</a></h5>
         </span>
       </div>
-        <div class="btn-floating halfway-fab waves-effect waves-light hoverable play-all-bt z-depth-2 fade-in-half-sec">
+        <div (click)="playRecentSongs(recent?.albumId)" class="btn-floating halfway-fab waves-effect waves-light hoverable play-all-bt z-depth-2 fade-in-half-sec">
           <i class="material-icons" style="color: inherit; background-color: inherit; fill: inherit;">play_arrow</i>
         </div>
       </div>

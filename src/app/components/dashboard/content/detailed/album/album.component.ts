@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { Album } from '../../../../../classes/Album';
 import { GeneralService } from '../../../../../services/general/general.service';
+import { PlayerService } from '../../../../../services/player/player.service';
 
 @Component({
   selector: 'app-album',
@@ -16,7 +17,8 @@ export class AlbumComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private generalService : GeneralService
+    private generalService : GeneralService,
+    private playerService : PlayerService
   ) { }
 
   ngOnInit() {
@@ -30,5 +32,9 @@ export class AlbumComponent implements OnInit {
         });
       });
     });
+  }
+
+  playSongs(index): void {
+    this.playerService.playSongs(index, this.album.songs);
   }
 }

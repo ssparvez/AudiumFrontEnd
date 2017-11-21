@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Artist } from '../../../../../classes/Artist';
 import { GeneralService } from '../../../../../services/general/general.service';
+import { PlayerService } from '../../../../../services/player/player.service';
+import { Song } from '../../../../../classes/Song';
 
 @Component({
   selector: 'app-artist',
@@ -17,7 +19,8 @@ export class ArtistComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private generalService : GeneralService
+    private generalService : GeneralService,
+    private playerService : PlayerService
   ) {}
 
 
@@ -38,6 +41,16 @@ export class ArtistComponent implements OnInit {
           });
         });
       });
+    });
+  }
+
+  playArtistSongs(index: number, songs: Song[]) : void {
+    this.playerService.playSongs(index, songs);
+  }
+
+  playAlbumSongs(albumId: number) {
+    this.generalService.get( "/albums/" + albumId + "/songs").subscribe((songs) => {
+      this.playerService.playSongs(0, songs);
     });
   }
 

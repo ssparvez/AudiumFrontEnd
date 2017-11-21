@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { Album } from '../../../../../classes/Album';
 import { GeneralService } from '../../../../../services/general/general.service';
+import { PlayerService } from '../../../../../services/player/player.service';
 
 @Component({
   selector: 'app-albums',
@@ -13,7 +14,8 @@ export class AlbumsComponent implements OnInit {
   albums: Album[]
   constructor(
     private router: Router,
-    private generalService : GeneralService
+    private generalService : GeneralService,
+    private playerService : PlayerService
   ) { }
 
   ngOnInit() {
@@ -30,5 +32,11 @@ export class AlbumsComponent implements OnInit {
   viewAlbum(albumId : number) {
 	console.log("album #" + albumId);
     this.router.navigate(['/dash/album/', albumId]);
+  }
+
+  playAlbumSongs(albumId: number) {
+    this.generalService.get( "/albums/" + albumId + "/songs").subscribe((songs) => {
+      this.playerService.playSongs(0, songs);
+    });
   }
 }

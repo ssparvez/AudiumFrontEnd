@@ -14,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let song of songs">
+      <tr *ngFor="let song of songs; let i = index;" (dblclick)="playSongs(i)">
         <td>{{song.title}}</td>
         <td>
           <span [routerLink]="['../../artist', 1]">{{song.artistName}}</span>
@@ -39,7 +39,7 @@
         <span class="card-title black" id="small-card-title">
           <h4><a [routerLink]="['../../artist', artist.artistId]">{{artist.artistName}}</a></h4>
         </span>
-        <a class="btn-floating halfway-fab waves-effect waves-light blue">
+        <a (click)="playArtistSongs(artist?.artistId)" class="btn-floating halfway-fab waves-effect waves-light blue">
           <i class="material-icons">play_arrow</i>
         </a>
       </div>
@@ -59,7 +59,7 @@
           <h4><a [routerLink]="['../../album', album.albumId]">{{album.albumTitle}}</a></h4>
           <h5><a [routerLink]="['../../artist', album.artist.artistId]">{{album.artist.artistName}}</a></h5>
         </span>
-        <a class="btn-floating halfway-fab waves-effect waves-light blue">
+        <a (click)="playAlbumSongs(album?.albumId)" class="btn-floating halfway-fab waves-effect waves-light blue">
           <i class="material-icons">play_arrow</i>
         </a>
       </div>
@@ -79,7 +79,7 @@
           <h4><a [routerLink]="['../../playlist', playlist.playlistId]">{{playlist.name}}</a></h4>
           <h5>by <a [routerLink]="['../../profile', playlist.creator.accountId]">{{playlist.creator.username}}</a></h5>
         </span>
-        <a class="btn-floating halfway-fab waves-effect waves-light blue">
+        <a (click)="playPlaylistSongs(playlist?.playlistId)" class="btn-floating halfway-fab waves-effect waves-light blue">
           <i class="material-icons">play_arrow</i>
         </a>
       </div>

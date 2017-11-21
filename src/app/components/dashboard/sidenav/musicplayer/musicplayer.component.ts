@@ -28,9 +28,9 @@ export class MusicplayerComponent implements OnInit {
   constructor(private playerService : PlayerService) { }
   ngOnInit() {
     this.songQueue = [];
-    this.playerService.songQueueSubject.subscribe((data) => {
-      console.log(data)
-      if(data != null) {
+    this.playerService.songQueueSubject.subscribe((songs) => {
+      console.log(songs)
+      if(songs != []) {
         // destroy old queue first
         if(this.songQueue != []) {
           // unload each existing howl object
@@ -39,10 +39,14 @@ export class MusicplayerComponent implements OnInit {
           }
           this.songQueue = [];
         }
-        this.songQueue = data.map(x => Object.assign({}, x));
-        //this.playerService.queueIndexSubject.subscribe(())
+        this.songQueue = songs.map(x => Object.assign({}, x));
         this.initSongs();
-        this.togglePlay();
+        // get song index
+        this.playerService.queueIndexSubject.subscribe((index) => {
+          console.log(index);
+          this.queueIndex = index;
+          this.togglePlay();
+        });
       }
     });
 
