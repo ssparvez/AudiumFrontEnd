@@ -8,6 +8,7 @@ import { AppError } from '../../../../errors/AppError';
 import { Playlist } from '../../../../classes/Playlist';
 import { CustomerAccount } from '../../../../classes/CustomerAccount';
 import { PlayerService } from '../../../../services/player/player.service';
+import { DataService } from '../../../../services/data.service';
 
 @Component({
   selector: 'app-search',
@@ -17,19 +18,22 @@ import { PlayerService } from '../../../../services/player/player.service';
 export class SearchComponent implements OnInit {
   keywords: string;
   songs : Song[];
-  artists : Artist[];  
+  artists : Artist[];
   albums : Album[];
   playlists : Playlist[];
   profiles : CustomerAccount[];
+  mediaPath: string;
 
   things: number[];
   constructor(
     private route: ActivatedRoute,
     private generalService: GeneralService,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private dataService: DataService
   ) { }
 
   ngOnInit() {
+    this.mediaPath = this.dataService.mediaURL;
     this.things = [1,2,3,4,5,6]
     this.route.params.subscribe(param => {
       this.keywords = param['keywords'];
@@ -53,10 +57,10 @@ export class SearchComponent implements OnInit {
             });
           });
         });
-		    
+
       });
-      
-      
+
+
     });
   }
 

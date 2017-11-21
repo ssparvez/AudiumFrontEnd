@@ -1,5 +1,5 @@
 <div class="row fade-in-1-sec">
-  <div class="card col s12 z-depth-0 transparent">
+  <div class="card col s12 z-depth-0 transparent" *ngIf="artist">
     <div class="card-image">
       <img class="responsive-img" src="assets/images/parallax.png">
       <span class="card-title black fade-in-half-sec" id="large-card-title">
@@ -11,7 +11,7 @@
       </a>
     </div>
   </div>
-  
+
   <ng-container *ngIf="artist && artist?.songs">
     <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'">
       <mz-tab-item class="fade-in-half-sec" [label]="'Overview'" [active]="true">
@@ -44,20 +44,35 @@
         <div class="row fade-in-half-sec" *ngIf="artist?.songs && artist?.albums">
           <div class="col s12 m3 fade-in-1-sec" *ngFor="let album of artist?.albums">
             <div class="card transparent hoverable">
-              <div class="card-image" *ngIf="album">
-                <a [routerLink]="['../../album', album?.albumId]">
-                  <img src="assets/images/defaults/album.svg">
-                </a>
-                <span class="card-title black" id="small-card-title">
-                  <h4 class="truncate" *ngIf="album">
-                    <a [routerLink]="['../../album', album?.albumId]">{{album?.albumTitle}}</a>
-                  </h4>
-                  <h5 class="truncate">{{album?.releaseYear?.substring(0,4)}}</h5>
-                </span>
-                <a (click)="playAlbumSongs(album?.albumId)" class="btn-floating halfway-fab waves-effect waves-light blue" *ngIf="artist && artist.songs">
-                  <i class="material-icons">play_arrow</i>
-                </a>
+              <div class="card-image" *ngIf="album" #albumcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
+                <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
+                  <a [routerLink]="['../../album', album?.albumId]">
+                    <img class="album-img" src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': albumcarddiv.offsetWidth }">
+                  </a>
+                  <span class="card-title black" id="small-card-title">
+                    <h4 class="truncate" *ngIf="album">
+                      <a [routerLink]="['../../album', album?.albumId]">{{album?.albumTitle}}</a>
+                    </h4>
+                    <h5 class="truncate">{{album?.releaseYear?.substring(0,4)}}</h5>
+                  </span>
+                  <a (click)="playAlbumSongs(album?.albumId)" class="btn-floating halfway-fab waves-effect waves-light blue" *ngIf="artist && artist.songs">
+                    <i class="material-icons">play_arrow</i>
+                  </a>
+                </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row fade-in-2-sec" *ngIf="artist?.songs?.length == 0 && artist?.albums?.length == 0">
+          <div class="col s12">
+            <div class="card-panel large transparent z-depth-0">
+              <div class="row"></div>
+            </div>
+          </div>
+          <div class="col s12">
+            <div class="card-panel large transparent z-depth-0 center">
+              <h2 class="grey-text">No songs or albums by this artist</h2>
             </div>
           </div>
         </div>
@@ -85,48 +100,51 @@
       </mz-tab-item>
 
       <mz-tab-item [label]="'Events'" class="fade-in-half-sec">
-        <h2 class="center" style="margin-top: 30px;">Events</h2>          
-        <ul class="collection" style="margin-top: 20px; border:none;">
-          <li class="collection-item grey darken-4" *ngFor="let thing of things">
-            <div class="row" style="margin-bottom: 0px;">
-            <div class="col m1">
-              <div style="width: 50px;">
-                <div style="height: 20px; background-color: red;"><h4 class="white-text center" style="padding-top: 2px;">JUL</h4></div>
-                <div style="height: 30px; background-color: white;"><h3 class="black-text center" style="padding-top: 5px;"><b>28</b></h3></div>
-              </div>
-            </div>
-            <div class="col m8">
-              <div class="row">
-                <div class="col m5">
-                  <h4>Warped Tour</h4>
-                </div>                  
-                <div class="col m7">
-                    <i class="material-icons white-text">location_on</i>
-                    <span style="font-size: 16px; font-weight: 500; color: #ccc;">Northwell Health at Jones Beach Theater, Wantagh</span>
+        <div class="row fade-in-half-sec" *ngIf="artist?.songs && artist?.albums">
+          <h2 class="center" style="margin-top: 30px;">Events</h2>
+          <ul class="collection" style="margin-top: 20px; border:none;" *ngIf="artist?.events?.length > 0">
+            <li class="collection-item grey darken-4" *ngFor="let event of artist?.events">
+              <div class="row" style="margin-bottom: 0px;">
+              <div class="col m1">
+                <div style="width: 50px;" *ngIf="event?.eventDate">
+                  <div style="height: 20px; background-color: red;"><h4 class="white-text center" style="padding-top: 2px;">{{monthNames[(+event?.eventDate?.toString().substring(5,7))-1]}}</h4></div>
+                  <div style="height: 30px; background-color: white;"><h3 class="black-text center" style="padding-top: 5px;"><b>{{(event?.eventDate?.toString().substring(8,10))}}</b></h3></div>
                 </div>
               </div>
+              <div class="col m8">
+                <div class="row">
+                  <div class="col m5">
+                    <h4>{{event?.eventTitle}}</h4>
+                  </div>
+                  <div class="col m7" *ngIf="event?.address">
+                      <i class="material-icons white-text">location_on</i>
+                      <span style="font-size: 16px; font-weight: 500; color: #ccc;">{{event?.address?.addressLine1}}, {{event?.address?.city}} {{event?.address?.state}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col m3">
+                <a class="right waves-effect waves-light btn">Get Tickets</a>
+              </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="row fade-in-2-sec" *ngIf="artist?.events?.length == 0">
+          <div class="col s12">
+            <div class="card-panel large transparent z-depth-0">
+              <div class="row"></div>
             </div>
-            <div class="col m3">
-              <a class="right waves-effect waves-light btn">Get Tickets</a>
+          </div>
+          <div class="col s12">
+            <div class="card-panel large transparent z-depth-0 center">
+              <h2 class="grey-text">No upcoming events</h2>
             </div>
-            </div>
-          </li>
-        </ul>
+          </div>
+        </div>
       </mz-tab-item>
     </mz-tab>
 
-    <div class="row fade-in-2-sec" *ngIf="artist?.songs?.length == 0 && artist?.albums?.length == 0">
-      <div class="col s12">
-        <div class="card-panel large transparent z-depth-0">
-          <div class="row"></div>
-        </div>
-      </div>
-      <div class="col s12">
-        <div class="card-panel large transparent z-depth-0 center">
-          <h2 class="grey-text">No songs or albums by this artist</h2>
-        </div>
-      </div>
-    </div>
+
   </ng-container>
 
   <!-- Loading animation -->

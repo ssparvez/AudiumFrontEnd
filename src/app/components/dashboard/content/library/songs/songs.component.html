@@ -29,6 +29,7 @@
 		    <td *ngIf="song"><a [routerLink]="['../artist', song?.artistId]">{{song?.artistName}}</a></td>
         <td *ngIf="song"><a [routerLink]="['../album', song?.albumId]">{{song?.albumTitle}}</a></td>
         <td>
+          <!-- NOTE: Putting these spans on separate lines creates a space for some reason. Though ugly, we should keep them on the same line -->
           <span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span><span *ngIf="song?.duration?.substring(3,4) != '0' || song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}
         </td>
         <td class="center">{{song?.timeAdded | timeAgo}}</td>
