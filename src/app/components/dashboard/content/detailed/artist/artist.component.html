@@ -1,7 +1,7 @@
 <div class="row fade-in-1-sec">
   <div class="card col s12 z-depth-0 transparent" *ngIf="artist">
     <div class="card-image">
-      <img class="responsive-img" src="assets/images/parallax.png">
+      <img class="responsive-img" src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Banner.jpg" onError="this.src='assets/images/defaults/banner.png'">
       <span class="card-title black fade-in-half-sec" id="large-card-title">
         <h1 class="fade-in-1-sec" style="display: inline; vertical-align: middle;">{{artist?.artistName}}</h1>
         <a style="margin-left: 20px;" class="waves-effect waves-light btn" *ngIf="artist">Follow</a>
