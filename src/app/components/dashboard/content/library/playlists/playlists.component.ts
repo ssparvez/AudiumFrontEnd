@@ -58,7 +58,6 @@ export class PlaylistsComponent implements OnInit {
   }
 
   viewPlaylist(playlistId: number) {
-    console.log("playlist #" + playlistId);
     this.router.navigate(['/dash/playlist/', playlistId]);
   }
 
@@ -93,7 +92,6 @@ export class PlaylistsComponent implements OnInit {
 
     this.isPlaying = !isPlaying;
   }
-
 
   checkOwnership(playlistOwner): boolean {
     return ( this.currentAccountId === playlistOwner);
