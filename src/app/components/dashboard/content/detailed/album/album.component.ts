@@ -11,7 +11,7 @@ import { PlayerService } from '../../../../../services/player/player.service';
 })
 
 export class AlbumComponent implements OnInit {
-
+  imagePath = "https://s3.us-east-2.amazonaws.com/assets.audium.io/images"  
   private id;
   album: Album;
 

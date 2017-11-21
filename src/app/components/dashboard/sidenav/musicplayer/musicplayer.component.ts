@@ -10,6 +10,7 @@ import { Song } from '../../../../classes/Song';
   styleUrls: ['./musicplayer.component.css']
 })
 export class MusicplayerComponent implements OnInit {
+  imagePath = "https://s3.us-east-2.amazonaws.com/assets.audium.io/images"  
   songQueue: any[];
   previousQueue: any[];
   queueIndex = 0;

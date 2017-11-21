@@ -1,3 +1,8 @@
 span h5 a:hover, span h4 a:hover{
     color: #ffab00;
 }
+
+img {
+    height: 200px;
+    width: 200px;
+}

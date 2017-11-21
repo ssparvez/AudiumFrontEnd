@@ -12,6 +12,7 @@ import { PlayerService } from '../../../../../services/player/player.service';
 export class AlbumsComponent implements OnInit {
   accountId: number
   albums: Album[]
+  imagePath = "https://s3.us-east-2.amazonaws.com/assets.audium.io/images"
   constructor(
     private router: Router,
     private generalService : GeneralService,
@@ -38,5 +39,13 @@ export class AlbumsComponent implements OnInit {
     this.generalService.get( "/albums/" + albumId + "/songs").subscribe((songs) => {
       this.playerService.playSongs(0, songs);
     });
+  }
+  checkImagePaths(albumId: number) : string {
+    let extensions = [".jpg", ".jpeg", ".png"]
+    let imageUrl = "assets/images/defaults/album.svg"
+    for(let index of extensions) {
+    }
+
+    return imageUrl;
   }
 }
