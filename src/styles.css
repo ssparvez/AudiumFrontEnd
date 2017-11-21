@@ -79,7 +79,7 @@ h5 {
     color: white;
 }
 
-.album-div, .artist-div {
+.album-div, .artist-div, .artist-banner {
     max-height: inherit;
     overflow: hidden;
     background: rgba(0, 0, 1, 1.0);

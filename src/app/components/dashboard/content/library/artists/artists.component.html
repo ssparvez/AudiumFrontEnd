@@ -10,7 +10,7 @@
           <div class="card-image" #artistcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': artistcarddiv.offsetWidth, 'max-height.px': artistcarddiv.offsetWidth }">
             <div class="artist-div valign-wrapper" [ngStyle]="{'min-height.px': artistcarddiv.offsetWidth, 'max-height.px': artistcarddiv.offsetWidth }">
               <a [routerLink]="['../artist', artist?.artistId]">
-                <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{'min-width.px': artistcarddiv.offsetWidth }">
+                <img class="artist-banner-img" src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{'min-width.px': artistcarddiv.offsetWidth }">
               </a>
               <span class="card-title black" id="small-card-title">
                 <h4><a [routerLink]="['../artist', artist?.artistId]">{{artist?.artistName}}</a></h4>

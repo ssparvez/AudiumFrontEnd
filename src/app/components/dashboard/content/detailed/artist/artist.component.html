@@ -1,14 +1,16 @@
 <div class="row fade-in-1-sec">
   <div class="card col s12 z-depth-0 transparent" *ngIf="artist">
-    <div class="card-image">
-      <img class="responsive-img" src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Banner.jpg" onError="this.src='assets/images/defaults/banner.png'">
-      <span class="card-title black fade-in-half-sec" id="large-card-title">
-        <h1 class="fade-in-1-sec" style="display: inline; vertical-align: middle;">{{artist?.artistName}}</h1>
-        <a style="margin-left: 20px;" class="waves-effect waves-light btn" *ngIf="artist">Follow</a>
-      </span>
-      <a (click)="playArtistSongs(0, artist?.songs)" class="btn-floating halfway-fab waves-effect waves-light blue hoverable" *ngIf="artist?.songs?.length > 0">
-        <i class="material-icons">play_arrow</i>
-      </a>
+    <div class="card-image" #artistbannerdiv (window:resize)="0" [ngStyle]="{'min-height.px': (artistbannerdiv.offsetWidth / 2), 'max-height.px': (artistbannerdiv.offsetWidth / 2) }">
+      <div class="artist-banner" [ngStyle]="{'min-height.px': (artistbannerdiv.offsetWidth / 2), 'max-height.px': (artistbannerdiv.offsetWidth / 2) }">
+        <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Banner.jpg" onError="this.src='assets/images/defaults/banner.png'" [ngStyle]="{'min-width.px': artistbannerdiv.offsetWidth }">
+        <span class="card-title black fade-in-half-sec" id="large-card-title">
+          <h1 class="fade-in-1-sec" style="display: inline; vertical-align: middle;">{{artist?.artistName}}</h1>
+          <a style="margin-left: 20px;" class="waves-effect waves-light btn" *ngIf="artist">Follow</a>
+        </span>
+        <a (click)="playArtistSongs(0, artist?.songs)" class="btn-floating halfway-fab waves-effect waves-light blue hoverable" *ngIf="artist?.songs?.length > 0">
+          <i class="material-icons">play_arrow</i>
+        </a>
+      </div>
     </div>
   </div>
 
