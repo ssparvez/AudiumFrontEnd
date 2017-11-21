@@ -52,17 +52,8 @@ export class MusicplayerComponent implements OnInit {
         });
       }
     });
-
-    // this.songQueue = [
-    //   {songId: 1, title: "The Less I Know the Better", artistName: "Tame Impala", url: '../../../../../assets/songs/TheLessIKnowTheBetter.m4a', albumArtUrl: "../../../../../assets/images/currents.jpg"},
-    //   {songId: 2, title: "Intro", artistName: "The xx", url: '../../../../../assets/songs/Intro.mp3', albumArtUrl: '../../../../../assets/images/xx.png'},
-    //   {songId: 3, title: "Feels Good Inc.", artistName: "Gorillaz", url: '../../../../../assets/songs/FeelsGoodInc.mp3', albumArtUrl: '../../../../../assets/images/demondays.jpeg'},
-    //   {songId: 4, title: "song 4", artistName: "Gorillaz", url: '../../../../../assets/songs/FeelsGoodInc.mp3', albumArtUrl: '../../../../../assets/images/demondays.jpeg'}
-    // ];
-    // init the songs
-    //this.initSongs();
-    //console.log(this.songQueue);
   }
+  
   initSongs(): void { // attaches howl object to each song
     for(let song of this.songQueue) {
       song.sound = new Howl({
