@@ -323,3 +323,5 @@ tbody.tracklist tr td a:hover {
 .ngx-contextmenu a:hover {
     background-color: #616161;
 }
+
+input[type=range]+.thumb.active{display:none;border-radius:50% 50% 50% 0}
