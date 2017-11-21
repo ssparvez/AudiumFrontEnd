@@ -8,11 +8,13 @@
       <div class="col s12 m3" *ngFor="let artist of artists">
         <div class="card hoverable transparent fade-in-half-sec" *ngIf="artist">
           <div class="card-image">
-            <a [routerLink]="['../artist', artist?.artistId]"><img src="assets/images/defaults/artist.svg"></a>
+            <a [routerLink]="['../artist', artist?.artistId]">
+              <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'">
+            </a>
             <span class="card-title black" id="small-card-title">
               <h4><a [routerLink]="['../artist', artist?.artistId]">{{artist?.artistName}}</a></h4>
             </span>
-            <a class="btn-floating halfway-fab waves-effect waves-light blue">
+            <a (click)="playSongs(artist?.artistId)"class="btn-floating halfway-fab waves-effect waves-light blue">
               <i class="material-icons">play_arrow</i>
             </a>
           </div>

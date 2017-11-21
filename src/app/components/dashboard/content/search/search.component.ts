@@ -7,6 +7,8 @@ import { GeneralService } from '../../../../services/general/general.service';
 import { AppError } from '../../../../errors/AppError';
 import { Playlist } from '../../../../classes/Playlist';
 import { CustomerAccount } from '../../../../classes/CustomerAccount';
+import { PlayerService } from '../../../../services/player/player.service';
+import { DataService } from '../../../../services/data.service';
 
 @Component({
   selector: 'app-search',
@@ -16,15 +18,22 @@ import { CustomerAccount } from '../../../../classes/CustomerAccount';
 export class SearchComponent implements OnInit {
   keywords: string;
   songs : Song[];
-  artists : Artist[];  
+  artists : Artist[];
   albums : Album[];
   playlists : Playlist[];
   profiles : CustomerAccount[];
+  mediaPath: string;
 
   things: number[];
-  constructor(private route: ActivatedRoute, private generalService: GeneralService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private generalService: GeneralService,
+    private playerService: PlayerService,
+    private dataService: DataService
+  ) { }
 
   ngOnInit() {
+    this.mediaPath = this.dataService.mediaURL;
     this.things = [1,2,3,4,5,6]
     this.route.params.subscribe(param => {
       this.keywords = param['keywords'];
@@ -48,10 +57,32 @@ export class SearchComponent implements OnInit {
             });
           });
         });
-		    
+
       });
-      
-      
+
+
+    });
+  }
+
+  playSongs(index: number): void {
+    this.playerService.playSongs(index, this.songs);
+  }
+
+  playArtistSongs(artistId: number): void {
+    this.generalService.get("/artists/" + artistId + "/songs").subscribe((songs) => {
+      this.playerService.playSongs(0, songs);
+    });
+  }
+
+  playAlbumSongs(albumId: number): void {
+    this.generalService.get("/albums/" + albumId + "/songs").subscribe((songs) => {
+      this.playerService.playSongs(0, songs);
+    });
+  }
+
+  playPlaylistSongs(playlistId: number): void {
+    this.generalService.get("/playlist/" + playlistId + "/songs").subscribe((songs) => {
+      this.playerService.playSongs(0, songs);
     });
   }
 

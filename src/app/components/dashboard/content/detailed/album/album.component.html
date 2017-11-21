@@ -1,11 +1,13 @@
 <div class="row fade-in-half-sec">
   <div class="col s6 m4">
     <div class="card transparent fade-in-1-sec">
-      <div class="card-image">
-        <img style="z-index: 1" src="assets/images/defaults/album.svg">
-        <a class="btn-floating halfway-fab waves-effect waves-light blue" *ngIf="album?.songs?.length > 0">
+      <div class="card-image" #albumcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
+        <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
+        <img style="z-index: 1" src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'">
+        <a (click)="playSongs(0)" class="btn-floating halfway-fab waves-effect waves-light blue" *ngIf="album?.songs?.length > 0">
           <i class="material-icons">play_arrow</i>
         </a>
+        </div>
       </div>
     </div>
   </div>
@@ -46,7 +48,7 @@
     </thead>
 
     <tbody class="tracklist">
-      <tr *ngFor="let song of album?.songs">
+      <tr *ngFor="let song of album?.songs; let i = index" (dblclick)="playSongs(i)">
         <td>{{song?.trackNumber}}</td>
         <td>
           {{song?.title}}
@@ -56,8 +58,8 @@
           <a [routerLink]="['../../artist', song?.artistId]">{{song?.artistName}}</a>
         </td>
         <td>
-          <span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span>
-          <span *ngIf="song?.duration?.substring(3,4) != '0' || song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}
+          <!-- NOTE: Putting these spans on separate lines creates a space for some reason. Though ugly, we should keep them on the same line -->
+          <span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span><span *ngIf="song?.duration?.substring(3,4) != '0' || song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}
         </td>
       </tr>
     </tbody>

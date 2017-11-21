@@ -10,18 +10,18 @@
 <div class="row fade-in-1-sec" *ngIf="recentListens?.length > 0">
   <div class="col s12 m3" *ngFor="let recent of recentListens">
     <div class="card transparent" *ngIf="recent">
-      <div class="card-image">
-        <div class="fade-in-2-sec">
-          <a [routerLink]="['../album', recent?.albumId]">
-            <img class="hoverable" src="assets/images/everything-now.jpg">
+      <div class="card-image" #albumcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
+        <div class="album-div valign-wrapper fade-in-2-sec hoverable" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
+          <a [routerLink]="['../album', recent?.albumId]" class="hoverable">
+            <img class="album-img hoverable" src="{{mediaPath}}/images/album_arts/{{recent?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': albumcarddiv.offsetWidth }">
           </a>
-        <span class="card-title black" id="small-card-title">
-          <h4><a class="album-tile" [routerLink]="['../album', recent?.albumId]">{{recent?.albumTitle}}</a></h4>
-          <h5><a class="album-tile" [routerLink]="['../artist', recent?.artistId]">{{recent?.artistName}}</a></h5>
-        </span>
-      </div>
-        <div class="btn-floating halfway-fab waves-effect waves-light hoverable play-all-bt z-depth-2 fade-in-half-sec">
-          <i class="material-icons" style="color: inherit; background-color: inherit; fill: inherit;">play_arrow</i>
+          <span class="card-title black" id="small-card-title">
+            <h4><a class="album-tile" [routerLink]="['../album', recent?.albumId]">{{recent?.albumTitle}}</a></h4>
+            <h5><a class="album-tile" [routerLink]="['../artist', recent?.artistId]">{{recent?.artistName}}</a></h5>
+          </span>
+          <div (click)="playRecentSongs(recent?.albumId)" class="btn-floating halfway-fab waves-effect waves-light hoverable play-all-bt z-depth-2 fade-in-half-sec">
+            <i class="material-icons" style="color: inherit; background-color: inherit; fill: inherit;">play_arrow</i>
+          </div>
         </div>
       </div>
     </div>
@@ -56,7 +56,7 @@
           <td>
             {{song?.title}}
             <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
-          </td> 
+          </td>
           <td>
             <!--IN SPAN: *ngFor="let artist of song.artists; last as isLast"-->
             <!--{{artist.name}}{{isLast ? '' : ', '}}-->

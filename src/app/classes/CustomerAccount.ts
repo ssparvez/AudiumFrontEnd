@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Account} from "./Account";
+import { Account } from "./Account";
 
 @Injectable()
 export class CustomerAccount extends Account {
@@ -7,6 +7,7 @@ export class CustomerAccount extends Account {
   private _dob: string;
   private _gender: string;
   private _profilePicURL: string;
+  private _followerCount?: number;
 
   constructor() {
     super();
@@ -28,13 +29,20 @@ export class CustomerAccount extends Account {
     this._gender = value;
   }
 
-
   get profilePicURL(): string {
     return this._profilePicURL;
   }
 
   set profilePicURL(value: string) {
     this._profilePicURL = value;
+  }
+
+  get followerCount(): number {
+    return this._followerCount;
+  }
+
+  set followerCount(value: number) {
+    this._followerCount = value;
   }
 
   loadWithJSON( json) {
@@ -46,5 +54,6 @@ export class CustomerAccount extends Account {
     this.accountId = json['_accountId'];
     this.lastName = json['_lastName'];
     this.gender = json['_gender'];
+    this.followerCount = json['_followerCount']
   }
 }

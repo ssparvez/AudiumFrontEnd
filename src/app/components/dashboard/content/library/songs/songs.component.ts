@@ -30,10 +30,10 @@ export class SongsComponent implements OnInit {
     this.toastService.show('Playing Song!', 4000, 'blue');
   }
 
-  playSongs(songId: number) {
+  playLibrarySongs(index: number) {
     // initialize howl here?
-    this.playerService.playSongs(songId, this.songs);
-    console.log(songId);
+    this.playerService.playSongs(index, this.songs);
+    console.log(index);
   }
 
 }

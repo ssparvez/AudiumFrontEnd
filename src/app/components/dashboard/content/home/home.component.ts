@@ -6,6 +6,8 @@ import { Router } from "@angular/router";
 import { Observable } from 'rxjs/Rx';
 import { Song } from '../../../../classes/Song';
 import { Genre } from '../../../../classes/Genre';
+import { PlayerService } from '../../../../services/player/player.service';
+import { DataService } from '../../../../services/data.service';
 
 @Component({
   selector: 'app-home',
@@ -16,14 +18,18 @@ export class HomeComponent implements OnInit {
   recentListens: Song[];
   topSongs: Song[];
   genres: Genre[];
+  mediaPath: string;
   constructor(
     private generalService : GeneralService,
     private authenticationService : AuthenticationService,
+    private playerService : PlayerService,
+    private dataService: DataService,
     private currentUser : CustomerAccount,
     private router : Router
   ) { }
 
   ngOnInit() {
+    this.mediaPath = this.dataService.mediaURL;
     if(this.authenticationService != null && this.authenticationService.currentUserInfo != null){
       this.currentUser = this.authenticationService.currentUserInfo;
     }
@@ -54,5 +60,11 @@ export class HomeComponent implements OnInit {
           });
       });
     }
+  }
+
+  playRecentSongs(albumId: number) : void {
+    this.generalService.get( "/albums/" + albumId + "/songs").subscribe((songs) => {
+      this.playerService.playSongs(0, songs);
+    });
   }
 }
