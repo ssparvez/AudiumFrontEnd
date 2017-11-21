@@ -3,10 +3,6 @@
     color: white;
 }
 
-.playlists-context-menu:hover {
-    color: white;
-}
-
 .card-content {
     color: rgb(236, 236, 236);
     padding-bottom: 0;
@@ -17,8 +13,18 @@
 }
 
 .playlist-name {
-    font-size: x-large;
+    font-size: large;
     margin-top: 5%;
+}
+
+
+.playlist-creator {
+    color: #757575 ;
+}
+
+.playlist-creator:hover {
+    color: #9e9e9e ;
+    border-bottom: 2px #9e9e9e solid;
 }
 
 .playlist-playbutton-div {
@@ -27,9 +33,7 @@
     bottom: 35%;
     left: 38%;
     display: none;
-}
-
-.card-image {
+    outline: 0;
 }
 
 .card:hover > .playlist-playbutton-div {
@@ -40,34 +44,36 @@
 .card:hover > .card-image{
     filter: brightness(30%);
 }
-
-.playlist-name-div {
-}
-.playlist-creator {
-    color: #757575 ;
-}
-
-.playlist-creator:hover {
-    color: #9e9e9e ;
-    border-bottom: 2px #9e9e9e solid;
-}
-
 .playlist-container {
     position: relative;
 }
 
 .play-icon {
-    font-size: 5rem;
+    font-size: 6rem;
     transition: 0.3s;
+    outline:none
 }
 
 .play-icon:hover{
     cursor: pointer;
-    transition: 0.3s;
-    font-size: 6rem;
+    -webkit-transform: scale(1.3);
+    -ms-transform: scale(1.3);
+    transform: scale(1.3);
 }
 
 .play-icon:active {
-    transition: 0.2s;
-    font-size: 5.5rem;
+    -webkit-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    transform: scale(0.8);
 }
+
+.noSelect {
+    outline: 0;
+    outline: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+

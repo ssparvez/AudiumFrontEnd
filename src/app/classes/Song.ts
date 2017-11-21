@@ -1,26 +1,28 @@
 export interface Song {
-  songId? : number
-  title? : string,
-  duration? : string,
-  file? : string,
-  year? : Date,
-  isExplicit? : boolean,
-  lyrics? : string;
+  songId?: number;
+  title?: string;
+  duration?: string;
+  file?: string;
+  year?: Date;
+  isExplicit?: boolean;
+  lyrics?: string;
 
-  artistId? : number,
-  artistName? : string,
-  albumId? : number,
-  albumTitle? : string,
-  timeAdded? : number,
-  trackNumber?: number,
-  genreId?: number,
-  genreName?: string,
-  playCount?: number
+  artistId?: number;
+  artistName?: string;
+  albumId?: number;
+  albumTitle?: string;
+  timeAdded?: number;
+  trackNumber?: number;
+  genreId?: number;
+  genreName?: string;
+  playCount?: number;
   //artists: Artist [],
   //album: Album []
-  isPlaying?: boolean,
-  sound?: Howl,
+  isPlaying?: boolean;
+  sound?: Howl;
   // not needed
-  url?: string,
-  albumArtUrl?: string,
+  url?: string;
+  albumArtUrl?: string;
+
+  isSaved?: boolean;
 }

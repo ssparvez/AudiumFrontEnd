@@ -21,7 +21,7 @@
       </tr>
     </thead>
     <tbody class="tracklist">
-      <tr *ngFor="let song of songs" (dblclick)="playSongs(song.songId)">
+      <tr *ngFor="let song of songs" (dblclick)="playSongs(song.songId)" (contextmenu)="songMenu.onContextMenu($event, song)">
         <td>
           {{song?.title}}
           <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
@@ -55,3 +55,6 @@
 <div class="row fade-in-2-sec" *ngIf="!songs">
   <div class="loader">Loading...</div>
 </div>
+
+<app-song-menu #songMenu [songs]="songs" [inMusic]="true">
+</app-song-menu>

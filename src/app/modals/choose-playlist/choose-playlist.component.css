@@ -20,15 +20,15 @@
     margin-top: 5%;
 }
 
+.playlist-container {
+    position: relative;
+}
 .playlist-add-div {
     position: absolute;
     z-index: 1000;
-    bottom: 33%;
-    left: 36%;
+    bottom: 27%;
+    left: 32%;
     display: none;
-}
-
-.card-image {
 }
 
 .card:hover > .playlist-add-div {
@@ -43,10 +43,6 @@
 
 .playlist-name-div {
     color: white;
-}
-
-.playlist-container {
-    position: relative;
 }
 
 .add-icon {

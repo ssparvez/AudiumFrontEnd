@@ -17,10 +17,18 @@
           <img src="assets/images/defaults/playlist.svg" width="150">
         </a>
       </div>
-      <div class="playlist-playbutton-div" >
-        <a class="play-button">
-          <i class="material-icons play-icon">play_circle_outline</i>
-        </a>
+      <div class="playlist-playbutton-div noSelect">
+        <div *ngIf="isPlaying == true ; then pause else play"></div>
+        <ng-template #play >
+          <a class="play-button" (click)="playbackControl(false)">
+            <i class="material-icons play-icon">play_circle_outline</i>
+          </a>
+        </ng-template>
+        <ng-template #pause>
+          <a class="play-button"  (click)="playbackControl(true)">
+            <i class="material-icons play-icon">pause_circle_outline</i>
+          </a>
+        </ng-template>
       </div>
       <div class="playlist-name-div col s12 center {{emulateCardContentHover[i]}}" (mouseenter)="emulateContentHover(i, true)"
            (mouseleave)="emulateContentHover(i, false)">
@@ -28,10 +36,6 @@
           <div class="col s11 truncate playlist-name" style="color: inherit; padding-bottom: 28px;">{{playlist?.name}}
             <br>
               <a class="playlist-creator" [routerLink]="['../profile', playlist?.accountId]">{{playlist?.username}}</a>
-            <!--<span class="col s1 right right-align grey-text {{emulateCardContentHoverIcon[i]}}"-->
-                  <!--*ngIf="playlist?.accountId == currentAccountId">-->
-                <!--<i class="material-icons">star</i>-->
-              <!--</span>-->
           </div>
         </a>
       </div>

@@ -27,6 +27,7 @@ export class PlaylistsComponent implements OnInit {
 
   playlists: Playlist[];
   public currentUser: JSON;
+  public isPlaying;
   public currentAccountId: number;
   public emulateCardContentHover: string[];
   public emulateCardContentHoverIcon: string[];
@@ -87,6 +88,12 @@ export class PlaylistsComponent implements OnInit {
       this.emulateCardContentHoverIcon[index] = 'text-darken-1';
     }
   }
+
+  playbackControl(isPlaying) {
+
+    this.isPlaying = !isPlaying;
+  }
+
 
   checkOwnership(playlistOwner): boolean {
     return ( this.currentAccountId === playlistOwner);

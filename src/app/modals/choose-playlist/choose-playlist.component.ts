@@ -4,6 +4,7 @@ import {GeneralService} from "../../services/general/general.service";
 import {Playlist} from "../../classes/Playlist";
 import {AppError} from "../../errors/AppError";
 import {animate, style, transition, trigger} from "@angular/animations";
+import {MzToastService} from "ng2-materialize";
 
 
 @Component({
@@ -26,6 +27,7 @@ export class ChoosePlaylistComponent implements OnInit {
   public playlists: Playlist[];
   constructor(private dialogRef:MatDialogRef<ChoosePlaylistComponent>,
               private service: GeneralService,
+              private toastService: MzToastService,
               @Inject(MAT_DIALOG_DATA) private data: {accountId: number, songId: number}) { }
 
   ngOnInit() {
@@ -51,7 +53,7 @@ export class ChoosePlaylistComponent implements OnInit {
       response => {
         this.closeDialog(true);
       }, (error: AppError) => {
-
+        this.toastService.show("Song was not added", 3000, 'blue');
       }
     );
   }

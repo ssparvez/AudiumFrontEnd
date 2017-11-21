@@ -24,14 +24,16 @@ export class PlaylistComponent implements OnInit {
 
   private id;
   public playlist: Playlist;
-  songsInPlaylist: Song[] = null;
+  public songsInPlaylist: Song[] = null;
+  public isPlaying;
   private currentUser;
   private currentAccountId;
   public numberOfSongs = 0;
+  public songCounter = 0;
+  public playbackCondition: string = "play_arrow";
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private service: GeneralService,
     private toastService: MzToastService ) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -71,7 +73,7 @@ export class PlaylistComponent implements OnInit {
   }
 
   changeFollowStatus(status) {
-      this.service.post('/account/followstatus/' + this.currentAccountId + '/playlist'  + this.id + '/'
+      this.service.post('/account/' + this.currentAccountId + '/playlist'  + this.id + '/follow/'
         + status, "")
         .subscribe(
         response => {
@@ -87,4 +89,24 @@ export class PlaylistComponent implements OnInit {
       );
   }
 
+  pausePlayback() {
+
+    this.isPlaying = false;
+    this.playbackCondition= "play_arrow";
+  }
+
+  playPlayback() {
+    this.isPlaying = true;
+  }
+  playbackSong($event: MouseEvent) {
+    this.isPlaying = !this.isPlaying;
+    if ( this.isPlaying) {
+      $event.srcElement.innerHTML = "pause";
+    } else {
+      $event.srcElement.innerHTML = "play_arrow";
+    }
+
+  }
+
 }
+

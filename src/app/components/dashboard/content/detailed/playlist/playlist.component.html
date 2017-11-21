@@ -1,9 +1,24 @@
 <div class="row fade-in-half-sec" *ngIf="playlist">
-  <div class="col s6 m4" (contextmenu)="playlistMenu.onContextMenu($event, playlist)">
+  <div class="col s6 m4 playlist-container"  (contextmenu)="playlistMenu.onContextMenu($event, playlist)">
     <div class="card">
       <div class="card-image" >
         <img src="assets/images/defaults/playlist.svg">
-        <a class="btn-floating halfway-fab waves-effect waves-light blue" *ngIf="playlist?.songs?.length > 0"><i class="material-icons">play_arrow</i></a>
+        <a class="btn-floating halfway-fab waves-effect waves-light blue" *ngIf="playlist?.songs?.length > 0">
+          <i class="material-icons">play_arrow</i>
+        </a>
+      </div>
+      <div class="playlist-playback-div noSelect">
+        <div *ngIf="isPlaying == true ; then pause else play"></div>
+        <ng-template #play >
+          <a class="playback-button" (click)="playPlayback()">
+            <i class="material-icons playback-icon">play_circle_outline</i>
+          </a>
+        </ng-template>
+        <ng-template #pause>
+          <a class="playback-button"  (click)="pausePlayback()">
+            <i class="material-icons playback-icon">pause_circle_outline</i>
+          </a>
+        </ng-template>
       </div>
     </div>
   </div>
@@ -47,6 +62,7 @@
   <table class="bordered responsive-table white-text">
     <thead>
       <tr>
+        <th></th>
         <th>Title</th>
         <th>Artist</th>
         <th>Album</th>
@@ -55,11 +71,17 @@
     </thead>
 
     <tbody class="tracklist" *ngIf="songsInPlaylist">
-      <tr @fade *ngFor="let song of songsInPlaylist" (contextmenu)="songMenu.onContextMenu($event, song)" >
-      <td>{{song?.title}}</td>
-      <td><a [routerLink]="['../../artist', song?.artistId]">{{song?.artistName}}</a></td>
-      <td><a [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</a></td>
-      <td>{{song?.timeAdded | timeAgo}}</td>
+      <tr @fade *ngFor="let song of songsInPlaylist let i = index;" (contextmenu)="songMenu.onContextMenu($event, song)">
+        <td class="song-number">
+          <a class="testing" >{{i+1}}</a>
+            <a (click)="playbackSong($event)" class="song-playback-icon">
+              <i class="material-icons">{{playbackCondition}}</i>
+            </a>
+        </td>
+        <td>{{song?.title}}</td>
+        <td><a [routerLink]="['../../artist', song?.artistId]">{{song?.artistName}}</a></td>
+        <td><a [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</a></td>
+        <td>{{song?.timeAdded | timeAgo}}</td>
       </tr>
     </tbody>
   </table>
@@ -84,9 +106,9 @@
   <div class="loader">Loading...</div>
 </div>
 
-  <app-playlist-menu #playlistMenu [playlists]="playlist" [detailed]="true"></app-playlist-menu>
-  <app-song-menu #songMenu [songs]="songsInPlaylist" [detailed]="true"
+<app-playlist-menu #playlistMenu [playlists]="playlist" [detailed]="true"></app-playlist-menu>
+<app-song-menu #songMenu [songs]="songsInPlaylist" [inPlaylist]="true"
                  [currentPlaylist]="playlist?.playlistId"
                  [playlistOwner]="playlist?.accountId" >
-  </app-song-menu>
+</app-song-menu>
 

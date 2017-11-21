@@ -57,7 +57,7 @@ export class PlaylistMenuComponent implements OnInit {
     },
     {
       html:(item) => 'Unfollow playlist',
-      click:(item) => console.log('edit'),
+      click:(item) => this.changeFollowStatus(item,false),
       enabled: (item) => true,
       visible: (item) => item.followed === true || item.followed == null
     }
@@ -133,6 +133,23 @@ export class PlaylistMenuComponent implements OnInit {
     );
   }
 
+
+  changeFollowStatus(playlist: Playlist, status) {
+    this.service.post('/account/' + this.currentAccountId + '/playlist'  + playlist.playlistId + '/follow/'
+      + status, "")
+      .subscribe(
+        response => {
+          playlist.followed = status;
+          if (status) {
+            this.toastService.show("You are now following this playlist", 3000, 'blue');
+          } else {
+            this.toastService.show("You are no longer following this playlistt", 3000, 'blue');
+          }
+        }, (error: AppError) => {
+          this.toastService.show("Playlist follow status could not be changed", 3000, 'blue');
+        }
+      );
+  }
 
   checkOwnership(playlistOwner): boolean {
     return ( this.currentAccountId === playlistOwner);
