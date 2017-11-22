@@ -12,6 +12,7 @@ export class SidenavComponent implements OnInit {
   isExpanded = false;
   accountName: string;
   accountImage: string;
+  logoImg: string = "assets/images/logo.png";
 
   constructor(private router: Router, private authService: AuthenticationService) {
     const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -34,6 +35,14 @@ export class SidenavComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(['/login/true']);
+  }
+
+  onMouseOverLogo() {
+    this.logoImg = "assets/images/logo_grey.png";
+  }
+
+  onMouseOutLogo() {
+    this.logoImg = "assets/images/logo.png";
   }
 
 }

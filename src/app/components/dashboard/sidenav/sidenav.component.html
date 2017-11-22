@@ -1,10 +1,12 @@
 <mz-sidenav fixed="true" backgroundClass="grey darken-3" [id]="'sidenav'">
   <mz-sidenav-header>
-    <div class="blue white-text">
-      <img src="assets/images/logo.png">
-      <span>Audium</span>
-      <a class="waves-effect right" (click)="logout()">
-        <i class="material-icons white-text">exit_to_app</i>
+    <div class="blue">
+      <a class="audium-logo" [routerLink]="['/dash/home']" (mouseover)="onMouseOverLogo()" (mouseout)="onMouseOutLogo()">
+        <img [src]="logoImg">
+        <span>Audium</span>
+      </a>
+      <a class="waves-effect right logout-bt" (click)="logout()">
+        <i class="material-icons">exit_to_app</i>
       </a>
     </div>
   </mz-sidenav-header>

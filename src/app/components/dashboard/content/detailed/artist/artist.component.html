@@ -3,6 +3,8 @@
     <div class="card-image" #artistbannerdiv (window:resize)="0" [ngStyle]="{'min-height.px': (artistbannerdiv.offsetWidth / 2), 'max-height.px': (artistbannerdiv.offsetWidth / 2) }">
       <div class="artist-banner" [ngStyle]="{'min-height.px': (artistbannerdiv.offsetWidth / 2), 'max-height.px': (artistbannerdiv.offsetWidth / 2) }">
         <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Banner.jpg" onError="this.src='assets/images/defaults/banner.png'" [ngStyle]="{'min-width.px': artistbannerdiv.offsetWidth }">
+        <!-- Use the div below to apply opacity or color masks to the artist banner image -->
+        <div class="artist-banner-mask" style="width: 100%; height: 100%; position: absolute; top: 0px; left: 0px;"></div>
         <span class="card-title black fade-in-half-sec" id="large-card-title">
           <h1 class="fade-in-1-sec" style="display: inline; vertical-align: middle;">{{artist?.artistName}}</h1>
           <a style="margin-left: 20px;" class="waves-effect waves-light btn blue-bt" *ngIf="artist">Follow</a>

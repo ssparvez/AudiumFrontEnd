@@ -44,5 +44,21 @@ span.thumb.active {
   display: none;
 }
 
+.audium-logo {
+    color: white;
+}
+
+.audium-logo:hover {
+    color: #c7c7c7;
+}
+
+.logout-bt {
+    color: white;
+}
+
+.logout-bt:hover {
+    color: #c7c7c7;
+}
+
 
 
