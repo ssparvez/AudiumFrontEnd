@@ -24,7 +24,6 @@ export class SearchComponent implements OnInit {
   profiles : CustomerAccount[];
   mediaPath: string;
 
-  things: number[];
   constructor(
     private route: ActivatedRoute,
     private generalService: GeneralService,
@@ -34,7 +33,6 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.mediaPath = this.dataService.mediaURL;
-    this.things = [1,2,3,4,5,6]
     this.route.params.subscribe(param => {
       this.keywords = param['keywords'];
       console.log(this.keywords);
