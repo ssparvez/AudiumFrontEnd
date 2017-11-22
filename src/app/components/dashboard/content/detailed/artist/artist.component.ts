@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { Artist } from '../../../../../classes/Artist';
 import { GeneralService } from '../../../../../services/general/general.service';
 import { PlayerService } from '../../../../../services/player/player.service';
@@ -19,8 +19,7 @@ export class ArtistComponent implements OnInit {
   mediaPath: string;
   events: Event[];
   monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-  // generic placeholder object
-  things = [1,2,3,4,5]
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -31,6 +30,12 @@ export class ArtistComponent implements OnInit {
 
 
   ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (!(event instanceof NavigationEnd)) {
+          return;
+      }
+      window.scrollTo(0, 0)
+    });
     this.events = [];
     this.mediaPath = this.dataService.mediaURL;
     this.route.params.subscribe(param => {

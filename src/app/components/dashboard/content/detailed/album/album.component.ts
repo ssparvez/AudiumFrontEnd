@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { Album } from '../../../../../classes/Album';
 import { GeneralService } from '../../../../../services/general/general.service';
 import { PlayerService } from '../../../../../services/player/player.service';
@@ -17,6 +17,7 @@ export class AlbumComponent implements OnInit {
   album: Album;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private generalService: GeneralService,
     private playerService: PlayerService,
@@ -24,6 +25,12 @@ export class AlbumComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (!(event instanceof NavigationEnd)) {
+          return;
+      }
+      window.scrollTo(0, 0)
+    });
     this.mediaPath = this.dataService.mediaURL;
     this.route.params.subscribe(param => {
       this.id = + param['id'];

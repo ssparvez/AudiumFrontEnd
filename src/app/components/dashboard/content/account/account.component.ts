@@ -10,6 +10,7 @@ import {MzToastService} from "ng2-materialize/dist";
 import {ChangePasswordComponent} from "../../../../modals/change-password/change-password.component";
 import {ConfirmComponent} from "../../../../modals/confirm-modal/confirm.component";
 import {MatDialog} from  "@angular/material";
+import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 
 @Component({
   selector: 'app-account',
@@ -32,7 +33,8 @@ export class AccountComponent implements OnInit {
   public premiumUser = "PremiumUser";
   public basicUser = "BasicUser";
 
-  constructor( private currentUser: CustomerAccount,
+  constructor( private router: Router,
+               private currentUser: CustomerAccount,
                private dataService:DataService,
                private service: GeneralService,
                private authService: AuthenticationService,
@@ -40,6 +42,12 @@ export class AccountComponent implements OnInit {
                private toastService: MzToastService) { }
 
   ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (!(event instanceof NavigationEnd)) {
+          return;
+      }
+      window.scrollTo(0, 0)
+    });
     if ( this.currentUser.accountId == null) {
       this.currentUser.loadWithJSON(JSON.parse(sessionStorage.getItem("currentUser")));
       this.currentUser.profilePicURL = this.dataService.profilePic + this.currentUser.accountId + '.png';
