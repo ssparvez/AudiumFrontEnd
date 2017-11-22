@@ -89,11 +89,15 @@ export class PlaylistsComponent implements OnInit {
     }
   }
 
-  playbackControl(isPlaying) {
+  pausePlayback() {
 
-    this.isPlaying = !isPlaying;
+    this.isPlaying = false;
+
   }
 
+  playPlayback() {
+    this.isPlaying = true;
+  }
 
   checkOwnership(playlistOwner): boolean {
     return ( this.currentAccountId === playlistOwner);

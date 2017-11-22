@@ -20,12 +20,12 @@
       <div class="playlist-playbutton-div noSelect">
         <div *ngIf="isPlaying == true ; then pause else play"></div>
         <ng-template #play >
-          <a class="play-button" (click)="playbackControl(false)">
+          <a class="play-button" (click)="playPlayback()">
             <i class="material-icons play-icon">play_circle_outline</i>
           </a>
         </ng-template>
         <ng-template #pause>
-          <a class="play-button"  (click)="playbackControl(true)">
+          <a class="play-button"  (click)="pausePlayback()">
             <i class="material-icons play-icon">pause_circle_outline</i>
           </a>
         </ng-template>
