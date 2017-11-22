@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import {AuthenticationService} from "../../services/authentication/authentication.service";
-import {Renderer2} from '@angular/core';
-import {register} from "ts-node/dist";
-import {GeneralService} from "../../services/general/general.service";
-import {AppError} from "../../errors/AppError";
+import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
+import { AuthenticationService } from "../../services/authentication/authentication.service";
+import { Renderer2 } from '@angular/core';
+import { register } from "ts-node/dist";
+import { GeneralService } from "../../services/general/general.service";
+import { AppError } from "../../errors/AppError";
 
 @Component({
   selector: 'app-login',
@@ -52,6 +52,12 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (!(event instanceof NavigationEnd)) {
+          return;
+      }
+      window.scrollTo(0, 0)
+    });
     this.route.paramMap.subscribe(param => {
 
     if (param.get('login') === 'false') {

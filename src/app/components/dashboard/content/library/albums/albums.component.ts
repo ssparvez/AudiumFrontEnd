@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router, NavigationEnd } from "@angular/router";
 import { Album } from '../../../../../classes/Album';
 import { GeneralService } from '../../../../../services/general/general.service';
 import { PlayerService } from '../../../../../services/player/player.service';
@@ -11,8 +11,8 @@ import { DataService } from '../../../../../services/data.service';
   styleUrls: ['./albums.component.css']
 })
 export class AlbumsComponent implements OnInit {
-  accountId: number
-  albums: Album[]
+  accountId: number;
+  albums: Album[];
   mediaPath: string;
   constructor(
     private router: Router,
@@ -22,6 +22,12 @@ export class AlbumsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (!(event instanceof NavigationEnd)) {
+          return;
+      }
+      window.scrollTo(0, 0)
+    });
     this.mediaPath = this.dataService.mediaURL;
     this.accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;
     this.generalService.get("/accounts/" + this.accountId + "/albums").subscribe((albums) => {

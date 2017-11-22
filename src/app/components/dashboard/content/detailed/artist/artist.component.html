@@ -21,7 +21,7 @@
           <h2 class="center">Popular Songs</h2>
         </div>
         <div class="row fade-in-1-sec">
-          <table class="bordered responsive-table white-text" *ngIf="artist">
+          <table class="bordered responsive-table white-text" *ngIf="artist?.songs?.length > 0">
             <thead>
               <tr>
                 <th>Title</th>
@@ -30,7 +30,7 @@
               </tr>
             </thead>
             <tbody class="tracklist" *ngIf="artist?.songs">
-              <tr *ngFor="let song of artist?.songs; let i = index" (dblclick)="playArtistSongs(i, artist?.songs)">
+              <tr *ngFor="let song of artist?.songs?.slice(0, 10); let i = index" (dblclick)="playArtistSongs(i, artist?.songs)">
                 <td>{{song?.title}}</td>
                 <td *ngIf="song">
                   <a [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</a>
@@ -40,11 +40,16 @@
             </tbody>
           </table>
         </div>
-        <div class="row fade-in-half-sec" style="margin-top: 20px;" *ngIf="artist?.songs">
+        <div class="col s12 fade-in-half-sec" style="margin-bottom: 20px;" *ngIf="artist?.songs?.length == 0 && artist?.albums?.length > 0">
+          <div class="card-panel large transparent z-depth-0 center">
+            <h3 class="grey-text">No songs by this artist</h3>
+          </div>
+        </div>
+        <div class="row fade-in-half-sec" style="margin-top: 40px;" *ngIf="artist?.songs">
           <h2 class="center">Albums</h2>
         </div>
-        <div class="row fade-in-half-sec" *ngIf="artist?.songs && artist?.albums">
-          <div class="col s12 m3 fade-in-1-sec" *ngFor="let album of artist?.albums">
+        <div class="row fade-in-half-sec" *ngIf="artist?.songs && artist?.albums?.length > 0">
+          <div class="col s12 m3 fade-in-1-sec" *ngFor="let album of artist?.albums?.slice(0, 10)">
             <div class="card transparent hoverable">
               <div class="card-image" *ngIf="album" #albumcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
                 <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
@@ -65,6 +70,11 @@
             </div>
           </div>
         </div>
+        <div class="col s12 fade-in-half-sec" style="margin-bottom: 40px;" *ngIf="artist?.songs?.length > 0 && artist?.albums?.length == 0">
+          <div class="card-panel large transparent z-depth-0 center">
+            <h3 class="grey-text">No albums by this artist</h3>
+          </div>
+        </div>
 
         <div class="row fade-in-2-sec" *ngIf="artist?.songs?.length == 0 && artist?.albums?.length == 0">
           <div class="col s12">
@@ -75,6 +85,11 @@
           <div class="col s12">
             <div class="card-panel large transparent z-depth-0 center">
               <h2 class="grey-text">No songs or albums by this artist</h2>
+            </div>
+          </div>
+          <div class="col s12">
+            <div class="card-panel large transparent z-depth-0">
+              <div class="row" (window:resize)="0" [ngStyle]="{'min-height.px': (mainContentDiv.width / 4) }"></div>
             </div>
           </div>
         </div>

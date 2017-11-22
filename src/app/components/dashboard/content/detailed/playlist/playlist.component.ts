@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import {Playlist} from "../../../../../classes/Playlist";
 import {GeneralService} from "../../../../../services/general/general.service";
 import {AppError} from "../../../../../errors/AppError";
@@ -33,6 +33,7 @@ export class PlaylistComponent implements OnInit {
   public playbackCondition: string = "play_arrow";
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private service: GeneralService,
     private toastService: MzToastService ) {
@@ -41,6 +42,12 @@ export class PlaylistComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (!(event instanceof NavigationEnd)) {
+          return;
+      }
+      window.scrollTo(0, 0)
+    });
     this.route.params.subscribe(param => {
       this.id = + param['id'];
       console.log(this.id);

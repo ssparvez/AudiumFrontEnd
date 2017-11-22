@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { MzToastService } from 'ng2-materialize';
-import { Router } from "@angular/router";
+import { Router, NavigationEnd } from "@angular/router";
 import { GeneralService } from "../../../../../services/general/general.service";
 import { CreatePlaylistComponent } from "../../../../../modals/create-playlist/create-playlist.component";
 import {AppError} from "../../../../../errors/AppError";
@@ -46,6 +46,12 @@ export class PlaylistsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (!(event instanceof NavigationEnd)) {
+          return;
+      }
+      window.scrollTo(0, 0)
+    });
     this.service.get("/accounts/" + this.currentAccountId + "/playlists").subscribe((playlists) => {
       this.playlists = playlists;
       for (let playlist of playlists) {
