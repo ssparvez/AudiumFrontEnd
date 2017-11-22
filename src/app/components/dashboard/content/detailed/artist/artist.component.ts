@@ -6,6 +6,7 @@ import { PlayerService } from '../../../../../services/player/player.service';
 import { DataService } from '../../../../../services/data.service';
 import { Song } from '../../../../../classes/Song';
 import { Event } from '../../../../../classes/Event';
+import { Address } from '../../../../../classes/Address';
 
 @Component({
   selector: 'app-artist',
@@ -70,5 +71,7 @@ export class ArtistComponent implements OnInit {
       this.playerService.playSongs(0, songs);
     });
   }
-
+  navigateToMaps(address: Address){
+    window.open("https://maps.google.com/?q=" + address.addressLine1 + ", " + address.city + " " + address.state, "_blank");
+}
 }

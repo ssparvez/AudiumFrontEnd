@@ -173,7 +173,7 @@
                     </div>
                     <div class="col m7" *ngIf="event?.address">
                         <i class="material-icons white-text">location_on</i>
-                        <span style="font-size: 16px; font-weight: 500; color: #ccc;">{{event?.address?.addressLine1}}, {{event?.address?.city}} {{event?.address?.state}}</span>
+                        <span (click)="navigateToMaps(event?.address)" style="font-size: 16px; font-weight: 500; color: #ccc; cursor: pointer;">{{event?.address?.addressLine1}}, {{event?.address?.city}} {{event?.address?.state}}</span>
                     </div>
                   </div>
                 </div>
