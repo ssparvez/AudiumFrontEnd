@@ -16,7 +16,7 @@
                 <h4 class="truncate"><a [routerLink]="['../album', album?.albumId]">{{album?.albumTitle}}</a></h4>
                 <h5 class="truncate"><a [routerLink]="['../artist', album?.artistId]">{{album?.artistName}}</a></h5>
               </span>
-              <a (click)="playAlbumSongs(album?.albumId)" class="btn-floating halfway-fab waves-effect waves-light blue">
+              <a (click)="playAlbumSongs(album?.albumId)" class="btn-floating halfway-fab waves-effect waves-light blue-bt">
                 <i class="material-icons">play_arrow</i>
               </a>
             </div>
@@ -41,6 +41,6 @@
 </div>
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec" *ngIf="!albums">
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!albums">
   <div class="loader">Loading...</div>
 </div>

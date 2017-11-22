@@ -4,7 +4,7 @@
     <h1>Songs</h1>
   </div>
   <div class="right" *ngIf="songs?.length > 0">
-    <a class="btn btn-floating btn-large blue pulse" (click)="playLibrarySongs(0)">
+    <a class="btn btn-floating btn-large blue-bt pulse" (click)="playLibrarySongs(0)">
       <i class="material-icons">play_arrow</i>
     </a>
   </div>
@@ -53,7 +53,7 @@
 </div>
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec" *ngIf="!songs">
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!songs">
   <div class="loader">Loading...</div>
 </div>
 

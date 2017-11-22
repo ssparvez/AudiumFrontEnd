@@ -102,9 +102,9 @@
 </div>
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec loading" *ngIf="!playlist">
-  <div class="loader">Loading...</div>
-</div>
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!playlist">
+    <div class="loader">Loading...</div>
+  </div>
 
 <app-playlist-menu #playlistMenu [playlists]="playlist" [detailed]="true"></app-playlist-menu>
 <app-song-menu #songMenu [songs]="songsInPlaylist" [inPlaylist]="true"

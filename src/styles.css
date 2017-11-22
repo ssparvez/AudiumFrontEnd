@@ -91,6 +91,20 @@ h5 {
     height: auto;
 }
 
+.more-albums:hover {
+    filter: brightness(30%);
+}
+
+.blue-bt {
+    color: white;
+    background-color: #2196f3;
+}
+
+.blue-bt:hover {
+    color: white;
+    background-color: #4eabec;
+}
+
 /*Black color to the text*/
 
 .tab {
@@ -101,18 +115,6 @@ h5 {
 .tabs .tab a:hover {
     background-color: transparent;
     color: rgb(150, 209, 252);
-}
-
-/* "Play all" button */
-.play-all-bt {
-    background-color: rgb(33, 150, 243);
-    color: white;
-}
-
-.play-all-bt:hover {
-    /*background-color: rgb(92, 179, 245);*/
-    background-color: rgb(50, 160, 245);
-    color: white;
 }
 
 span h5 a.album-tile:hover, span h4 a.album-tile:hover{

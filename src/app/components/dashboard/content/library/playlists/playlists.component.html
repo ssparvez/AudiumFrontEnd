@@ -3,7 +3,7 @@
     <h1>Playlists</h1>
   </div>
   <div class="right">
-    <a class="btn btn-floating btn-large blue fade-in-half-sec" >
+    <a class="btn btn-floating btn-large blue-bt fade-in-half-sec" >
       <i class="material-icons" (click)="openNewPlaylistForm($event)">add</i>
     </a>
   </div>
@@ -18,7 +18,7 @@
         </a>
       </div>
       <div class="playlist-playbutton-div noSelect">
-        <div *ngIf="isPlaying == true ; then pause else play"></div>
+        <div *ngIf="isPlaying; then pause else play"></div>
         <ng-template #play >
           <a class="play-button" (click)="playbackControl(false)">
             <i class="material-icons play-icon">play_circle_outline</i>
@@ -56,7 +56,7 @@
 </div>
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec" *ngIf="!playlists">
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!playlists">
   <div class="loader">Loading...</div>
 </div>
 <app-playlist-menu #playlistMenu [playlists]="playlists" [detailed]="false"></app-playlist-menu>

@@ -15,7 +15,7 @@
               <span class="card-title black" id="small-card-title">
                 <h4><a [routerLink]="['../artist', artist?.artistId]">{{artist?.artistName}}</a></h4>
               </span>
-              <a (click)="playSongs(artist?.artistId)"class="btn-floating halfway-fab waves-effect waves-light blue">
+              <a (click)="playSongs(artist?.artistId)"class="btn-floating halfway-fab waves-effect waves-light blue-bt">
                 <i class="material-icons">play_arrow</i>
               </a>
             </div>
@@ -42,7 +42,7 @@
 </ng-container>
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec" *ngIf="!artists">
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!artists">
   <div class="loader">Loading...</div>
 </div>
 

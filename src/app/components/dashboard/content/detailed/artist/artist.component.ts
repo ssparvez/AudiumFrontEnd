@@ -41,17 +41,17 @@ export class ArtistComponent implements OnInit {
     this.route.params.subscribe(param => {
       this.id = + param['id'];
       console.log(this.id);
-      // get artist
+      // Get artist
       this.generalService.get("/artists/" + this.id).subscribe((artist) => {
         this.artist = artist;
-        // get artist songs
+        // Get artist songs
 		    this.generalService.get("/artists/" + this.id + "/songs").subscribe((songs) => {
           this.artist.songs = songs;
           console.log(this.artist.songs);
-          // get artist albums
+          // Get artist albums
           this.generalService.get("/artists/" + this.id + "/albums").subscribe((albums) => {
             this.artist.albums = albums;
-            // get artist upcoming events
+            // Get artist upcoming events
             this.generalService.get("/artist/" + this.id + "/events").subscribe((events) => {
               this.artist.events = events;
             });

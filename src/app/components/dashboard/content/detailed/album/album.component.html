@@ -4,7 +4,7 @@
       <div class="card-image" #albumcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
         <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
           <img style="z-index: 1" src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'">
-          <a (click)="playSongs(0)" class="btn-floating halfway-fab waves-effect waves-light blue" *ngIf="album?.songs?.length > 0">
+          <a (click)="playSongs(0)" class="btn-floating halfway-fab waves-effect waves-light blue-bt" *ngIf="album?.songs?.length > 0">
             <i class="material-icons">play_arrow</i>
           </a>
         </div>
@@ -82,6 +82,6 @@
   </div>
 </div>
 <!-- Loading animation -->
-<div class="row fade-in-2-sec" *ngIf="!album">
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!album">
   <div class="loader">Loading...</div>
 </div>
