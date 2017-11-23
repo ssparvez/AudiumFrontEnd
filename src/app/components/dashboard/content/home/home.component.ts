@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GeneralService } from '../../../../services/general/general.service';
 import { AuthenticationService } from '../../../../services/authentication/authentication.service';
 import { CustomerAccount } from "../../../../classes/CustomerAccount";
-import { Router } from "@angular/router";
+import { Router, NavigationEnd } from "@angular/router";
 import { Observable } from 'rxjs/Rx';
 import { Song } from '../../../../classes/Song';
 import { Genre } from '../../../../classes/Genre';
@@ -29,6 +29,13 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (!(event instanceof NavigationEnd)) {
+          return;
+      }
+      window.scrollTo(0, 0)
+    });
+
     this.mediaPath = this.dataService.mediaURL;
     if(this.authenticationService != null && this.authenticationService.currentUserInfo != null){
       this.currentUser = this.authenticationService.currentUserInfo;

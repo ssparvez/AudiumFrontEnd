@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { Artist } from '../../../../../classes/Artist';
 import { GeneralService } from '../../../../../services/general/general.service';
 import { PlayerService } from '../../../../../services/player/player.service';
 import { DataService } from '../../../../../services/data.service';
 import { Song } from '../../../../../classes/Song';
 import { Event } from '../../../../../classes/Event';
+import { Address } from '../../../../../classes/Address';
 
 @Component({
   selector: 'app-artist',
@@ -19,8 +20,7 @@ export class ArtistComponent implements OnInit {
   mediaPath: string;
   events: Event[];
   monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-  // generic placeholder object
-  things = [1,2,3,4,5]
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -31,22 +31,28 @@ export class ArtistComponent implements OnInit {
 
 
   ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (!(event instanceof NavigationEnd)) {
+          return;
+      }
+      window.scrollTo(0, 0)
+    });
     this.events = [];
     this.mediaPath = this.dataService.mediaURL;
     this.route.params.subscribe(param => {
       this.id = + param['id'];
       console.log(this.id);
-      // get artist
+      // Get artist
       this.generalService.get("/artists/" + this.id).subscribe((artist) => {
         this.artist = artist;
-        // get artist songs
+        // Get artist songs
 		    this.generalService.get("/artists/" + this.id + "/songs").subscribe((songs) => {
           this.artist.songs = songs;
           console.log(this.artist.songs);
-          // get artist albums
+          // Get artist albums
           this.generalService.get("/artists/" + this.id + "/albums").subscribe((albums) => {
             this.artist.albums = albums;
-            // get artist upcoming events
+            // Get artist upcoming events
             this.generalService.get("/artist/" + this.id + "/events").subscribe((events) => {
               this.artist.events = events;
             });
@@ -65,5 +71,7 @@ export class ArtistComponent implements OnInit {
       this.playerService.playSongs(0, songs);
     });
   }
-
+  navigateToMaps(address: Address){
+    window.open("https://maps.google.com/?q=" + address.addressLine1 + ", " + address.city + " " + address.state, "_blank");
+}
 }

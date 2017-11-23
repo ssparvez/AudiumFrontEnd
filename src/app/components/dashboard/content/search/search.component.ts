@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Song } from '../../../../classes/Song';
 import { Artist } from '../../../../classes/Artist';
 import { Album } from '../../../../classes/Album';
-import { ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
 import { GeneralService } from '../../../../services/general/general.service';
 import { AppError } from '../../../../errors/AppError';
 import { Playlist } from '../../../../classes/Playlist';
@@ -24,8 +24,8 @@ export class SearchComponent implements OnInit {
   profiles : CustomerAccount[];
   mediaPath: string;
 
-  things: number[];
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private generalService: GeneralService,
     private playerService: PlayerService,
@@ -33,8 +33,13 @@ export class SearchComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (!(event instanceof NavigationEnd)) {
+          return;
+      }
+      window.scrollTo(0, 0)
+    });
     this.mediaPath = this.dataService.mediaURL;
-    this.things = [1,2,3,4,5,6]
     this.route.params.subscribe(param => {
       this.keywords = param['keywords'];
       console.log(this.keywords);

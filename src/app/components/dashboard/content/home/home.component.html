@@ -19,7 +19,7 @@
             <h4><a class="album-tile" [routerLink]="['../album', recent?.albumId]">{{recent?.albumTitle}}</a></h4>
             <h5><a class="album-tile" [routerLink]="['../artist', recent?.artistId]">{{recent?.artistName}}</a></h5>
           </span>
-          <div (click)="playRecentSongs(recent?.albumId)" class="btn-floating halfway-fab waves-effect waves-light hoverable play-all-bt z-depth-2 fade-in-half-sec">
+          <div (click)="playRecentSongs(recent?.albumId)" class="btn-floating halfway-fab waves-effect waves-light hoverable blue-bt z-depth-2 fade-in-half-sec">
             <i class="material-icons" style="color: inherit; background-color: inherit; fill: inherit;">play_arrow</i>
           </div>
         </div>
@@ -90,7 +90,7 @@
   <div class="row">
     <div class="col s12 m3 fade-in-half-sec" *ngFor="let genre of genres">
       <a class="genre" [routerLink]="['../home']">
-        <div class="card-panel hoverable center genre waves-effect waves-light fade-in-half-sec" style="width: 100%;">
+        <div class="card-panel hoverable center blue-bt waves-effect waves-light fade-in-half-sec" style="width: 100%;">
           <h3 class="truncate" style="color: inherit;">{{genre?.genreName}}</h3>
         </div>
       </a>
@@ -111,7 +111,7 @@
 
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec" *ngIf="!recentListens || !topSongs || !genres">
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!recentListens || !topSongs || !genres">
   <div class="loader">Loading...</div>
 </div>
 
