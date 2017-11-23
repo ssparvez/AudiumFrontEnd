@@ -26,10 +26,11 @@
 .playlist-add-div {
     position: absolute;
     z-index: 1000;
-    bottom: 27%;
-    left: 32%;
+    bottom: 55px;
+    left: 65px;
     display: none;
 }
+
 
 .card:hover > .playlist-add-div {
     display: block;

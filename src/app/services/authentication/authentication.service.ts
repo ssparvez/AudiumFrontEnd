@@ -15,7 +15,8 @@ export class AuthenticationService {
 
   constructor(private http: Http,
               private dataService: DataService,
-              private currentUser: CustomerAccount) { }
+              private currentUser: CustomerAccount,
+              private service: GeneralService) { }
 
 
   login(credentials) {
@@ -32,6 +33,7 @@ export class AuthenticationService {
         if ( result && result.token) {
           localStorage.setItem('token', result.token);
           this.storeInfo();
+          this.loadPersonalizedData();
           return true;
         } else {
           return false;
@@ -41,7 +43,7 @@ export class AuthenticationService {
 
   logout() {
     sessionStorage.clear();
-    localStorage.removeItem('token');
+    localStorage.clear();
   }
 
   isLoggedIn() {
@@ -56,6 +58,22 @@ export class AuthenticationService {
     return new JwtHelper().decodeToken(token); // returns token as simple json
   }
 
+  loadPersonalizedData() {
+    this.service.get('/accounts/'+ this.currentUser.accountId +'/playlists/allfollowed').subscribe(
+      playlistIds => {
+        localStorage.setItem("playlistsfollowed", JSON.stringify(playlistIds));
+        console.log(playlistIds);
+      }, (error: AppError) => {
+      }
+    );
+    this.service.get('/accounts/'+ this.currentUser.accountId +'/artists/allsaved').subscribe(
+      artistIds => {
+        localStorage.setItem("artistsfollowed", JSON.stringify(artistIds));
+        console.log(artistIds);
+      }, (error: AppError) => {
+      }
+    );
+  }
 
   storeInfo() {
     const info = this.currentUserInfo;

@@ -31,6 +31,7 @@ export class ChoosePlaylistComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) private data: {accountId: number, songId: number}) { }
 
   ngOnInit() {
+    this.changePosition();
     this.loadUserPlaylists();
   }
 
@@ -60,6 +61,9 @@ export class ChoosePlaylistComponent implements OnInit {
 
   closeDialog( argument?) {
     this.dialogRef.close(argument);
+  }
+  changePosition() {
+    // this.dialogRef.updatePosition({ top: '15%', left: '15%' });
   }
 }
 

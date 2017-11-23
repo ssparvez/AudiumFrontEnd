@@ -22,15 +22,15 @@
       </div>
     </div>
   </div>
-  <div class="col s6 m8">
+  <div class="col s6 m8 playlist-info" *ngIf="playlist">
     <div class="row" style="margin-top: 10px;">
       <h4>Playlist</h4>
     </div>
-    <div class="row" style="margin-bottom: 0px; padding-bottom: 0px;">
-      <h1 style="margin-bottom: 10px;">{{playlist?.name}}</h1>
+    <div class="row " style="margin-bottom: 0; padding-bottom: 0px;">
+      <div class="detailed-name">{{playlist?.name}}</div>
     </div>
-    <div class="row creator" *ngIf="playlist" style="margin-bottom: 5px;">
-      <div class="playlist-detailed-creator">by
+    <div class="row creator" style="margin-bottom: 5px;">
+      <div class="playlist-detailed-creator">By
         <a [routerLink]="['../../profile', playlist?.accountId]">{{playlist?.username}}</a>
       </div>
     </div>
@@ -43,14 +43,14 @@
       </div>
     </div>
     <div class="row">
-      <div class="col s2">
-        <button mz-button class="playlist-page-btn btn-medium left"
-                [flat]="true" *ngIf="!isFollowing() && !isOwnerOfPlaylist()"
+      <div class="col s2" style="padding-left: 0">
+        <button mz-button class="detailed-follow-btn btn-medium waves-effect"
+                 *ngIf="!isFollowing() && !isOwnerOfPlaylist()"
                 (click)="changeFollowStatus(true)" >
           FOLLOW
         </button>
-        <button mz-button class="playlist-page-btn btn-medium left"
-                [flat]="true" *ngIf="isFollowing() && !isOwnerOfPlaylist()"
+        <button mz-button class="detailed-follow-btn  btn-medium waves-effect"
+                *ngIf="isFollowing() && !isOwnerOfPlaylist()"
                 (click)="changeFollowStatus(false)" >
           UNFOLLOW
         </button>
@@ -71,12 +71,16 @@
     </thead>
 
     <tbody class="tracklist" *ngIf="songsInPlaylist">
-      <tr @fade *ngFor="let song of songsInPlaylist let i = index;" (contextmenu)="songMenu.onContextMenu($event, song)">
+      <tr @fade *ngFor="let song of songsInPlaylist let i = index;" (contextmenu)="songMenu.onContextMenu($event, song)"
+          [ngClass]="{'playing': song.isPlaying}">
         <td class="song-number">
-          <a class="testing" >{{i+1}}</a>
-            <a (click)="playbackSong($event)" class="song-playback-icon">
-              <i class="material-icons " style="font-size: 18px; vertical-align: middle;">{{playbackCondition}}</i>
+          <a class="song-number-value" >{{i+1}}.</a>
+            <a (click)="playbackSong($event,song)" class="song-playback-icon"  *ngIf="!song.isPlaying">
+              <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">play_circle_outline</i>
             </a>
+          <a (click)="playbackSong($event,song)" class="song-playback-icon" *ngIf="song.isPlaying">
+            <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">pause</i>
+          </a>
         </td>
         <td>{{song?.title}}</td>
         <td><a [routerLink]="['../../artist', song?.artistId]">{{song?.artistName}}</a></td>

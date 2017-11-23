@@ -20,12 +20,12 @@ export class HomeComponent implements OnInit {
   genres: Genre[];
   mediaPath: string;
   constructor(
-    private generalService : GeneralService,
-    private authenticationService : AuthenticationService,
-    private playerService : PlayerService,
+    private generalService: GeneralService,
+    private authenticationService: AuthenticationService,
+    private playerService: PlayerService,
     private dataService: DataService,
-    private currentUser : CustomerAccount,
-    private router : Router
+    public currentUser: CustomerAccount,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -41,17 +41,17 @@ export class HomeComponent implements OnInit {
       this.currentUser = this.authenticationService.currentUserInfo;
     }
 
-    if(this.currentUser != null && this.currentUser.accountId != null){
+    if(this.currentUser != null && this.currentUser.accountId != null) {
       this.generalService.get("/accounts/" + this.currentUser.accountId + "/albums/recent/0/4")
         .catch(error => Observable.throw(new Error(error.status))).subscribe((recentListens) => {
           if(recentListens != null){
             this.recentListens = recentListens;
-          }else{
+          }else {
             this.recentListens = [];
           }
           this.generalService.get("/songs/top/0/5")
             .catch(error => Observable.throw(new Error(error.status))).subscribe((songs) => {
-              if(songs != null){
+              if(songs != null) {
                 this.topSongs = songs;
               }else{
                 this.topSongs = [];
@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  playRecentSongs(albumId: number) : void {
+  playRecentSongs(albumId: number): void {
     this.generalService.get( "/albums/" + albumId + "/songs").subscribe((songs) => {
       this.playerService.playSongs(0, songs);
     });

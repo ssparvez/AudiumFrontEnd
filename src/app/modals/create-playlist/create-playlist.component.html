@@ -1,5 +1,6 @@
 <div class="row center">
-  <div mat-dialog-title> Create new playlist</div>
+  <div mat-dialog-title  *ngIf="isNew" > Create new playlist</div>
+  <div mat-dialog-title  *ngIf="!isNew" > Change playlist name</div>
     <div class="input-field col s12">
       <input ngModel required="required"
              name="playlistName" id="playlistName"
@@ -11,8 +12,11 @@
 
   </div>
   <div class="row center cp-buttons">
-    <button mz-button class="waves-effect" [flat]="true"  (click)="createPlaylist()">
+    <button mz-button class="waves-effect" [flat]="true"  (click)="createPlaylist()" *ngIf="isNew">
       Create
+    </button>
+    <button mz-button class="waves-effect" [flat]="true"  (click)="editPlaylist()" *ngIf="!isNew">
+      Change
     </button>
     <button mz-button mat-dialog-close [flat]="true" class="waves-effect">
       Cancel

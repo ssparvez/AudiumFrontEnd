@@ -54,10 +54,6 @@ export class PlaylistsComponent implements OnInit {
     });
     this.service.get("/accounts/" + this.currentAccountId + "/playlists").subscribe((playlists) => {
       this.playlists = playlists;
-      for (let playlist of playlists) {
-        this.emulateCardContentHover.push('');
-        this.emulateCardContentHoverIcon.push('text-darken-1');
-      }
       console.log(this.playlists);
     });
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -72,7 +68,8 @@ export class PlaylistsComponent implements OnInit {
     this.dialog.open(CreatePlaylistComponent, {
       data: {
         accountId: this.currentUser['_accountId'],
-        username: this.currentUser['_username']
+        username: this.currentUser['_username'],
+        isNew: true
       }, width: '600px'
     })
       .afterClosed()

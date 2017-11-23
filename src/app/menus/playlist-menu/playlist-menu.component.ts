@@ -9,6 +9,7 @@ import {MzToastService} from "ng2-materialize";
 import {Router} from "@angular/router";
 import {animate, transition, trigger, style} from "@angular/animations";
 import {ChoosePlaylistComponent} from "../../modals/choose-playlist/choose-playlist.component";
+import {CreatePlaylistComponent} from "../../modals/create-playlist/create-playlist.component";
 
 @Component({
   selector: 'app-playlist-menu',
@@ -25,7 +26,7 @@ export class PlaylistMenuComponent implements OnInit {
   public ownerMenuActions = [
     {
       html:(item) => 'Edit',
-      click:(item) => console.log('edit'),
+      click:(item) => this.openPlaylistEditForm(item),
       enabled: (item) => true,
       visible: (item) => true
     },
@@ -51,7 +52,7 @@ export class PlaylistMenuComponent implements OnInit {
   public regularMenuActions = [
     {
       html:(item) => 'Follow playlist',
-      click:(item) => console.log('edit'),
+      click:(item) => this.changeFollowStatus(item,true),
       enabled: (item) => true,
       visible: (item) => item.followed === false
     },
@@ -150,6 +151,25 @@ export class PlaylistMenuComponent implements OnInit {
         }
       );
   }
+
+  openPlaylistEditForm(playlist: Playlist) {
+    this.dialog.open(CreatePlaylistComponent, {
+      data: {
+        accountId: this.currentUser['_accountId'],
+        username: this.currentUser['_username'],
+        playlistId: playlist.playlistId,
+        isNew: false
+      }, width: '600px'
+    })
+      .afterClosed()
+      .subscribe(result => {
+        if (result && result.isValid) {
+          playlist.name = result.newName;
+          this.toastService.show("Playlist name was changed", 3000, 'blue');
+        }
+      });
+  }
+
 
   checkOwnership(playlistOwner): boolean {
     return ( this.currentAccountId === playlistOwner);

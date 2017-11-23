@@ -152,6 +152,7 @@ export class SongMenuComponent implements OnInit {
     }
   }
 
+
   checkOwnership() {
     return (this.currentAccountId === this.playlistOwner);
   }

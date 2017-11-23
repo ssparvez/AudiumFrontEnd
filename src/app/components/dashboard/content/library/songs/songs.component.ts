@@ -25,11 +25,11 @@ export class SongsComponent implements OnInit {
       if (!(event instanceof NavigationEnd)) {
           return;
       }
-      window.scrollTo(0, 0)
+      window.scrollTo(0, 0);
     });
     this.accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;
     this.generalService.get("/accounts/" + this.accountId + "/songs").subscribe((songs) => {
-      this.songs = songs
+      this.songs = songs;
       console.log(this.songs);
     });
   }
@@ -40,8 +40,14 @@ export class SongsComponent implements OnInit {
 
   playLibrarySongs(index: number) {
     // initialize howl here?
+    // this.songs[index].isPlaying = true; used to change the play button
     this.playerService.playSongs(index, this.songs);
     console.log(index);
+  }
+
+  playbackSong($event: MouseEvent, song:Song) {
+    song.isPlaying = !song.isPlaying;
+
   }
 
 }

@@ -1,13 +1,31 @@
-.playlist-page-btn {
-    color: #2196f3;
-    font-size: large;
-    padding: 0;
-}
-.playlist-page-btn:hover {
-    background-color: transparent;
+.detailed-follow-btn {
     color: white;
+    font-size: large;
+    background-color: #2196f3;
+    border-radius: 25px
+}
+.detailed-follow-btn:hover {
+    transition: 0.1s;
+    transform: scale(1.1);
 }
 
+.playlist-page-btn:hover {
+    color: white;
+}
+.detailed-name {
+    font-size: 260%;
+    color: white;
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.playlist-info {
+    padding-left: 3%;
+}
+.chip{
+    margin-top: 1%;
+    font-size: medium;
+}
 .loading {
     margin-top: 40vh;
  }
@@ -17,16 +35,10 @@
     font-size: x-large;
 }
 
+
 .playlist-detailed-creator > a:hover {
     color: white;
-}
-tbody.tracklist tr:hover {
-    color: white;
-    background-color: #424242;
-}
-
-td > a:hover{
-    color: #9e9e9e ;
+    border-bottom: 1px solid white;
 }
 
 
@@ -36,12 +48,14 @@ td > a:hover{
 .playlist-playback-div {
     position: absolute;
     z-index: 1000;
-    bottom: 37%;
-    left: 37%;
+    bottom: 135px;
+    left: 150px;
     display: none;
-
 }
 
+.card {
+    background-color: transparent;
+}
 .card:hover > .playlist-playback-div {
     display: block;
 }
@@ -67,32 +81,12 @@ td > a:hover{
     -ms-transform: scale(0.7);
     transform: scale(0.7);
 }
-th {
-    font-size: large;
-}
-a{
-    cursor: pointer;
-}
-.song-number{
-    font-size: large;
-    width: 4%;
-}
 
-tr:hover > .testing {
+
+tr:hover > .song-number-value {
 
     color: #1b5e20;
 }
-.song-playback-icon{
-    display: none;
-}
-
-tr:hover > .song-number  > .testing{
-    display: none;
-}
-tr:hover > .song-number > .song-playback-icon {
-    display: block;
-}
-
 .noSelect {
     outline: 0;
     outline: none;
@@ -103,4 +97,6 @@ tr:hover > .song-number > .song-playback-icon {
     user-select: none;
 }
 
-
+.detailed-follow-btn:hover {
+    background-color: #29b6f6;
+}

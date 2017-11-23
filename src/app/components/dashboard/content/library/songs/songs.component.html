@@ -13,6 +13,7 @@
   <table class="bordered responsive-table white-text fade-in-half-sec" *ngIf="songs?.length > 0">
     <thead>
       <tr>
+        <th></th>
         <th>Title</th>
         <th>Artist</th>
         <th>Album</th>
@@ -21,7 +22,17 @@
       </tr>
     </thead>
     <tbody class="tracklist">
-      <tr *ngFor="let song of songs; let i = index" (dblclick)="playLibrarySongs(i)" (contextmenu)="songMenu.onContextMenu($event, song)">
+      <tr *ngFor="let song of songs; let i = index" (dblclick)="playLibrarySongs(i)" (contextmenu)="songMenu.onContextMenu($event, song)"
+          [ngClass]="{'playing': song.isPlaying}" >
+        <td class="song-number">
+          <a class="song-number-value" >{{i+1}}.</a>
+          <a (click)="playbackSong($event,song)" class="song-playback-icon"  *ngIf="!song.isPlaying">
+            <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">play_circle_outline</i>
+          </a>
+          <a (click)="playbackSong($event,song)" class="song-playback-icon" *ngIf="song.isPlaying">
+            <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">pause</i>
+          </a>
+        </td>
         <td>
           {{song?.title}}
           <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
@@ -37,8 +48,6 @@
     </tbody>
   </table>
 </div>
-
-
 <div class="row fade-in-2-sec" *ngIf="songs?.length == 0">
   <div class="col s12">
     <div class="card-panel large transparent z-depth-0">

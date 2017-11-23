@@ -30,7 +30,7 @@ export class PlaylistComponent implements OnInit {
   private currentAccountId;
   public numberOfSongs = 0;
   public songCounter = 0;
-  public playbackCondition: string = "play_arrow";
+  public playbackCondition = "play_circle_outline";
 
   constructor(
     private router: Router,
@@ -52,8 +52,8 @@ export class PlaylistComponent implements OnInit {
       this.id = + param['id'];
       console.log(this.id);
       this.service.get('/playlist/' + this.id + '/' + this.currentAccountId ).subscribe((playlist) => {
-        console.log(playlist);
         this.playlist = playlist;
+        this.assignFollowStatus();
         this.loadSongs(this.playlist.playlistId);
       });
     });
@@ -63,7 +63,7 @@ export class PlaylistComponent implements OnInit {
     return (this.playlist.accountId === this.currentAccountId);
   }
 
-  isFollowing() {
+  isFollowing(): boolean {
     return this.playlist.followed;
   }
 
@@ -80,7 +80,7 @@ export class PlaylistComponent implements OnInit {
   }
 
   changeFollowStatus(status) {
-      this.service.post('/account/' + this.currentAccountId + '/playlist'  + this.id + '/follow/'
+      this.service.post('/account/' + this.currentAccountId + '/playlist/'  + this.id + '/follow/'
         + status, "")
         .subscribe(
         response => {
@@ -96,6 +96,13 @@ export class PlaylistComponent implements OnInit {
       );
   }
 
+  assignFollowStatus(): void {
+    const playlistsFollowed = JSON.parse(localStorage.getItem("playlistsfollowed"));
+    if (playlistsFollowed.find( x => x === this.playlist.playlistId) != null ) {
+      this.playlist.followed = true;
+    }
+  }
+
   pausePlayback() {
 
     this.isPlaying = false;
@@ -105,13 +112,10 @@ export class PlaylistComponent implements OnInit {
   playPlayback() {
     this.isPlaying = true;
   }
-  playbackSong($event: MouseEvent) {
+
+  playbackSong($event: MouseEvent, song:Song) {
     this.isPlaying = !this.isPlaying;
-    if ( this.isPlaying) {
-      $event.srcElement.innerHTML = "pause";
-    } else {
-      $event.srcElement.innerHTML = "play_arrow";
-    }
+    song.isPlaying = !song.isPlaying;
 
   }
 

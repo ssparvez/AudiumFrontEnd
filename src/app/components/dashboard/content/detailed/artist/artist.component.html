@@ -7,7 +7,14 @@
         <div class="artist-banner-mask" style="width: 100%; height: 100%; position: absolute; top: 0px; left: 0px;"></div>
         <span class="card-title black fade-in-half-sec" id="large-card-title">
           <h1 class="fade-in-1-sec" style="display: inline; vertical-align: middle;">{{artist?.artistName}}</h1>
-          <a style="margin-left: 20px;" class="waves-effect waves-light btn blue-bt" *ngIf="artist">Follow</a>
+          <button mz-button class="detailed-follow-btn btn-medium waves-effect"
+                  *ngIf="!isFollowing()" (click)="changeFollowStatus(true)">
+          FOLLOW
+          </button>
+          <button mz-button class="detailed-follow-btn btn-medium waves-effect"
+                  *ngIf="isFollowing()" (click)="changeFollowStatus(false)">
+          UNFOLLOW
+          </button>
         </span>
         <a (click)="playArtistSongs(0, artist?.songs)" class="btn-floating halfway-fab waves-effect waves-light hoverable blue-bt" *ngIf="artist?.songs?.length > 0">
           <i class="material-icons">play_arrow</i>
