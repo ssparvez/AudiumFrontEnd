@@ -20,9 +20,6 @@ export interface Song {
   //album: Album []
   isPlaying?: boolean;
   sound?: Howl;
-  // not needed
-  url?: string;
-  albumArtUrl?: string;
 
   isSaved?: boolean;
 }

@@ -75,7 +75,7 @@
         <td class="song-number">
           <a class="testing" >{{i+1}}</a>
             <a (click)="playbackSong($event)" class="song-playback-icon">
-              <i class="material-icons">{{playbackCondition}}</i>
+              <i class="material-icons " style="font-size: 18px; vertical-align: middle;">{{playbackCondition}}</i>
             </a>
         </td>
         <td>{{song?.title}}</td>
@@ -95,7 +95,7 @@
     </div>
   </div>
   <div class="col s12">
-    <div class="card-panel large transparent z-depth-0 center">
+    <div class="card-panel large transparent z-depth-0 center fade-in-2-sec">
       <h2 class="grey-text">No songs in playlist</h2>
     </div>
   </div>

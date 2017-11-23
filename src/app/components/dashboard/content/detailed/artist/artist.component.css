@@ -1,7 +1,11 @@
 span h5 a:hover, span h4 a:hover {
-    color: #ffab00;
+    color: #9e9e9e;
 }
 
 .col.s12.m3.fade-in-1-sec {
     padding-bottom: 10px;
+}
+
+.artist-banner-img {
+
 }
