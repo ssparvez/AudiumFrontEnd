@@ -60,12 +60,15 @@
           <td>
             <!--IN SPAN: *ngFor="let artist of song.artists; last as isLast"-->
             <!--{{artist.name}}{{isLast ? '' : ', '}}-->
-            <a [routerLink]="['../artist', song?.artistId]">{{song?.artistName}}</a>
+            <a [routerLink]="['../artist', song?.artistId]" (contextmenu)="artistMenu.onContextMenu($event, { artistId: song?.artistId, followed: false } )">
+              {{song?.artistName}}
+            </a>
           </td>
           <td>
             <!-- IN SPAN: *ngFor="let album of song.albums; last as isLast" -->
             <!--{{album.title}}{{isLast ? '' : ', '}}-->
-            <a [routerLink]="['../album', song?.albumId]">{{song?.albumTitle}}</a>
+            <a [routerLink]="['../album', song?.albumId]" (contextmenu)="albumMenu.onContextMenu($event, { albumId: song?.artistId, saved: false } )">
+              {{song?.albumTitle}}</a>
           </td>
           <td>{{song?.playCount}}</td>
         </tr>
@@ -120,5 +123,6 @@
   <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by
   <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
 </div>-->
-<app-song-menu #songMenu [songs]="topSongs" >
-</app-song-menu>
+<app-song-menu #songMenu [songs]="topSongs" ></app-song-menu>
+<app-artist-menu #artistMenu  [library]="false"></app-artist-menu>
+<app-album-menu #albumMenu ></app-album-menu>

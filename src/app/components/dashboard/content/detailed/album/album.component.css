@@ -1,0 +1,13 @@
+.album-info {
+    padding-left: 3%;
+}
+
+.chip{
+    margin-top: 1%;
+    font-size: medium;
+}
+
+
+.detailed-follow-btn:hover {
+    background-color: #29b6f6;
+}

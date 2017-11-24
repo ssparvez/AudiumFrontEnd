@@ -1,0 +1,8 @@
+<context-menu #albumMenu>
+  <ng-template *ngFor="let action of albumMenuActions" contextMenuItem let-item
+               [enabled]="action.enabled" [visible]="action.visible"
+               (execute)="action.click($event.item)">
+    {{ action.html() }}
+  </ng-template>
+</context-menu>
+

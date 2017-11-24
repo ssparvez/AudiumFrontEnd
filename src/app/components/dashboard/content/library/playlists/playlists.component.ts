@@ -15,10 +15,10 @@ import {Playlist} from "../../../../../classes/Playlist";
   animations: [
     trigger('fade',[
       transition('void => *',[
-        animate(600, style({opacity: 0}))
+        animate(300, style({opacity: 0}))
       ]),
       transition('* => void',[
-        animate(600, style({opacity: 0}))
+        animate(300, style({opacity: 0}))
       ])
     ])
   ]

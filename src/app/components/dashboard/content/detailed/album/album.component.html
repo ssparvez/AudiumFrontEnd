@@ -12,28 +12,38 @@
     </div>
   </div>
   <!-- Album Information -->
-  <div *ngIf="album" class="creator col s6 m8 fade-in-1-sec">
+  <div *ngIf="album" class="creator col s6 m8 fade-in-1-sec album-info">
     <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
       <h4>Album</h4>
     </div>
     <div class="row" style="margin-bottom: 0px; padding-bottom: 0px;">
       <h1>{{album?.albumTitle}}</h1>
     </div>
-    <div class="row">
+    <div class="row creator">
       <h2>
         <a [routerLink]="['../../artist', album?.artistId]">{{album?.artistName}}</a>
       </h2>
-    </div>
-    <div class="row">
-      <h3></h3>
     </div>
     <div class="row">
       <div class="chip fade-in-half-sec" *ngIf="album?.releaseYear">
         {{album?.releaseYear.substring(0,4)}}
       </div>
       <div class="chip fade-in-half-sec" *ngIf="album?.songs">
-        {{album?.songs?.length}} song
-        <span *ngIf="album?.songs?.length != 1">s</span>
+        {{album?.songs?.length}} song<span *ngIf="album?.songs?.length != 1">s</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s2" style="padding-left: 0">
+        <button mz-button class="detailed-follow-btn btn-medium waves-effect"
+                *ngIf="!isSaved()"
+                (click)="changeSaveStatus(true)" >
+          FOLLOW
+        </button>
+        <button mz-button class="detailed-follow-btn  btn-medium waves-effect"
+                *ngIf="isSaved()"
+                (click)="changeSaveStatus(false)" >
+          UNFOLLOW
+        </button>
       </div>
     </div>
   </div>
@@ -50,7 +60,8 @@
       </tr>
     </thead>
     <tbody class="tracklist">
-      <tr *ngFor="let song of album?.songs; let i = index" (dblclick)="playSongs(i)">
+      <tr *ngFor="let song of album?.songs; let i = index" (dblclick)="playSongs(i)"
+          (contextmenu)="songMenu.onContextMenu($event, song)">
         <td>{{song?.trackNumber}}</td>
         <td>
           {{song?.title}}
@@ -85,3 +96,4 @@
 <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!album">
   <div class="loader">Loading...</div>
 </div>
+<app-song-menu #songMenu [songs]="album?.songs" ></app-song-menu>

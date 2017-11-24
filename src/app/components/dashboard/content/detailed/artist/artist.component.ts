@@ -18,10 +18,10 @@ import {animate, style, transition, trigger} from "@angular/animations";
   animations: [
     trigger('fade',[
       transition('void => *',[
-        animate(600, style({opacity: 0}))
+        animate(300, style({opacity: 0}))
       ]),
       transition('* => void',[
-        animate(600, style({opacity: 0}))
+        animate(300, style({opacity: 0}))
       ])
     ])
   ]
@@ -33,6 +33,8 @@ export class ArtistComponent implements OnInit {
   mediaPath: string;
   events: Event[];
   public currentAccountId: number;
+  public isPlaying;
+  public playbackCondition = "play_circle_outline";
   monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
   constructor(
@@ -133,5 +135,21 @@ export class ArtistComponent implements OnInit {
     const artistsFollowed: number[] = JSON.parse(localStorage.getItem("artistsfollowed"));
     artistsFollowed.unshift(this.artist.artistId);
     localStorage.setItem("artistsfollowed", JSON.stringify(artistsFollowed));
+  }
+
+  pausePlayback() {
+
+    this.isPlaying = false;
+    this.playbackCondition= "play_arrow";
+  }
+
+  playPlayback() {
+    this.isPlaying = true;
+  }
+
+  playbackSong($event: MouseEvent, song:Song) {
+    this.isPlaying = !this.isPlaying;
+    song.isPlaying = !song.isPlaying;
+
   }
 }

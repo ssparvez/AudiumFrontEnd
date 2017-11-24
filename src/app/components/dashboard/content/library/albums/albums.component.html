@@ -5,7 +5,7 @@
 <div class="col s12 fade-in-half-sec">
   <ng-container  *ngIf="albums">
     <div class="row" style="margin-bottom:0;" *ngIf="albums?.length > 0">
-      <div class="col s12 m3 fade-in-half-sec" *ngFor="let album of albums">
+      <div class="col s12 m3 fade-in-half-sec" *ngFor="let album of albums" (contextmenu)="albumMenu.onContextMenu($event, album)">
         <div  class="card hoverable transparent">
           <div class="card-image" #albumcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
             <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
@@ -44,3 +44,4 @@
 <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!albums">
   <div class="loader">Loading...</div>
 </div>
+<app-album-menu #albumMenu [albums]="albums" [library]="true"></app-album-menu>

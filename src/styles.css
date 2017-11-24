@@ -345,7 +345,7 @@ th {
 td {
     font-size: large;
 }
-a{
+a, td>div{
     cursor: pointer;
 }
 
@@ -360,10 +360,7 @@ input[type=range]+.thumb.active{display:none;border-radius:50% 50% 50% 0}
     font-size: large;
     width: 4%;
 }
-tr:hover > .song-number-value {
 
-    color: #1b5e20;
-}
 tr:hover > .song-number  > .song-number-value{
     display: none;
 }
@@ -387,3 +384,12 @@ tr:hover > .song-number > .song-playback-icon {
     transform: scale(1.05);
 }
 
+.noSelect {
+    outline: 0;
+    outline: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

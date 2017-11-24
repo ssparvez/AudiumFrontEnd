@@ -144,8 +144,10 @@ export class PlaylistMenuComponent implements OnInit {
         response => {
           playlist.followed = status;
           if (status) {
+            this.addPlaylistToFollow(playlist);
             this.toastService.show("You are now following this playlist", 3000, 'blue');
           } else {
+            this.removePlaylistFromFollowed(playlist);
             this.toastService.show("You are no longer following this playlistt", 3000, 'blue');
           }
         }, (error: AppError) => {
@@ -171,7 +173,17 @@ export class PlaylistMenuComponent implements OnInit {
         }
       });
   }
+  removePlaylistFromFollowed(playlist: Playlist) {
+    const playlistsFollowed: number[] = JSON.parse(localStorage.getItem("playlistsfollowed"));
+    playlistsFollowed.splice(playlistsFollowed.indexOf(playlist.playlistId),1);
+    localStorage.setItem("artistsfollowed", JSON.stringify(playlistsFollowed));
+  }
 
+  addPlaylistToFollow(playlist: Playlist) {
+    const playlistsFollowed: number[] = JSON.parse(localStorage.getItem("playlistsfollowed"));
+    playlistsFollowed.unshift(playlist.playlistId);
+    localStorage.setItem("playlistsfollowed", JSON.stringify(playlistsFollowed));
+  }
 
   checkOwnership(playlistOwner): boolean {
     return ( this.currentAccountId === playlistOwner);

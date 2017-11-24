@@ -13,10 +13,10 @@ import {trigger, transition, style, animate} from "@angular/animations";
   animations: [
     trigger('fade',[
       transition('void => *',[
-        animate(600, style({opacity: 0}))
+        animate(300, style({opacity: 0}))
       ]),
       transition('* => void',[
-        animate(600, style({opacity: 0}))
+        animate(300, style({opacity: 0}))
       ])
     ])
   ]

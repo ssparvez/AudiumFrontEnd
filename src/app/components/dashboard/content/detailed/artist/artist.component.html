@@ -32,13 +32,24 @@
           <table class="bordered responsive-table white-text" *ngIf="artist?.songs?.length > 0">
             <thead>
               <tr>
+                <th></th>
                 <th>Title</th>
                 <th>Album</th>
                 <th class="center">Plays</th>
               </tr>
             </thead>
             <tbody class="tracklist" *ngIf="artist?.songs">
-              <tr *ngFor="let song of artist?.songs?.slice(0, 10); let i = index" (dblclick)="playArtistSongs(i, artist?.songs)" (contextmenu)="songMenu.onContextMenu($event, song)">
+              <tr *ngFor="let song of artist?.songs?.slice(0, 10); let i = index" (dblclick)="playArtistSongs(i, artist?.songs)"
+                  (contextmenu)="songMenu.onContextMenu($event, song)">
+                <td class="song-number">
+                  <a class="song-number-value" >{{i+1}}.</a>
+                  <a (click)="playbackSong($event,song)" class="song-playback-icon"  *ngIf="!song.isPlaying">
+                    <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">play_circle_outline</i>
+                  </a>
+                  <a (click)="playbackSong($event,song)" class="song-playback-icon" *ngIf="song.isPlaying">
+                    <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">pause</i>
+                  </a>
+                </td>
                 <td>{{song?.title}}</td>
                 <td *ngIf="song">
                   <a [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</a>
@@ -213,6 +224,5 @@
   </div>
 </div>
 
-<app-song-menu #songMenu [songs]="artist?.songs" >
-</app-song-menu>
+<app-song-menu #songMenu [songs]="artist?.songs" ></app-song-menu>
 <app-artist-menu #artistMenu [artists]="artist" [library]="false"></app-artist-menu>

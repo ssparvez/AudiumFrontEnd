@@ -48,6 +48,7 @@ import { SongMenuComponent } from './menus/song-menu/song-menu.component';
 import { LyricsComponent } from './components/dashboard/content/lyrics/lyrics.component';
 import { ChoosePlaylistComponent } from './modals/choose-playlist/choose-playlist.component';
 import { ArtistMenuComponent } from './menus/artist-menu/artist-menu.component';
+import { AlbumMenuComponent } from './menus/album-menu/album-menu.component';
 
 
 const appRoutes: Routes = [
@@ -116,6 +117,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     LyricsComponent,
     ChoosePlaylistComponent,
     ArtistMenuComponent,
+    AlbumMenuComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,

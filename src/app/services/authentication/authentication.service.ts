@@ -66,10 +66,16 @@ export class AuthenticationService {
       }, (error: AppError) => {
       }
     );
-    this.service.get('/accounts/'+ this.currentUser.accountId +'/artists/allsaved').subscribe(
+    this.service.get('/accounts/'+ this.currentUser.accountId +'/artists/allfollowed').subscribe(
       artistIds => {
         localStorage.setItem("artistsfollowed", JSON.stringify(artistIds));
         console.log(artistIds);
+      }, (error: AppError) => {
+      }
+    );
+    this.service.get('/accounts/'+ this.currentUser.accountId +'/albums/allsaved').subscribe(
+      albumIds => {
+        localStorage.setItem("albumssaved", JSON.stringify(albumIds));
       }, (error: AppError) => {
       }
     );

@@ -14,7 +14,7 @@ import {animate, style, transition, trigger} from "@angular/animations";
   animations: [
     trigger('fade',[
       transition('* => void',[
-        animate(600, style({opacity: 0}))
+        animate(300, style({opacity: 0}))
       ])
     ])
   ]
@@ -80,14 +80,16 @@ export class PlaylistComponent implements OnInit {
   }
 
   changeFollowStatus(status) {
-      this.service.update('/account/' + this.currentAccountId + '/playlist/'  + this.id + '/follow/'
+      this.service.update('/accounts/' + this.currentAccountId + '/playlist/'  + this.id + '/follow/'
         + status, "")
         .subscribe(
         response => {
           this.playlist.followed = status;
           if (status) {
+            this.addPlaylistToFollow();
             this.toastService.show("You are now following this playlist", 3000, 'blue');
           } else {
+            this.removePlaylistFromFollowed();
             this.toastService.show("You are no longer following this playlistt", 3000, 'blue');
           }
         }, (error: AppError) => {
@@ -102,7 +104,17 @@ export class PlaylistComponent implements OnInit {
       this.playlist.followed = true;
     }
   }
+  removePlaylistFromFollowed() {
+    const playlistsFollowed: number[] = JSON.parse(localStorage.getItem("playlistsfollowed"));
+    playlistsFollowed.splice(playlistsFollowed.indexOf(this.playlist.playlistId),1);
+    localStorage.setItem("artistsfollowed", JSON.stringify(playlistsFollowed));
+  }
 
+  addPlaylistToFollow() {
+    const playlistsFollowed: number[] = JSON.parse(localStorage.getItem("playlistsfollowed"));
+    playlistsFollowed.unshift(this.playlist.playlistId);
+    localStorage.setItem("playlistsfollowed", JSON.stringify(playlistsFollowed));
+  }
   pausePlayback() {
 
     this.isPlaying = false;

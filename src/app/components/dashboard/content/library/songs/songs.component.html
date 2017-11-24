@@ -25,7 +25,7 @@
       <tr *ngFor="let song of songs; let i = index" (dblclick)="playLibrarySongs(i)" (contextmenu)="songMenu.onContextMenu($event, song)"
           [ngClass]="{'playing': song.isPlaying}" >
         <td class="song-number">
-          <a class="song-number-value" >{{i+1}}.</a>
+          <div class="song-number-value" >{{i+1}}.</div>
           <a (click)="playbackSong($event,song)" class="song-playback-icon"  *ngIf="!song.isPlaying">
             <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">play_circle_outline</i>
           </a>
@@ -37,7 +37,7 @@
           {{song?.title}}
           <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
         </td>
-		    <td *ngIf="song"><a [routerLink]="['../artist', song?.artistId]">{{song?.artistName}}</a></td>
+		    <td *ngIf="song"><a [routerLink]="['../artist', song?.artistId]" (contextmenu)="artistMenu.onContextMenu($event, { artistId: song?.artistId, followed: false } )">{{song?.artistName}}</a></td>
         <td *ngIf="song"><a [routerLink]="['../album', song?.albumId]">{{song?.albumTitle}}</a></td>
         <td>
           <!-- NOTE: Putting these spans on separate lines creates a space for some reason. Though ugly, we should keep them on the same line -->
@@ -68,3 +68,4 @@
 
 <app-song-menu #songMenu [songs]="songs" [inMusic]="true">
 </app-song-menu>
+<app-artist-menu #artistMenu [artists]="artist" [library]="false"></app-artist-menu>
