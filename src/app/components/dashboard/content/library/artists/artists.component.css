@@ -7,3 +7,72 @@ span h5 a:hover, span h4 a:hover{
 .col.s12.m3.fade-in-half-sec {
     padding-bottom: 10px;
 }
+
+/** CARD W/ PLAY BUTTON **/
+
+.card-content {
+    color: rgb(236, 236, 236);
+    padding-bottom: 0;
+}
+
+.card-content:hover, .card-content-emulated-hover {
+    color: white;
+}
+
+.artist-name {
+    font-size: large;
+    margin-top: 5%;
+}
+
+.artist-playbutton-div {
+    position: absolute;
+    z-index: 1000;
+    bottom: 100px;
+    left: 110px;
+    display: none;
+    outline: 0;
+}
+
+.card:hover > .artist-playbutton-div {
+    display: block;
+}
+
+
+.card:hover > .card-image{
+    filter: brightness(30%);
+}
+.artist-container {
+    position: relative;
+}
+
+.play-icon {
+    font-size: 6rem;
+    transition: 0.3s;
+    outline:none
+}
+
+.play-icon:hover{
+    cursor: pointer;
+    -webkit-transform: scale(1.3);
+    -ms-transform: scale(1.3);
+    transform: scale(1.3);
+}
+
+.play-icon:active {
+    -webkit-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    transform: scale(0.8);
+}
+
+/****************************/
+
+.noSelect {
+    outline: 0;
+    outline: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+

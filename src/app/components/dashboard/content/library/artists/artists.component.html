@@ -1,31 +1,38 @@
 <div class="row fade-in-half-sec">
   <h1 class="col s12">Artists</h1>
 </div>
-
-<div class="col s12 fade-in-half-sec">
-  <ng-container  *ngIf="artists">
-    <div class="row fade-in-half-sec" style="margin-bottom:0;"  *ngIf="artists?.length > 0">
-      <div class="col s12 m3 fade-in-half-sec" *ngFor="let artist of artists">
-        <div class="card hoverable transparent fade-in-half-sec" *ngIf="artist">
-          <div class="card-image" #artistcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': artistcarddiv.offsetWidth, 'max-height.px': artistcarddiv.offsetWidth }">
-            <div class="artist-div valign-wrapper" [ngStyle]="{'min-height.px': artistcarddiv.offsetWidth, 'max-height.px': artistcarddiv.offsetWidth }">
-              <a [routerLink]="['../artist', artist?.artistId]">
-                <img class="artist-banner-img" src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{'min-width.px': artistcarddiv.offsetWidth }">
-              </a>
-              <span class="card-title black" id="small-card-title">
-                <h4><a [routerLink]="['../artist', artist?.artistId]">{{artist?.artistName}}</a></h4>
-              </span>
-              <a (click)="playSongs(artist?.artistId)"class="btn-floating halfway-fab waves-effect waves-light blue-bt">
-                <i class="material-icons">play_arrow</i>
-              </a>
-            </div>
+<div class="row" style="margin-bottom:0;" *ngIf="artists">
+  <div class="col s3 artist-container fade-in-1-sec" @fade *ngFor="let artist of artists; let i = index;"
+       (contextmenu)="artistMenu.onContextMenu($event, artist)"
+       (contextmenu)="null" [attr.data-index]="i" >
+    <div class="card hoverable grey darken-2" *ngIf="artist">
+      <div class="card-image" *ngIf="artist">
+        <a [routerLink]="['../artist', artist?.artistId]">
+          <img class="artist-banner-img" src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'">
+        </a>
+      </div>
+      <div class="artist-playbutton-div noSelect">
+        <div *ngIf="isPlaying; then pause else play"></div>
+        <ng-template #play >
+          <a class="play-button" (click)="playPlayback()">
+            <i class="material-icons play-icon">play_circle_outline</i>
+          </a>
+        </ng-template>
+        <ng-template #pause>
+          <a class="play-button"  (click)="pausePlayback()">
+            <i class="material-icons play-icon">pause_circle_outline</i>
+          </a>
+        </ng-template>
+      </div>
+      <div class="playlist-name-div col s12 center">
+        <a [routerLink]="['../artist', artist?.artistId]" style="display:flex !important;">
+          <div class="col s11 truncate artist-name" style="color: inherit; padding-bottom: 28px;">{{artist?.artistName}}
           </div>
-        </div>
+        </a>
       </div>
     </div>
-  </ng-container>
+  </div>
 </div>
-
 <ng-container  *ngIf="artists?.length == 0">
   <div class="row fade-in-2-sec" >
     <div class="col s12">
@@ -46,3 +53,4 @@
   <div class="loader">Loading...</div>
 </div>
 
+<app-artist-menu #artistMenu [artists]="artists" [library]="true"></app-artist-menu>

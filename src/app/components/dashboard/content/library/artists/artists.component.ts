@@ -4,16 +4,28 @@ import { Artist } from '../../../../../classes/Artist';
 import { GeneralService } from '../../../../../services/general/general.service';
 import { PlayerService } from '../../../../../services/player/player.service';
 import { DataService } from '../../../../../services/data.service';
+import {trigger, transition, style, animate} from "@angular/animations";
 
 @Component({
   selector: 'app-artists',
   templateUrl: './artists.component.html',
-  styleUrls: ['./artists.component.css']
+  styleUrls: ['./artists.component.css'],
+  animations: [
+    trigger('fade',[
+      transition('void => *',[
+        animate(600, style({opacity: 0}))
+      ]),
+      transition('* => void',[
+        animate(600, style({opacity: 0}))
+      ])
+    ])
+  ]
 })
 export class ArtistsComponent implements OnInit {
   mediaPath: string;
   accountId: number;
-  artists: Artist[]
+  artists: Artist[];
+  public isPlaying;
   constructor(
     private router: Router,
     private generalService: GeneralService,
@@ -26,7 +38,7 @@ export class ArtistsComponent implements OnInit {
       if (!(event instanceof NavigationEnd)) {
           return;
       }
-      window.scrollTo(0, 0)
+      window.scrollTo(0, 0);
     });
 
     this.mediaPath = this.dataService.mediaURL;
@@ -40,5 +52,15 @@ export class ArtistsComponent implements OnInit {
     this.generalService.get("/artists/" + artistId + "/songs").subscribe((songs) => {
       this.playerService.playSongs(0, songs);
     });
+  }
+
+  pausePlayback() {
+
+    this.isPlaying = false;
+
+  }
+
+  playPlayback() {
+    this.isPlaying = true;
   }
 }

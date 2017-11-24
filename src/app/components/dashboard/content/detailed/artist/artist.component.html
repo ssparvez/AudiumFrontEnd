@@ -1,5 +1,5 @@
 <div class="row fade-in-1-sec" #mainContentDiv>
-  <div class="card col s12 z-depth-0 transparent" *ngIf="artist">
+  <div class="card col s12 z-depth-0 transparent" *ngIf="artist"   (contextmenu)="artistMenu.onContextMenu($event, artist)">
     <div class="card-image" #artistbannerdiv (window:resize)="0" [ngStyle]="{'min-height.px': (artistbannerdiv.offsetWidth / 2), 'max-height.px': (artistbannerdiv.offsetWidth / 2) }">
       <div class="artist-banner" [ngStyle]="{'min-height.px': (artistbannerdiv.offsetWidth / 2), 'max-height.px': (artistbannerdiv.offsetWidth / 2) }">
         <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Banner.jpg" onError="this.src='assets/images/defaults/banner.png'" [ngStyle]="{'min-width.px': artistbannerdiv.offsetWidth }">
@@ -22,7 +22,6 @@
       </div>
     </div>
   </div>
-
   <ng-container *ngIf="artist">
     <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'">
       <mz-tab-item class="fade-in-half-sec" [label]="'Overview'" [active]="true">
@@ -39,7 +38,7 @@
               </tr>
             </thead>
             <tbody class="tracklist" *ngIf="artist?.songs">
-              <tr *ngFor="let song of artist?.songs?.slice(0, 10); let i = index" (dblclick)="playArtistSongs(i, artist?.songs)">
+              <tr *ngFor="let song of artist?.songs?.slice(0, 10); let i = index" (dblclick)="playArtistSongs(i, artist?.songs)" (contextmenu)="songMenu.onContextMenu($event, song)">
                 <td>{{song?.title}}</td>
                 <td *ngIf="song">
                   <a [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</a>
@@ -213,3 +212,7 @@
     <div class="loader">Loading...</div>
   </div>
 </div>
+
+<app-song-menu #songMenu [songs]="artist?.songs" >
+</app-song-menu>
+<app-artist-menu #artistMenu [artists]="artist" [library]="false"></app-artist-menu>

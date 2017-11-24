@@ -46,7 +46,7 @@ export class PlaylistComponent implements OnInit {
       if (!(event instanceof NavigationEnd)) {
           return;
       }
-      window.scrollTo(0, 0)
+      window.scrollTo(0, 0);
     });
     this.route.params.subscribe(param => {
       this.id = + param['id'];
@@ -80,7 +80,7 @@ export class PlaylistComponent implements OnInit {
   }
 
   changeFollowStatus(status) {
-      this.service.post('/account/' + this.currentAccountId + '/playlist/'  + this.id + '/follow/'
+      this.service.update('/account/' + this.currentAccountId + '/playlist/'  + this.id + '/follow/'
         + status, "")
         .subscribe(
         response => {

@@ -9,11 +9,22 @@ import { Event } from '../../../../../classes/Event';
 import { Address } from '../../../../../classes/Address';
 import {MzToastService} from "ng2-materialize";
 import {AppError} from "../../../../../errors/AppError";
+import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-artist',
   templateUrl: './artist.component.html',
-  styleUrls: ['./artist.component.css']
+  styleUrls: ['./artist.component.css'],
+  animations: [
+    trigger('fade',[
+      transition('void => *',[
+        animate(600, style({opacity: 0}))
+      ]),
+      transition('* => void',[
+        animate(600, style({opacity: 0}))
+      ])
+    ])
+  ]
 })
 export class ArtistComponent implements OnInit {
 
@@ -83,15 +94,17 @@ export class ArtistComponent implements OnInit {
 }
 
   changeFollowStatus(status) {
-    this.generalService.post('/account/' + this.currentAccountId + '/artist/'  + this.id + '/follow/'
+    this.generalService.update('/accounts/' + this.currentAccountId + '/artist/'  + this.id + '/follow/'
       + status, "")
       .subscribe(
         response => {
           this.artist.followed = status;
           if (status) {
+            this.addArtistToFollow();
             this.toastService.show("You are now following this artist", 3000, 'blue');
           } else {
-            this.toastService.show("You are no longer following this artist", 3000, 'blue');
+            this.removeArtistFromFollowed();
+            this.toastService.show("Artist was unfollowed", 3000, 'blue');
           }
         }, (error: AppError) => {
           this.toastService.show("Artist follow status could not be changed", 3000, 'blue');
@@ -104,9 +117,21 @@ export class ArtistComponent implements OnInit {
   }
 
   assignFollowStatus(): void {
-    const artistsFollowed = JSON.parse(localStorage.getItem("artistsfollowed"));
+    const artistsFollowed: number[] = JSON.parse(localStorage.getItem("artistsfollowed"));
     if (artistsFollowed.find( x => x === this.artist.artistId) != null ) {
       this.artist.followed = true;
     }
+  }
+
+  removeArtistFromFollowed() {
+    const artistsFollowed: number[] = JSON.parse(localStorage.getItem("artistsfollowed"));
+    artistsFollowed.splice(artistsFollowed.indexOf(this.artist.artistId),1);
+    localStorage.setItem("artistsfollowed", JSON.stringify(artistsFollowed));
+  }
+
+  addArtistToFollow() {
+    const artistsFollowed: number[] = JSON.parse(localStorage.getItem("artistsfollowed"));
+    artistsFollowed.unshift(this.artist.artistId);
+    localStorage.setItem("artistsfollowed", JSON.stringify(artistsFollowed));
   }
 }

@@ -19,6 +19,7 @@ import {CreatePlaylistComponent} from "../../modals/create-playlist/create-playl
 export class PlaylistMenuComponent implements OnInit {
   @Input('playlists') public playlists: Playlist[];
   @Input('detailed') public detailed: boolean;
+  @Input('library') public library: boolean;
   @ViewChild('ownerMenu') public ownerMenu: ContextMenuComponent;
   @ViewChild('regularMenu') public regularMenu: ContextMenuComponent;
   public currentUser: JSON;
@@ -109,9 +110,10 @@ export class PlaylistMenuComponent implements OnInit {
               response => {
                 if(this.detailed) {
                   this.router.navigate(['/dash/playlists']);
+                } else {
+                  this.playlists.splice(this.playlists.indexOf(playlistToDelete), 1);
                 }
                 this.toastService.show("Playlist was deleted", 3000, 'blue');
-                this.playlists.splice(this.playlists.indexOf(playlistToDelete), 1);
               }, (error: AppError) => {
                 this.toastService.show("Playlist could not be deleted", 3000, 'blue');
               }
@@ -136,7 +138,7 @@ export class PlaylistMenuComponent implements OnInit {
 
 
   changeFollowStatus(playlist: Playlist, status) {
-    this.service.post('/account/' + this.currentAccountId + '/playlist'  + playlist.playlistId + '/follow/'
+    this.service.update('/accounts/' + this.currentAccountId + '/playlist/'  + playlist.playlistId + '/follow/'
       + status, "")
       .subscribe(
         response => {
