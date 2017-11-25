@@ -3,8 +3,7 @@
 </div>
 <div class="row" style="margin-bottom:0;" *ngIf="artists">
   <div class="col s3 artist-container fade-in-1-sec" @fade *ngFor="let artist of artists; let i = index;"
-       (contextmenu)="artistMenu.onContextMenu($event, artist)"
-       (contextmenu)="null" [attr.data-index]="i" >
+       (contextmenu)="artistMenu.onContextMenu($event, artist)">
     <div class="card hoverable grey darken-2" *ngIf="artist">
       <div class="card-image" *ngIf="artist">
         <a [routerLink]="['../artist', artist?.artistId]">

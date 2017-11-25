@@ -1,9 +1,17 @@
+<div *ngIf="profile">
 <div class="card">
     <div class="card-image">
       <img class="responsive-img" src="assets/images/defaults/banner.png">
       <span class="card-title black" id="large-card-title">
-        <h1 style="display: inline; vertical-align: middle;">User name</h1>
-        <a style="margin-left: 20px;" class="waves-effect waves-light btn blue-bt">Follow</a>
+        <h1 style="display: inline; vertical-align: middle;">{{currentUser.displayName}}</h1>
+        <button mz-button class="detailed-follow-btn btn-medium waves-effect"
+                *ngIf="!isFollowing() && !checkIfOwner()" (click)="changeFollowStatus(true)">
+          FOLLOW
+          </button>
+          <button mz-button class="detailed-follow-btn btn-medium waves-effect"
+                  *ngIf="isFollowing() && !checkIfOwner()" (click)="changeFollowStatus(false)">
+          UNFOLLOW
+          </button>
       </span>
       <a class="btn-floating halfway-fab waves-effect waves-light blue-bt">
         <i class="material-icons">play_arrow</i>
@@ -53,3 +61,8 @@
         </ul>
   </mz-tab-item>
   </mz-tab>
+
+  <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!profile">
+    <div class="loader">Loading...</div>
+  </div>
+</div>

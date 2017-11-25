@@ -115,13 +115,13 @@ export class PlaylistComponent implements OnInit {
     playlistsFollowed.unshift(this.playlist.playlistId);
     localStorage.setItem("playlistsfollowed", JSON.stringify(playlistsFollowed));
   }
-  pausePlayback() {
+  pausePlayback(playlistId) {
 
     this.isPlaying = false;
     this.playbackCondition= "play_arrow";
   }
 
-  playPlayback() {
+  playPlayback(playlistId) {
     this.isPlaying = true;
   }
 
