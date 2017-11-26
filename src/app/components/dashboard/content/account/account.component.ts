@@ -80,13 +80,43 @@ export class AccountComponent implements OnInit {
       });
   }
 
+  openDeleteAccountDialog() {
+    this.dialog.open(ConfirmComponent, {  data: {message: "Are you sure you want to delete your account?"}, height: '180px'})
+    .afterClosed()
+    .subscribe(
+      result => {
+        this.dialog.open(ConfirmComponent, {  data: {message: "Are you really sure you want to?"}, height: '180px'})
+        .afterClosed()
+        .subscribe(
+          result => {
+            if(result) {
+              this.service.deleteResource('/accounts/'+ this.currentUser.accountId).subscribe(
+                response => {
+                  if (response && response.token) {
+                    this.router.navigate(['']);                      
+                    // redirect to front page?
+                  } else {
+                    this.toastService.show("There was an error. Please try again.", 3000, 'blue');
+                  }
+                }, 
+                (error: AppError) => {
+                  this.toastService.show("There was an error. Please try again.", 3000, 'blue');
+                }
+              );
+            }
+          }
+        );
+      }
+    );
+  }
+
   downgradeAccount() {
     this.dialog.open(ConfirmComponent, {  data: {message: "Are you sure you want to downgrade?"}, height: '180px'})
       .afterClosed()
       .subscribe(
         result => {
           if(result) {
-            this.service.deleteResource('/downgradeaccount/'+ this.currentUser.accountId).subscribe(
+            this.service.deleteResource('/accounts/' + this.currentUser.accountId + '/downgrade').subscribe(
               response => {
                 if (response && response.token) {
                   localStorage.setItem('token', response.token);

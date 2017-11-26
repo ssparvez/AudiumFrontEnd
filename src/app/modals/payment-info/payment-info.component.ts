@@ -99,7 +99,7 @@ export class PaymentInfoComponent  implements  OnInit {
   }
 
   loadPaymentInfo() {
-    this.service.get('/paymentinfo/' + this.accountId ).subscribe(
+    this.service.get('/accounts/' + this.accountId + '/paymentinfo' ).subscribe(
       response => {
         const info = response;
         console.log(info);
