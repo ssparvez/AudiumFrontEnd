@@ -32,7 +32,12 @@ import { PlaylistComponent } from './components/dashboard/content/detailed/playl
 import { ChangePasswordComponent } from "./modals/change-password/change-password.component";
 import { ConfirmComponent } from './modals/confirm-modal/confirm.component';
 import { CreatePlaylistComponent } from './modals/create-playlist/create-playlist.component';
-
+import { PlaylistMenuComponent } from './menus/playlist-menu/playlist-menu.component';
+import { SongMenuComponent } from './menus/song-menu/song-menu.component';
+import { LyricsComponent } from './components/dashboard/content/lyrics/lyrics.component';
+import { ChoosePlaylistComponent } from './modals/choose-playlist/choose-playlist.component';
+import { ArtistMenuComponent } from './menus/artist-menu/artist-menu.component';
+import { AlbumMenuComponent } from './menus/album-menu/album-menu.component';
 import { InputFormatDirective } from './directives/input-format.directive';
 // Services
 import { AuthenticationService } from "./services/authentication/authentication.service";
@@ -43,17 +48,13 @@ import { CustomerAccount } from "./classes/CustomerAccount";
 import { GeneralService } from "./services/general/general.service";
 import { SearchComponent } from './components/dashboard/content/search/search.component';
 import {ContextMenuModule, ContextMenuService} from "ngx-contextmenu";
-import { PlaylistMenuComponent } from './menus/playlist-menu/playlist-menu.component';
-import { SongMenuComponent } from './menus/song-menu/song-menu.component';
-import { LyricsComponent } from './components/dashboard/content/lyrics/lyrics.component';
-import { ChoosePlaylistComponent } from './modals/choose-playlist/choose-playlist.component';
-import { ArtistMenuComponent } from './menus/artist-menu/artist-menu.component';
-import { AlbumMenuComponent } from './menus/album-menu/album-menu.component';
-
+import {AdminSidenavComponent} from "./components/dashboard/sidenav/admin-sidenav/admin-sidenav.component";
+import { AdminHomeComponent } from './components/dashboard/content/admin/admin-home/admin-home.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
   children: [
+    {path: "admin-home" , component: AdminHomeComponent},
     {path: "home" , component: HomeComponent},
     {path: "search/:keywords", component: SearchComponent},
     {path: "songs", component: SongsComponent},
@@ -118,6 +119,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ChoosePlaylistComponent,
     ArtistMenuComponent,
     AlbumMenuComponent,
+    AdminSidenavComponent,
+    AdminHomeComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,

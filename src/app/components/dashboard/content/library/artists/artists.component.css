@@ -64,15 +64,7 @@ span h5 a:hover, span h4 a:hover{
     transform: scale(0.8);
 }
 
-/****************************/
-
-.noSelect {
-    outline: 0;
-    outline: none;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+img {
+    min-height: 300px;
+    max-height: 300px;
 }
-

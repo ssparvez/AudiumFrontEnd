@@ -20,12 +20,12 @@
       <div class="playlist-playbutton-div noSelect">
         <div *ngIf="isPlaying; then pause else play"></div>
         <ng-template #play >
-          <a class="play-button" (click)="playPlayback()">
+          <a class="play-button" (click)="playPlayback(playlist.playlistId)">
             <i class="material-icons play-icon">play_circle_outline</i>
           </a>
         </ng-template>
         <ng-template #pause>
-          <a class="play-button"  (click)="pausePlayback()">
+          <a class="play-button"  (click)="pausePlayback(playlist.playlistId)">
             <i class="material-icons play-icon">pause_circle_outline</i>
           </a>
         </ng-template>
@@ -35,7 +35,7 @@
         <a [routerLink]="['../playlist', playlist?.playlistId]" style="display:flex !important;">
           <div class="col s11 truncate playlist-name" style="color: inherit; padding-bottom: 28px;">{{playlist?.name}}
             <br>
-              <a class="playlist-creator" [routerLink]="['../profile', playlist?.accountId]">{{playlist?.username}}</a>
+            <a class="playlist-creator" [routerLink]="['../profile', playlist?.accountId]">{{playlist?.username}}</a>
           </div>
         </a>
       </div>

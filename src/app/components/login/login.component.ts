@@ -77,9 +77,16 @@ export class LoginComponent implements OnInit {
             // let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
             // this.router.navigate([returnUrl || '/']);
             /* Hiding the login form triggers the "Save password?" prompt on many newer browsers */
+            const currentAccountRole =  JSON.parse(sessionStorage.getItem("currentUser"))['_role'];
             this.renderer.selectRootElement('form').style.display = 'none';
             this.invalidLogin = false;
-            this.router.navigate(['/dash/home']);
+
+            if ( currentAccountRole === "Admin" ) {
+              this.router.navigate(['/dash/admin-home']);
+            } else {
+              this.router.navigate(['/dash/home']);
+            }
+
           } else {
             this.invalidLogin = true;
           }

@@ -5,3 +5,14 @@ span h5 a:hover, span h4 a:hover {
 .col.s12.m3.fade-in-half-sec {
     padding-bottom: 10px;
 }
+
+img {
+    min-height: 300px;
+    max-height: 300px;
+}
+
+.play-icon {
+    font-size: 6rem;
+    transition: 0.3s;
+    outline:none
+}
