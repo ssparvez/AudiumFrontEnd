@@ -38,6 +38,10 @@ import { LyricsComponent } from './components/dashboard/content/lyrics/lyrics.co
 import { ChoosePlaylistComponent } from './modals/choose-playlist/choose-playlist.component';
 import { ArtistMenuComponent } from './menus/artist-menu/artist-menu.component';
 import { AlbumMenuComponent } from './menus/album-menu/album-menu.component';
+import { AdminSidenavComponent } from "./components/dashboard/sidenav/admin-sidenav/admin-sidenav.component";
+import { AdminHomeComponent } from './components/dashboard/content/admin/admin-home/admin-home.component';
+import { QueueComponent } from './components/dashboard/content/queue/queue.component';
+import { SearchComponent } from './components/dashboard/content/search/search.component';
 import { InputFormatDirective } from './directives/input-format.directive';
 // Services
 import { AuthenticationService } from "./services/authentication/authentication.service";
@@ -46,10 +50,8 @@ import { AuthGuard } from "./guards/authguard.service";
 import { DataService } from "./services/data.service";
 import { CustomerAccount } from "./classes/CustomerAccount";
 import { GeneralService } from "./services/general/general.service";
-import { SearchComponent } from './components/dashboard/content/search/search.component';
-import {ContextMenuModule, ContextMenuService} from "ngx-contextmenu";
-import {AdminSidenavComponent} from "./components/dashboard/sidenav/admin-sidenav/admin-sidenav.component";
-import { AdminHomeComponent } from './components/dashboard/content/admin/admin-home/admin-home.component';
+import { ContextMenuModule, ContextMenuService } from "ngx-contextmenu";
+
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -63,7 +65,8 @@ const appRoutes: Routes = [
     {path: "artists", component: ArtistsComponent},
     {path: "playlists", component: PlaylistsComponent},
     {path: "song/:id/lyrics", component: LyricsComponent},
-    // DETAILED
+    {path: "queue", component: QueueComponent},
+    // Detailed
     {path: "artist/:id", component: ArtistComponent},
     {path: "album/:id", component: AlbumComponent},
     {path: "playlist/:id", component: PlaylistComponent},
@@ -121,6 +124,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AlbumMenuComponent,
     AdminSidenavComponent,
     AdminHomeComponent,
+    QueueComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,

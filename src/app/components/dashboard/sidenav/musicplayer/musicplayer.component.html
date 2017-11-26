@@ -4,11 +4,12 @@
       <img src="{{mediaPath}}/images/album_arts/{{songQueue[queueIndex].albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'">
     </a>
     <span class="card-title black" id="music-card-title">
-      <div style="padding: 0px 24px;">
+      <div style="padding: 0px 16px;">
         <span class="track-slider">
           <input #ref1 (change)="seekTrack(ref1.value)" class="track-slider" type=range value=0 min=0 max={{songQueue[queueIndex].sound.duration()}}
-            id=fader step=1>
+            id=fader step=1 value={{songQueue[queueIndex].sound.seek()}}>
         </span>
+        <i (click)="viewQueue()" class="material-icons">playlist_play</i>        
         <div class="row" style="margin-bottom: 0px;">
           <div class="left" style="height: 50px;">
             <h5>

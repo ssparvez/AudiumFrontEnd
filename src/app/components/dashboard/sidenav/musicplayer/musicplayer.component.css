@@ -52,14 +52,13 @@ span.volume-slider input[type=range]::-webkit-slider-thumb, span.track-slider in
   cursor: pointer;
 }
 
+span.track-slider input[type='range'] {
+    width: 238px;
+}
 span.track-slider input[type=range]::-webkit-slider-thumb {
     background: #2196f3;
 }
 
 span.volume-slider input[type="range"]::-ms-fill-lower {
     background: red;
-}
-
-input[type=range] + .thumb.active {
-    display: none !important; /* make sure this is in materialize.min.css */
 }
