@@ -70,24 +70,24 @@ export class SearchComponent implements OnInit {
   }
 
   playSongs(index: number): void {
-    this.playerService.playSongs(index, this.songs);
+    this.playerService.loadSongs(index, this.songs);
   }
 
   playArtistSongs(artistId: number): void {
     this.generalService.get("/artists/" + artistId + "/songs").subscribe((songs) => {
-      this.playerService.playSongs(0, songs);
+      this.playerService.loadSongs(0, songs);
     });
   }
 
   playAlbumSongs(albumId: number): void {
     this.generalService.get("/albums/" + albumId + "/songs").subscribe((songs) => {
-      this.playerService.playSongs(0, songs);
+      this.playerService.loadSongs(0, songs);
     });
   }
 
   playPlaylistSongs(playlistId: number): void {
     this.generalService.get("/playlist/" + playlistId + "/songs").subscribe((songs) => {
-      this.playerService.playSongs(0, songs);
+      this.playerService.loadSongs(0, songs);
     });
   }
 

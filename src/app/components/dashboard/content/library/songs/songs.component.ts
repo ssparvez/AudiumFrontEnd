@@ -41,13 +41,12 @@ export class SongsComponent implements OnInit {
   playLibrarySongs(index: number) {
     // initialize howl here?
     // this.songs[index].isPlaying = true; used to change the play button
-    this.playerService.playSongs(index, this.songs);
+    this.playerService.loadSongs(index, this.songs);
     console.log(index);
   }
 
   playbackSong($event: MouseEvent, song:Song) {
     song.isPlaying = !song.isPlaying;
-
   }
 
 }

@@ -8,12 +8,17 @@ export class PlayerService {
   songQueue = this.songQueueSubject.asObservable();
   public queueIndexSubject = new Subject<any>();
   queueIndex = this.queueIndexSubject.asObservable();
+  public songsToQueueSubject = new Subject<any>();
+  songsToQueue = this.songsToQueueSubject.asObservable();
 
   constructor() { }
 
-  playSongs(index: number, songs: Song[]) {
+  loadSongs(index: number, songs: Song[]) {
     this.songQueueSubject.next(songs);
     this.queueIndexSubject.next(index);
   }
 
+  addSongsToQueue(songs: Song[]) {
+    this.songsToQueueSubject.next(songs);
+  }
 }

@@ -31,6 +31,7 @@ export class MusicplayerComponent implements OnInit {
   ngOnInit() {
     this.mediaPath = this.dataService.mediaURL;
     this.songQueue = [];
+    // loads songs
     this.playerService.songQueueSubject.subscribe((songs) => {
       console.log(songs)
       if(songs != []) {
@@ -52,6 +53,12 @@ export class MusicplayerComponent implements OnInit {
         });
       }
     });
+    // add songs to queue
+    this.playerService.songsToQueueSubject.subscribe((songs) => {
+      console.log(songs);
+      this.songQueue.concat(songs);
+    });
+
   }
   
   initSongs(): void { // attaches howl object to each song
