@@ -44,7 +44,7 @@ export class MusicplayerComponent implements OnInit {
           this.songQueue = [];
         }
         this.songQueue = songs.map(x => Object.assign({}, x));
-        this.initSongs();
+        this.songQueue = this.initSongs(this.songQueue);
         // get song index
         this.playerService.queueIndexSubject.subscribe((index) => {
           console.log(index);
@@ -55,14 +55,18 @@ export class MusicplayerComponent implements OnInit {
     });
     // add songs to queue
     this.playerService.songsToQueueSubject.subscribe((songs) => {
+      console.log("songs to add")
       console.log(songs);
-      this.songQueue.concat(songs);
+      // spreading songs into songQueue
+      this.songQueue = [...this.songQueue, ...this.initSongs(songs)];
+      console.log("current queue:");
+      console.log(this.songQueue);
     });
 
   }
   
-  initSongs(): void { // attaches howl object to each song
-    for(let song of this.songQueue) {
+  initSongs(songs: Song[]): Song[] { // attaches howl object to each song
+    for(let song of songs) {
       song.sound = new Howl({
         src: ['../../../../../assets/songs/TheLessIKnowTheBetter.m4a'],
         onend: () => {
@@ -91,6 +95,7 @@ export class MusicplayerComponent implements OnInit {
         }
       });
     }
+    return songs;
   }
 
   togglePlayback():void {

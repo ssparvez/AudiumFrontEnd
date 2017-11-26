@@ -4,6 +4,7 @@ import {ContextMenuComponent, ContextMenuService} from "ngx-contextmenu";
 import {GeneralService} from "../../services/general/general.service";
 import {MzToastService} from "ng2-materialize";
 import {AppError} from "../../errors/AppError";
+import { PlayerService } from '../../services/player/player.service';
 
 @Component({
   selector: 'app-artist-menu',
@@ -19,6 +20,12 @@ export class ArtistMenuComponent implements OnInit {
   public currentAccountId: number;
   public artistMenuActions = [
     {
+      html:(item) => 'Add to Queue',
+      click:(item) => this.addArtistToQueue(item),
+      enabled: (item) => true,
+      visible: (item) => true
+    },
+    {
       html:(item) => 'Follow artist',
       click:(item) => this.changeFollowStatus(item, true),
       enabled: (item) => true,
@@ -33,6 +40,7 @@ export class ArtistMenuComponent implements OnInit {
   ];
 
   constructor(private service: GeneralService,
+              private playerService: PlayerService,
               private contextMenuService: ContextMenuService,
               private toastService: MzToastService ) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -94,5 +102,12 @@ export class ArtistMenuComponent implements OnInit {
     const artistsFollowed: number[] = JSON.parse(localStorage.getItem("artistsfollowed"));
     artistsFollowed.unshift(artist.artistId);
     localStorage.setItem("artistsfollowed", JSON.stringify(artistsFollowed));
+  }
+
+  addArtistToQueue(artist: Artist) {
+    this.service.get( "/artists/" + artist.artistId + "/songs").subscribe((songs) => {
+      this.playerService.addSongsToQueue(songs);
+      console.log(songs);      
+    });    
   }
 }
