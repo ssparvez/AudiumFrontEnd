@@ -33,7 +33,9 @@ export class AuthenticationService {
         if ( result && result.token) {
           localStorage.setItem('token', result.token);
           this.storeInfo();
-          this.loadPersonalizedData();
+          if ( this.currentUserInfo.role !== 'Admin') {
+            this.loadPersonalizedData();
+          }
           return true;
         } else {
           return false;

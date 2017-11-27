@@ -11,7 +11,7 @@
 <div class="row" style="margin-bottom:0;" *ngIf="playlists">
   <div class="col s3 playlist-container fade-in-1-sec" @fade *ngFor="let playlist of playlists; let i = index;"
         (contextmenu)="playlistMenu.onContextMenu($event, playlist)" [attr.data-index]="i" >
-    <div class="card hoverable grey darken-2" *ngIf="playlist">
+    <div class="card hoverable" *ngIf="playlist">
       <div class="card-image" *ngIf="playlist">
         <a [routerLink]="['../playlist', playlist?.playlistId]" (mouseenter)="emulateContentHover(i, true)" (mouseleave)="emulateContentHover(i, false)">
           <img src="assets/images/defaults/playlist.svg" width="150">

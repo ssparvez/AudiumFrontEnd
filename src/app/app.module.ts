@@ -50,6 +50,9 @@ import { SearchComponent } from './components/dashboard/content/search/search.co
 import {ContextMenuModule, ContextMenuService} from "ngx-contextmenu";
 import {AdminSidenavComponent} from "./components/dashboard/sidenav/admin-sidenav/admin-sidenav.component";
 import { AdminHomeComponent } from './components/dashboard/content/admin/admin-home/admin-home.component';
+import { AdminAccountsComponent } from './components/dashboard/content/admin/admin-accounts/admin-accounts.component';
+import {AccountsComponent} from "./modals/admin/accounts/accounts.component";
+import { AdminSongsComponent } from './components/dashboard/content/admin/admin-songs/admin-songs.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -63,6 +66,9 @@ const appRoutes: Routes = [
     {path: "artists", component: ArtistsComponent},
     {path: "playlists", component: PlaylistsComponent},
     {path: "song/:id/lyrics", component: LyricsComponent},
+    // ADMIN
+    {path: "admin-accounts" , component: AdminAccountsComponent},
+
     // DETAILED
     {path: "artist/:id", component: ArtistComponent},
     {path: "album/:id", component: AlbumComponent},
@@ -121,13 +127,17 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AlbumMenuComponent,
     AdminSidenavComponent,
     AdminHomeComponent,
+    AdminAccountsComponent,
+    AccountsComponent,
+    AdminSongsComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,
     ChangePasswordComponent,
     ConfirmComponent,
     CreatePlaylistComponent,
-    ChoosePlaylistComponent
+    ChoosePlaylistComponent,
+    AccountsComponent
   ],
   imports: [
     ContextMenuModule,

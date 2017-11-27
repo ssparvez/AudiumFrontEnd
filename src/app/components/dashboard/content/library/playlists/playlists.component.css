@@ -8,6 +8,10 @@
     color: white;
 }
 
+.card {
+    background-color: transparent;
+}
+
 .playlist-name {
     font-size: large;
     margin-top: 5%;
@@ -77,3 +81,4 @@ img {
     min-height: 300px;
     max-height: 300px;
 }
+

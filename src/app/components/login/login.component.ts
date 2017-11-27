@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
       if (!(event instanceof NavigationEnd)) {
           return;
       }
-      window.scrollTo(0, 0)
+      window.scrollTo(0, 0);
     });
     this.route.paramMap.subscribe(param => {
 
@@ -109,12 +109,16 @@ export class LoginComponent implements OnInit {
 
   formatFirstLetterFN() {
     const value = this.fN;
-    this.fN = value.charAt(0).toUpperCase() + value.slice(1);
+    if ( value !== undefined) {
+      this.fN = value.charAt(0).toUpperCase() + value.slice(1);
+    }
   }
 
   formatFirstLetterLN() {
     const value = this.lN;
-    this.lN = value.charAt(0).toUpperCase() + value.slice(1);
+    if ( value !== undefined) {
+      this.lN = value.charAt(0).toUpperCase() + value.slice(1);
+    }
   }
 
 }
