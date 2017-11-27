@@ -74,4 +74,8 @@ export class HomeComponent implements OnInit {
       this.playerService.loadSongs(0, songs);
     });
   }
+
+  playTopSongs(index: number): void {
+    this.playerService.loadSongs(index, this.topSongs);
+  }
 }
