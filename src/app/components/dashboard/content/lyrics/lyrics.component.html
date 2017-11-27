@@ -1,10 +1,11 @@
 <h1>Lyrics</h1>
-<h2 style="margin-bottom: 20px;">{{song?.title}}</h2><h3>by {{song?.artistName}}</h3>
-<div class="row">
-  <h2 [innerHTML]="song?.lyrics" class="center"></h2>
-</div>
+<div *ngIf="song">
+  <h2 style="margin-bottom: 20px;">{{song?.title}}</h2><h3 class="creator">by <a [routerLink]="['../../../artist', song?.artistId]">{{song?.artistName}}</a></h3>
+  <div class="row">
+    <h2 [innerHTML]="song?.lyrics" class="center"></h2>
+  </div>
 
-<div class="row fade-in-2-sec" *ngIf="!songs?.lyrics">
+  <div class="row fade-in-2-sec" *ngIf="!song?.lyrics || song?.lyrics?.length == 0">
     <div class="col s12">
       <div class="card-panel large transparent z-depth-0">
         <div class="row"></div>
@@ -12,7 +13,12 @@
     </div>
     <div class="col s12">
       <div class="card-panel large transparent z-depth-0 center">
-        <h2 class="grey-text">No lyrics data for this song</h2>
+        <h2 class="grey-text">No lyrics for this song</h2>
       </div>
     </div>
   </div>
+</div>
+<!-- Loading animation -->
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!song">
+  <div class="loader">Loading...</div>
+</div>
