@@ -32,6 +32,8 @@ export class ArtistComponent implements OnInit {
   artist: Artist;
   mediaPath: string;
   events: Event[];
+  showAllSongs: boolean;
+  showAllAlbums: boolean;
   public currentAccountId: number;
   public isPlaying;
   public playbackCondition = "play_circle_outline";
@@ -46,6 +48,8 @@ export class ArtistComponent implements OnInit {
     private toastService: MzToastService
   ) {
     this.currentAccountId = JSON.parse(sessionStorage.getItem("currentUser"))['_accountId'];
+    this.showAllSongs = false;
+    this.showAllAlbums = false;
   }
 
 

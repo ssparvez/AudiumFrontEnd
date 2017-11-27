@@ -95,10 +95,6 @@ h5 {
     height: auto;
 }
 
-.more-albums:hover {
-    filter: brightness(30%);
-}
-
 .blue-bt {
     color: white;
     background-color: #2196f3;
