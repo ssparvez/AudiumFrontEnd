@@ -52,7 +52,7 @@
                 </td>
                 <td>{{song?.title}}</td>
                 <td *ngIf="song">
-                  <a [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</a>
+                  <a [routerLink]="['../../album', song?.albumId]"  (contextmenu)="albumMenu.onContextMenu($event, { albumId: song?.albumId, followed: false } )">{{song?.albumTitle}}</a>
                 </td>
                 <td class="center">{{song?.playCount}}</td>
               </tr>
@@ -226,3 +226,4 @@
 
 <app-song-menu #songMenu [songs]="artist?.songs" ></app-song-menu>
 <app-artist-menu #artistMenu [artists]="artist" [library]="false"></app-artist-menu>
+<app-album-menu #albumMenu> </app-album-menu>

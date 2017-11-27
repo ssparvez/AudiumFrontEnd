@@ -1,3 +1,33 @@
-<p>
-  admin-home works!
-</p>
+<div class="row fade-in-half-sec">
+  <h1 class="col s12">Admin Console</h1>
+</div>
+<div class="row ">
+  <div class="col s3 offset-s2 center">
+    <button class="admin-console-button" [routerLink]="['../admin-accounts']">
+      <i class="material-icons admin-icon">supervisor_account</i>
+    </button>
+    <div class="admin-button-label">Accounts</div>
+  </div>
+  <<div class="col s3 offset-s1 center">
+  <button class="admin-console-button" [routerLink]="['../admin-accounts']">
+    <i class="material-icons admin-icon">music_note</i>
+  </button>
+  <div class="admin-button-label">Songs</div>
+</div>
+</div>
+<br>
+<div class="row">
+  <div class="col s3 offset-s2 center">
+    <button class="admin-console-button" [routerLink]="['../admin-accounts']">
+      <i class="material-icons admin-icon">record_voice_over</i>
+    </button>
+    <div class="admin-button-label">Artists</div>
+  </div>
+  <div class="col s3 offset-s1 center">
+    <button class="admin-console-button" [routerLink]="['../admin-accounts']">
+      <i class="material-icons admin-icon">attach_money</i>
+    </button>
+    <div class="admin-button-label">Payments</div>
+  </div>
+</div>
+

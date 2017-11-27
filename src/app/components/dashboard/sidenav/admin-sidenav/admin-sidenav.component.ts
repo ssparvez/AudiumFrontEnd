@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./admin-sidenav.component.css']
 })
 export class AdminSidenavComponent implements OnInit {
+  public isExpanded = false;
   public  logoImg = "assets/images/logo.png";
 
   constructor(private router: Router,
@@ -29,5 +30,9 @@ export class AdminSidenavComponent implements OnInit {
 
   onMouseOutLogo() {
     this.logoImg = "assets/images/logo.png";
+  }
+
+  changeExpansion() {
+    this.isExpanded = !this.isExpanded;
   }
 }

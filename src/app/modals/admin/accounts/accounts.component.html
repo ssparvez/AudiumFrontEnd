@@ -1,0 +1,116 @@
+<div class="row center">
+  <div class="white-text darken-2 left adminaccounts-info-text">{{this.title}}</div>
+
+  <!-- ADD ACCOUNT -->
+
+  <div class="add-account" *ngIf="this.toAddAccount">
+    <div class="col s12">
+      <div *ngIf="registrationCheck == false" class="card-panel red lighten-1 center-align notif">Registration failed. Please
+        try again.
+      </div>
+      <form #form="ngForm">
+        <div class="row">
+          <div class="input-field col s6">
+            <input ngModel required [(ngModel)]="fN" name="firstName" id="first_name"
+                   type="text" class="validate" (blur)="formatFirstLetterFN()"
+            >
+            <label for="first_name">First Name</label>
+          </div>
+          <div class="input-field col s6">
+            <input ngModel required [(ngModel)]="lN" name="lastName" id="last_name"
+                   type="text" class="validate" (blur)="formatFirstLetterLN()">
+            <label for="last_name">Last Name</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s5">
+            <input required ngModel minlength="6" name="username"
+                   #username="ngModel" type="text" class="validate" id="username">
+            <label for="username">Username</label>
+            <div *ngIf="username.touched && !username.valid">
+              <div *ngIf="username.errors['minlength']" class="card-panel notif red lighten-1">
+                <span class=""> Minimum {{username.errors['minlength'].requiredLength}} characters</span>
+              </div>
+            </div>
+          </div>
+          <div class="input-field col s7">
+            <input ngModel required name="email" id="email" type="email" class="validate">
+            <label for="email">Email</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input ngModel minlength="5" name="passwordHash"
+                   #password="ngModel" required id="password" type="password"
+                   class=" validate" autocomplete="new-password">
+            <label for="password">Password</label>
+            <div *ngIf="password.touched && !password.valid">
+              <div *ngIf="password.errors['minlength']" class="card-panel notif red lighten-1">
+                <span> Minimum {{password.errors['minlength'].requiredLength}} characters</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s4">
+            <mz-datepicker-container class="col s12">
+              <input mz-datepicker ngModel name="dateOfBirth" required [label]="'Date of Birth'" [options]="dateOptions"
+                     type="text">
+            </mz-datepicker-container>
+          </div>
+          <div class="input-field col s8">
+            <input ngModel name="gender" type="radio" value="male" id="radio1" required/>
+            <label for="radio1">Male</label>
+            <input ngModel name="gender" type="radio" value="female" id="radio2"/>
+            <label for="radio2">Female</label>
+            <input ngModel name="gender" type="radio" value="nonbinary" id="radio3"/>
+            <label for="radio3">Non-binary</label>
+          </div>
+        </div>
+        <br/>
+      </form>
+    </div>
+  </div>
+
+  <!-- DELETE ACCOUNT -->
+
+  <div *ngIf="this.toDeleteAccount" class="delete-account">
+    <div class="row">
+      <div class="input-field col s12  center">
+        <input ngModel
+               #accountId
+               name="ccNumber" id="cc"
+               type="text"
+               [(ngModel)]="this.accountIdToDelete.accountId"
+        >
+        <label class="active" for="cc">Account ID</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-dialog-actions class="row">
+  <div class="col s12 center">
+    <button mz-button *ngIf="this.toDeleteAccount"
+            type='button'
+            [flat]="true"
+            class=" waves-effect"
+            [disabled]="this.accountIdToDelete.accountId == ''"
+            (click)="deleteAccount()"
+    > Delete
+    </button>
+    <button mz-button *ngIf="this.toAddAccount"
+            [flat]="true"
+            class=" waves-effect"
+            (click)="createAccount()"
+    > Add User
+    </button>
+    <button mz-button mat-dialog-close
+            [flat]="true"
+            class="waves-effect"
+            mat-dialog-close
+    >Cancel
+    </button>
+  </div>
+</mat-dialog-actions>
+

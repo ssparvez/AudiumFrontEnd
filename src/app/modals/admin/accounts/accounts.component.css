@@ -1,0 +1,67 @@
+/* label color */
+.input-field label {
+
+    color: white;
+}
+/* label focus color */
+.input-field input:focus + label {
+    color: white;
+}
+
+/* label underline focus color */
+.input-field input:focus {
+    border-bottom: 1px  white;
+    box-shadow: 0 1px 0 0 #2196f3;
+}
+
+.input-field {
+    color: white;
+}
+
+.select-wrapper ul li>span {
+    color: grey;
+}
+
+button:hover {
+    background-color: #2196f3;
+}
+
+.adminaccounts-info-text {
+    font-size: xx-large;
+    margin-bottom: 30px;
+
+}
+
+.payment-error-cpl{
+    padding: 8px;
+}
+
+button {
+    color: white;
+}
+
+/** FOR ADDING ACCOUNT **/
+
+.notif {
+    padding: 12px;
+}
+input[type="checkbox"], input[type="radio"] + label {
+    pointer-events: auto;
+
+}
+
+input[type="radio"]:checked + label:after {
+    background-color: #2196f3;
+}
+
+/** FOR DELETING ACCOUNT **/
+
+.delete-account > .row > .input-field input{
+    margin-top: 5%;
+    font-size: x-large;
+}
+
+.delete-account > .row > .input-field label {
+    font-size: x-large;
+}
+

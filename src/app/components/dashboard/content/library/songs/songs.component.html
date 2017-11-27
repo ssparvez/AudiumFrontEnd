@@ -38,7 +38,7 @@
           <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
         </td>
 		    <td *ngIf="song"><a [routerLink]="['../artist', song?.artistId]" (contextmenu)="artistMenu.onContextMenu($event, { artistId: song?.artistId, followed: false } )">{{song?.artistName}}</a></td>
-        <td *ngIf="song"><a [routerLink]="['../album', song?.albumId]">{{song?.albumTitle}}</a></td>
+        <td *ngIf="song"><a [routerLink]="['../album', song?.albumId]" (contextmenu)="albumMenu.onContextMenu($event, { albumId: song?.albumId, followed: false } )">{{song?.albumTitle}}</a></td>
         <td>
           <!-- NOTE: Putting these spans on separate lines creates a space for some reason. Though ugly, we should keep them on the same line -->
           <span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span><span *ngIf="song?.duration?.substring(3,4) != '0' || song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}
@@ -69,3 +69,4 @@
 <app-song-menu #songMenu [songs]="songs" [inMusic]="true">
 </app-song-menu>
 <app-artist-menu #artistMenu [artists]="artist" [library]="false"></app-artist-menu>
+<app-album-menu #albumMenu ></app-album-menu>

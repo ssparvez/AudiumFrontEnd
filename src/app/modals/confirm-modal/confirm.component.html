@@ -2,16 +2,16 @@
   <div class="row confirm-message">
     {{message}}
   </div>
-  <mat-dialog-actions class="center">
-    <div class="col offset-s3">
-      <button mz-button
-              type='button'
-              [flat]="true"
-              class=" waves-effect"
-              [mat-dialog-close]="true">Yes</button>
-      <button mz-button  mat-dialog-close
-              [flat]="true"
-              class="waves-effect" (click)="onNoClick()">No</button>
-    </div>
-  </mat-dialog-actions>
 </div>
+<mat-dialog-actions class="row">
+  <div class="col s12 center">
+    <button mz-button
+            type='button'
+            [flat]="true"
+            class=" waves-effect"
+            [mat-dialog-close]="true">Yes</button>
+    <button mz-button  mat-dialog-close
+            [flat]="true"
+            class="waves-effect" (click)="onNoClick()">No</button>
+  </div>
+</mat-dialog-actions>
