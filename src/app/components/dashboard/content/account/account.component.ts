@@ -90,15 +90,15 @@ export class AccountComponent implements OnInit {
         .subscribe(
           result => {
             if(result) {
-              this.service.deleteResource('/accounts/'+ this.currentUser.accountId).subscribe(
+              this.service.deleteResource('/accounts/'+ this.currentUser.accountId +'/delete').subscribe(
                 response => {
                   if (response && response.token) {
-                    this.router.navigate(['']);                      
+                    this.router.navigate(['']);
                     // redirect to front page?
                   } else {
                     this.toastService.show("There was an error. Please try again.", 3000, 'blue');
                   }
-                }, 
+                },
                 (error: AppError) => {
                   this.toastService.show("There was an error. Please try again.", 3000, 'blue');
                 }
