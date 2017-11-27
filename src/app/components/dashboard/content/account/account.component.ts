@@ -85,27 +85,26 @@ export class AccountComponent implements OnInit {
     .afterClosed()
     .subscribe(
       result => {
-        this.dialog.open(ConfirmComponent, {  data: {message: "Are you really sure you want to?"}, height: '180px'})
-        .afterClosed()
-        .subscribe(
-          result => {
-            if(result) {
-              this.service.deleteResource('/accounts/'+ this.currentUser.accountId +'/delete').subscribe(
-                response => {
-                  if (response && response.token) {
-                    this.router.navigate(['']);
-                    // redirect to front page?
-                  } else {
+        if(result) {
+          this.dialog.open(ConfirmComponent, {  data: {message: "Are you really sure you want to?"}, height: '180px'})
+          .afterClosed()
+          .subscribe(
+            result => {
+              if(result) {
+                this.service.deleteResource('/accounts/'+ this.currentUser.accountId).subscribe(
+                  response => {
+                    if(response) {
+                      this.router.navigate(['']);
+                    }
+                  },
+                  (error: AppError) => {
                     this.toastService.show("There was an error. Please try again.", 3000, 'blue');
                   }
-                },
-                (error: AppError) => {
-                  this.toastService.show("There was an error. Please try again.", 3000, 'blue');
-                }
-              );
+                );
+              }
             }
-          }
-        );
+          );
+        }
       }
     );
   }
