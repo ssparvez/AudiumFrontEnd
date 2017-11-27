@@ -6,6 +6,7 @@ import {ContextMenuComponent, ContextMenuService} from "ngx-contextmenu";
 import {GeneralService} from "../../services/general/general.service";
 import {MzToastService} from "ng2-materialize";
 import {AppError} from "../../errors/AppError";
+import { PlayerService } from "../../services/player/player.service";
 @Component({
   selector: 'app-album-menu',
   templateUrl: './album-menu.component.html',
@@ -19,6 +20,12 @@ export class AlbumMenuComponent implements OnInit {
   public currentUser: JSON;
   public currentAccountId: number;
   public albumMenuActions = [
+    {
+      html:(item) => 'Add to Queue',
+      click:(item) => this.addAlbumToQueue(item),
+      enabled: (item) => true,
+      visible: (item) => true
+    },
     {
       html:(item) => 'Save Album',
       click:(item) => this.changeSaveStatus(item, true),
@@ -34,6 +41,7 @@ export class AlbumMenuComponent implements OnInit {
   ];
 
   constructor(private service: GeneralService,
+              private playerService: PlayerService,
               private contextMenuService: ContextMenuService,
               private toastService: MzToastService) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -95,6 +103,10 @@ export class AlbumMenuComponent implements OnInit {
     localStorage.setItem("albumssaved", JSON.stringify(albumsSaved));
   }
 
-
-
+  addAlbumToQueue(album: Album) {
+    this.service.get( "/albums/" + album.albumId + "/songs").subscribe((songs) => {
+      this.playerService.addSongsToQueue(songs);
+      console.log(songs);      
+    });    
+  }
 }

@@ -92,6 +92,6 @@ export class AlbumComponent implements OnInit {
 
 
   playSongs(index): void {
-    this.playerService.playSongs(index, this.album.songs);
+    this.playerService.loadSongs(index, this.album.songs);
   }
 }

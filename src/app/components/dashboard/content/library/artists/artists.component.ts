@@ -31,7 +31,7 @@ export class ArtistsComponent implements OnInit {
     private generalService: GeneralService,
     private playerService: PlayerService,
     private dataService: DataService
-  ) {}
+  ) {}loadSongs
 
   ngOnInit() {
     this.router.events.subscribe((event) => {
@@ -50,7 +50,7 @@ export class ArtistsComponent implements OnInit {
   }
   playSongs(artistId: number) {
     this.generalService.get("/artists/" + artistId + "/songs").subscribe((songs) => {
-      this.playerService.playSongs(0, songs);
+      this.playerService.loadSongs(0, songs);
     });
   }
 

@@ -83,12 +83,12 @@ export class ArtistComponent implements OnInit {
   }
 
   playArtistSongs(index: number, songs: Song[]): void {
-    this.playerService.playSongs(index, songs);
+    this.playerService.loadSongs(index, songs);
   }
 
   playAlbumSongs(albumId: number) {
     this.generalService.get( "/albums/" + albumId + "/songs").subscribe((songs) => {
-      this.playerService.playSongs(0, songs);
+      this.playerService.loadSongs(0, songs);
     });
   }
   navigateToMaps(address: Address) {

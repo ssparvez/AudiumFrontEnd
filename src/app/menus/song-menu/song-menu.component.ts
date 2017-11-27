@@ -7,6 +7,7 @@ import {Playlist} from "../../classes/Playlist";
 import {AppError} from "../../errors/AppError";
 import {ChoosePlaylistComponent} from "../../modals/choose-playlist/choose-playlist.component";
 import {MatDialog} from "@angular/material";
+import { PlayerService } from '../../services/player/player.service';
 
 @Component({
   selector: 'app-song-menu',
@@ -26,6 +27,18 @@ export class SongMenuComponent implements OnInit {
   public currentAccountId: number;
   public playlistMenuActions = [
     {
+      html:(item) => 'Add to Queue',
+      click:(item) => this.addSongsToQueue(item),
+      enabled: (item) => true,
+      visible: (item) => true
+    },
+    {
+      html:(item) => 'Add to Playlist',
+      click:(item) => this.openPlaylistChoices(item),
+      enabled: (item) => true,
+      visible: (item) => true
+    },
+    {
       html:(item) => 'Save to Your Music',
       click:(item) => this.saveSongToMusic(item),
       enabled: (item) => true,
@@ -37,14 +50,21 @@ export class SongMenuComponent implements OnInit {
       enabled: (item) => true,
       visible: (item) => this.checkOwnership()
     },
+    
+  ];
+  public outsideMenuActions = [
+    {
+      html:(item) => 'Add to Queue',
+      click:(item) => this.addSongsToQueue(item),
+      enabled: (item) => true,
+      visible: (item) => true
+    },
     {
       html:(item) => 'Add to Playlist',
       click:(item) => this.openPlaylistChoices(item),
       enabled: (item) => true,
       visible: (item) => true
     },
-  ];
-  public outsideMenuActions = [
     {
       html:(item) => 'Save to Your Music',
       click:(item) => this.saveSongToMusic(item),
@@ -57,18 +77,13 @@ export class SongMenuComponent implements OnInit {
       enabled: (item: Song) => true,
       visible: (item) => this.inMusic
     },
-    {
-      html:(item) => 'Add to Playlist',
-      click:(item) => this.openPlaylistChoices(item),
-      enabled: (item) => true,
-      visible: (item) => true
-    },
   ];
 
   constructor(private service: GeneralService,
               private contextMenuService: ContextMenuService,
               private dialog: MatDialog,
-              private toastService: MzToastService,) {
+              private toastService: MzToastService,
+              private playerService: PlayerService) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     this.currentAccountId = this.currentUser['_accountId'];
   }
@@ -150,6 +165,10 @@ export class SongMenuComponent implements OnInit {
         }
       );
     }
+  }
+
+  addSongsToQueue(song: Song) {
+    this.playerService.addSongsToQueue([song])
   }
 
 

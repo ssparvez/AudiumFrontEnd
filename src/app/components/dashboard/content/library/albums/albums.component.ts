@@ -58,7 +58,7 @@ export class AlbumsComponent implements OnInit {
 
   playAlbumSongs(albumId: number) {
     this.generalService.get( "/albums/" + albumId + "/songs").subscribe((songs) => {
-      this.playerService.playSongs(0, songs);
+      this.playerService.loadSongs(0, songs);
     });
   }
   checkImagePaths(albumId: number): string {

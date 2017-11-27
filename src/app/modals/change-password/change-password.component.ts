@@ -23,7 +23,7 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   submitPassChange(values) {
-    this.service.update('/changepassword/' + this.data.accountId, values).subscribe(
+    this.service.update('/accounts/' + this.data.accountId + "/password", values).subscribe(
       response => {
         this.toastService.show("Your password was changed", 3000, 'blue');
         this.closeDialog();

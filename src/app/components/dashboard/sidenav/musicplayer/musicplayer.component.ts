@@ -3,6 +3,7 @@ import { PlayerService} from '../../../../services/player/player.service';
 import { Howl } from 'howler';
 import { Song } from '../../../../classes/Song';
 import { DataService } from '../../../../services/data.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,15 +26,22 @@ export class MusicplayerComponent implements OnInit {
   volumeLevel = 1;
   previousVolumeLevel = 1;
   repeatLevel = 0;
-  value = 0;
+  seekPosition = 0;
 
-  constructor(private playerService: PlayerService, private dataService: DataService) { }
+  constructor(
+    private playerService: PlayerService, 
+    private dataService: DataService,
+    private router: Router    
+  ) { }
+
   ngOnInit() {
+    // probably better if song queue was its own object, with properties
     this.mediaPath = this.dataService.mediaURL;
     this.songQueue = [];
-    this.playerService.songQueueSubject.subscribe((songs) => {
-      console.log(songs)
-      if(songs != []) {
+    // loads songs
+    this.playerService.songsToLoadSubject.subscribe((songQueue) => {
+      console.log(songQueue)
+      if(songQueue.songs != []) {
         // destroy old queue first
         if(this.songQueue != []) {
           // unload each existing howl object
@@ -42,20 +50,28 @@ export class MusicplayerComponent implements OnInit {
           }
           this.songQueue = [];
         }
-        this.songQueue = songs.map(x => Object.assign({}, x));
-        this.initSongs();
+        this.songQueue = songQueue.songs.map(x => Object.assign({}, x)); // copy array 
+        this.songQueue = this.initSongs(this.songQueue);
         // get song index
-        this.playerService.queueIndexSubject.subscribe((index) => {
-          console.log(index);
-          this.queueIndex = index;
-          this.togglePlay();
-        });
+        this.queueIndex = songQueue.index;
+        console.log(this.queueIndex);
+        this.togglePlay();
       }
     });
+    // add songs to queue
+    this.playerService.songsToQueueSubject.subscribe((songs) => {
+      console.log("songs to add")
+      console.log(songs);
+      // spreading songs into songQueue
+      this.songQueue = [...this.songQueue, ...this.initSongs(songs)];
+      console.log("current queue:");
+      console.log(this.songQueue);
+    });
+
   }
   
-  initSongs(): void { // attaches howl object to each song
-    for(let song of this.songQueue) {
+  initSongs(songs: Song[]): Song[] { // attaches howl object to each song
+    for(let song of songs) {
       song.sound = new Howl({
         src: ['../../../../../assets/songs/TheLessIKnowTheBetter.m4a'],
         onend: () => {
@@ -84,6 +100,7 @@ export class MusicplayerComponent implements OnInit {
         }
       });
     }
+    return songs;
   }
 
   togglePlayback():void {
@@ -104,6 +121,7 @@ export class MusicplayerComponent implements OnInit {
     if(this.queueIndex != this.songQueue.length - 1) {
       this.songQueue[this.queueIndex].sound.stop();
       this.queueIndex += 1;
+      this.playerService.queueIndexSubject.next(this.queueIndex);
       this.togglePlay();
     }
   }
@@ -111,6 +129,7 @@ export class MusicplayerComponent implements OnInit {
     if(this.queueIndex != 0) {
       this.songQueue[this.queueIndex].sound.stop(); // stop current song
       this.queueIndex -= 1;
+      this.playerService.queueIndexSubject.next(this.queueIndex);
       this.togglePlay();
     }
   }
@@ -183,7 +202,12 @@ export class MusicplayerComponent implements OnInit {
 
   seekTrack(value: number): void {
     this.songQueue[this.queueIndex].sound.seek(value);
-    this.value = value;
+    this.seekPosition = value;
     console.log(this.songQueue[this.queueIndex].sound.seek())
+  }
+
+  viewQueue(): void {
+    this.playerService.currentSongQueue = this.songQueue;
+    this.router.navigate(['/dash/queue/']);
   }
 }

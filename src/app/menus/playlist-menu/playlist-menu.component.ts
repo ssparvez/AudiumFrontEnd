@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 import {animate, transition, trigger, style} from "@angular/animations";
 import {ChoosePlaylistComponent} from "../../modals/choose-playlist/choose-playlist.component";
 import {CreatePlaylistComponent} from "../../modals/create-playlist/create-playlist.component";
+import { PlayerService } from '../../services/player/player.service';
 
 @Component({
   selector: 'app-playlist-menu',
@@ -25,6 +26,12 @@ export class PlaylistMenuComponent implements OnInit {
   public currentUser: JSON;
   public currentAccountId: number;
   public ownerMenuActions = [
+    {
+      html:(item) => 'Add to Queue',
+      click:(item) => this.addPlaylistToQueue(item),
+      enabled: (item) => true,
+      visible: (item) => true
+    },
     {
       html:(item) => 'Edit',
       click:(item) => this.openPlaylistEditForm(item),
@@ -66,6 +73,7 @@ export class PlaylistMenuComponent implements OnInit {
   ];
 
   constructor(private service: GeneralService,
+              private playerService: PlayerService,
               private contextMenuService: ContextMenuService,
               private dialog: MatDialog,
               private toastService: MzToastService,
@@ -191,6 +199,13 @@ export class PlaylistMenuComponent implements OnInit {
 
   setPlaylists(playlists: Playlist[]) {
     this.playlists = playlists;
+  }
+
+  addPlaylistToQueue(playlist: Playlist) {
+    this.service.get( "/playlist/" + playlist.playlistId + "/songs").subscribe((songs) => {
+      this.playerService.addSongsToQueue(songs);
+      console.log(songs);      
+    });    
   }
 
 }

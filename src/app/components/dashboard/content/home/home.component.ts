@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit {
 
   playRecentSongs(albumId: number): void {
     this.generalService.get( "/albums/" + albumId + "/songs").subscribe((songs) => {
-      this.playerService.playSongs(0, songs);
+      this.playerService.loadSongs(0, songs);
     });
   }
 }
