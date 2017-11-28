@@ -5,6 +5,7 @@ import { Song } from '../../../../classes/Song';
 import { DataService } from '../../../../services/data.service';
 import { Router } from '@angular/router';
 import { SongQueue } from '../../../../classes/SongQueue';
+import { GeneralService } from '../../../../services/general/general.service';
 
 
 @Component({
@@ -43,6 +44,7 @@ export class MusicplayerComponent implements OnInit {
   constructor(
     private playerService: PlayerService, 
     private dataService: DataService,
+    private generalService: GeneralService,
     private router: Router    
   ) { }
 
@@ -84,8 +86,11 @@ export class MusicplayerComponent implements OnInit {
   
   initSongs(songs: Song[]): Song[] { // attaches howl object to each song
     for(let song of songs) {
+      if(song.file == null) {
+        song.file = "assets/audio/Default.mp3";
+      }
       song.sound = new Howl({
-        src: [song.file != null ? this.mediaPath + "/audio/" + song.file.replace("E:/Music/", "") : "assets/audio/Default.mp3"],
+        src: [this.mediaPath + "/audio/" + song.file.replace("E:/Music/", "")],
         onloaderror: () => {
           this.songQueue[this.queueIndex].sound.src = ['assets/audio/Default.mp3'];
         },

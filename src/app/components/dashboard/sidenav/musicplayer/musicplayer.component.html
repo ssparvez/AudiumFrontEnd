@@ -7,7 +7,7 @@
       <div style="padding: 0px 16px;">
         <span class="track-slider">
           <input #ref1 (change)="seekTrack(ref1.value)" class="track-slider" type=range min=0 max={{songQueue[queueIndex].sound.duration()}}
-            id=fader step=1 value={{songQueue[queueIndex].sound.seek()}}>
+            id=fader step=1 value={{songQueue[queueIndex]?.sound?.seek()}}>
         </span>
         <i (click)="viewQueue()" class="material-icons">playlist_play</i>        
         <div class="row" style="margin-bottom: 0px;">
