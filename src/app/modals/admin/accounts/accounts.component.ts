@@ -15,6 +15,7 @@ export class AccountsComponent implements OnInit {
 
   public toDeleteAccount:boolean;
   public toAddAccount:boolean;
+  public registrationCheck = true;
   public title: String;
   public accountIdToDelete = {accountId: ""};
   public fN: string;
@@ -62,8 +63,10 @@ export class AccountsComponent implements OnInit {
           if (confirm) {
             this.service.post('/register',this.form.value).subscribe(
               response => {
+                this.registrationCheck = true;
                 this.closeDialog(true);
               }, ( error: AppError) => {
+                this.registrationCheck = false;
               }
             );
           }

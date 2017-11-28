@@ -1,0 +1,36 @@
+.content-searchicon {
+    position: absolute;
+    font-size: xx-large;
+    bottom: 10%;
+}
+
+td {
+    font-size: medium;
+}
+
+.search-add-btn {
+    color: #2196f3;
+}
+
+
+.search-add-btn:hover {
+    color: white;
+    background-color: transparent;
+}
+
+.test {
+    position: fixed;
+    bottom: 100px;
+}
+
+.close-icon {
+    color: white;
+}
+
+.close-icon:hover {
+    color: #616161;
+}
+
+.close-icon-i {
+    font-size: 4rem;
+}

@@ -1,0 +1,54 @@
+<div class="navbar" >
+  <nav style="height: 60px;">
+    <div class="nav-wrapper grey darken-3">
+      <form>
+        <div class="input-field">
+          <input #search id="search" type="search" required (keyup.enter)="onEnter(search.value)">
+          <label class="label-icon" for="search">
+            <i class="material-icons content-searchicon">search</i>
+          </label>
+        </div>
+      </form>
+    </div>
+  </nav>
+</div>
+<div class="container" style="width: 90%; margin-top: 5%">
+  <h1>Pick Songs<a class="right close-icon" (click)="closeDialog()"><i class="material-icons close-icon-i">close</i></a></h1>
+  <div class="row" *ngIf="songs?.length > 0">
+    <table class="bordered responsive-table white-text fade-in-half-sec">
+      <thead>
+      <tr>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Album</th>
+        <th>Duration</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody class="tracklist">
+      <tr *ngFor="let song of songs; let i = index;" (dblclick)="playSongs(i)">
+        <td>{{song.title}}</td>
+        <td>
+          <a>{{song?.artistName}}</a>
+        </td>
+        <td>
+          <a>{{song?.albumTitle}}</a>
+        </td>
+        <td>
+          <!-- NOTE: Putting these spans on separate lines creates a space for some reason. Though ugly, we should keep them on the same line -->
+          <span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span><span *ngIf="song?.duration?.substring(3,4) != '0' || song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}
+        </td>
+        <td>
+          <button mz-button [flat]="true" class="search-add-btn" (click)="addSongToContent(song.songId)">
+            Add
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Loading animation -->
+<div class="row" style="margin-top: 25%;" *ngIf="!songs">
+  <h2 class="grey-text center">Nothing here</h2>
+</div>

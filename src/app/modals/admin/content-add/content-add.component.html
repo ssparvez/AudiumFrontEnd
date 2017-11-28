@@ -1,0 +1,159 @@
+<div class="row center">
+  <div class="white-text darken-2 left admincontent-title-text">{{this.title}}</div>
+
+
+  <!-- ADD SONG -->
+
+  <div class="" *ngIf="this.toAdd && this.contentTypeToDelete === 'Song'">
+    <form #form="ngForm">
+      <div class="col s12 admin-content-add">
+        <div *ngIf="!contentAddCheck" class="card-panel red lighten-1 center-align notif">Song addition failed. Please
+          try again.
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input ngModel #title required name="title" id="title" [ngModel]="sT"
+                   type="text" class="validate" (blur)="sT = formatFirstLetter(sT)">
+            <label for="title" class="active">Song Title</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input ngModel #artist required name="artist" id="artist"
+                   type="text" class="validate">
+            <label for="artist" class="active">Artist ID#</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input ngModel required name="year" id="year"
+                   maxlength="4" pattern="\d+"
+                   type="text" class="validate">
+            <label for="year" class="active">Year</label>
+          </div>
+          <div class="input-field col s6">
+            <mz-select-container>
+              <select mz-select
+                      ngModel
+                      required
+                      name="genre"
+                      id="genre"
+                      class="white-text">
+                <option value=""></option>
+                <option *ngFor="let genre of genres" value="{{genre.genreId}}">{{genre.genreName}}</option>
+              </select>
+            </mz-select-container>
+            <label for="genre" class="active">Genre</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input ngModel required name="duration" id="duration"
+                   type="text" pattern="\d\d:\d\d:\d\d" class="validate">
+            <label for="duration" class="active">Duration (HH:MM:SS)</label>
+          </div>
+          <div class="input-field col s6 radio-button ">
+            <span class="left">Is Explicit?</span><br>
+            <input ngModel name="isExplicit" type="radio" value="true" id="isExplicit1" required/>
+            <label for="isExplicit1" class="left white-text">Yes</label>
+            <input ngModel name="isExplicit" type="radio" value="false" id="isExplicit2">
+            <label for="isExplicit2" class="left white-text">No</label>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+
+  <!-- ADD ALBUM -->
+
+  <div class="" *ngIf="this.toAdd && this.contentTypeToDelete === 'Album'">
+    <form #form="ngForm">
+      <div class="col s12 admin-content-add">
+        <div *ngIf="!contentAddCheck" class="card-panel red lighten-1 center-align notif">Song addition failed. Please
+          try again.
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input ngModel #title required name="title" id="albumTitle" [ngModel]="sT"
+                   type="text" class="validate" (blur)="sT = formatFirstLetter(sT)">
+            <label for="albumTitle" class="active">Album Title</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input ngModel #artist required name="artist" id="albumArtist"
+                   type="text" class="validate">
+            <label for="albumArtist" class="active">Artist ID#</label>
+          </div>
+          <div class="input-field col s6">
+            <input ngModel required name="year" id="albumYear"
+                   maxlength="4" pattern="\d+"
+                   type="text" class="validate">
+            <label for="albumYear" class="active">Year</label>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+
+  <!-- ADD PLAYLIST -->
+
+  <div *ngIf="this.toAdd && this.contentTypeToDelete === 'Playlist'">
+    <form #form="ngForm" class="admin-content-add">
+      <div class="row">
+        <div class="input-field col s12  center">
+          <input ngModel
+                 #contentId
+                 name="playlist" id="playlist"
+                 type="text" >
+          <label class="active" for="playlist">Playlist Name:</label>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- DELETE CONTENT -->
+
+  <div *ngIf="this.toDelete" class="admin-content-delete">
+    <div class="row">
+      <div class="input-field col s12  center">
+        <input ngModel
+               #contentId
+               name="contentId" id="contentId"
+               type="text"
+               [(ngModel)]="this.contentIdToDelete.contentId"
+        >
+        <label class="active" for="contentId">{{this.contentTypeToDelete}} ID#</label>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<mat-dialog-actions class="row">
+  <div class="col s12 center">
+    <button mz-button *ngIf="this.toDelete"
+            type='button'
+            [flat]="true"
+            class=" waves-effect"
+            [disabled]="this.contentIdToDelete.contentId == ''"
+            (click)="deleteContent()"
+    > Delete
+    </button>
+    <button mz-button *ngIf="this.toAdd"
+            [flat]="true"
+            class=" waves-effect"
+            (click)="addContent()"
+    > Add
+    </button>
+    <button mz-button mat-dialog-close
+            [flat]="true"
+            class="waves-effect"
+            mat-dialog-close
+    >Cancel
+    </button>
+  </div>
+</mat-dialog-actions>
+

@@ -8,7 +8,14 @@ import { Router } from "@angular/router";
 })
 export class ContentComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  public currentUser: JSON;
+  public currentAccountRole;
+
+  constructor(private router: Router) {
+    this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    this.currentAccountRole = this.currentUser['_role'];
+    console.log(this.currentAccountRole);
+  }
 
   ngOnInit() {
   }

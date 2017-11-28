@@ -1,0 +1,38 @@
+<div class="row center">
+  <div class="white-text darken-2 left admincontent-title-text">{{this.title}}</div>
+
+  <div  class="admin-content-modify">
+    <div class="row">
+      <div class="input-field col s12  center">
+        <input ngModel
+               #contentId
+               name="contentId" id="contentId"
+               type="text"
+               [(ngModel)]="this.contentToEdit"
+        >
+        <label class="active" for="contentId">{{this.contentTypeToChange}} ID#</label>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<mat-dialog-actions class="row">
+  <div class="col s12 center">
+    <button mz-button
+            type='button'
+            [flat]="true"
+            class=" waves-effect"
+            [disabled]="this.contentToEdit == ''"
+            (click)="modifyContent()"
+    > Modify
+    </button>
+    <button mz-button mat-dialog-close
+            [flat]="true"
+            class="waves-effect"
+            mat-dialog-close
+    >Cancel
+    </button>
+  </div>
+</mat-dialog-actions>
+

@@ -289,11 +289,6 @@ tbody.tracklist tr td a:hover {
   }
 }
 
-
-.dropdown-content li>a {
-    color: #bdbdbd    !important; ;
-}
-
 .mat-menu-content {
     color: white;
     background-color: #424242;
@@ -309,8 +304,14 @@ tbody.tracklist tr td a:hover {
 .mat-dialog-container {
     background-color: #212121;
 }
+
+.dropdown-content li>span {
+    color: #424242    !important; ;
+}
+
+
 .dropdown-content li  {
-    background-color: #424242 ;
+    background-color: white ;
 }
 
 .ngx-contextmenu .dropdown-menu {

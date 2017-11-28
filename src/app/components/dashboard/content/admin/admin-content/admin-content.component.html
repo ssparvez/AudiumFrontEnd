@@ -1,0 +1,67 @@
+<div class="row fade-in-half-sec">
+  <h1 class="col s12" style="font-weight: bold">Content Options</h1>
+</div>
+<br>
+<div class="row ">
+  <div class="card col s10 grey darken-3 padding-bot ">
+    <div class="admin-content-label">Songs</div>
+    <div class="col s3 center">
+      <button class="admin-console-button" (click)="openAddWindow('Song')">
+        <i class="material-icons admin-icon">library_add</i>
+      </button>
+      <div class="admin-button-label">Add Song</div>
+    </div>
+    <div class="col s3 center">
+      <button class="admin-console-button" (click)="openDeleteWindow('Song')">
+        <i class="material-icons admin-icon">delete_forever</i>
+      </button>
+      <div class="admin-button-label">Delete Song</div>
+    </div>
+  </div>
+</div>
+<div class="row ">
+  <div class="card col s10 grey darken-3 padding-bot">
+    <div class="admin-content-label">Playlists</div>
+    <div class="col s3 center">
+      <button class="admin-console-button" (click)="openAddWindow('Playlist')">
+        <i class="material-icons admin-icon">playlist_add</i>
+      </button>
+      <div class="admin-button-label">Add Playlist</div>
+    </div>
+    <div class="col s3 center">
+      <button class="admin-console-button" (click)="openDeleteWindow('Playlist')">
+        <i class="material-icons admin-icon">delete_forever</i>
+      </button>
+      <div class="admin-button-label">Delete Playlist</div>
+    </div>
+    <div class="col s3 center">
+      <button class="admin-console-button" (click)="openAddSongToPlaylistWindow()">
+        <i class="material-icons admin-icon">add</i>
+      </button>
+      <div class="admin-button-label">Add Song to Playlist</div>
+    </div>
+  </div>
+</div>
+<div class="row ">
+  <div class="card col s10 grey darken-3 padding-bot">
+    <div class="admin-content-label">Albums</div>
+    <div class="col s3 center">
+      <button class="admin-console-button" (click)="openAddWindow('Album')">
+        <i class="material-icons admin-icon">add_box</i>
+      </button>
+      <div class="admin-button-label">Add Album</div>
+    </div>
+    <div class="col s3 center">
+      <button class="admin-console-button" (click)="openDeleteWindow('Album')">
+        <i class="material-icons admin-icon">delete_forever</i>
+      </button>
+      <div class="admin-button-label">Delete Album</div>
+    </div>
+    <div class="col s3 center">
+      <button class="admin-console-button" (click)="openAddSongToContent('Album')">
+        <i class="material-icons admin-icon">add</i>
+      </button>
+      <div class="admin-button-label">Add Song to Album</div>
+    </div>
+  </div>
+</div>

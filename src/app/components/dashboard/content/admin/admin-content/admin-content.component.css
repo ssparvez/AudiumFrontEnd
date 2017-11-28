@@ -4,26 +4,31 @@
     background-color: white;
 }
 .admin-icon {
-    font-size: 17rem;
+    font-size: 8rem;
     color: #2196f3;
     background-color: white;
+    padding: 20px;
 }
 .admin-console-button:hover {
-    background-color: #29b6f6;
+    background-color: white;
 }
 .admin-console-button:hover > .admin-icon {
-    background-color: #29b6f6;
-    color: white;
+    background-color: white;
+    color: #01579b  ;
 }
-
 .admin-button-label {
     color: white;
     font-size: x-large;
-    margin-top: 8%;
+    margin-top: 0;
 }
 
-
-.admin-home-welcome{
+.admin-content-label {
     font-size: xx-large;
     color: white;
+    padding-bottom: 20px;
+    font-weight: bold;
+}
+
+.padding-bot {
+    padding-bottom: 30px;
 }

@@ -1,7 +1,7 @@
 <mz-sidenav fixed="true" backgroundClass="grey darken-3" [id]="'sidenav'">
   <mz-sidenav-header>
     <div class="blue">
-      <a class="audium-logo" [routerLink]="['/dash/home']" (mouseover)="onMouseOverLogo()"
+      <a class="audium-logo" [routerLink]="['/dash/admin-home']" (mouseover)="onMouseOverLogo()"
          (mouseout)="onMouseOutLogo()">
         <img [src]="logoImg">
         <span>Audium</span>
@@ -27,5 +27,14 @@
       </div>
     </a>
   </mz-sidenav-link>
+  <mz-sidenav-link>
+    <a routerLinkActive="blue-text text-lighten-2" [routerLink]="['admin-content']" class="waves-effect">
+      <div>
+        <i class="material-icons" style="vertical-align: text-top">music_note</i>
+        <span class="sidenav-text">Content</span>
+      </div>
+    </a>
+  </mz-sidenav-link>
 
 </mz-sidenav>
+

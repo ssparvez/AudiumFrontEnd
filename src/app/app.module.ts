@@ -44,8 +44,9 @@ import { QueueComponent } from './components/dashboard/content/queue/queue.compo
 import { SearchComponent } from './components/dashboard/content/search/search.component';
 import { InputFormatDirective } from './directives/input-format.directive';
 import { AdminAccountsComponent } from './components/dashboard/content/admin/admin-accounts/admin-accounts.component';
+import {AdminContentComponent} from "./components/dashboard/content/admin/admin-content/admin-content.component";
+
 import {AccountsComponent} from "./modals/admin/accounts/accounts.component";
-import { AdminSongsComponent } from './components/dashboard/content/admin/admin-songs/admin-songs.component';
 // Services
 import { AuthenticationService } from "./services/authentication/authentication.service";
 import { PlayerService } from './services/player/player.service';
@@ -54,10 +55,14 @@ import { DataService } from "./services/data.service";
 import { CustomerAccount } from "./classes/CustomerAccount";
 import { GeneralService } from "./services/general/general.service";
 import {ContextMenuModule, ContextMenuService} from "ngx-contextmenu";
+import { ContentAddComponent } from './modals/admin/content-add/content-add.component';
+import { SongSearchComponent } from './modals/admin/search/song-search/song-search.component';
+import { ContentInputComponent } from './modals/admin/search/content-input/content-input.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
   children: [
+
     {path: "home" , component: HomeComponent},
     {path: "search/:keywords", component: SearchComponent},
     {path: "songs", component: SongsComponent},
@@ -70,15 +75,16 @@ const appRoutes: Routes = [
     // ADMIN
     {path: "admin-home" , component: AdminHomeComponent},
     {path: "admin-accounts" , component: AdminAccountsComponent},
+    {path: "admin-content" , component: AdminContentComponent},
     // DETAILED
     {path: "artist/:id", component: ArtistComponent},
     {path: "album/:id", component: AlbumComponent},
     {path: "playlist/:id", component: PlaylistComponent},
-    {path: "profile/:id", component: ProfileComponent}
-    ]
+    {path: "profile/:id", component: ProfileComponent},
+  ]
   },
   {path: "login/:login", component: LoginComponent},
-  {path: "", component: FrontPageComponent}
+  {path: "", component: FrontPageComponent},
 ];
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
@@ -131,7 +137,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     QueueComponent,
     AdminAccountsComponent,
     AccountsComponent,
-    AdminSongsComponent,
+    AdminContentComponent,
+    ContentAddComponent,
+    SongSearchComponent,
+    ContentInputComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,
@@ -139,7 +148,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ConfirmComponent,
     CreatePlaylistComponent,
     ChoosePlaylistComponent,
-    AccountsComponent
+    AccountsComponent,
+    ContentAddComponent,
+    SongSearchComponent,
+    ContentInputComponent
   ],
   imports: [
     ContextMenuModule,

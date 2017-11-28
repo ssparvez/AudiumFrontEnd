@@ -1,0 +1,49 @@
+.admincontent-title-text {
+    font-size: xx-large;
+    margin-bottom: 10px;
+}
+
+
+/* label color */
+.input-field label {
+
+    color: white;
+}
+/* label focus color */
+.input-field input:focus + label {
+    color: white;
+}
+
+/* label underline focus color */
+.input-field input:focus {
+    border-bottom: 1px  white;
+    box-shadow: 0 1px 0 0 #2196f3;
+}
+
+.input-field {
+    font-size: large;
+    color: white;
+}
+
+.select-wrapper ul li>span {
+    color: grey;
+}
+
+button:hover {
+    background-color: #2196f3;
+}
+
+button {
+    color: white;
+}
+
+
+.admin-content-modify > .row > .input-field > input{
+    margin-top: 5%;
+    font-size: x-large;
+}
+
+.admin-content-modify > .row > .input-field label {
+    font-size: x-large;
+}
+

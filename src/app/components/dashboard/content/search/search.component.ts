@@ -37,7 +37,7 @@ export class SearchComponent implements OnInit {
       if (!(event instanceof NavigationEnd)) {
           return;
       }
-      window.scrollTo(0, 0)
+      window.scrollTo(0, 0);
     });
     this.mediaPath = this.dataService.mediaURL;
     this.route.params.subscribe(param => {
