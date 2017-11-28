@@ -85,7 +85,10 @@ export class MusicplayerComponent implements OnInit {
   initSongs(songs: Song[]): Song[] { // attaches howl object to each song
     for(let song of songs) {
       song.sound = new Howl({
-        src: ['../../../../../assets/songs/TheLessIKnowTheBetter.m4a'],
+        src: [song.file != null ? this.mediaPath + "/audio/" + song.file.replace("E:/Music/", "") : "assets/audio/Default.mp3"],
+        onloaderror: () => {
+          this.songQueue[this.queueIndex].sound.src = ['assets/audio/Default.mp3'];
+        },
         onend: () => {
           switch(this.repeatLevel) {
             case 0: {
