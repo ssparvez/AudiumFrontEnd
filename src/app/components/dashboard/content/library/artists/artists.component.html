@@ -33,7 +33,7 @@
   </div>
 </div>
 <ng-container  *ngIf="artists?.length == 0">
-  <div class="row fade-in-2-sec" >
+  <div class="row fade-in-2-sec" style="margin-bottom: 0px;">
     <div class="col s12">
       <div class="card-panel large transparent z-depth-0">
         <div class="row"></div>
@@ -48,7 +48,7 @@
 </ng-container>
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!artists">
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!artists">
   <div class="loader">Loading...</div>
 </div>
 

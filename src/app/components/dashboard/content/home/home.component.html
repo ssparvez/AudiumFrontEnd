@@ -1,120 +1,128 @@
-<div class="row fade-in-half-sec">
-<ng-container *ngIf="currentUser">
-  <h1 class="fade-in-half-sec">Home</h1>
-</ng-container>
-<ng-container *ngIf="currentUser">
-<div class="row">
-  <h2 class="center fade-in-half-sec" *ngIf="recentListens?.length > 0">Jump Back In</h2>
-  <h2 class="center fade-in-half-sec" *ngIf="recentListens?.length == 0">Start Listening</h2>
-</div>
-<div class="row fade-in-1-sec" *ngIf="recentListens?.length > 0">
-  <div class="col s12 m3" *ngFor="let recent of recentListens">
-    <div class="card transparent" *ngIf="recent">
-      <div class="card-image" #albumcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
-        <div class="album-div valign-wrapper fade-in-2-sec hoverable" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
-          <a [routerLink]="['../album', recent?.albumId]" class="hoverable">
-            <img class="album-img hoverable" src="{{mediaPath}}/images/album_arts/{{recent?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': albumcarddiv.offsetWidth }">
-          </a>
-          <span class="card-title black" id="small-card-title">
-            <h4><a class="album-tile" [routerLink]="['../album', recent?.albumId]">{{recent?.albumTitle}}</a></h4>
-            <h5><a class="album-tile" [routerLink]="['../artist', recent?.artistId]">{{recent?.artistName}}</a></h5>
-          </span>
-          <div (click)="playRecentSongs(recent?.albumId)" class="btn-floating halfway-fab waves-effect waves-light hoverable blue-bt z-depth-2 fade-in-half-sec">
-            <i class="material-icons" style="color: inherit; background-color: inherit; fill: inherit;">play_arrow</i>
+<div class="row fade-in-half-sec" style="margin-bottom: 0px;">
+  <ng-container *ngIf="currentUser">
+    <h1 class="fade-in-half-sec">Home</h1>
+  </ng-container>
+  <ng-container *ngIf="currentUser">
+    <div class="row">
+      <h2 class="center fade-in-half-sec" *ngIf="recentListens?.length > 0">Jump Back In</h2>
+      <h2 class="center fade-in-half-sec" *ngIf="recentListens?.length == 0">Start Listening</h2>
+    </div>
+    <div class="row fade-in-1-sec" *ngIf="recentListens?.length > 0">
+      <div class="col s12 m3" *ngFor="let recent of recentListens">
+        <div class="card transparent" *ngIf="recent">
+          <div class="card-image" #albumcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
+            <div class="album-div valign-wrapper fade-in-2-sec hoverable" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
+              <a [routerLink]="['../album', recent?.albumId]" class="hoverable">
+                <img class="album-img hoverable" src="{{mediaPath}}/images/album_arts/{{recent?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'"
+                  [ngStyle]="{'min-width.px': albumcarddiv.offsetWidth }">
+              </a>
+              <span class="card-title black" id="small-card-title">
+                <h4>
+                  <a class="album-tile" [routerLink]="['../album', recent?.albumId]">{{recent?.albumTitle}}</a>
+                </h4>
+                <h5>
+                  <a class="album-tile" [routerLink]="['../artist', recent?.artistId]">{{recent?.artistName}}</a>
+                </h5>
+              </span>
+              <div (click)="playRecentSongs(recent?.albumId)" class="btn-floating halfway-fab waves-effect waves-light hoverable blue-bt z-depth-2 fade-in-half-sec">
+                <i class="material-icons" style="color: inherit; background-color: inherit; fill: inherit;">play_arrow</i>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-<div *ngIf="recentListens?.length == 0">
-  <div class="row fade-in-2-sec">
-    <div class="col s12">
-      <div class="card-panel large transparent z-depth-0 center">
-        <h3 class="grey-text">You haven't listened to any music yet</h3>
-      </div>
-    </div>
-  </div>
-</div>
-</ng-container>
-<ng-container *ngIf="currentUser && recentListens">
-  <div class="row">
-    <h2 class="center fade-in-half-sec"><br *ngIf="recentListens?.length > 0">Top Songs</h2>
-  </div>
-  <div class="row">
-    <table class="bordered responsive-table white-text fade-in-half-sec">
-      <thead>
-        <tr class="fade-in-half-sec">
-          <th>Title</th>
-          <th>Artist</th>
-          <th>Album</th>
-          <th>Plays</th>
-        </tr>
-      </thead>
-      <tbody class="tracklist" *ngIf="topSongs?.length > 0">
-        <tr class="fade-in-half-sec" *ngFor="let song of topSongs; let i = index" (contextmenu)="songMenu.onContextMenu($event, song)" (dblclick)="playTopSongs(i)">
-          <td>
-            {{song?.title}}
-            <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
-          </td>
-          <td>
-            <!--IN SPAN: *ngFor="let artist of song.artists; last as isLast"-->
-            <!--{{artist.name}}{{isLast ? '' : ', '}}-->
-            <a [routerLink]="['../artist', song?.artistId]" (contextmenu)="artistMenu.onContextMenu($event, { artistId: song?.artistId, followed: false } )">
-              {{song?.artistName}}
-            </a>
-          </td>
-          <td>
-            <!-- IN SPAN: *ngFor="let album of song.albums; last as isLast" -->
-            <!--{{album.title}}{{isLast ? '' : ', '}}-->
-            <a [routerLink]="['../album', song?.albumId]" (contextmenu)="albumMenu.onContextMenu($event, { albumId: song?.artistId, saved: false } )">
-              {{song?.albumTitle}}</a>
-          </td>
-          <td>{{song?.playCount}}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div *ngIf="topSongs?.length == 0">
-      <div class="row fade-in-1-sec">
+    <div *ngIf="recentListens?.length == 0">
+      <div class="row fade-in-2-sec">
         <div class="col s12">
           <div class="card-panel large transparent z-depth-0 center">
-            <h3 class="grey-text">No data available</h3>
+            <h3 class="grey-text">You haven't listened to any music yet</h3>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</ng-container>
-
-<div class="row" *ngIf="currentUser && topSongs">
-  <h2 class="center fade-in-half-sec"><br>Genres</h2>
-</div>
-<ng-container *ngIf="genres?.length > 0">
-  <div class="row">
-    <div class="col s12 m3 fade-in-half-sec" *ngFor="let genre of genres">
-      <a class="genre" [routerLink]="['../home']">
-        <div class="card-panel hoverable center blue-bt waves-effect waves-light fade-in-half-sec" style="width: 100%;">
-          <h3 class="truncate" style="color: inherit;">{{genre?.genreName}}</h3>
-        </div>
-      </a>
+  </ng-container>
+  <ng-container *ngIf="currentUser && recentListens">
+    <div class="row">
+      <h2 class="center fade-in-half-sec">
+        <br *ngIf="recentListens?.length > 0">Top Songs</h2>
     </div>
+    <div class="row">
+      <table class="bordered responsive-table white-text fade-in-half-sec">
+        <thead>
+          <tr class="fade-in-half-sec">
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Album</th>
+            <th>Plays</th>
+          </tr>
+        </thead>
+        <tbody class="tracklist" *ngIf="topSongs?.length > 0">
+          <tr class="fade-in-half-sec" *ngFor="let song of topSongs; let i = index" (contextmenu)="songMenu.onContextMenu($event, song)"
+            (dblclick)="playTopSongs(i)">
+            <td>
+              {{song?.title}}
+              <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
+            </td>
+            <td>
+              <!--IN SPAN: *ngFor="let artist of song.artists; last as isLast"-->
+              <!--{{artist.name}}{{isLast ? '' : ', '}}-->
+              <a [routerLink]="['../artist', song?.artistId]" (contextmenu)="artistMenu.onContextMenu($event, { artistId: song?.artistId, followed: false } )">
+                {{song?.artistName}}
+              </a>
+            </td>
+            <td>
+              <!-- IN SPAN: *ngFor="let album of song.albums; last as isLast" -->
+              <!--{{album.title}}{{isLast ? '' : ', '}}-->
+              <a [routerLink]="['../album', song?.albumId]" (contextmenu)="albumMenu.onContextMenu($event, { albumId: song?.artistId, saved: false } )">
+                {{song?.albumTitle}}</a>
+            </td>
+            <td>{{song?.playCount}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="topSongs?.length == 0">
+        <div class="row fade-in-1-sec">
+          <div class="col s12">
+            <div class="card-panel large transparent z-depth-0 center">
+              <h3 class="grey-text">No data available</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="row" *ngIf="currentUser && topSongs">
+    <h2 class="center fade-in-half-sec">
+      <br>Genres</h2>
   </div>
-</ng-container>
-<div *ngIf="genres?.length == 0">
-  <div class="row fade-in-2-sec">
-    <div class="col s12">
-      <div class="card-panel large transparent z-depth-0 center">
-        <h3 class="grey-text">No data available</h3>
+  <ng-container *ngIf="genres?.length > 0">
+    <div class="row">
+      <div class="col s12 m3 fade-in-half-sec" *ngFor="let genre of genres">
+        <a class="genre" [routerLink]="['../home']">
+          <div class="card-panel hoverable center blue-bt waves-effect waves-light fade-in-half-sec" style="width: 100%;">
+            <h3 class="truncate" style="color: inherit;">{{genre?.genreName}}</h3>
+          </div>
+        </a>
+      </div>
+    </div>
+  </ng-container>
+  <div *ngIf="genres?.length == 0">
+    <div class="row fade-in-2-sec">
+      <div class="col s12">
+        <div class="card-panel large transparent z-depth-0 center">
+          <h3 class="grey-text">No data available</h3>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 </div>
 
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!recentListens || !topSongs || !genres">
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!recentListens || !topSongs || !genres">
   <div class="loader">Loading...</div>
 </div>
 
@@ -123,6 +131,6 @@
   <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by
   <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
 </div>-->
-<app-song-menu #songMenu [songs]="topSongs" ></app-song-menu>
-<app-artist-menu #artistMenu  [library]="false"></app-artist-menu>
-<app-album-menu #albumMenu ></app-album-menu>
+<app-song-menu #songMenu [songs]="topSongs"></app-song-menu>
+<app-artist-menu #artistMenu [library]="false"></app-artist-menu>
+<app-album-menu #albumMenu></app-album-menu>

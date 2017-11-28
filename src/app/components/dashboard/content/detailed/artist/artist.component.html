@@ -1,4 +1,4 @@
-<div class="row fade-in-1-sec" #mainContentDiv>
+<div class="row fade-in-1-sec" #mainContentDiv style="margin-bottom: 0px;">
   <div class="card col s12 z-depth-0 transparent" *ngIf="artist"   (contextmenu)="artistMenu.onContextMenu($event, artist)">
     <div class="card-image" #artistbannerdiv (window:resize)="0" [ngStyle]="{'min-height.px': (artistbannerdiv.offsetWidth / 2), 'max-height.px': (artistbannerdiv.offsetWidth / 2) }">
       <div class="artist-banner" [ngStyle]="{'min-height.px': (artistbannerdiv.offsetWidth / 2), 'max-height.px': (artistbannerdiv.offsetWidth / 2) }">
@@ -222,7 +222,7 @@
   </ng-container>
 
   <!-- Loading animation -->
-  <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!artist">
+  <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!artist">
     <div class="loader">Loading...</div>
   </div>
 </div>

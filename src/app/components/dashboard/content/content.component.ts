@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material';
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.css']
+  styleUrls: ['./content.component.css'],
 })
 export class ContentComponent implements OnInit {
   currentUser: CustomerAccount;
@@ -26,7 +26,6 @@ export class ContentComponent implements OnInit {
   }
 
   openNewPaymentDialog() {
-    
         this.dialog.open(PaymentInfoComponent,{ data: {isNew: true}, width: '400px'}, )
           .afterClosed()
           .subscribe(result => {

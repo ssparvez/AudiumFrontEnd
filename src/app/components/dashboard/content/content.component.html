@@ -1,5 +1,5 @@
 <main class="grey darken-4">
-  <div *ngIf="currentUser._role == 'BasicUser' && !isHidden" class="green accent-3" style="height: 30px;">
+  <div *ngIf="currentUser._role == 'BasicUser' && !isHidden" class="green accent-3" style="height: 30px;" [ngClass]="isHidden ? 'animated slideOutUp' : 'animated slideInDown'">
     <div class="row" style="padding-top: 3px;">
       <a (click)="openNewPaymentDialog()" class="white-text col s4 offset-s4 center"><b>Upgrade to Audium Premium!</b></a>
       <a><i (click)="isHidden = !isHidden" class="material-icons white-text right">close</i></a>
@@ -26,6 +26,6 @@
     <router-outlet></router-outlet>
   </div>
 </main>
-<footer>
-  
+<footer class="fixed" *ngIf="currentUser._role == 'BasicUser'">
+    <img class="responsive-img" src="assets/images/cyber.gif">
 </footer>

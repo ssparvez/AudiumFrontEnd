@@ -34,7 +34,7 @@
     </div>
   </div>
 </div>
-<div class="row fade-in-2-sec" *ngIf="albums?.length == 0">
+<div class="row fade-in-2-sec" *ngIf="albums?.length == 0" style="margin-bottom: 0px;">
   <div class="col s12">
     <div class="card-panel large transparent z-depth-0">
       <div class="row"></div>
@@ -48,7 +48,7 @@
 </div>
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!albums">
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!albums">
   <div class="loader">Loading...</div>
 </div>
 <app-album-menu #albumMenu [albums]="albums" [library]="true"></app-album-menu>

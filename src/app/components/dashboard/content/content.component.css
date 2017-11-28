@@ -1,10 +1,9 @@
-header,
-main {
+header, main, footer {
     padding-left: 300px;
-    min-height: 100vh;
 }
 
 main {
+    min-height: 100vh;    
     flex: 1 0 auto;
 }
 
