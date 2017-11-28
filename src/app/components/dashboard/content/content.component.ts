@@ -23,14 +23,13 @@ import { trigger, state, style, transition, animate, keyframes} from "@angular/c
           display: 'none'
       })),
       state('maximum', style({
-          
+
       })),
       transition('maximum => none', animate('100ms'))
   ])
   ]
 })
 export class ContentComponent implements OnInit {
-  currentUser: CustomerAccount;
   upgradeBannerState = 'maximum';
   adBannerState = 'maximum';
 
@@ -44,8 +43,6 @@ export class ContentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    console.log(this.currentUser)
   }
 
   onEnter(keywords: string) {
