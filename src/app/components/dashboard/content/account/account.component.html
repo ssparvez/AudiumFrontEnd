@@ -116,7 +116,7 @@
           <div *ngIf="getCurrentUser().role === this.basicUser ; then upgrade else downgrade"></div>
           <ng-template #upgrade>
             <div class="col s6">
-              <button mz-button class="account-btn-ug waves-effect green btn" (click)="openNewPaymentDialog()">
+              <button mz-button class="account-btn-ug waves-effect pulse green accent-3 btn" (click)="openNewPaymentDialog()">
                 Upgrade
               </button>
             </div>

@@ -1,8 +1,12 @@
-<main class="grey darken-4">
-  <div *ngIf="currentUser._role == 'BasicUser' && !isHidden" class="green accent-3" style="height: 30px;" [ngClass]="isHidden ? 'animated slideOutUp' : 'animated slideInDown'">
+<header>
+  <div *ngIf="currentUser._role == 'BasicUser'" class="green accent-3" [@upgradeBannerTrigger]="upgradeBannerState">
     <div class="row" style="padding-top: 3px;">
-      <a (click)="openNewPaymentDialog()" class="white-text col s4 offset-s4 center"><b>Upgrade to Audium Premium!</b></a>
-      <a><i (click)="isHidden = !isHidden" class="material-icons white-text right">close</i></a>
+      <a [routerLink]="['account']" class="white-text col s4 offset-s4 center">
+        <b>Upgrade to Audium Premium!</b>
+      </a>
+      <a>
+        <i (click)="closeUpgradeBanner()" class="material-icons white-text right">close</i>
+      </a>
     </div>
   </div>
   <div class="navbar">
@@ -20,12 +24,23 @@
       </div>
     </nav>
   </div>
+</header>
+<main class="grey darken-4">
   <div class="container" style="width: 90%;">
     <!-- Page Content goes here -->
     <div class="row"></div>
     <router-outlet></router-outlet>
   </div>
 </main>
-<footer class="fixed" *ngIf="currentUser._role == 'BasicUser'">
-    <img class="responsive-img" src="assets/images/cyber.gif">
+<footer class="fixed" *ngIf="currentUser._role == 'BasicUser'" [@adBannerTrigger]="adBannerState">
+  <div class="card transparent" style="margin: 0px;" >
+    <div class="card-image">
+      <a [routerLink]="">
+        <img class="responsive-img" src="assets/images/cyber.gif">
+      </a>
+      <span class="card-title black" style="padding: 12px 12px 0px 12px;">
+        <a (click)="closeAdBanner()"><i class="material-icons white-text">close</i> </a>
+      </span>
+    </div>
+  </div>
 </footer>

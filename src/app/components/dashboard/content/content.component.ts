@@ -1,19 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { CustomerAccount } from '../../../classes/CustomerAccount';
-import { PaymentInfoComponent } from '../../../modals/payment-info/payment-info.component';
-import { MatDialog } from '@angular/material';
+import { trigger, state, style, transition, animate, keyframes} from "@angular/core";
+
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.css'],
+  animations: [
+    trigger('upgradeBannerTrigger', [
+        state('none', style({
+            height: '0px'
+        })),
+        state('maximum', style({
+            height: '30px'
+        })),
+        transition('maximum => none', animate('100ms'))
+    ]),
+    trigger('adBannerTrigger', [
+      state('none', style({
+          display: 'none'
+      })),
+      state('maximum', style({
+          
+      })),
+      transition('maximum => none', animate('100ms'))
+  ])
+  ]
 })
 export class ContentComponent implements OnInit {
   currentUser: CustomerAccount;
-  isHidden = false;
+  upgradeBannerState = 'maximum';
+  adBannerState = 'maximum';
 
-  constructor(private router: Router, private dialog: MatDialog) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -25,10 +46,10 @@ export class ContentComponent implements OnInit {
     console.log(keywords);
   }
 
-  openNewPaymentDialog() {
-        this.dialog.open(PaymentInfoComponent,{ data: {isNew: true}, width: '400px'}, )
-          .afterClosed()
-          .subscribe(result => {
-          });
-      }
+  closeUpgradeBanner() {
+    this.upgradeBannerState = (this.upgradeBannerState === 'none' ? 'maximum': 'none')
+  }
+  closeAdBanner() {
+    this.adBannerState = (this.adBannerState === 'none' ? 'maximum': 'none')
+  }
 }
