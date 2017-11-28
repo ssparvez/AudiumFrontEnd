@@ -7,7 +7,7 @@
     <div class="playbackcard card hoverable grey darken-2" *ngIf="album">
       <div class="playbackcard-image card-image" *ngIf="album" #albumCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
         <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-          <a [routerLink]="['../../album', album?.albumId]">
+          <a [routerLink]="['../album', album?.albumId]">
             <img class="album-img" src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': albumCardDiv.offsetWidth }">
           </a>
         </div>

@@ -7,7 +7,7 @@
     <div class="card hoverable grey darken-2" *ngIf="artist">
       <div class="card-image" #artistcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': artistcarddiv.offsetWidth, 'max-height.px': artistcarddiv.offsetWidth }">
           <div class="artist-div valign-wrapper" [ngStyle]="{'min-height.px': artistcarddiv.offsetWidth, 'max-height.px': artistcarddiv.offsetWidth }">
-            <a [routerLink]="['../../artist', artist?.artistId]">
+            <a [routerLink]="['../artist', artist?.artistId]">
               <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{'min-width.px': artistcarddiv.offsetWidth }">
             </a>
           </div>
