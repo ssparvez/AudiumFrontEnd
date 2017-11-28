@@ -2,34 +2,35 @@
   <h1 class="col s12">Artists</h1>
 </div>
 <div class="row" style="margin-bottom:0;" *ngIf="artists">
-  <div class="col s3 artist-container fade-in-1-sec" @fade *ngFor="let artist of artists; let i = index;"
+  <div class="col s3 artist-container fade-in-1-sec" style="padding-bottom: 15px;" @fade *ngFor="let artist of artists; let i = index;"
        (contextmenu)="artistMenu.onContextMenu($event, artist)">
-    <div class="card hoverable grey darken-2" *ngIf="artist">
-      <div class="card-image" #artistcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': artistcarddiv.offsetWidth, 'max-height.px': artistcarddiv.offsetWidth }">
-          <div class="artist-div valign-wrapper" [ngStyle]="{'min-height.px': artistcarddiv.offsetWidth, 'max-height.px': artistcarddiv.offsetWidth }">
-            <a [routerLink]="['../artist', artist?.artistId]">
-              <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{'min-width.px': artistcarddiv.offsetWidth }">
-            </a>
+    <div class="card transparent" *ngIf="artist">
+      <div class="card-image hoverable fade-in-1-sec" #artistCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
+        <div class="artist-div valign-wrapper" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
+          <div class="transparent artist-img" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
+            <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{'min-width.px': artistCardDiv.offsetWidth }">
+            <div class="artist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../artist', artist?.artistId]" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
+              <div class="artist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
+              <ng-template #play>
+                <h1 class="col s12 artist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                  <a (click)="playPlayback($event)">
+                    <i class="material-icons artist-play-icon large">play_circle_outline</i>
+                  </a>
+                </h1>
+              </ng-template>
+              <ng-template #pause>
+                <h1 class="col s12 artist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                  <a (click)="pausePlayback($event)">
+                    <i class="material-icons artist-play-icon large">pause_circle_outline</i>
+                  </a>
+                </h1>
+              </ng-template>
+            </div>
           </div>
+        </div>
       </div>
-      <div class="artist-playbutton-div noSelect">
-        <div *ngIf="isPlaying; then pause else play"></div>
-        <ng-template #play >
-          <a class="play-button" (click)="playPlayback()">
-            <i class="material-icons play-icon">play_circle_outline</i>
-          </a>
-        </ng-template>
-        <ng-template #pause>
-          <a class="play-button"  (click)="pausePlayback()">
-            <i class="material-icons play-icon">pause_circle_outline</i>
-          </a>
-        </ng-template>
-      </div>
-      <div class="playlist-name-div col s12 center">
-        <a [routerLink]="['../artist', artist?.artistId]" style="display:flex !important;">
-          <div class="col s11 truncate artist-name" style="color: inherit; padding-bottom: 28px;">{{artist?.artistName}}
-          </div>
-        </a>
+      <div class="col s12 center artist-name" style="margin-top: 5px;">
+        <a [routerLink]="['../artist', artist?.artistId]">{{artist?.artistName}}</a>
       </div>
     </div>
   </div>

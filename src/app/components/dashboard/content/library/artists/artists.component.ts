@@ -54,13 +54,15 @@ export class ArtistsComponent implements OnInit {
     });
   }
 
-  pausePlayback() {
-
+  pausePlayback($event: MouseEvent) {
     this.isPlaying = false;
-
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
-  playPlayback() {
+  playPlayback($event: MouseEvent) {
     this.isPlaying = true;
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 }

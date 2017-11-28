@@ -24,41 +24,45 @@ span h5 a:hover, span h4 a:hover{
     margin-top: 5%;
 }
 
-.artist-playbutton-div {
-    position: absolute;
-    z-index: 1000;
-    bottom: 100px;
-    left: 110px;
-    display: none;
-    outline: 0;
+.artist-name a:hover {
+    color: #9e9e9e;
 }
 
-.card:hover > .artist-playbutton-div {
-    display: block;
+.artist-play-button-inner-wrapper, .artist-play-button-inner-wrapper a {
+    color: inherit;
 }
 
-
-.card:hover > .card-image{
-    filter: brightness(30%);
-}
-.artist-container {
-    position: relative;
+.artist-play-button-inner-wrapper:hover {
+    color: inherit;
 }
 
-.play-icon {
-    font-size: 6rem;
+.artist-play-button-wrapper {
+    background-color: transparent;
+    color: transparent;
+    cursor: pointer;
+}
+
+.artist-play-button-wrapper:hover {
+    background-color: rgba(0,0,0,0.75);
+    color: white;
+}
+
+.artist-play-icon {
+    color: inherit;
     transition: 0.3s;
     outline:none
 }
 
-.play-icon:hover{
+.artist-play-icon:hover {
+    color: inherit;
     cursor: pointer;
     -webkit-transform: scale(1.3);
     -ms-transform: scale(1.3);
     transform: scale(1.3);
 }
 
-.play-icon:active {
+.artist-play-icon:active {
+    color: inherit;
     -webkit-transform: scale(0.8);
     -ms-transform: scale(0.8);
     transform: scale(0.8);
