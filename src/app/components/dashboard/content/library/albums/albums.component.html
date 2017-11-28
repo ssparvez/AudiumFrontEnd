@@ -5,10 +5,12 @@
   <div class="col s3 playbackcard-container fade-in-1-sec" @fade *ngFor="let album of albums; let i = index;"
        (contextmenu)="albumMenu.onContextMenu($event, album)">
     <div class="playbackcard card hoverable grey darken-2" *ngIf="album">
-      <div class="playbackcard-image card-image" *ngIf="album" >
-        <a [routerLink]="['../album', album?.albumId]">
-          <img class="album-img" src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'">
-        </a>
+      <div class="playbackcard-image card-image" *ngIf="album" #albumCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
+        <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
+          <a [routerLink]="['../../album', album?.albumId]">
+            <img class="album-img" src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': albumCardDiv.offsetWidth }">
+          </a>
+        </div>
       </div>
       <div class="playbackcard-playbutton-div noSelect">
         <div *ngIf="isPlaying; then pause else play"></div>
