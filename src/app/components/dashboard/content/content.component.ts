@@ -10,27 +10,28 @@ import { trigger, state, style, transition, animate, keyframes} from "@angular/c
   styleUrls: ['./content.component.css'],
   animations: [
     trigger('upgradeBannerTrigger', [
-        state('none', style({
-            height: '0px'
-        })),
-        state('maximum', style({
-            height: '30px'
-        })),
-        transition('maximum => none', animate('100ms'))
+      transition(':enter', [
+        style({height: '0px'}),
+        animate('500ms ease-in-out', style({height: '30px'}))
+      ]),
+      transition(':leave', [
+        style({height: '30px'}),
+        animate('200ms ease-in-out', style({height: '0px'}))
+      ])
     ]),
     trigger('adBannerTrigger', [
       state('none', style({
           display: 'none'
       })),
       state('maximum', style({
-
+          
       })),
       transition('maximum => none', animate('100ms'))
   ])
   ]
 })
 export class ContentComponent implements OnInit {
-  upgradeBannerState = 'maximum';
+  upgradeBannerIsHidden = false;
   adBannerState = 'maximum';
 
   public currentUser: JSON;
@@ -50,9 +51,6 @@ export class ContentComponent implements OnInit {
     console.log(keywords);
   }
 
-  closeUpgradeBanner() {
-    this.upgradeBannerState = (this.upgradeBannerState === 'none' ? 'maximum': 'none')
-  }
   closeAdBanner() {
     this.adBannerState = (this.adBannerState === 'none' ? 'maximum': 'none')
   }

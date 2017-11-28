@@ -1,11 +1,11 @@
 <header>
-  <div *ngIf="currentAccountRole == 'BasicUser'" class="green accent-3" [@upgradeBannerTrigger]="upgradeBannerState">
-    <div class="row" style="padding-top: 3px;">
+  <div *ngIf="currentAccountRole == 'BasicUser' && !upgradeBannerIsHidden" class="green accent-3" [@upgradeBannerTrigger]='upgradeBannerState'>
+    <div class="row" style="margin-bottom: 0px;">
       <a [routerLink]="['account']" class="white-text col s4 offset-s4 center">
         <b>Upgrade to Audium Premium!</b>
       </a>
       <a>
-        <i (click)="closeUpgradeBanner()" class="material-icons white-text right">close</i>
+        <i (click)="upgradeBannerIsHidden = true" class="material-icons white-text right">close</i>
       </a>
     </div>
   </div>

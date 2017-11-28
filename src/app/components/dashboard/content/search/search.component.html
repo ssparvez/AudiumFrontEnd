@@ -31,10 +31,10 @@
   </table>
 </div>
 
-<div class="row" *ngIf="artists?.length > 0">
+<div class="row" *ngIf="artists?.length > 0" style="margin-top: 50px;">
   <h2 class="center fade-in-half-sec">Artists</h2>
 </div>
-<div class="row">
+<div class="row" style="margin-bottom: 0px;">
   <div class="col s12 m2" *ngFor="let artist of artists">
     <div class="card hoverable transparent fade-in-half-sec">
       <div class="card-image" #artistcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': artistcarddiv.offsetWidth, 'max-height.px': artistcarddiv.offsetWidth }">
@@ -54,10 +54,10 @@
   </div>
 </div>
 
-<div class="row" *ngIf="albums?.length > 0">
+<div class="row" *ngIf="albums?.length > 0" style="margin-top: 50px;">
   <h2 class="center fade-in-half-sec">Albums</h2>
 </div>
-<div class="row">
+<div class="row" style="margin-bottom: 0px;">
   <div class="col s12 m2" *ngFor="let album of albums">
     <div class="card hoverable fade-in-half-sec">
       <div class="card-image" #albumcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
@@ -78,10 +78,10 @@
   </div>
 </div>
 
-<div class="row" *ngIf="playlists?.length > 0">
+<div class="row" *ngIf="playlists?.length > 0" style="margin-top: 50px;">
   <h2 class="center fade-in-half-sec">Playlists</h2>
 </div>
-<div class="row">
+<div class="row" style="margin-bottom: 0px;">
   <div class="col s12 m2" *ngFor="let playlist of playlists">
     <div class="card hoverable fade-in-half-sec">
       <div class="card-image">
@@ -100,10 +100,10 @@
   </div>
 </div>
 
-<div class="row" *ngIf="profiles?.length > 0">
+<div class="row" *ngIf="profiles?.length > 0" style="margin-top: 50px;">
   <h2 class="center fade-in-half-sec">Profiles</h2>
 </div>
-<div class="row">
+<div class="row" style="margin-bottom: 0px;">
   <ul class="collection fade-in-half-sec" style="margin-top: 20px; border: none;">
     <li class="collection-item avatar grey darken-4" *ngFor="let profile of profiles">
       <a [routerLink]="['../../profile', profile?.accountId]">
@@ -121,6 +121,6 @@
 </div>
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!songs || !albums || !artists || !playlists || !profiles">
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!songs || !albums || !artists || !playlists || !profiles">
   <div class="loader">Loading...</div>
 </div>
