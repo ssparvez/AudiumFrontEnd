@@ -1,4 +1,4 @@
-<div class="row fade-in-1-sec" #mainContentDiv>
+<div class="row fade-in-1-sec" #mainContentDiv style="margin-bottom: 0px;">
   <div class="card col s12 z-depth-0 transparent" *ngIf="artist"   (contextmenu)="artistMenu.onContextMenu($event, artist)">
     <div class="card-image" #artistbannerdiv (window:resize)="0" [ngStyle]="{'min-height.px': (artistbannerdiv.offsetWidth / 2), 'max-height.px': (artistbannerdiv.offsetWidth / 2) }">
       <div class="artist-banner" [ngStyle]="{'min-height.px': (artistbannerdiv.offsetWidth / 2), 'max-height.px': (artistbannerdiv.offsetWidth / 2) }">
@@ -72,7 +72,7 @@
           <h2 class="center">Albums</h2>
         </div>
         <div class="row fade-in-half-sec" *ngIf="artist?.albums?.length > 0">
-          <div class="col s12 m3 fade-in-1-sec" *ngFor="let album of artist?.albums?.slice(0, (artist?.albums?.length > 12 ? 11 : 12))">
+          <div class="col s12 m3 fade-in-1-sec" *ngFor="let album of showAllAlbums ? artist?.albums : artist?.albums?.slice(0, (artist?.albums?.length > 12 ? 11 : 12))">
             <div class="card transparent hoverable">
               <div class="card-image" *ngIf="album" #albumCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
                 <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
@@ -92,12 +92,12 @@
               </div>
             </div>
           </div>
-          <div class="col s12 m3 fade-in-1-sec more-albums" *ngIf="artist?.albums?.length > 12">
+          <div class="col s12 m3 fade-in-1-sec" *ngIf="artist?.albums?.length > 12 && !showAllAlbums">
             <div class="card transparent hoverable">
               <div class="card-image" #moreAlbumsDiv (window:resize)="0" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
                 <div class="valign-wrapper grey darken-3" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
-                  <a>
-                    <div class="btn transparent" #moreAlbumsBtn style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
+                  <a (click)="showAllAlbums = true">
+                    <div class="btn transparent more-albums" #moreAlbumsBtn style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
                       <div class="col s12 m4" style="padding: 0px;" *ngFor="let album of artist?.albums?.slice(12, (artist?.albums?.length > 21 ? 20 : 21))">
                         <div class="card transparent" style="margin: 0px;">
                           <div class="card-image" *ngIf="album" #albumCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
@@ -107,12 +107,15 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col s12 m4" style="padding: 0px;" *ngIf="artist?.albums?.length > 21 && artist?.events">
+                      <div class="col s12 m4 grey darken-3" style="padding: 0px;" *ngIf="artist?.albums?.length > 21 && artist?.events">
                         <div class="card-image" #nMoreDiv (window:resize)="0" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
                           <div class="valign-wrapper" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
                               <div class="col s12 grey-text" style="text-align: center;">+{{artist?.albums?.length - 20}}</div>
                           </div>
                         </div>
+                      </div>
+                      <div class="more-albums-label valign-wrapper" style="position: absolute; width: 100%;" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
+                        <h2 class="col s12" style="text-align: center;">Show all</h2>
                       </div>
                     </div>
                   </a>
@@ -219,7 +222,7 @@
   </ng-container>
 
   <!-- Loading animation -->
-  <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!artist">
+  <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!artist">
     <div class="loader">Loading...</div>
   </div>
 </div>

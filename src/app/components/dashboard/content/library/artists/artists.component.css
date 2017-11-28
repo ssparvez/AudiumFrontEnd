@@ -63,8 +63,3 @@ span h5 a:hover, span h4 a:hover{
     -ms-transform: scale(0.8);
     transform: scale(0.8);
 }
-
-img {
-    min-height: 300px;
-    max-height: 300px;
-}

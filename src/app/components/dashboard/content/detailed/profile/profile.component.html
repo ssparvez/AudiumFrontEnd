@@ -18,18 +18,17 @@
       </a>
     </div>
   </div>
-
   <mz-tab
   [fixedTabWidth]="'true'"
   [responsiveThreshold]="'true'"
   >
   <mz-tab-item [label]="'Overview'">
-    <div class="row" style="margin-top: 20px;">
+    <div class="row" style="margin-top: 20px; margin-bottom: 0px;">
       <h2 style="text-align: center;">Recently Played</h2>
     </div>
   </mz-tab-item>
   <mz-tab-item [label]="'Library'">
-      <div class="row" style="margin-top: 20px;">
+      <div class="row" style="margin-top: 20px; margin-bottom: 0px;">
           <h2 style="text-align: center;">Playlists</h2>
       </div>
 
@@ -62,7 +61,7 @@
   </mz-tab-item>
   </mz-tab>
 
-  <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!profile">
+  <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!profile">
     <div class="loader">Loading...</div>
   </div>
 </div>

@@ -5,10 +5,12 @@
   <div class="col s3 artist-container fade-in-1-sec" @fade *ngFor="let artist of artists; let i = index;"
        (contextmenu)="artistMenu.onContextMenu($event, artist)">
     <div class="card hoverable grey darken-2" *ngIf="artist">
-      <div class="card-image" *ngIf="artist">
-        <a [routerLink]="['../artist', artist?.artistId]">
-          <img class="artist-banner-img" src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'">
-        </a>
+      <div class="card-image" #artistcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': artistcarddiv.offsetWidth, 'max-height.px': artistcarddiv.offsetWidth }">
+          <div class="artist-div valign-wrapper" [ngStyle]="{'min-height.px': artistcarddiv.offsetWidth, 'max-height.px': artistcarddiv.offsetWidth }">
+            <a [routerLink]="['../artist', artist?.artistId]">
+              <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{'min-width.px': artistcarddiv.offsetWidth }">
+            </a>
+          </div>
       </div>
       <div class="artist-playbutton-div noSelect">
         <div *ngIf="isPlaying; then pause else play"></div>
@@ -33,7 +35,7 @@
   </div>
 </div>
 <ng-container  *ngIf="artists?.length == 0">
-  <div class="row fade-in-2-sec" >
+  <div class="row fade-in-2-sec" style="margin-bottom: 0px;">
     <div class="col s12">
       <div class="card-panel large transparent z-depth-0">
         <div class="row"></div>
@@ -48,7 +50,7 @@
 </ng-container>
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!artists">
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!artists">
   <div class="loader">Loading...</div>
 </div>
 

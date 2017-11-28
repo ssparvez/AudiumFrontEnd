@@ -1,4 +1,4 @@
-<div class="row fade-in-half-sec" *ngIf="playlist">
+<div class="row fade-in-half-sec" *ngIf="playlist" style="margin-bottom: 0px;">
   <div class="col s6 m4 playlist-container"  (contextmenu)="playlistMenu.onContextMenu($event, playlist)">
     <div class="card hoverable">
       <div class="card-image" >
@@ -55,7 +55,7 @@
     </div>
   </div>
 </div>
-<div class="row fade-in-1-sec" *ngIf="playlist">
+<div class="row fade-in-1-sec" *ngIf="playlist" style="margin-bottom: 0px;">
   <table class="bordered responsive-table white-text">
     <thead>
       <tr>
@@ -89,7 +89,7 @@
 </div>
 
 
-<div class="row fade-in-2-sec" *ngIf="playlist && !songsInPlaylist">
+<div class="row fade-in-2-sec" *ngIf="playlist && !songsInPlaylist" style="margin-bottom: 0px;">
   <div class="col s12">
     <div class="card-panel large transparent z-depth-0">
       <div class="row"></div>
@@ -103,7 +103,7 @@
 </div>
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!playlist">
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!playlist">
     <div class="loader">Loading...</div>
   </div>
 

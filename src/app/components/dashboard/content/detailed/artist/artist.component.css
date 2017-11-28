@@ -6,10 +6,25 @@ span h5 a:hover, span h4 a:hover {
     padding-bottom: 10px;
 }
 
-.artist-banner-img {
-
+.more-albums .more-albums-label h2 {
+    color: inherit;
 }
 
+.more-albums .more-albums-label h2:hover {
+    color: inherit;
+}
+
+.more-albums .more-albums-label {
+    text-transform: none;
+    background-color: transparent;
+    color: transparent;
+}
+
+.more-albums .more-albums-label:hover {
+    text-transform: none;
+    background-color: rgba(0,0,0,0.75);
+    color: white;
+}
 
 .detailed-follow-btn {
     margin-left: 25px;

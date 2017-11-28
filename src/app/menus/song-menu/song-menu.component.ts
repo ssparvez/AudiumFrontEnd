@@ -8,6 +8,7 @@ import {AppError} from "../../errors/AppError";
 import {ChoosePlaylistComponent} from "../../modals/choose-playlist/choose-playlist.component";
 import {MatDialog} from "@angular/material";
 import { PlayerService } from '../../services/player/player.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-song-menu',
@@ -50,7 +51,12 @@ export class SongMenuComponent implements OnInit {
       enabled: (item) => true,
       visible: (item) => this.checkOwnership()
     },
-    
+    {
+      html:(item) => 'Show Lyrics',
+      click:(item) => this.viewLyrics(item),
+      enabled: (item) => true,
+      visible: (item) => true
+    },
   ];
   public outsideMenuActions = [
     {
@@ -77,13 +83,20 @@ export class SongMenuComponent implements OnInit {
       enabled: (item: Song) => true,
       visible: (item) => this.inMusic
     },
+    {
+      html:(item) => 'Show Lyrics',
+      click:(item) => this.viewLyrics(item),
+      enabled: (item) => true,
+      visible: (item) => true
+    },
   ];
 
   constructor(private service: GeneralService,
               private contextMenuService: ContextMenuService,
               private dialog: MatDialog,
               private toastService: MzToastService,
-              private playerService: PlayerService) {
+              private playerService: PlayerService,
+              private router: Router) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     this.currentAccountId = this.currentUser['_accountId'];
   }
@@ -169,6 +182,10 @@ export class SongMenuComponent implements OnInit {
 
   addSongsToQueue(song: Song) {
     this.playerService.addSongsToQueue([song])
+  }
+
+  viewLyrics(song: Song) {
+    this.router.navigate(['dash/song', song.songId, 'lyrics'])
   }
 
 

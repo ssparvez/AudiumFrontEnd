@@ -4,6 +4,7 @@ import { Howl } from 'howler';
 import { Song } from '../../../../classes/Song';
 import { DataService } from '../../../../services/data.service';
 import { Router } from '@angular/router';
+import { SongQueue } from '../../../../classes/SongQueue';
 
 
 @Component({
@@ -12,6 +13,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./musicplayer.component.css']
 })
 export class MusicplayerComponent implements OnInit {
+  // just testing for now
+  queue: SongQueue = {
+    isPlaying: false,
+    isMuted: false,
+    isShuffled: false,
+    isRepeated: false,
+    volumeLevel: 1,
+    previousVolumeLevel: 1,
+    repeatLevel: 0,
+    seekPosition: 0,
+  }
   mediaPath: string;
   songQueue: any[];
   previousQueue: any[];
@@ -73,7 +85,10 @@ export class MusicplayerComponent implements OnInit {
   initSongs(songs: Song[]): Song[] { // attaches howl object to each song
     for(let song of songs) {
       song.sound = new Howl({
-        src: ['../../../../../assets/songs/TheLessIKnowTheBetter.m4a'],
+        src: [song.file != null ? this.mediaPath + "/audio/" + song.file.replace("E:/Music/", "") : "assets/audio/Default.mp3"],
+        onloaderror: () => {
+          this.songQueue[this.queueIndex].sound.src = ['assets/audio/Default.mp3'];
+        },
         onend: () => {
           switch(this.repeatLevel) {
             case 0: {

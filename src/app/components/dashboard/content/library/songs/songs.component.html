@@ -1,5 +1,5 @@
 
-<div class="row fade-in-half-sec">
+<div class="row fade-in-half-sec" style="margin-bottom: 0px;">
   <div class="left">
     <h1>Songs</h1>
   </div>
@@ -48,7 +48,7 @@
     </tbody>
   </table>
 </div>
-<div class="row fade-in-2-sec" *ngIf="songs?.length == 0">
+<div class="row fade-in-2-sec" *ngIf="songs?.length == 0" style="margin-bottom: 0px;">
   <div class="col s12">
     <div class="card-panel large transparent z-depth-0">
       <div class="row"></div>
@@ -62,7 +62,7 @@
 </div>
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!songs">
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!songs">
   <div class="loader">Loading...</div>
 </div>
 

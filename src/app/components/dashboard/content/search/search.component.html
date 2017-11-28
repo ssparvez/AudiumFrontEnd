@@ -1,6 +1,6 @@
 <h1>Search</h1>
 
-<div class="row" *ngIf="songs?.length > 0">
+<div class="row" *ngIf="songs?.length > 0" style="margin-bottom: 0px;">
   <div class="row fade-in-half-sec">
     <h2 class="center">Songs</h2>
   </div>
@@ -62,7 +62,7 @@
     <div class="card hoverable fade-in-half-sec">
       <div class="card-image" #albumcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
         <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
-          <a [routerLink]="['../../artist', album?.artist?.artistId]">
+          <a [routerLink]="['../../album', album?.albumId]">
             <img class="album-img" src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': albumcarddiv.offsetWidth }">
           </a>
           <span class="card-title black" id="small-card-title">

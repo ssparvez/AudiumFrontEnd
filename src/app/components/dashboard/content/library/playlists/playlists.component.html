@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" style="margin-bottom: 0px;">
   <div class="left fade-in-half-sec">
     <h1>Playlists</h1>
   </div>
@@ -42,7 +42,7 @@
     </div>
   </div>
 </div>
-<div class="row fade-in-2-sec" *ngIf="playlists?.length == 0">
+<div class="row fade-in-2-sec" *ngIf="playlists?.length == 0" style="margin-bottom: 0px;">
   <div class="col s12">
     <div class="card-panel large transparent z-depth-0">
       <div class="row"></div>
@@ -56,7 +56,7 @@
 </div>
 
 <!-- Loading animation -->
-<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!playlists">
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!playlists">
   <div class="loader">Loading...</div>
 </div>
 <app-playlist-menu #playlistMenu [playlists]="playlists" [detailed]="false"></app-playlist-menu>
