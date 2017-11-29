@@ -33,7 +33,7 @@
   </div>
 </main>
 <footer class="fixed" >
-  <div class="card" style="margin: 0px;" *ngIf="currentUser._role == 'BasicUser' && !adBannerIsHidden" [@adBannerTrigger]>
+  <div class="card" style="margin-bottom: 0px;" *ngIf="currentUser._role == 'BasicUser' && !adBannerIsHidden" [@adBannerTrigger]>
     <div class="card-image">
       <a [routerLink]="">
         <img class="responsive-img" src="assets/images/cyber.gif" mz-tooltip [tooltip]="'<b>Advertisement</b>'" [position]="'top'" [html]="true">

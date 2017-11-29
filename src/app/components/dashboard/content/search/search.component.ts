@@ -23,6 +23,11 @@ export class SearchComponent implements OnInit {
   playlists : Playlist[];
   profiles : CustomerAccount[];
   mediaPath: string;
+  showAllSongs: boolean = false;
+  showAllAlbums: boolean = false;
+  showAllArtists: boolean = false;
+  showAllPlaylists: boolean = false;
+  showAllProfiles: boolean = false;
   public isPlaying;
 
   constructor(

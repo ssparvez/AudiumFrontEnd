@@ -14,7 +14,7 @@
       </tr>
     </thead>
     <tbody class="tracklist">
-      <tr *ngFor="let song of songs; let i = index;" (dblclick)="playSongs(i)">
+      <tr class="fade-in-1-sec" *ngFor="let song of showAllSongs ? songs : songs?.slice(0, (songs?.length > 10 ? 9 : 10)); let i = index;" (dblclick)="playSongs(i)">
         <td>{{song.title}}</td>
         <td>
           <a [routerLink]="['../../artist', song?.artistId]">{{song?.artistName}}</a>
@@ -27,6 +27,11 @@
           <span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span><span *ngIf="song?.duration?.substring(3,4) != '0' || song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}
         </td>
       </tr>
+      <tr class="fade-in-1-sec" *ngIf="!showAllSongs && songs?.length > 10">
+        <td colspan="4" style="text-align: center; font-weight: bold;">
+          <a (click)="showAllSongs = true">Show all song results</a>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
@@ -35,7 +40,7 @@
   <h2 class="center fade-in-half-sec">Artists</h2>
 </div>
 <div class="row" style="margin-bottom: 0px;">
-  <div class="col s12 m2" *ngFor="let artist of artists" style="padding-bottom: 10px;">
+  <div class="col s12 m2" *ngFor="let artist of showAllArtists ? artists : artists?.slice(0, (artists?.length > 12 ? 11 : 12))" style="padding-bottom: 10px;">
     <div class="card transparent" *ngIf="artist">
       <div class="card-image hoverable fade-in-1-sec" #artistCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
         <div class="artist-div" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
@@ -66,13 +71,44 @@
       </div>
     </div>
   </div>
+  <div class="col s12 m2 fade-in-1-sec" *ngIf="artists?.length > 12 && !showAllArtists">
+    <div class="card transparent hoverable">
+      <div class="card-image" #moreArtistsDiv (window:resize)="0" [ngStyle]="{'min-height.px': moreArtistsDiv.offsetWidth, 'max-height.px': moreArtistsDiv.offsetWidth }">
+        <div class="valign-wrapper grey darken-3" [ngStyle]="{'min-height.px': moreArtistsDiv.offsetWidth, 'max-height.px': moreArtistsDiv.offsetWidth }">
+          <a (click)="showAllArtists = true">
+            <div class="btn transparent more-artists" #moreArtistsBtn style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': moreArtistsDiv.offsetWidth, 'max-height.px': moreArtistsDiv.offsetWidth }">
+              <div class="col s12 m4" style="padding: 0px;" *ngFor="let artist of artists?.slice(11, (artists?.length > 20 ? 19 : 20))">
+                <div class="card transparent" style="margin: 0px;">
+                  <div class="card-image" *ngIf="artist" (window:resize)="0" [ngStyle]="{'min-height.px': (moreArtistsDiv.offsetWidth / 3), 'max-height.px': (moreArtistsDiv.offsetWidth / 3) }">
+                    <div class="artist-div valign-wrapper" [ngStyle]="{'min-height.px': (moreArtistsDiv.offsetWidth / 3), 'max-height.px': (moreArtistsDiv.offsetWidth / 3) }">
+                        <img class="artist-img" src="assets/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{'min-width.px': (moreArtistsDiv.offsetWidth / 3) }"> <!--{{mediaPath}} -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col s12 m4 grey darken-3" style="padding: 0px;" *ngIf="artists?.length > 20">
+                <div class="card-image" #nMoreDiv (window:resize)="0" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
+                  <div class="valign-wrapper center-align" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
+                      <div class="col s12 grey-text" style="text-align: center; margin: 0px; padding: 0px;">+{{artists?.length - 19}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="more-artists-label valign-wrapper" style="position: absolute; width: 100%;" [ngStyle]="{'min-height.px': moreArtistsDiv.offsetWidth, 'max-height.px': moreArtistsDiv.offsetWidth }">
+                <h2 class="col s12" style="text-align: center;">Show all artist results</h2>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="row" *ngIf="albums?.length > 0" style="margin-top: 50px;">
   <h2 class="center fade-in-half-sec">Albums</h2>
 </div>
 <div class="row" style="margin-bottom: 0px;">
-  <div class="col s12 m2" *ngFor="let album of albums" style="padding-bottom: 10px;">
+  <div class="col s12 m2" *ngFor="let album of showAllAlbums ? albums : albums?.slice(0, (albums?.length > 12 ? 11 : 12))" style="padding-bottom: 10px;">
     <div class="card transparent" *ngIf="album">
       <div class="card-image hoverable fade-in-1-sec" #albumCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
         <div class="album-div" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
@@ -104,13 +140,44 @@
       </div>
     </div>
   </div>
+  <div class="col s12 m2 fade-in-1-sec" *ngIf="albums?.length > 12 && !showAllAlbums">
+    <div class="card transparent hoverable">
+      <div class="card-image" #moreAlbumsDiv (window:resize)="0" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
+        <div class="valign-wrapper grey darken-3" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
+          <a (click)="showAllAlbums = true">
+            <div class="btn transparent more-albums" #moreAlbumsBtn style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
+              <div class="col s12 m4" style="padding: 0px;" *ngFor="let album of albums?.slice(11, (albums?.length > 20 ? 19 : 20))">
+                <div class="card transparent" style="margin: 0px;">
+                  <div class="card-image" *ngIf="album" (window:resize)="0" [ngStyle]="{'min-height.px': (moreAlbumsDiv.offsetWidth / 3), 'max-height.px': (moreAlbumsDiv.offsetWidth / 3) }">
+                    <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': (moreAlbumsDiv.offsetWidth / 3), 'max-height.px': (moreAlbumsDiv.offsetWidth / 3) }">
+                        <img class="album-img" src="assets/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': (moreAlbumsDiv.offsetWidth / 3) }"> <!--{{mediaPath}} -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col s12 m4 grey darken-3" style="padding: 0px;" *ngIf="albums?.length > 20">
+                <div class="card-image" #nMoreDiv (window:resize)="0" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
+                  <div class="valign-wrapper center-align" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
+                      <div class="col s12 grey-text" style="text-align: center; margin: 0px; padding: 0px;">+{{albums?.length - 19}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="more-albums-label valign-wrapper" style="position: absolute; width: 100%;" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
+                <h2 class="col s12" style="text-align: center;">Show all album results</h2>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="row" *ngIf="playlists?.length > 0" style="margin-top: 50px;">
   <h2 class="center fade-in-half-sec">Playlists</h2>
 </div>
 <div class="row" style="margin-bottom: 0px;">
-  <div class="col s12 m2" *ngFor="let playlist of playlists">
+  <div class="col s12 m2" *ngFor="let playlist of showAllPlaylists ? playlists : playlists?.slice(0, (playlists?.length > 6 ? 5 : 6))" style="padding-bottom: 10px;">
     <div class="card transparent" *ngIf="playlist">
       <div class="card-image hoverable fade-in-1-sec" #playlistCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
         <div class="playlist-div" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
@@ -142,14 +209,36 @@
       </div>
     </div>
   </div>
+  <div class="col s12 m2 fade-in-1-sec" *ngIf="playlists?.length > 6 && !showAllPlaylists">
+    <div class="card transparent hoverable">
+      <div class="card-image" #morePlaylistsDiv (window:resize)="0" [ngStyle]="{'min-height.px': morePlaylistsDiv.offsetWidth, 'max-height.px': morePlaylistsDiv.offsetWidth }">
+        <div class="valign-wrapper grey darken-3" [ngStyle]="{'min-height.px': morePlaylistsDiv.offsetWidth, 'max-height.px': morePlaylistsDiv.offsetWidth }">
+          <a (click)="showAllPlaylists = true" style="width: 100%;">
+            <div class="btn transparent more-playlists" #morePlaylistsBtn style="padding: 0px; width: 100%;" (window:resize)="0" [ngStyle]="{'min-height.px': morePlaylistsDiv.offsetWidth, 'max-height.px': morePlaylistsDiv.offsetWidth }">
+              <div class="card-image" #nMoreDiv (window:resize)="0" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
+                <div class="valign-wrapper center-align" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
+                    <div class="col s12 grey-text" style="font-size: 30px; text-align: center; margin: 0px; padding: 0px;">+{{playlists?.length - 5}}</div>
+                </div>
+              </div>
+              <div class="more-playlists-label valign-wrapper" style="position: absolute; width: 100%; top: 0px;" [ngStyle]="{'min-height.px': morePlaylistsDiv.offsetWidth, 'max-height.px': morePlaylistsDiv.offsetWidth }">
+                <h2 class="col s12" style="text-align: center;">Show all playlist results</h2>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="row" *ngIf="profiles?.length > 0" style="margin-top: 50px;">
   <h2 class="center fade-in-half-sec">Profiles</h2>
 </div>
-<div class="row" style="margin-bottom: 0px;">
-  <ul class="collection fade-in-half-sec" style="margin-top: 20px; border: none;">
-    <li class="collection-item avatar grey darken-4" *ngFor="let profile of profiles">
+<div class="row" style="margin-bottom: 0px; padding-bottom: 20px" *ngIf="profiles?.length > 0">
+  <ul class="collection fade-in-half-sec" style="margin-top: 20px; border: none;
+   border-bottom-style: solid; border-bottom-color: white; border-bottom-width: 1px;
+   border-top-style: solid; border-top-color: white; border-top-width: 1px;">
+    <li class="collection-item avatar fade-in-1-sec grey darken-4" *ngFor="let profile of showAllProfiles ? profiles : profiles?.slice(0, (profiles?.length > 5 ? 4 : 5))">
       <a [routerLink]="['../../profile', profile?.accountId]">
         <img src="assets/images/defaults/user_profile.svg" alt="" class="circle hoverable">
       </a>
@@ -160,6 +249,11 @@
       <a href="#!" class="secondary-content">
         <a class="waves-effect waves-light btn blue-bt">Follow</a>
       </a>
+    </li>
+    <li class="fade-in-1-sec valign-wrapper center-align tracklist" style="text-align: center; font-size: 18px; font-weight: bold; min-height: 80px;" *ngIf="!showAllProfiles && profiles?.length > 5">
+      <div style="min-width: 100%;">
+        <a (click)="showAllProfiles = true">Show all user profile results</a>
+      </div>
     </li>
   </ul>
 </div>

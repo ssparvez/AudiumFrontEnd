@@ -1,3 +1,23 @@
 span h5 a:hover, span h4 a:hover, li span.profile-link a:hover {
     color: #9e9e9e;
 }
+
+.more-albums .more-albums-label h2, .more-artists .more-artists-label h2, .more-playlists .more-playlists-label h2 {
+    color: inherit;
+}
+
+.more-albums .more-albums-label h2:hover, .more-artists .more-artists-label h2:hover, .more-playlists .more-playlists-label h2:hover {
+    color: inherit;
+}
+
+.more-albums .more-albums-label, .more-artists .more-artists-label, .more-playlists .more-playlists-label {
+    text-transform: none;
+    background-color: transparent;
+    color: transparent;
+}
+
+.more-albums .more-albums-label:hover, .more-artists .more-artists-label:hover, .more-playlists .more-playlists-label:hover {
+    text-transform: none;
+    background-color: rgba(0,0,0,0.75);
+    color: white;
+}
