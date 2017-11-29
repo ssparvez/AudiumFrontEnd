@@ -100,8 +100,10 @@ export class PlaylistMenuComponent implements OnInit {
       event: $event,
       item: item,
     });
-    $event.preventDefault();
-    $event.stopPropagation();
+    if (!$event.ctrlKey) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
   }
 
   deletePlaylist(playlistToDelete) {
@@ -204,8 +206,8 @@ export class PlaylistMenuComponent implements OnInit {
   addPlaylistToQueue(playlist: Playlist) {
     this.service.get( "/playlist/" + playlist.playlistId + "/songs").subscribe((songs) => {
       this.playerService.queueSongs(songs);
-      console.log(songs);      
-    });    
+      console.log(songs);
+    });
   }
 
 }

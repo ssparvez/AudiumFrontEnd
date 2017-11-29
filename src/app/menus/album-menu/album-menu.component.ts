@@ -59,8 +59,10 @@ export class AlbumMenuComponent implements OnInit {
       event: $event,
       item: item,
     });
-    $event.preventDefault();
-    $event.stopPropagation();
+    if (!$event.ctrlKey) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
   }
 
   changeSaveStatus(album: Album, status) {
@@ -106,7 +108,7 @@ export class AlbumMenuComponent implements OnInit {
   addAlbumToQueue(album: Album) {
     this.service.get( "/albums/" + album.albumId + "/songs").subscribe((songs) => {
       this.playerService.queueSongs(songs);
-      console.log(songs);      
-    });    
+      console.log(songs);
+    });
   }
 }

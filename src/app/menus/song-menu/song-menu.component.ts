@@ -117,8 +117,10 @@ export class SongMenuComponent implements OnInit {
       event: $event,
       item: item,
     });
-    $event.preventDefault();
-    $event.stopPropagation();
+    if (!$event.ctrlKey) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
   }
 
 

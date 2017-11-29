@@ -59,8 +59,10 @@ export class ArtistMenuComponent implements OnInit {
       event: $event,
       item: item,
     });
-    $event.preventDefault();
-    $event.stopPropagation();
+    if (!$event.ctrlKey) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
   }
 
 
@@ -107,7 +109,7 @@ export class ArtistMenuComponent implements OnInit {
   addArtistToQueue(artist: Artist) {
     this.service.get( "/artists/" + artist.artistId + "/songs").subscribe((songs) => {
       this.playerService.queueSongs(songs);
-      console.log(songs);      
-    });    
+      console.log(songs);
+    });
   }
 }
