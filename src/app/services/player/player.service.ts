@@ -4,7 +4,7 @@ import { Subject } from 'rxjs/Subject';
 import { MusicplayerComponent } from '../../components/dashboard/sidenav/musicplayer/musicplayer.component';
 @Injectable()
 export class PlayerService {
-  
+
   public songsToLoadSubject = new Subject<any>();
   songsToLoad = this.songsToLoadSubject.asObservable();
   public songsToQueueSubject = new Subject<any>();
@@ -18,7 +18,9 @@ export class PlayerService {
   isPlaying: boolean;
   currentQueueIndex: number;
 
-  constructor() { }
+  constructor() {
+    this.currentSongQueue = [];
+  }
 
   loadSongs(index: number, songs: Song[]) {
     this.songsToLoadSubject.next({index: index, songs: songs});

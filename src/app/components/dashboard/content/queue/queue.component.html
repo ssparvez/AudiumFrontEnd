@@ -10,8 +10,8 @@
       </tr>
     </thead>
     <tbody class="tracklist">
-      <tr *ngFor="let song of songs; let i = index" (dblclick)="playLibrarySongs(i)" (contextmenu)="songMenu.onContextMenu($event, song)" 
-      [ngClass]="{'blue-text': queueIndex == i}">
+      <tr *ngFor="let song of songs; let i = index" (dblclick)="playLibrarySongs(i)" (contextmenu)="songMenu.onContextMenu($event, song)"
+      [ngClass]="{'current-track': queueIndex == i}">
         <!-- [ngClass]="{'playing': song.isPlaying}" -->
         <td>
           {{song?.title}}
@@ -27,15 +27,20 @@
     </tbody>
   </table>
 </div>
-<div class="row fade-in-2-sec" *ngIf="songs?.length == 0">
-  <div class="col s12">
-    <div class="card-panel large transparent z-depth-0">
-      <div class="row"></div>
+<div class="row fade-in-2-sec" *ngIf="songs?.length == 0" style="margin-bottom: 0px;">
+    <div class="col s12">
+      <div class="card-panel large transparent z-depth-0">
+        <div class="row"></div>
+      </div>
+    </div>
+    <div class="col s12">
+      <div class="card-panel large transparent z-depth-0 center">
+        <h2 class="grey-text">No songs in queue</h2>
+      </div>
     </div>
   </div>
-  <div class="col s12">
-    <div class="card-panel large transparent z-depth-0 center">
-      <h2 class="grey-text">No songs in library</h2>
-    </div>
+
+  <!-- Loading animation -->
+  <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!songs">
+    <div class="loader">Loading...</div>
   </div>
-</div>

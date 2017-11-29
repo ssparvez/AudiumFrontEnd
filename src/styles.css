@@ -353,6 +353,19 @@ input[type=range]+.thumb.active{display:none;border-radius:50% 50% 50% 0}
 .playing {
     background-color: #424242
 }
+
+.current-track {
+    color: #2196F3 !important;
+}
+
+.current-track td a {
+    color: #2196F3 !important;
+}
+
+.current-track td a:hover {
+    color: rgb(106, 176, 230) !important;
+}
+
 .song-number{
     font-size: large;
     width: 4%;
