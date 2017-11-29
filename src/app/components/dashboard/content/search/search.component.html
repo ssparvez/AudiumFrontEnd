@@ -35,20 +35,34 @@
   <h2 class="center fade-in-half-sec">Artists</h2>
 </div>
 <div class="row" style="margin-bottom: 0px;">
-  <div class="col s12 m2" *ngFor="let artist of artists">
-    <div class="card hoverable transparent fade-in-half-sec">
-      <div class="card-image" #artistcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': artistcarddiv.offsetWidth, 'max-height.px': artistcarddiv.offsetWidth }">
-        <div class="artist-div valign-wrapper" [ngStyle]="{'min-height.px': artistcarddiv.offsetWidth, 'max-height.px': artistcarddiv.offsetWidth }">
-          <a [routerLink]="['../../artist', artist?.artistId]">
-            <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{'min-width.px': artistcarddiv.offsetWidth }">
-          </a>
-          <span class="card-title black" id="small-card-title">
-            <h4 class="truncate"><a [routerLink]="['../../artist', artist?.artistId]">{{artist?.artistName}}</a></h4>
-          </span>
-          <a (click)="playArtistSongs(artist?.artistId)" class="btn-floating halfway-fab waves-effect waves-light blue-bt">
-            <i class="material-icons">play_arrow</i>
-          </a>
+  <div class="col s12 m2" *ngFor="let artist of artists" style="padding-bottom: 10px;">
+    <div class="card transparent" *ngIf="artist">
+      <div class="card-image hoverable fade-in-1-sec" #artistCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
+        <div class="artist-div" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
+          <div class="transparent artist-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
+            <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{'min-width.px': artistCardDiv.offsetWidth }">
+            <div class="artist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../../artist', artist?.artistId]" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
+              <div class="artist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
+              <ng-template #play>
+                <h1 class="col s12 artist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                  <a (click)="playArtistSongs($event, artist?.artistId)">
+                    <i class="material-icons artist-play-icon medium">play_circle_outline</i>
+                  </a>
+                </h1>
+              </ng-template>
+              <ng-template #pause>
+                <h1 class="col s12 artist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                  <a (click)="pausePlayback($event)">
+                    <i class="material-icons artist-play-icon medium">pause_circle_outline</i>
+                  </a>
+                </h1>
+              </ng-template>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="col s12 center artist-name" style="margin-top: 5px;">
+        <a class="truncate" [routerLink]="['../../artist', artist?.artistId]">{{artist?.artistName}}</a>
       </div>
     </div>
   </div>
@@ -75,7 +89,7 @@
               </ng-template>
               <ng-template #pause>
                 <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                  <a (click)="pausePlayback($event, album?.albumId)">
+                  <a (click)="pausePlayback($event)">
                     <i class="material-icons album-play-icon medium">pause_circle_outline</i>
                   </a>
                 </h1>
@@ -97,18 +111,34 @@
 </div>
 <div class="row" style="margin-bottom: 0px;">
   <div class="col s12 m2" *ngFor="let playlist of playlists">
-    <div class="card hoverable fade-in-half-sec">
-      <div class="card-image">
-        <a [routerLink]="['../../playlist', playlist?.playlistId]">
-          <img src="assets/images/everything-now.jpg">
-        </a>
-        <span class="card-title black" id="small-card-title">
-          <h4 class="truncate"><a [routerLink]="['../../playlist', playlist?.playlistId]">{{playlist?.name}}</a></h4>
-          <h5 class="truncate">by <a [routerLink]="['../../profile', playlist?.creator?.accountId]">{{playlist?.creator?.username}}</a></h5>
-        </span>
-        <a (click)="playPlaylistSongs(playlist?.playlistId)" class="btn-floating halfway-fab waves-effect waves-light blue-bt">
-          <i class="material-icons">play_arrow</i>
-        </a>
+    <div class="card transparent" *ngIf="playlist">
+      <div class="card-image hoverable fade-in-1-sec" #playlistCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
+        <div class="playlist-div" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
+          <div class="transparent playlist-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
+            <img src="assets/images/defaults/playlist.svg" [ngStyle]="{'min-width.px': playlistCardDiv.offsetWidth }">
+            <div class="playlist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: -1px;" [routerLink]="['../../playlist', playlist?.playlistId]" [ngStyle]="{ 'min-height.px': playlistCardDiv.offsetWidth + 1, 'max-height.px': playlistCardDiv.offsetWidth + 1 }">
+              <div class="playlist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
+              <ng-template #play>
+                <h1 class="col s12 playlist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                  <a (click)="playPlaylistSongs($event, playlist?.playlistId)">
+                    <i class="material-icons playlist-play-icon medium">play_circle_outline</i>
+                  </a>
+                </h1>
+              </ng-template>
+              <ng-template #pause>
+                <h1 class="col s12 playlist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                  <a (click)="pausePlayback($event)">
+                    <i class="material-icons playlist-play-icon medium">pause_circle_outline</i>
+                  </a>
+                </h1>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col s12 center card-playlist-info search-result" style="margin-top: 8px;">
+        <h4><a class="truncate" [routerLink]="['../../playlist', playlist?.playlistId]">{{playlist?.name}}</a></h4>
+        <h5 style="margin-top: 3px;"><a class="truncate" [routerLink]="['../../profile', playlist?.creator?.accountId]">{{playlist?.creator?.username}}</a></h5>
       </div>
     </div>
   </div>

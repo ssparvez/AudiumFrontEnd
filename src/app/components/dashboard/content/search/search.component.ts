@@ -74,10 +74,13 @@ export class SearchComponent implements OnInit {
     this.playerService.loadSongs(index, this.songs);
   }
 
-  playArtistSongs(artistId: number): void {
+  playArtistSongs($event: MouseEvent, artistId: number): void {
     this.generalService.get("/artists/" + artistId + "/songs").subscribe((songs) => {
       this.playerService.loadSongs(0, songs);
     });
+    this.isPlaying = true;
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
   playAlbumSongs($event: MouseEvent, albumId: number): void {
@@ -89,13 +92,16 @@ export class SearchComponent implements OnInit {
     $event.stopPropagation();
   }
 
-  playPlaylistSongs(playlistId: number): void {
+  playPlaylistSongs($event: MouseEvent, playlistId: number): void {
     this.generalService.get("/playlist/" + playlistId + "/songs").subscribe((songs) => {
       this.playerService.loadSongs(0, songs);
     });
+    this.isPlaying = true;
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
-  pausePlayback($event: MouseEvent, albumId) {
+  pausePlayback($event: MouseEvent) {
     this.isPlaying = false;
     $event.preventDefault();
     $event.stopPropagation();
