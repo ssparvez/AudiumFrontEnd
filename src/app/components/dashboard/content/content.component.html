@@ -32,14 +32,14 @@
     <router-outlet></router-outlet>
   </div>
 </main>
-<footer class="fixed" *ngIf="currentUser._role == 'BasicUser'" [@adBannerTrigger]="adBannerState">
+<footer class="fixed" *ngIf="currentUser._role == 'BasicUser' && !adBannerIsHidden" [@adBannerTrigger]>
   <div class="card transparent" style="margin: 0px;" >
     <div class="card-image">
       <a [routerLink]="">
         <img class="responsive-img" src="assets/images/cyber.gif">
       </a>
       <span class="card-title black" style="padding: 12px 12px 0px 12px;">
-        <a (click)="closeAdBanner()"><i class="material-icons white-text">close</i> </a>
+        <a (click)="adBannerIsHidden = true"><i class="material-icons white-text">close</i> </a>
       </span>
     </div>
   </div>

@@ -20,19 +20,20 @@ import { trigger, state, style, transition, animate, keyframes} from "@angular/c
       ])
     ]),
     trigger('adBannerTrigger', [
-      state('none', style({
-          display: 'none'
-      })),
-      state('maximum', style({
-          
-      })),
-      transition('maximum => none', animate('100ms'))
-  ])
+      transition(':enter', [
+        style({transform: 'translateY(100%)'}),        
+        animate('500ms ease-in-out', style({transform: 'translateY(0%)'}))
+      ]),
+      transition(':leave', [
+        style({transform: 'translateY(0)'}),        
+        animate('500ms ease-in-out', style({transform: 'translateY(100%)'}))
+      ])
+    ]),
   ]
 })
 export class ContentComponent implements OnInit {
   upgradeBannerIsHidden = false;
-  adBannerState = 'maximum';
+  adBannerIsHidden = false;
 
   public currentUser: JSON;
   public currentAccountRole;
@@ -49,9 +50,5 @@ export class ContentComponent implements OnInit {
   onEnter(keywords: string) {
     this.router.navigate(['/dash/search/', keywords]);
     console.log(keywords);
-  }
-
-  closeAdBanner() {
-    this.adBannerState = (this.adBannerState === 'none' ? 'maximum': 'none')
   }
 }
