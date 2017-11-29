@@ -12,10 +12,10 @@ import { trigger, state, style, transition, animate, keyframes} from "@angular/c
     trigger('upgradeBannerTrigger', [
       transition(':enter', [
         style({height: '0px'}),
-        animate('1000ms 2000ms ease-in-out', style({height: '30px'}))
+        animate('500ms 2000ms ease-in-out', style({height: '30px'}))
       ]),
       transition(':leave', [
-        animate('500ms ease-in-out', style({height: '0px'}))
+        animate('100ms ease-in-out', style({height: '0px'}))
       ])
     ]),
     trigger('adBannerTrigger', [
