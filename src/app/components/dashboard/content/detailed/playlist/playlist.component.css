@@ -1,17 +1,4 @@
-.detailed-follow-btn {
-    color: white;
-    font-size: large;
-    background-color: #2196f3;
-    border-radius: 25px
-}
-.detailed-follow-btn:hover {
-    transition: 0.1s;
-    transform: scale(1.1);
-}
 
-.playlist-page-btn:hover {
-    color: white;
-}
 .detailed-name {
     font-size: 260%;
     color: white;
@@ -22,10 +9,12 @@
 .playlist-info {
     padding-left: 3%;
 }
+
 .chip{
     margin-top: 1%;
     font-size: medium;
 }
+
 .loading {
     margin-top: 40vh;
  }
@@ -35,68 +24,11 @@
     font-size: x-large;
 }
 
-
 .playlist-detailed-creator > a:hover {
     color: white;
     border-bottom: 1px solid white;
 }
 
-
 .playlist-container {
     position: relative;
-}
-.playlist-playback-div {
-    position: absolute;
-    z-index: 1000;
-    bottom: 135px;
-    left: 150px;
-    display: none;
-}
-
-.card {
-    background-color: transparent;
-}
-.card:hover > .playlist-playback-div {
-    display: block;
-}
-
-.card:hover > .card-image{
-    filter: brightness(30%);
-}
-
-.playback-icon {
-    font-size: 8rem;
-    transition: 0.3s;
-}
-
-.playback-icon:hover {
-    cursor: pointer;
-    -webkit-transform: scale(1.3);
-    -ms-transform: scale(1.3);
-    transform: scale(1.3);
-
-}
-.playback-icon:active {
-    -webkit-transform: scale(0.7);
-    -ms-transform: scale(0.7);
-    transform: scale(0.7);
-}
-
-
-tr:hover > .song-number-value {
-
-    color: #1b5e20;
-}
-.noSelect {
-    outline: 0;
-    outline: none;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.detailed-follow-btn:hover {
-    background-color: #29b6f6;
 }

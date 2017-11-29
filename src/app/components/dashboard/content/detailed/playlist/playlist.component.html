@@ -1,21 +1,29 @@
 <div class="row fade-in-half-sec" *ngIf="playlist" style="margin-bottom: 0px;">
   <div class="col s6 m4 playlist-container"  (contextmenu)="playlistMenu.onContextMenu($event, playlist)">
-    <div class="card hoverable">
-      <div class="card-image" >
-        <img src="assets/images/defaults/playlist.svg">
-      </div>
-      <div class="playlist-playback-div noSelect">
-        <div *ngIf="isPlaying == true ; then pause else play"></div>
-        <ng-template #play >
-          <a class="playback-button" (click)="playPlayback()">
-            <i class="material-icons playback-icon">play_circle_outline</i>
-          </a>
-        </ng-template>
-        <ng-template #pause>
-          <a class="playback-button"  (click)="pausePlayback()">
-            <i class="material-icons playback-icon">pause_circle_outline</i>
-          </a>
-        </ng-template>
+    <div class="card transparent" *ngIf="playlist">
+      <div class="card-image hoverable fade-in-1-sec" #playlistCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
+        <div class="playlist-div" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
+          <div class="transparent playlist-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
+            <img src="assets/images/defaults/playlist.svg" [ngStyle]="{'min-width.px': playlistCardDiv.offsetWidth }">
+            <div class="playlist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: -1px; cursor: default;" [ngStyle]="{ 'min-height.px': playlistCardDiv.offsetWidth + 1, 'max-height.px': playlistCardDiv.offsetWidth + 1 }">
+              <div class="playlist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
+              <ng-template #play>
+                <h1 class="col s12 playlist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                  <a (click)="playPlayback($event, playlist?.playlistId)">
+                    <i class="material-icons playlist-play-icon large">play_circle_outline</i>
+                  </a>
+                </h1>
+              </ng-template>
+              <ng-template #pause>
+                <h1 class="col s12 playlist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                  <a (click)="pausePlayback($event, playlist?.playlistId)">
+                    <i class="material-icons playlist-play-icon large">pause_circle_outline</i>
+                  </a>
+                </h1>
+              </ng-template>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

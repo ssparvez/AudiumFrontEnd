@@ -115,14 +115,18 @@ export class PlaylistComponent implements OnInit {
     playlistsFollowed.unshift(this.playlist.playlistId);
     localStorage.setItem("playlistsfollowed", JSON.stringify(playlistsFollowed));
   }
-  pausePlayback(playlistId) {
 
+  pausePlayback($event: MouseEvent, playlistId) {
     this.isPlaying = false;
     this.playbackCondition= "play_arrow";
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
-  playPlayback(playlistId) {
+  playPlayback($event: MouseEvent, playlistId) {
     this.isPlaying = true;
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
   playbackSong($event: MouseEvent, song:Song) {
