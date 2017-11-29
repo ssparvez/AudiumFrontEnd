@@ -106,7 +106,7 @@ export class ArtistMenuComponent implements OnInit {
 
   addArtistToQueue(artist: Artist) {
     this.service.get( "/artists/" + artist.artistId + "/songs").subscribe((songs) => {
-      this.playerService.addSongsToQueue(songs);
+      this.playerService.queueSongs(songs);
       console.log(songs);      
     });    
   }

@@ -90,6 +90,10 @@ export class AlbumComponent implements OnInit {
     localStorage.setItem("albumssaved", JSON.stringify(albumsSaved));
   }
 
+  addAlbumToQueue() {
+    this.playerService.queueSongs(this.album.songs);
+  }
+
 
   playSongs(index): void {
     this.playerService.loadSongs(index, this.album.songs);

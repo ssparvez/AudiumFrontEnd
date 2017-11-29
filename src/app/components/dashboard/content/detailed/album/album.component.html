@@ -33,17 +33,23 @@
       </div>
     </div>
     <div class="row">
-      <div class="col s2" style="padding-left: 0">
+      <div class="col s3" style="padding-left: 0">
         <button mz-button class="detailed-follow-btn btn-medium waves-effect"
                 *ngIf="!isSaved()"
                 (click)="changeSaveStatus(true)" >
-          FOLLOW
+          SAVE
         </button>
         <button mz-button class="detailed-follow-btn  btn-medium waves-effect"
                 *ngIf="isSaved()"
                 (click)="changeSaveStatus(false)" >
-          UNFOLLOW
+          UNSAVE
         </button>
+      </div>
+      <div class="col s2" style="margin-top: 5px;">
+        <a (click)="addAlbumToQueue()"  mz-tooltip
+        [tooltip]="'<b>Add to Queue</b>'"
+        [position]="'right'"
+        [html]="true"><i class="material-icons">playlist_add</i></a>
       </div>
     </div>
   </div>

@@ -5,7 +5,10 @@
         <img [src]="logoImg">
         <span>Audium</span>
       </a>
-      <a class="waves-effect right logout-bt" (click)="logout()">
+      <a class="waves-effect right logout-bt" (click)="logout()" mz-tooltip
+      [tooltip]="'<b>Log out</b>'"
+      [position]="'right'"
+      [html]="true">
         <i class="material-icons">exit_to_app</i>
       </a>
     </div>

@@ -11,6 +11,8 @@ export class PlayerService {
   songsToQueue = this.songsToQueueSubject.asObservable();
   public queueIndexSubject = new Subject<number>();
   queueIndex = this.queueIndexSubject.asObservable();
+  public songSubject = new Subject<Song>();
+  song = this.songSubject.asObservable();
 
   currentSongQueue: Song[];
   isPlaying: boolean;
@@ -25,8 +27,8 @@ export class PlayerService {
     this.currentQueueIndex = index;
   }
 
-  addSongsToQueue(songs: Song[]) {
-    this.songsToLoadSubject.next(songs);
+  queueSongs(songs: Song[]) {
+    this.songsToQueueSubject.next(songs);
     this.currentSongQueue = [...this.currentSongQueue, ...songs];
   }
 }

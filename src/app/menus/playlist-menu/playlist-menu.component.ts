@@ -203,7 +203,7 @@ export class PlaylistMenuComponent implements OnInit {
 
   addPlaylistToQueue(playlist: Playlist) {
     this.service.get( "/playlist/" + playlist.playlistId + "/songs").subscribe((songs) => {
-      this.playerService.addSongsToQueue(songs);
+      this.playerService.queueSongs(songs);
       console.log(songs);      
     });    
   }

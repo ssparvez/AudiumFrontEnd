@@ -105,7 +105,7 @@ export class AlbumMenuComponent implements OnInit {
 
   addAlbumToQueue(album: Album) {
     this.service.get( "/albums/" + album.albumId + "/songs").subscribe((songs) => {
-      this.playerService.addSongsToQueue(songs);
+      this.playerService.queueSongs(songs);
       console.log(songs);      
     });    
   }
