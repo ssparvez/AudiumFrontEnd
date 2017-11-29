@@ -467,13 +467,17 @@ tr:hover > .song-number > .song-playback-icon {
     font-weight: bold;
 }
 
-.card-album-info h4 a {
+.card-album-info h4, .card-album-info h4 a {
     color: #757575;
     font-weight: normal;
 }
 
 .card-album-info h3 a:hover, .card-album-info h4 a:hover {
     color: #9e9e9e;
+}
+
+.card-album-info h4 a:hover {
+    text-decoration: underline;
 }
 
 .album-play-button-inner-wrapper, .album-play-button-inner-wrapper a {

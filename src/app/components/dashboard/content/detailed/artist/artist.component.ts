@@ -141,14 +141,17 @@ export class ArtistComponent implements OnInit {
     localStorage.setItem("artistsfollowed", JSON.stringify(artistsFollowed));
   }
 
-  pausePlayback() {
-
+  pausePlayback($event: MouseEvent, albumId) {
     this.isPlaying = false;
-    this.playbackCondition= "play_arrow";
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
-  playPlayback() {
+  playPlayback($event: MouseEvent, albumId) {
+    this.playAlbumSongs(albumId);
     this.isPlaying = true;
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
   playbackSong($event: MouseEvent, song:Song) {

@@ -73,22 +73,34 @@
         </div>
         <div class="row fade-in-half-sec" *ngIf="artist?.albums?.length > 0">
           <div class="col s12 m3 fade-in-1-sec" *ngFor="let album of showAllAlbums ? artist?.albums : artist?.albums?.slice(0, (artist?.albums?.length > 12 ? 11 : 12))">
-            <div class="card transparent hoverable">
-              <div class="card-image" *ngIf="album" #albumCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-                <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-                  <a [routerLink]="['../../album', album?.albumId]">
-                    <img class="album-img" src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': albumCardDiv.offsetWidth }">
-                  </a>
-                  <span class="card-title black" id="small-card-title">
-                    <h4 class="truncate" *ngIf="album">
-                      <a [routerLink]="['../../album', album?.albumId]">{{album?.albumTitle}}</a>
-                    </h4>
-                    <h5 class="truncate">{{album?.releaseYear?.substring(0,4)}}</h5>
-                  </span>
-                  <a (click)="playAlbumSongs(album?.albumId)" class="btn-floating halfway-fab waves-effect waves-light blue-bt" *ngIf="artist && artist.songs">
-                    <i class="material-icons">play_arrow</i>
-                  </a>
+            <div class="card transparent" *ngIf="album">
+              <div class="card-image hoverable fade-in-1-sec" #albumCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
+                <div class="album-div" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
+                  <div class="transparent album-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
+                    <img src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': albumCardDiv.offsetWidth }">
+                    <div class="album-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../../album', album?.albumId]" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
+                      <div class="album-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
+                      <ng-template #play>
+                        <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                          <a (click)="playPlayback($event, album?.albumId)">
+                            <i class="material-icons album-play-icon large">play_circle_outline</i>
+                          </a>
+                        </h1>
+                      </ng-template>
+                      <ng-template #pause>
+                        <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                          <a (click)="pausePlayback($event, album?.albumId)">
+                            <i class="material-icons album-play-icon large">pause_circle_outline</i>
+                          </a>
+                        </h1>
+                      </ng-template>
+                    </div>
+                  </div>
                 </div>
+              </div>
+              <div class="col s12 center card-album-info" style="margin-top: 8px;">
+                <h3 class="truncate"><a [routerLink]="['../../album', album?.albumId]">{{album?.albumTitle}}</a></h3>
+                <h4 style="margin-top: 3px;">{{album?.releaseYear?.substring(0,4)}}</h4>
               </div>
             </div>
           </div>
