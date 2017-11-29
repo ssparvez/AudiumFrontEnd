@@ -91,14 +91,16 @@ export class PlaylistsComponent implements OnInit {
     }
   }
 
-  pausePlayback() {
-
+  pausePlayback($event: MouseEvent, playlistId) {
     this.isPlaying = false;
-
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
-  playPlayback() {
+  playPlayback($event: MouseEvent, playlistId) {
     this.isPlaying = true;
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
   checkOwnership(playlistOwner): boolean {

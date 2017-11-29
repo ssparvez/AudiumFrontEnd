@@ -456,75 +456,75 @@ tr:hover > .song-number > .song-playback-icon {
     transform: scale(0.8);
 }
 
-/* Album */
-.card-album-info {
+/* Album/Playlist */
+.card-album-info, .card-playlist-info {
     font-size: large;
     margin-top: 5%;
 }
 
-.card-album-info h3 a {
+.card-album-info h3 a, .card-playlist-info h3 a {
     color: white;
     font-weight: bold;
 }
 
-.card-album-info h4, .card-album-info h4 a {
+.card-album-info h4, .card-album-info h4 a, .card-playlist-info h4, .card-playlist-info h4 a {
     color: #757575;
     font-weight: normal;
 }
 
-.card-album-info h3 a:hover, .card-album-info h4 a:hover {
+.card-album-info h3 a:hover, .card-album-info h4 a:hover, .card-playlist-info h3 a:hover, .card-playlist-info h4 a:hover {
     color: #9e9e9e;
 }
 
-.card-album-info h4 a:hover {
+.card-album-info h4 a:hover, .card-playlist-info h4 a:hover {
     text-decoration: underline;
 }
 
-.card-album-info.search-result h4, .card-album-info.search-result h4 a {
+.card-album-info.search-result h4, .card-album-info.search-result h4 a, .card-playlist-info.search-result h4, .card-playlist-info.search-result h4 a {
     color: white;
     font-weight: bold;
 }
 
-.card-album-info.search-result h5, .card-album-info.search-result h5 a {
+.card-album-info.search-result h5, .card-album-info.search-result h5 a, .card-playlist-info.search-result h5, .card-playlist-info.search-result h5 a {
     color: #757575;
     font-weight: normal;
 }
 
-.card-album-info.search-result h4 a:hover, .card-album-info.search-result h5 a:hover {
+.card-album-info.search-result h4 a:hover, .card-album-info.search-result h5 a:hover, .card-playlist-info.search-result h4 a:hover, .card-playlist-info.search-result h5 a:hover {
     color: #9e9e9e;
     text-decoration: none;
 }
 
-.card-album-info.search-result h5 a:hover {
+.card-album-info.search-result h5 a:hover, .card-playlist-info.search-result h5 a:hover {
     text-decoration: underline;
 }
 
-.album-play-button-inner-wrapper, .album-play-button-inner-wrapper a {
+.album-play-button-inner-wrapper, .album-play-button-inner-wrapper a, .playlist-play-button-inner-wrapper, .playlist-play-button-inner-wrapper a {
     color: inherit;
 }
 
-.album-play-button-inner-wrapper:hover {
+.album-play-button-inner-wrapper:hover, .playlist-play-button-inner-wrapper:hover {
     color: inherit;
 }
 
-.album-play-button-wrapper {
+.album-play-button-wrapper, .playlist-play-button-wrapper {
     background-color: transparent;
     color: transparent;
     cursor: pointer;
 }
 
-.album-play-button-wrapper:hover {
+.album-play-button-wrapper:hover, .playlist-play-button-wrapper:hover {
     background-color: rgba(0,0,0,0.75);
     color: white;
 }
 
-.album-play-icon {
+.album-play-icon, .playlist-play-icon {
     color: inherit;
     transition: 0.3s;
     outline:none
 }
 
-.album-play-icon:hover {
+.album-play-icon:hover, .playlist-play-icon:hover {
     color: inherit;
     cursor: pointer;
     -webkit-transform: scale(1.3);
@@ -532,7 +532,7 @@ tr:hover > .song-number > .song-playback-icon {
     transform: scale(1.3);
 }
 
-.album-play-icon:active {
+.album-play-icon:active, .playlist-play-icon:active {
     color: inherit;
     -webkit-transform: scale(0.8);
     -ms-transform: scale(0.8);

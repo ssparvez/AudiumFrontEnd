@@ -9,35 +9,36 @@
   </div>
 </div>
 <div class="row" style="margin-bottom:0;" *ngIf="playlists">
-  <div class="col s3 playlist-container fade-in-1-sec" @fade *ngFor="let playlist of playlists; let i = index;"
+  <div class="col s3 playlist-container fade-in-1-sec" @fade style="padding-bottom: 15px;" *ngFor="let playlist of playlists; let i = index;"
         (contextmenu)="playlistMenu.onContextMenu($event, playlist)" [attr.data-index]="i" >
-    <div class="card hoverable" *ngIf="playlist">
-      <div class="card-image" *ngIf="playlist">
-        <a [routerLink]="['../playlist', playlist?.playlistId]" (mouseenter)="emulateContentHover(i, true)" (mouseleave)="emulateContentHover(i, false)">
-          <img src="assets/images/defaults/playlist.svg" width="150">
-        </a>
-      </div>
-      <div class="playlist-playbutton-div noSelect">
-        <div *ngIf="isPlaying; then pause else play"></div>
-        <ng-template #play >
-          <a class="play-button" (click)="playPlayback(playlist.playlistId)">
-            <i class="material-icons play-icon">play_circle_outline</i>
-          </a>
-        </ng-template>
-        <ng-template #pause>
-          <a class="play-button"  (click)="pausePlayback(playlist.playlistId)">
-            <i class="material-icons play-icon">pause_circle_outline</i>
-          </a>
-        </ng-template>
-      </div>
-      <div class="playlist-name-div col s12 center {{emulateCardContentHover[i]}}" (mouseenter)="emulateContentHover(i, true)"
-           (mouseleave)="emulateContentHover(i, false)">
-        <a [routerLink]="['../playlist', playlist?.playlistId]" style="display:flex !important;">
-          <div class="col s11 truncate playlist-name" style="color: inherit; padding-bottom: 28px;">{{playlist?.name}}
-            <br>
-            <a class="playlist-creator" [routerLink]="['../profile', playlist?.accountId]">{{playlist?.username}}</a>
+    <div class="card transparent" *ngIf="playlist">
+      <div class="card-image hoverable fade-in-1-sec" #playlistCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
+        <div class="playlist-div" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
+          <div class="transparent playlist-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
+            <img src="assets/images/defaults/playlist.svg" [ngStyle]="{'min-width.px': playlistCardDiv.offsetWidth }">
+            <div class="playlist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: -1px;" [routerLink]="['../playlist', playlist?.playlistId]" [ngStyle]="{ 'min-height.px': playlistCardDiv.offsetWidth + 1, 'max-height.px': playlistCardDiv.offsetWidth + 1 }">
+              <div class="playlist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
+              <ng-template #play>
+                <h1 class="col s12 playlist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                  <a (click)="playPlayback($event, playlist?.playlistId)">
+                    <i class="material-icons playlist-play-icon large">play_circle_outline</i>
+                  </a>
+                </h1>
+              </ng-template>
+              <ng-template #pause>
+                <h1 class="col s12 playlist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                  <a (click)="pausePlayback($event, playlist?.playlistId)">
+                    <i class="material-icons playlist-play-icon large">pause_circle_outline</i>
+                  </a>
+                </h1>
+              </ng-template>
+            </div>
           </div>
-        </a>
+        </div>
+      </div>
+      <div class="col s12 center card-playlist-info" style="margin-top: 8px;">
+        <h3><a class="truncate" [routerLink]="['../playlist', playlist?.playlistId]">{{playlist?.name}}</a></h3>
+        <h4 style="margin-top: 3px;"><a class="truncate" [routerLink]="['../profile', playlist?.accountId]">{{playlist?.username}}</a></h4>
       </div>
     </div>
   </div>
