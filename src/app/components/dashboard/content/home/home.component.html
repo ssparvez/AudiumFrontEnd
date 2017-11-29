@@ -8,26 +8,35 @@
       <h2 class="center fade-in-half-sec" *ngIf="recentListens?.length == 0">Start Listening</h2>
     </div>
     <div class="row fade-in-1-sec" *ngIf="recentListens?.length > 0">
-      <div class="col s12 m3" *ngFor="let recent of recentListens">
-        <div class="card transparent" *ngIf="recent">
-          <div class="card-image" #albumcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
-            <div class="album-div valign-wrapper fade-in-2-sec hoverable" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
-              <a [routerLink]="['../album', recent?.albumId]" class="hoverable">
-                <img class="album-img hoverable" src="{{mediaPath}}/images/album_arts/{{recent?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'"
-                  [ngStyle]="{'min-width.px': albumcarddiv.offsetWidth }">
-              </a>
-              <span class="card-title black" id="small-card-title">
-                <h4>
-                  <a class="album-tile" [routerLink]="['../album', recent?.albumId]">{{recent?.albumTitle}}</a>
-                </h4>
-                <h5>
-                  <a class="album-tile" [routerLink]="['../artist', recent?.artistId]">{{recent?.artistName}}</a>
-                </h5>
-              </span>
-              <div (click)="playRecentSongs(recent?.albumId)" class="btn-floating halfway-fab waves-effect waves-light hoverable blue-bt z-depth-2 fade-in-half-sec">
-                <i class="material-icons" style="color: inherit; background-color: inherit; fill: inherit;">play_arrow</i>
+      <div class="col s12 m3" *ngFor="let album of recentListens">
+        <div class="card transparent" *ngIf="album">
+          <div class="card-image hoverable fade-in-1-sec" #albumCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
+            <div class="album-div" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
+              <div class="transparent album-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
+                <img src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': albumCardDiv.offsetWidth }">
+                <div class="album-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../album', album?.albumId]" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
+                  <div class="album-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
+                  <ng-template #play>
+                    <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                      <a (click)="playPlayback($event, album?.albumId)">
+                        <i class="material-icons album-play-icon large">play_circle_outline</i>
+                      </a>
+                    </h1>
+                  </ng-template>
+                  <ng-template #pause>
+                    <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                      <a (click)="pausePlayback($event, album?.albumId)">
+                        <i class="material-icons album-play-icon large">pause_circle_outline</i>
+                      </a>
+                    </h1>
+                  </ng-template>
+                </div>
               </div>
             </div>
+          </div>
+          <div class="col s12 center card-album-info" style="margin-top: 8px;">
+            <h3><a class="truncate" [routerLink]="['../album', album?.albumId]">{{album?.albumTitle}}</a></h3>
+            <h4 style="margin-top: 3px;"><a class="truncate" [routerLink]="['../artist', album?.artistId]">{{album?.artistName}}</a></h4>
           </div>
         </div>
       </div>

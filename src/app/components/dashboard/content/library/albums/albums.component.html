@@ -30,8 +30,8 @@
         </div>
       </div>
       <div class="col s12 center card-album-info" style="margin-top: 8px;">
-        <h3><a [routerLink]="['../album', album?.albumId]">{{album?.albumTitle}}</a></h3>
-        <h4 style="margin-top: 3px;"><a [routerLink]="['../artist', album?.artistId]">{{album?.artistName}}</a></h4>
+        <h3><a class="truncate" [routerLink]="['../album', album?.albumId]">{{album?.albumTitle}}</a></h3>
+        <h4 style="margin-top: 3px;"><a class="truncate" [routerLink]="['../artist', album?.artistId]">{{album?.artistName}}</a></h4>
       </div>
     </div>
   </div>

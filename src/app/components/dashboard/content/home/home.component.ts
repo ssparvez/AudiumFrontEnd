@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   topSongs: Song[];
   genres: Genre[];
   mediaPath: string;
+  public isPlaying;
   constructor(
     private generalService: GeneralService,
     private authenticationService: AuthenticationService,
@@ -77,5 +78,18 @@ export class HomeComponent implements OnInit {
 
   playTopSongs(index: number): void {
     this.playerService.loadSongs(index, this.topSongs);
+  }
+
+  pausePlayback($event: MouseEvent, albumId) {
+    this.isPlaying = false;
+    $event.preventDefault();
+    $event.stopPropagation();
+  }
+
+  playPlayback($event: MouseEvent, albumId) {
+    this.isPlaying = true;
+    this.playRecentSongs(albumId);
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 }

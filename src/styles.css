@@ -480,6 +480,25 @@ tr:hover > .song-number > .song-playback-icon {
     text-decoration: underline;
 }
 
+.card-album-info.search-result h4, .card-album-info.search-result h4 a {
+    color: white;
+    font-weight: bold;
+}
+
+.card-album-info.search-result h5, .card-album-info.search-result h5 a {
+    color: #757575;
+    font-weight: normal;
+}
+
+.card-album-info.search-result h4 a:hover, .card-album-info.search-result h5 a:hover {
+    color: #9e9e9e;
+    text-decoration: none;
+}
+
+.card-album-info.search-result h5 a:hover {
+    text-decoration: underline;
+}
+
 .album-play-button-inner-wrapper, .album-play-button-inner-wrapper a {
     color: inherit;
 }

@@ -23,6 +23,7 @@ export class SearchComponent implements OnInit {
   playlists : Playlist[];
   profiles : CustomerAccount[];
   mediaPath: string;
+  public isPlaying;
 
   constructor(
     private router: Router,
@@ -79,16 +80,25 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  playAlbumSongs(albumId: number): void {
+  playAlbumSongs($event: MouseEvent, albumId: number): void {
     this.generalService.get("/albums/" + albumId + "/songs").subscribe((songs) => {
       this.playerService.loadSongs(0, songs);
     });
+    this.isPlaying = true;
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
   playPlaylistSongs(playlistId: number): void {
     this.generalService.get("/playlist/" + playlistId + "/songs").subscribe((songs) => {
       this.playerService.loadSongs(0, songs);
     });
+  }
+
+  pausePlayback($event: MouseEvent, albumId) {
+    this.isPlaying = false;
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
 }
