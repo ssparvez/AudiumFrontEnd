@@ -98,19 +98,19 @@
                 <div class="valign-wrapper grey darken-3" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
                   <a (click)="showAllAlbums = true">
                     <div class="btn transparent more-albums" #moreAlbumsBtn style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
-                      <div class="col s12 m4" style="padding: 0px;" *ngFor="let album of artist?.albums?.slice(12, (artist?.albums?.length > 21 ? 20 : 21))">
+                      <div class="col s12 m4" style="padding: 0px;" *ngFor="let album of artist?.albums?.slice(11, (artist?.albums?.length > 20 ? 19 : 20))">
                         <div class="card transparent" style="margin: 0px;">
-                          <div class="card-image" *ngIf="album" #albumCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-                            <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-                                <img class="album-img" src="assets/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': albumCardDiv.offsetWidth }"> <!--{{mediaPath}} -->
+                          <div class="card-image" *ngIf="album" (window:resize)="0" [ngStyle]="{'min-height.px': (moreAlbumsDiv.offsetWidth / 3), 'max-height.px': (moreAlbumsDiv.offsetWidth / 3) }">
+                            <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': (moreAlbumsDiv.offsetWidth / 3), 'max-height.px': (moreAlbumsDiv.offsetWidth / 3) }">
+                                <img class="album-img" src="assets/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': (moreAlbumsDiv.offsetWidth / 3) }"> <!--{{mediaPath}} -->
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="col s12 m4 grey darken-3" style="padding: 0px;" *ngIf="artist?.albums?.length > 21 && artist?.events">
+                      <div class="col s12 m4 grey darken-3" style="padding: 0px;" *ngIf="artist?.albums?.length > 20 && artist?.events">
                         <div class="card-image" #nMoreDiv (window:resize)="0" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
                           <div class="valign-wrapper" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
-                              <div class="col s12 grey-text" style="text-align: center;">+{{artist?.albums?.length - 20}}</div>
+                              <div class="col s12 grey-text" style="text-align: center;">+{{artist?.albums?.length - 19}}</div>
                           </div>
                         </div>
                       </div>
