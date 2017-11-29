@@ -21,4 +21,37 @@ main {
   bottom: 10%;
 }
 
+.close-ad {
+    background-color: black;
+    color: white;
+}
 
+.close-ad:hover {
+    background-color: #212121;
+    color: #9e9e9e;
+}
+
+.close-ad span, .close-ad span i {
+    background-color: inherit;
+    color: inherit;
+}
+
+.upgrade-nag {
+    color: white;
+}
+
+.upgrade-nag:hover {
+    color: #eeeeee;
+}
+
+.clear-search {
+    color: rgb(66, 66, 66) !important;
+}
+
+.clear-search:hover {
+    color: #9e9e9e !important;
+}
+
+.clear-search-hidden {
+    display: none;
+}

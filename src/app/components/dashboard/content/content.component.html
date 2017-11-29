@@ -1,11 +1,11 @@
 <header>
   <div *ngIf="currentAccountRole == 'BasicUser' && !upgradeBannerIsHidden" class="green accent-3" [@upgradeBannerTrigger]='upgradeBannerState'>
     <div class="row" style="margin-bottom: 0px;">
-      <a [routerLink]="['account']" class="white-text col s4 offset-s4 center">
+      <a [routerLink]="['account']" class="upgrade-nag col s4 offset-s4 center">
         <b>Upgrade to Audium Premium!</b>
       </a>
       <a>
-        <i (click)="upgradeBannerIsHidden = true" class="material-icons white-text right">close</i>
+        <i (click)="upgradeBannerIsHidden = true" class="material-icons upgrade-nag right">close</i>
       </a>
     </div>
   </div>
@@ -18,7 +18,7 @@
             <label class="label-icon" for="search">
               <i class="large material-icons content-searchicon">search</i>
             </label>
-            <i class="material-icons">close</i>
+            <i class="material-icons clear-search" (click)="search.value = null">close</i>
           </div>
         </form>
       </div>
@@ -33,14 +33,16 @@
   </div>
 </main>
 <footer class="fixed" *ngIf="currentUser._role == 'BasicUser' && !adBannerIsHidden" [@adBannerTrigger]>
-  <div class="card transparent" style="margin: 0px;" >
+  <div class="card" style="margin: 0px;">
     <div class="card-image">
       <a [routerLink]="">
-        <img class="responsive-img" src="assets/images/cyber.gif">
+        <img class="responsive-img" src="assets/images/cyber.gif" mz-tooltip [tooltip]="'<b>Advertisement</b>'" [position]="'top'" [html]="true">
       </a>
-      <span class="card-title black" style="padding: 12px 12px 0px 12px;">
-        <a (click)="adBannerIsHidden = true"><i class="material-icons white-text">close</i> </a>
-      </span>
+      <a class="close-ad" (click)="adBannerIsHidden = true">
+        <span class="card-title" style="padding: 12px 12px 0px 12px;" mz-tooltip [tooltip]="'<b>Close advertisement</b>'" [position]="'right'" [html]="true">
+          <i class="material-icons">close</i>
+        </span>
+      </a>
     </div>
   </div>
 </footer>
