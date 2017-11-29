@@ -30,12 +30,14 @@
           </div>
         </div>
         <div class="row" style="margin-bottom: 0px;">
-          <i (click)="toggleShuffle()" class="material-icons" [ngClass]="{'white-text': !isShuffled, 'blue-text': isShuffled}">shuffle</i>
-          <i (click)="toggleRepeat()" class="material-icons" [ngClass]="{'white-text': !isRepeated, 'blue-text': isRepeated}">{{repeatIcon}}</i>
+          <i (click)="toggleShuffle()" class="material-icons" [ngClass]="{'white-text': !isShuffled, 'blue-text': isShuffled}" 
+          mz-tooltip [tooltip]="'<b>Shuffle</b>'" [position]="'top'" [html]="true">shuffle</i>
+          <i (click)="toggleRepeat()" class="material-icons" [ngClass]="{'white-text': !isRepeated, 'blue-text': isRepeated}"
+          mz-tooltip [tooltip]="'<b>Repeat</b>'" [position]="'top'" [html]="true">{{repeatIcon}}</i>
           <h4 style="display: inline; vertical-align: middle;">
             <a [routerLink]="['song', songQueue[queueIndex].songId, 'lyrics']">LYRICS</a>
           </h4>
-          <i (click)="toggleMute()" class="material-icons" style="margin-left: 16px;">{{soundIcon}}</i>
+          <i (click)="toggleMute()" class="material-icons" style="margin-left: 28px;">{{soundIcon}}</i>
           <span class="volume-slider">
             <input #ref2 [(ngModel)]="mymodel2" (ngModelChange)="changeVolume($event)" class="volume-slider" type=range min=0 max=100
               value={{volumeLevel*100}} id=fader step=1>
