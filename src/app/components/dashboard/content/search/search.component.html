@@ -116,7 +116,7 @@
         <div class="playlist-div" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
           <div class="transparent playlist-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
             <img src="assets/images/defaults/playlist.svg" [ngStyle]="{'min-width.px': playlistCardDiv.offsetWidth }">
-            <div class="playlist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: -1px;" [routerLink]="['../../playlist', playlist?.playlistId]" [ngStyle]="{ 'min-height.px': playlistCardDiv.offsetWidth + 1, 'max-height.px': playlistCardDiv.offsetWidth + 1 }">
+            <div class="playlist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: -1px;" [routerLink]="['../../playlist', playlist?.playlistId]" [ngStyle]="{ 'min-height.px': playlistCardDiv.offsetWidth + 1, 'max-height.px': playlistCardDiv.offsetWidth + 1, 'min-width.px': playlistCardDiv.offsetWidth }">
               <div class="playlist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
               <ng-template #play>
                 <h1 class="col s12 playlist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
