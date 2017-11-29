@@ -6,8 +6,8 @@
        (contextmenu)="artistMenu.onContextMenu($event, artist)">
     <div class="card transparent" *ngIf="artist">
       <div class="card-image hoverable fade-in-1-sec" #artistCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
-        <div class="artist-div valign-wrapper" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
-          <div class="transparent artist-img" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
+        <div class="artist-div" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
+          <div class="transparent artist-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
             <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{'min-width.px': artistCardDiv.offsetWidth }">
             <div class="artist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../artist', artist?.artistId]" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
               <div class="artist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>

@@ -70,15 +70,17 @@ export class AlbumsComponent implements OnInit {
     return imageUrl;
   }
 
-  pausePlayback(albumId) {
-
+  pausePlayback($event: MouseEvent, albumId) {
     this.isPlaying = false;
-
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
-  playPlayback(albumId) {
+  playPlayback($event: MouseEvent, albumId) {
     this.playAlbumSongs(albumId);
     this.isPlaying = true;
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
 }
