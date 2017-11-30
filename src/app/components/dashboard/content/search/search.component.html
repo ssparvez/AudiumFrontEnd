@@ -205,7 +205,7 @@
       </div>
       <div class="col s12 center card-playlist-info search-result" style="margin-top: 8px;">
         <h4><a class="truncate" [routerLink]="['../../playlist', playlist?.playlistId]">{{playlist?.name}}</a></h4>
-        <h5 style="margin-top: 3px;"><a class="truncate" [routerLink]="['../../profile', playlist?.creator?.accountId]">{{playlist?.creator?.username}}</a></h5>
+        <h5 style="margin-top: 3px;"><a class="truncate" [routerLink]="['../../profile', playlist?.accountId]">{{playlist?.username}}</a></h5>
       </div>
     </div>
   </div>
