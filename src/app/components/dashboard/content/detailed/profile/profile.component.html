@@ -1,65 +1,187 @@
-<div *ngIf="profile">
-<div class="card">
-    <div class="card-image">
-      <img class="responsive-img" src="assets/images/defaults/banner.png">
-      <span class="card-title black" id="large-card-title">
-        <h1 style="display: inline; vertical-align: middle;">{{currentUser.displayName}}</h1>
-        <button mz-button class="detailed-follow-btn btn-medium waves-effect"
-                *ngIf="!isFollowing() && !checkIfOwner()" (click)="changeFollowStatus(true)">
+<div class="row fade-in-1-sec" #mainContentDiv style="margin-bottom: 0px;">
+  <div class="card col s12 z-depth-0 transparent" *ngIf="profile">
+    <div class="card-image" #profileBannerDiv (window:resize)="0" [ngStyle]="{'min-height.px': (profileBannerDiv.offsetWidth / 2), 'max-height.px': (profileBannerDiv.offsetWidth / 2) }">
+      <div class="profile-banner" [ngStyle]="{'min-height.px': (profileBannerDiv.offsetWidth / 2), 'max-height.px': (profileBannerDiv.offsetWidth / 2) }">
+        <img src="{{mediaPath}}/images/profiles/{{profile?.accountId}}/Banner.jpg" onError="this.src='assets/images/defaults/banner.png'" [ngStyle]="{'min-width.px': profileBannerDiv.offsetWidth }">
+        <!-- Use the div below to apply opacity or color masks to the banner image -->
+        <div class="profile-banner-mask" style="width: 100%; height: 100%; position: absolute; top: 0px; left: 0px;"></div>
+        <span class="card-title black fade-in-half-sec" id="large-card-title">
+          <h1 class="fade-in-1-sec" style="display: inline; vertical-align: middle;">{{profile?.username}}</h1>
+          <button mz-button class="detailed-follow-btn btn-medium waves-effect"
+                  *ngIf="profile?.publicProfile && !isFollowing()" (click)="changeFollowStatus(true)">
           FOLLOW
           </button>
           <button mz-button class="detailed-follow-btn btn-medium waves-effect"
-                  *ngIf="isFollowing() && !checkIfOwner()" (click)="changeFollowStatus(false)">
+                  *ngIf="profile?.publicProfile && isFollowing()" (click)="changeFollowStatus(false)">
           UNFOLLOW
           </button>
-      </span>
-      <a class="btn-floating halfway-fab waves-effect waves-light blue-bt">
-        <i class="material-icons">play_arrow</i>
-      </a>
+        </span>
+      </div>
     </div>
   </div>
-  <mz-tab
-  [fixedTabWidth]="'true'"
-  [responsiveThreshold]="'true'"
-  >
-  <mz-tab-item [label]="'Overview'">
-    <div class="row" style="margin-top: 20px; margin-bottom: 0px;">
-      <h2 style="text-align: center;">Recently Played</h2>
-    </div>
-  </mz-tab-item>
-  <mz-tab-item [label]="'Library'">
-      <div class="row" style="margin-top: 20px; margin-bottom: 0px;">
-          <h2 style="text-align: center;">Playlists</h2>
+  <ng-container *ngIf="profile && profile?.publicProfile">
+    <mz-tab
+    [fixedTabWidth]="'true'"
+    [responsiveThreshold]="'true'"
+    >
+    <mz-tab-item [label]="'Overview'" [active]="true">
+      <div (window:resize)="0" [ngStyle]="{'min-height.px': (mainContentDiv.offsetWidth / 4)}">
+        <div class="row fade-in-half-sec" style="margin-top: 30px;" *ngIf="profile?.recentSongs">
+          <h2 style="text-align: center;">Recently Played</h2>
+        </div>
+        <div class="row fade-in-1-sec" style="padding-bottom: 35px;" *ngIf="profile?.recentSongs">
+          <table class="bordered responsive-table white-text fade-in-half-sec" *ngIf="profile?.recentSongs?.length > 0">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th class="center">Time Played</th>
+              </tr>
+            </thead>
+            <tbody class="tracklist">
+              <tr *ngFor="let song of profile?.recentSongs?.slice(0, 10); let i = index" (dblclick)="playProfileSongs(i)"
+                  [ngClass]="{'playing': song.isPlaying}" >
+                <td class="song-number">
+                  <!-- <div class="song-number-value">{{i+1}}.</div> -->
+                  <div class="song-number-value"> </div>
+                  <a (click)="playbackSong($event,song)" class="song-playback-icon"  *ngIf="!song?.isPlaying">
+                    <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">play_circle_outline</i>
+                  </a>
+                  <a (click)="pausePlayback($event)" class="song-playback-icon" *ngIf="song?.isPlaying">
+                    <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">pause</i>
+                  </a>
+                </td>
+                <td>
+                  {{song?.title}}
+                  <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
+                </td>
+                <td *ngIf="song"><a [routerLink]="['../../artist', song?.artistId]">{{song?.artistName}}</a></td>
+                <td *ngIf="song"><a [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</a></td>
+                <td class="center">{{song?.timePlayed | timeAgo}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="col s12 fade-in-half-sec" style="margin-bottom: 20px;" *ngIf="profile?.recentSongs?.length == 0">
+            <div class="card-panel large transparent z-depth-0 center">
+              <h3 class="grey-text">User hasn't listened to any songs</h3>
+            </div>
+          </div>
+        </div>
+        <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!profile?.recentSongs">
+          <div class="loader">Loading...</div>
+        </div>
       </div>
+    </mz-tab-item>
+    <mz-tab-item [label]="'Library'">
+      <div class="row fade-in-half-sec" style="margin-top: 30px;" *ngIf="profile?.createdPlaylists">
+        <h2 style="text-align: center;">Playlists</h2>
+      </div>
+      <div class="row fade-in-half-sec" *ngIf="profile?.createdPlaylists?.length > 0">
+        <div class="col s12 m3 fade-in-1-sec" *ngFor="let playlist of profile?.createdPlaylists">
+          <div class="card transparent" *ngIf="playlist">
+            <div class="card-image hoverable fade-in-1-sec" #playlistCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
+              <div class="playlist-div" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
+                <div class="transparent playlist-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
+                  <img src="assets/images/defaults/playlist.svg" [ngStyle]="{'min-width.px': playlistCardDiv.offsetWidth }">
+                  <div class="playlist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../../playlist', playlist?.playlistId]" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
+                    <div class="playlist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
+                    <ng-template #play>
+                      <h1 class="col s12 playlist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                        <a (click)="playPlaylist($event, playlist?.playlistId)">
+                          <i class="material-icons playlist-play-icon large">play_circle_outline</i>
+                        </a>
+                      </h1>
+                    </ng-template>
+                    <ng-template #pause>
+                      <h1 class="col s12 playlist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                        <a (click)="pausePlayback($event)">
+                          <i class="material-icons playlist-play-icon large">pause_circle_outline</i>
+                        </a>
+                      </h1>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 center card-playlist-info" style="margin-top: 8px;">
+              <h3><a class="truncate" [routerLink]="['../../playlist', playlist?.playlistId]">{{playlist?.name}}</a></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!profile?.createdPlaylists">
+        <div class="loader">Loading...</div>
+      </div>
+    </mz-tab-item>
+    <mz-tab-item [label]="'Following'">
+      <div class="col s12" *ngIf="profile?.recentSongs || profile?.createdPlaylists || profile?.following">
+        <ul class="collection" style="margin-top: 20px; border:none;" *ngIf="profile?.following?.length > 0">
+          <li class="collection-item avatar fade-in-1-sec grey darken-4" *ngFor="let following of profile?.following">
+            <a [routerLink]="['../../profile', following?.accountId]">
+              <img src="assets/images/defaults/user_profile.svg" alt="" class="circle hoverable">
+            </a>
+            <span class="title profile-link"><a [routerLink]="['../../profile', following?.accountId]">{{following?.username}}</a></span>
+            <p class="white-text">{{following?.followerCount}} Follower<span *ngIf="following?.followerCount != 1">s</span>
+              <br>
+            </p>
+            <a href="#!" class="secondary-content">
+              <a class="waves-effect waves-light btn blue-bt">Follow</a>
+            </a>
+          </li>
+        </ul>
+        <div class="col s12 fade-in-half-sec" style="margin-bottom: 20px;" *ngIf="profile?.following?.length == 0">
+          <div class="card-panel large transparent z-depth-0 center">
+            <h3 class="grey-text">User isn't following anyone</h3>
+          </div>
+        </div>
+      </div>
+      <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!profile?.following">
+        <div class="loader">Loading...</div>
+      </div>
+    </mz-tab-item>
+    <mz-tab-item [label]="'Followers'">
+      <div class="col s12" *ngIf="profile?.recentSongs || profile?.createdPlaylists || profile?.following || profile?.followers">
+        <ul class="collection" style="margin-top: 20px; border:none;" *ngIf="profile?.followers?.length > 0">
+          <li class="collection-item avatar fade-in-1-sec grey darken-4" *ngFor="let follower of profile?.followers">
+            <a [routerLink]="['../../profile', follower?.accountId]">
+              <img src="assets/images/defaults/user_profile.svg" alt="" class="circle hoverable">
+            </a>
+            <span class="title profile-link"><a [routerLink]="['../../profile', follower?.accountId]">{{follower?.username}}</a></span>
+            <p class="white-text">{{follower?.followerCount}} Follower<span *ngIf="follower?.followerCount != 1">s</span>
+              <br>
+            </p>
+            <a href="#!" class="secondary-content">
+              <a class="waves-effect waves-light btn blue-bt">Follow</a>
+            </a>
+          </li>
+        </ul>
+        <div class="col s12 fade-in-half-sec" style="margin-bottom: 20px;" *ngIf="profile?.followers?.length == 0">
+          <div class="card-panel large transparent z-depth-0 center">
+            <h3 class="grey-text">User has no followers</h3>
+          </div>
+        </div>
+      </div>
+      <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!profile?.followers">
+        <div class="loader">Loading...</div>
+      </div>
+    </mz-tab-item>
+    </mz-tab>
+  </ng-container>
 
-  </mz-tab-item>
-  <mz-tab-item [label]="'Following'">
-      <ul class="collection" style="margin-top: 20px; border:none;">
-          <li class="collection-item avatar grey darken-4" *ngFor="let follower of followers">
-            <img src="assets/images/kebin.jpg" alt="" class="circle">
-            <span class="title white-text">Kevin Parker</span>
-            <p class="white-text">16 Followers<br>
-            </p>
-            <a href="#!" class="secondary-content">
-                <a class="waves-effect waves-light btn blue-bt">Follow</a>
-            </a>
-          </li>
-        </ul>
-  </mz-tab-item>
-  <mz-tab-item [label]="'Followers'">
-      <ul class="collection" style="margin-top: 20px; border: none;">
-          <li class="collection-item avatar grey darken-4" *ngFor="let follower of followers">
-            <img src="assets/images/kebin.jpg" alt="" class="circle">
-            <span class="title white-text">Kevin Parker</span>
-            <p class="white-text">16 Followers<br>
-            </p>
-            <a href="#!" class="secondary-content">
-                <a class="waves-effect waves-light btn blue-bt">Follow</a>
-            </a>
-          </li>
-        </ul>
-  </mz-tab-item>
-  </mz-tab>
+  <div class="row fade-in-2-sec" *ngIf="profile && !profile?.publicProfile" style="margin-bottom: 0px;">
+    <div class="col s12">
+      <div class="card-panel large transparent z-depth-0">
+        <div class="row"></div>
+      </div>
+    </div>
+    <div class="col s12">
+      <div class="card-panel large transparent z-depth-0 center">
+        <h2 class="grey-text">User's profile is private</h2>
+      </div>
+    </div>
+  </div>
 
   <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!profile">
     <div class="loader">Loading...</div>
