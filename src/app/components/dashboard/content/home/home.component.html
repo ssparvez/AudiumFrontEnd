@@ -108,17 +108,17 @@
   </div>
   <ng-container *ngIf="genres?.length > 0">
     <div class="row">
-      <div class="col s12 m3 fade-in-half-sec" *ngFor="let genre of showAllGenres ? genres : genres?.slice(0, (genres?.length > 16 ? 15 : 16))">
+      <div class="col s12 m3 fade-in-half-sec" *ngFor="let genre of showAllGenres ? genres : genres?.slice(0, 16)">
         <a class="genre" [routerLink]="['../home']">
           <div class="card-panel hoverable center blue-bt waves-effect waves-light fade-in-half-sec" style="width: 100%;">
             <h3 class="truncate" style="color: inherit;">{{genre?.genreName}}</h3>
           </div>
         </a>
       </div>
-      <div class="col s12 m3 fade-in-half-sec" *ngIf="!showAllGenres && genres?.length > 16">
+      <div class="col s12 fade-in-half-sec" *ngIf="!showAllGenres && genres?.length > 16">
         <a class="genre">
           <div class="card-panel hoverable center blue-bt waves-effect waves-light fade-in-half-sec" style="width: 100%;">
-            <h3 class="truncate" style="color: inherit; font-weight: bold;" (click)="showAllGenres = true">More...</h3>
+            <h3 class="truncate" style="color: inherit; font-weight: bold;" (click)="showAllGenres = true">Show all genres</h3>
           </div>
         </a>
       </div>
