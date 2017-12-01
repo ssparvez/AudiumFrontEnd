@@ -160,7 +160,8 @@
       </mz-tab-item>
       <mz-tab-item [label]="'About'" class="fade-in-half-sec">
         <div class="col s10 offset-s1" style="background-color: rgba(0, 0, 0, 0.1); margin-top: 3px;" *ngIf="artist" (window:resize)="0" [ngStyle]="{'min-height.px': (mainContentDiv.offsetWidth / 4)}">
-          <h3 style="margin-top: 10px;">
+          <h2 class="center" style="margin-top: 30px;">Bio</h2>
+          <h3 style="margin-top: 10px; margin-bottom: 20px; font-weight: 500; line-height: 25px;">
             <div [innerHTML]="artist?.bio"></div>
           </h3>
         </div>
