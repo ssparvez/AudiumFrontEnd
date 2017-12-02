@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
-import {GeneralService} from "../../../../../services/general/general.service";
-import {AppError} from "../../../../../errors/AppError";
-import {Profile} from "../../../../../classes/Profile";
-import {NotFoundError} from "../../../../../errors/not-found-error";
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
+import { GeneralService } from "../../../../../services/general/general.service";
+import { AppError } from "../../../../../errors/AppError";
+import { Profile } from "../../../../../classes/Profile";
+import { NotFoundError } from "../../../../../errors/not-found-error";
 
 @Component({
   selector: 'app-profile',
@@ -19,12 +19,23 @@ export class ProfileComponent implements OnInit {
   public isOwner: boolean;
   public isPlaying: boolean;
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private service: GeneralService) {
+  // Stylization variables
+  @ViewChild('profileBannerDiv') profileBannerDiv: ElementRef;
+  bannerWidth: number = 800;
+  bannerHeight: number = 400;
+  nPlaylistsPerRow: number = 4;
+  playlistCardWidth: number = ((this.bannerWidth * 0.92) / this.nPlaylistsPerRow);
 
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private service: GeneralService,
+    private cdRef: ChangeDetectorRef
+  ) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    this.currentAccountId = this.currentUser['_accountId'];
+    if(this.currentUser != null){
+      this.currentAccountId = this.currentUser['_accountId'];
+    }
   }
 
   ngOnInit() {
@@ -42,6 +53,17 @@ export class ProfileComponent implements OnInit {
       }
       window.scrollTo(0, 0);
     });
+  }
+
+  ngAfterViewChecked() {
+    if(this.profileBannerDiv != null && this.profileBannerDiv.nativeElement != null
+        && this.profileBannerDiv.nativeElement.offsetWidth != null
+        && this.profileBannerDiv.nativeElement.offsetWidth > 0){
+      this.bannerWidth = this.profileBannerDiv.nativeElement.offsetWidth;
+      this.bannerHeight = this.bannerWidth / 2;
+      this.playlistCardWidth = ((this.bannerWidth * 0.92) / this.nPlaylistsPerRow);
+      this.cdRef.detectChanges();
+    }
   }
 
   loadProfileInfo() {

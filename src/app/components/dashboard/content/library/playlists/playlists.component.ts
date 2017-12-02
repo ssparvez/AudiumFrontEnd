@@ -27,7 +27,7 @@ export class PlaylistsComponent implements OnInit {
 
   playlists: Playlist[];
   public currentUser: JSON;
-  public isPlaying;
+  public isPlaying: boolean;
   public currentAccountId: number;
   public emulateCardContentHover: string[];
   public emulateCardContentHoverIcon: string[];
@@ -41,8 +41,9 @@ export class PlaylistsComponent implements OnInit {
     this.emulateCardContentHover = [];
     this.emulateCardContentHoverIcon = [];
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    this.currentAccountId = this.currentUser['_accountId'];
-
+    if(this.currentUser != null){
+      this.currentAccountId = this.currentUser['_accountId'];
+    }
   }
 
   ngOnInit() {
@@ -56,7 +57,9 @@ export class PlaylistsComponent implements OnInit {
       this.playlists = playlists;
       console.log(this.playlists);
     });
-    this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    if(this.currentUser == null){
+      this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    }
   }
 
   viewPlaylist(playlistId: number) {

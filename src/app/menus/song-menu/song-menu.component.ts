@@ -98,7 +98,9 @@ export class SongMenuComponent implements OnInit {
               private playerService: PlayerService,
               private router: Router) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    this.currentAccountId = this.currentUser['_accountId'];
+    if(this.currentUser != null){
+      this.currentAccountId = this.currentUser['_accountId'];
+    }
   }
 
   ngOnInit() {

@@ -25,7 +25,7 @@ export class ArtistsComponent implements OnInit {
   mediaPath: string;
   accountId: number;
   artists: Artist[];
-  public isPlaying;
+  public isPlaying: boolean;
   constructor(
     private router: Router,
     private generalService: GeneralService,
@@ -42,11 +42,16 @@ export class ArtistsComponent implements OnInit {
     });
 
     this.mediaPath = this.dataService.mediaURL;
-    this.accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;
-    this.generalService.get("/accounts/" + this.accountId + "/artists").subscribe((artists) => {
-      this.artists = artists
-      console.log(this.artists);
-    });
+    let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    if(currUser != null){
+      this.accountId = currUser._accountId;
+    }
+    if(this.accountId != null){
+      this.generalService.get("/accounts/" + this.accountId + "/artists").subscribe((artists) => {
+        this.artists = artists
+        console.log(this.artists);
+      });
+    }
   }
   playSongs(artistId: number) {
     this.generalService.get("/artists/" + artistId + "/songs").subscribe((songs) => {

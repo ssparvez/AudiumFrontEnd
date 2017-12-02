@@ -1,5 +1,5 @@
 <header>
-  <div *ngIf="currentAccountRole == 'BasicUser' && !upgradeBannerIsHidden" class="green accent-3" [@upgradeBannerTrigger]='upgradeBannerState'>
+  <div *ngIf="currentUser && currentAccountRole && currentAccountRole == 'BasicUser' && !upgradeBannerIsHidden" class="green accent-3" [@upgradeBannerTrigger]='upgradeBannerState'>
     <div class="row" style="margin-bottom: 0px;">
       <a [routerLink]="['account']" class="upgrade-nag col s4 offset-s4 center" style="padding-top: 4px;">
         <b>Upgrade to Audium Premium!</b>
@@ -9,7 +9,7 @@
       </a>
     </div>
   </div>
-  <div class="navbar">
+  <div class="navbar" *ngIf="currentUser && currentAccountRole">
     <nav style="height: 60px;">
       <div class="nav-wrapper grey darken-3">
         <form *ngIf="currentAccountRole !== 'Admin'">
@@ -25,15 +25,26 @@
     </nav>
   </div>
 </header>
-<main class="grey darken-4">
-  <div class="container" style="width: 90%;">
+<main class="grey darken-4" #mainElement>
+  <div class="container" style="width: 90%;" *ngIf="currentUser">
     <!-- Page Content goes here -->
     <div class="row"></div>
     <router-outlet></router-outlet>
   </div>
+  <div class="container" style="width: 90%;" *ngIf="!currentUser">
+    <div class="row fade-in-half-sec valign-wrapper center-align" style="min-height: 500px;">
+      <div class="row" #redirectMsgDiv style="display: none; width: 100%;">
+        <h2 class="col s12 fade-in-half-sec" style="width: 100%;">Session expired.</h2>
+        <h3 class="col s12 fade-in-half-sec" style="width: 100%; padding-top: 10px;">Redirecting to login page...</h3>
+      </div>
+      <div class="row fade-in-half-sec" #loadingDiv style="width: 100%;">
+        <div class="loader">Loading...</div>
+      </div>
+    </div>
+  </div>
 </main>
 <footer class="fixed" >
-  <div class="card" style="margin-bottom: 0px;" *ngIf="currentUser._role == 'BasicUser' && !adBannerIsHidden" [@adBannerTrigger]>
+  <div class="card" style="margin-bottom: 0px;" *ngIf="currentUser?._role && currentUser?._role == 'BasicUser' && !adBannerIsHidden" [@adBannerTrigger]>
     <div class="card-image">
       <a [routerLink]="">
         <img class="responsive-img" src="assets/images/cyber.gif" mz-tooltip [tooltip]="'<b>Advertisement</b>'" [position]="'top'" [html]="true">

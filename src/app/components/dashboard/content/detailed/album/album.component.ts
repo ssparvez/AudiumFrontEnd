@@ -27,7 +27,10 @@ export class AlbumComponent implements OnInit {
     private dataService: DataService,
     private toastService: MzToastService) {
 
-    this.currentAccountId = this.currentAccountId = JSON.parse(sessionStorage.getItem("currentUser"))['_accountId'];
+    let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    if(currUser != null){
+      this.currentAccountId = currUser['_accountId'];
+    }
   }
 
   ngOnInit() {

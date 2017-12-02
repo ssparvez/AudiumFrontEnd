@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
-import {Playlist} from "../../../../../classes/Playlist";
-import {GeneralService} from "../../../../../services/general/general.service";
-import {AppError} from "../../../../../errors/AppError";
-import {Song} from "../../../../../classes/Song";
-import {MzToastService} from "ng2-materialize";
-import {animate, style, transition, trigger} from "@angular/animations";
+import { Playlist } from "../../../../../classes/Playlist";
+import { GeneralService } from "../../../../../services/general/general.service";
+import { AppError } from "../../../../../errors/AppError";
+import { Song } from "../../../../../classes/Song";
+import { MzToastService } from "ng2-materialize";
+import { animate, style, transition, trigger } from "@angular/animations";
 
 @Component({
   selector: 'app-playlist',
@@ -38,7 +38,9 @@ export class PlaylistComponent implements OnInit {
     private service: GeneralService,
     private toastService: MzToastService ) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    this.currentAccountId = this.currentUser['_accountId'];
+    if(this.currentUser != null){
+      this.currentAccountId = this.currentUser['_accountId'];
+    }
   }
 
   ngOnInit() {

@@ -1,8 +1,8 @@
 <div class="row fade-in-1-sec" #mainContentDiv style="margin-bottom: 0px;">
-  <div class="card col s12 z-depth-0 transparent" *ngIf="artist"   (contextmenu)="artistMenu.onContextMenu($event, artist)">
-    <div class="card-image" #artistBannerDiv (window:resize)="0" [ngStyle]="{'min-height.px': (artistBannerDiv.offsetWidth / 2), 'max-height.px': (artistBannerDiv.offsetWidth / 2) }">
-      <div class="artist-banner" [ngStyle]="{'min-height.px': (artistBannerDiv.offsetWidth / 2), 'max-height.px': (artistBannerDiv.offsetWidth / 2) }">
-        <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Banner.jpg" onError="this.src='assets/images/defaults/banner.png'" [ngStyle]="{'min-width.px': artistBannerDiv.offsetWidth }">
+  <div class="card col s12 z-depth-0 transparent" *ngIf="artist" (contextmenu)="artistMenu.onContextMenu($event, artist)" style="padding-left: 0px; padding-right: 0px;">
+    <div class="card-image" #artistBannerDiv (window:resize)="0" [ngStyle]="{ 'height.px': bannerHeight }">
+      <div class="artist-banner" [ngStyle]="{ 'height.px': bannerHeight }">
+        <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Banner.jpg" onError="this.src='assets/images/defaults/banner.png'" [ngStyle]="{ 'width.px': bannerWidth }">
         <!-- Use the div below to apply opacity or color masks to the artist banner image -->
         <div class="artist-banner-mask" style="width: 100%; height: 100%; position: absolute; top: 0px; left: 0px;"></div>
         <span class="card-title black fade-in-half-sec" id="large-card-title">
@@ -74,11 +74,11 @@
         <div class="row fade-in-half-sec" *ngIf="artist?.albums?.length > 0">
           <div class="col s12 m3 fade-in-1-sec" *ngFor="let album of showAllAlbums ? artist?.albums : artist?.albums?.slice(0, (artist?.albums?.length > 12 ? 11 : 12))">
             <div class="card transparent" *ngIf="album">
-              <div class="card-image hoverable fade-in-1-sec" #albumCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-                <div class="album-div" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-                  <div class="transparent album-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-                    <img src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': albumCardDiv.offsetWidth }">
-                    <div class="album-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../../album', album?.albumId]" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
+              <div class="card-image hoverable fade-in-1-sec" [ngStyle]="{ 'height.px': albumCardWidth }">
+                <div class="album-div" [ngStyle]="{ 'height.px': albumCardWidth }">
+                  <div class="transparent album-img valign-wrapper" style="padding: 0px;" [ngStyle]="{ 'height.px': albumCardWidth }">
+                    <img src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{ 'min-width.px': albumCardWidth }">
+                    <div class="album-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../../album', album?.albumId]" [ngStyle]="{ 'height.px': albumCardWidth }">
                       <div class="album-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
                       <ng-template #play>
                         <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
@@ -89,7 +89,7 @@
                       </ng-template>
                       <ng-template #pause>
                         <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                          <a (click)="pausePlayback($event, album?.albumId)">
+                          <a (click)="pausePlayback($event)">
                             <i class="material-icons album-play-icon large">pause_circle_outline</i>
                           </a>
                         </h1>
@@ -99,34 +99,34 @@
                 </div>
               </div>
               <div class="col s12 center card-album-info" style="margin-top: 8px;">
-                <h3 class="truncate"><a [routerLink]="['../../album', album?.albumId]">{{album?.albumTitle}}</a></h3>
+                <h3 class="white-grey-link"><a class="truncate" [routerLink]="['../../album', album?.albumId]">{{album?.albumTitle}}</a></h3>
                 <h4 style="margin-top: 3px;">{{album?.releaseYear?.substring(0,4)}}</h4>
               </div>
             </div>
           </div>
           <div class="col s12 m3 fade-in-1-sec" *ngIf="artist?.albums?.length > 12 && !showAllAlbums">
             <div class="card transparent hoverable">
-              <div class="card-image" #moreAlbumsDiv (window:resize)="0" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
-                <div class="valign-wrapper grey darken-3" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
+              <div class="card-image" [ngStyle]="{ 'height.px': albumCardWidth }">
+                <div class="valign-wrapper grey darken-3" [ngStyle]="{ 'height.px': albumCardWidth }">
                   <a (click)="showAllAlbums = true">
-                    <div class="btn transparent more-albums" #moreAlbumsBtn style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
+                    <div class="btn transparent more-albums" style="padding: 0px;" [ngStyle]="{ 'height.px': albumCardWidth }">
                       <div class="col s12 m4" style="padding: 0px;" *ngFor="let album of artist?.albums?.slice(11, (artist?.albums?.length > 20 ? 19 : 20))">
                         <div class="card transparent" style="margin: 0px;">
-                          <div class="card-image" *ngIf="album" (window:resize)="0" [ngStyle]="{'min-height.px': (moreAlbumsDiv.offsetWidth / 3), 'max-height.px': (moreAlbumsDiv.offsetWidth / 3) }">
-                            <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': (moreAlbumsDiv.offsetWidth / 3), 'max-height.px': (moreAlbumsDiv.offsetWidth / 3) }">
-                                <img class="album-img" src="assets/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': (moreAlbumsDiv.offsetWidth / 3) }"> <!--{{mediaPath}} -->
+                          <div class="card-image" *ngIf="album" [ngStyle]="{ 'height.px': (albumCardWidth / 3) }">
+                            <div class="album-div valign-wrapper" [ngStyle]="{ 'height.px': (albumCardWidth / 3) }">
+                                <img class="album-img" src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{ 'min-width.px': (albumCardWidth / 3) }">
                             </div>
                           </div>
                         </div>
                       </div>
                       <div class="col s12 m4 grey darken-3" style="padding: 0px;" *ngIf="artist?.albums?.length > 20 && artist?.events">
-                        <div class="card-image" #nMoreDiv (window:resize)="0" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
-                          <div class="valign-wrapper" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
+                        <div class="card-image" [ngStyle]="{ 'height.px': (albumCardWidth / 3) }">
+                          <div class="valign-wrapper" [ngStyle]="{ 'height.px': (albumCardWidth / 3) }">
                               <div class="col s12 grey-text" style="text-align: center;">+{{artist?.albums?.length - 19}}</div>
                           </div>
                         </div>
                       </div>
-                      <div class="more-albums-label valign-wrapper" style="position: absolute; width: 100%;" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
+                      <div class="more-albums-label valign-wrapper" style="position: absolute; width: 100%;" [ngStyle]="{ 'height.px': albumCardWidth }">
                         <h2 class="col s12" style="text-align: center;">Show all</h2>
                       </div>
                     </div>
@@ -153,13 +153,13 @@
           </div>
           <div class="col s12">
             <div class="card-panel large transparent z-depth-0">
-              <div class="row" (window:resize)="0" [ngStyle]="{'min-height.px': (mainContentDiv.offsetWidth / 4)}"></div>
+              <div class="row" (window:resize)="0" [ngStyle]="{ 'min-height.px': (mainContentDiv.offsetWidth / 4) }"></div>
             </div>
           </div>
         </div>
       </mz-tab-item>
       <mz-tab-item [label]="'About'" class="fade-in-half-sec">
-        <div class="col s10 offset-s1" style="background-color: rgba(0, 0, 0, 0.1); margin-top: 3px;" *ngIf="artist" (window:resize)="0" [ngStyle]="{'min-height.px': (mainContentDiv.offsetWidth / 4)}">
+        <div class="col s10 offset-s1" style="background-color: rgba(0, 0, 0, 0.1); margin-top: 3px;" *ngIf="artist" (window:resize)="0" [ngStyle]="{ 'min-height.px': (mainContentDiv.offsetWidth / 4)}">
           <h2 class="center" style="margin-top: 30px;">Bio</h2>
           <h3 style="margin-top: 10px; margin-bottom: 20px; font-weight: 500; line-height: 25px;">
             <div [innerHTML]="artist?.bio"></div>
@@ -170,51 +170,119 @@
         </div>
       </mz-tab-item>
 
-      <mz-tab-item [label]="'Related Artists'" class="fade-in-half-sec">
-        <div (window:resize)="0" [ngStyle]="{'min-height.px': (mainContentDiv.offsetWidth / 4)}">
-          <h2 class="center" style="margin-top: 30px;">Related Artists</h2>
-          <ul class="collection" style="margin-top: 20px; border:none;">
-            <li class="collection-item avatar grey darken-4" *ngFor="let thing of things">
-              <img src="assets/images/kebin.jpg" alt="" class="circle">
-              <span class="title white-text">Kevin Parker</span>
-              <p class="white-text">16 Followers
-                <br>
-              </p>
-              <a href="#!" class="secondary-content">
-                <a class="waves-effect waves-light btn">Follow</a>
-              </a>
-            </li>
-          </ul>
+      <mz-tab-item [label]="'Similar Artists'" class="fade-in-half-sec">
+        <div (window:resize)="0" [ngStyle]="{ 'min-height.px': (mainContentDiv.offsetWidth / 4)}">
+          <div *ngIf="artist && similarArtists">
+            <h2 class="center" style="margin-top: 30px;">Similar Artists</h2>
+          </div>
+          <div *ngIf="artist && similarArtists?.length > 0">
+            <div class="col s3 artist-container fade-in-1-sec" style="padding-bottom: 15px;"
+            *ngFor="let similarArtist of showAllSimilarArtists ? similarArtists : similarArtists?.slice(0, (similarArtists?.length > 12 ? 11 : 12)); let i = index;"
+            (contextmenu)="artistMenu.onContextMenu($event, similarArtist)">
+              <div class="card transparent" *ngIf="similarArtist">
+                <div class="card-image hoverable fade-in-1-sec" [ngStyle]="{ 'height.px': similarArtistCardWidth }">
+                  <div class="artist-div" [ngStyle]="{ 'height.px': similarArtistCardWidth }">
+                    <div class="transparent artist-img valign-wrapper" style="padding: 0px;" [ngStyle]="{ 'height.px': similarArtistCardWidth }">
+                      <img src="{{mediaPath}}/images/artists/{{similarArtist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{ 'min-width.px': similarArtistCardWidth }">
+                      <div class="artist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../../artist', similarArtist?.artistId]" [ngStyle]="{ 'height.px': similarArtistCardWidth }">
+                        <div class="artist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
+                        <ng-template #play>
+                          <h1 class="col s12 artist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                            <a (click)="playArtistSongs(i, similarArtist?.songs)">
+                              <i class="material-icons artist-play-icon large">play_circle_outline</i>
+                            </a>
+                          </h1>
+                        </ng-template>
+                        <ng-template #pause>
+                          <h1 class="col s12 artist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
+                            <a (click)="pausePlayback($event)">
+                              <i class="material-icons artist-play-icon large">pause_circle_outline</i>
+                            </a>
+                          </h1>
+                        </ng-template>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col s12 center" style="margin-top: 5px;">
+                  <a class="white-grey-link bold-text truncate" style="font-size: 18px;" [routerLink]="['../../artist', similarArtist?.artistId]">{{similarArtist?.artistName}}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col s12 fade-in-half-sec" style="margin-bottom: 40px;" *ngIf="artist && similarArtists?.length == 0">
+            <div class="card-panel large transparent z-depth-0 center">
+              <h3 class="grey-text">No similar artists</h3>
+            </div>
+          </div>
+          <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!artist || !similarArtists">
+            <div class="loader">Loading...</div>
+          </div>
         </div>
       </mz-tab-item>
 
       <mz-tab-item [label]="'Events'" class="fade-in-half-sec">
-        <div (window:resize)="0" [ngStyle]="{'min-height.px': (mainContentDiv.offsetWidth / 4)}">
+        <div (window:resize)="0" [ngStyle]="{ 'min-height.px': (mainContentDiv.offsetWidth / 4)}">
           <div class="row fade-in-half-sec" *ngIf="artist?.events">
-            <h2 class="center" style="margin-top: 30px;">Events</h2>
-            <ul class="collection" style="margin-top: 20px; border:none;" *ngIf="artist?.events?.length > 0">
-              <li class="collection-item grey darken-4" *ngFor="let event of artist?.events">
-                <div class="row" style="margin-bottom: 0px;">
-                <div class="col m1">
-                  <div style="width: 50px;" *ngIf="event?.eventDate">
-                    <div style="height: 20px; background-color: red;"><h4 class="white-text center" style="padding-top: 2px;">{{monthNames[(+event?.eventDate?.toString().substring(5,7))-1]}}</h4></div>
-                    <div style="height: 30px; background-color: white;"><h3 class="black-text center" style="padding-top: 5px;"><b>{{(event?.eventDate?.toString().substring(8,10))}}</b></h3></div>
-                  </div>
-                </div>
-                <div class="col m8">
-                  <div class="row">
-                    <div class="col m5">
-                      <h4>{{event?.eventTitle}}</h4>
-                    </div>
-                    <div class="col m7" *ngIf="event?.address">
-                        <i class="material-icons white-text">location_on</i>
-                        <span (click)="navigateToMaps(event?.address)" style="font-size: 16px; font-weight: 500; color: #ccc; cursor: pointer;">{{event?.address?.addressLine1}}, {{event?.address?.city}} {{event?.address?.state}}</span>
+            <h2 class="center" style="margin-top: 30px;">Upcoming Events</h2>
+            <ul class="collection" style="margin-top: 20px; border:none; border-bottom-style: solid; border-bottom-color: white; border-bottom-width: 1px;"
+            *ngIf="artist?.events?.length > 0">
+              <li class="collection-item grey darken-4 fade-in-half-sec" *ngFor="let event of showAllEvents ? artist?.events : artist?.events?.slice(0, (artist?.events?.length > 10 ? 9 : 10))">
+                <div class="row valign-wrapper" style="margin-bottom: 0px;">
+                  <div class="col s1" style="padding-left: 0px; padding-right: 0px;">
+                    <div style="width: 50px;" *ngIf="event?.eventDate" mz-tooltip
+                    [tooltip]="event?.eventDate?.slice(0, 10) == today ? 'Today' : getFullDate(event?.eventDate)"
+                    [position]="'left'" [html]="true">
+                      <div style="height: 20px;" [ngStyle]="{ 'background-color': (event?.eventDate < today ? 'grey' : 'red') }"><h4 class="white-text center" style="padding-top: 2px;">{{monthNamesShort[(+event?.eventDate?.substring(5,7))-1]}}</h4></div>
+                      <div style="height: 30px; background-color: white;">
+                        <h3 class="center" style="padding-top: 5px;" [ngStyle]="{ 'color': (event?.eventDate < today ? 'rgb(89,89,89)' : 'black') }">
+                          <b>{{(event?.eventDate?.substring(8,10))}}</b>
+                        </h3>
+                      </div>
                     </div>
                   </div>
+                  <div class="col s8">
+                    <div class="row valign-wrapper" style="margin-bottom: 0px;">
+                      <div class="col s7">
+                        <div class="row" #eventTitleRow style="margin-bottom: 0px;">
+                          <div class="col m3" style="padding-left: 0px;">
+                            <div class="row valign-wrapper" style="margin-bottom: 0px;" (window:resize)="0" [ngStyle]="{ 'min-height.px': eventTitleRow.offsetHeight, 'max-height.px': eventTitleRow.offsetHeight }">
+                              <div class="col m12" style="padding: 0px;">
+                                <h4 class="text-lighten-1" style="font-weight: normal;" [ngClass]="(event?.eventDate < today ? 'grey-text' : (event?.isCancelled ? 'red-text' : (event?.eventDate > today ? 'blue-text' : 'green-text')))">
+                                  <div *ngIf="!event?.isCancelled && event?.eventDate?.slice(0, 10) == today" style="font-weight: bold;">Today</div>
+                                  <div *ngIf="!event?.isCancelled && event?.eventDate?.slice(0, 10) > today">Upcoming</div>
+                                  <div *ngIf="!event?.isCancelled && event?.eventDate?.slice(0, 10) < today">Ended</div>
+                                  <div *ngIf="event?.isCancelled">Cancelled</div>
+                                </h4>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col m9" style="padding-left: 0px;">
+                            <div class="row valign-wrapper" style="margin-bottom: 0px;" (window:resize)="0" [ngStyle]="{ 'min-height.px': eventTitleRow.offsetHeight, 'max-height.px': eventTitleRow.offsetHeight }">
+                              <h4 class="white-text">{{event?.eventTitle}}</h4>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col s5" *ngIf="event?.address">
+                        <a class="white-grey-link" (click)="navigateToMaps(event?.address)" mz-tooltip [tooltip]="'View on Google Maps'" [position]="'right'" [html]="true">
+                          <span style="font-size: 16px; font-weight: 500;"><i class="material-icons">location_on</i> {{event?.address?.addressLine1}}, {{event?.address?.city}} {{event?.address?.state}}</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <a class="right waves-effect waves-light btn blue-bt" (click)="navigateToTickets(event?.eventTitle)"
+                    mz-tooltip [tooltip]="'Get tickets on TicketMaster'" [position]="'left'" [html]="true"
+                    [ngClass]="((event?.isCancelled || event?.eventDate < today) ? 'disabled' : '')">
+                      Get Tickets
+                    </a>
+                  </div>
                 </div>
-                <div class="col m3">
-                  <a class="right waves-effect waves-light btn blue-bt">Get Tickets</a>
-                </div>
+              </li>
+              <li class="fade-in-1-sec valign-wrapper center-align" style="text-align: center; font-size: 18px; font-weight: bold; min-height: 50px;" *ngIf="!showAllEvents && artist?.events?.length > 10">
+                <div style="min-width: 100%;">
+                  <a class="white-grey-link" (click)="showAllEvents = true">Show all upcoming events</a>
                 </div>
               </li>
             </ul>
