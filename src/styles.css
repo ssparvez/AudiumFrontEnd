@@ -79,7 +79,7 @@ h5 {
     color: grey;
 }
 
-.tabs .tab a {
+.tabs .tab a, .white-grey-link {
     color: white;
 }
 
@@ -117,7 +117,7 @@ h5 {
     color: rgb(150, 209, 252);
 }
 
-span h5 a.album-tile:hover, span h4 a.album-tile:hover{
+span h5 a.album-tile:hover, span h4 a.album-tile:hover, .white-grey-link:hover {
     color: #9e9e9e;
 }
 
@@ -595,7 +595,6 @@ tr:hover > .song-number > .song-playback-icon {
 }
 
 /* Search Box */
-
 input[type=search] {
     font-size: large;
 }
