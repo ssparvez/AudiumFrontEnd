@@ -191,30 +191,65 @@
       <mz-tab-item [label]="'Events'" class="fade-in-half-sec">
         <div (window:resize)="0" [ngStyle]="{'min-height.px': (mainContentDiv.offsetWidth / 4)}">
           <div class="row fade-in-half-sec" *ngIf="artist?.events">
-            <h2 class="center" style="margin-top: 30px;">Events</h2>
-            <ul class="collection" style="margin-top: 20px; border:none;" *ngIf="artist?.events?.length > 0">
-              <li class="collection-item grey darken-4" *ngFor="let event of artist?.events">
-                <div class="row" style="margin-bottom: 0px;">
-                <div class="col m1">
-                  <div style="width: 50px;" *ngIf="event?.eventDate">
-                    <div style="height: 20px; background-color: red;"><h4 class="white-text center" style="padding-top: 2px;">{{monthNames[(+event?.eventDate?.toString().substring(5,7))-1]}}</h4></div>
-                    <div style="height: 30px; background-color: white;"><h3 class="black-text center" style="padding-top: 5px;"><b>{{(event?.eventDate?.toString().substring(8,10))}}</b></h3></div>
-                  </div>
-                </div>
-                <div class="col m8">
-                  <div class="row">
-                    <div class="col m5">
-                      <h4>{{event?.eventTitle}}</h4>
-                    </div>
-                    <div class="col m7" *ngIf="event?.address">
-                        <i class="material-icons white-text">location_on</i>
-                        <span (click)="navigateToMaps(event?.address)" style="font-size: 16px; font-weight: 500; color: #ccc; cursor: pointer;">{{event?.address?.addressLine1}}, {{event?.address?.city}} {{event?.address?.state}}</span>
+            <h2 class="center" style="margin-top: 30px;">Upcoming Events</h2>
+            <ul class="collection" style="margin-top: 20px; border:none; border-bottom-style: solid; border-bottom-color: white; border-bottom-width: 1px;"
+            *ngIf="artist?.events?.length > 0">
+              <li class="collection-item grey darken-4 fade-in-half-sec" *ngFor="let event of showAllEvents ? artist?.events : artist?.events?.slice(0, (artist?.events?.length > 10 ? 9 : 10))">
+                <div class="row valign-wrapper" style="margin-bottom: 0px;">
+                  <div class="col s1" style="padding-left: 0px; padding-right: 0px;">
+                    <div style="width: 50px;" *ngIf="event?.eventDate" mz-tooltip
+                    [tooltip]="event?.eventDate?.slice(0, 10) == today ? 'Today' : getFullDate(event?.eventDate)"
+                    [position]="'left'" [html]="true">
+                      <div style="height: 20px;" [ngStyle]="{ 'background-color': (event?.eventDate < today ? 'grey' : 'red') }"><h4 class="white-text center" style="padding-top: 2px;">{{monthNamesShort[(+event?.eventDate?.substring(5,7))-1]}}</h4></div>
+                      <div style="height: 30px; background-color: white;">
+                        <h3 class="center" style="padding-top: 5px;" [ngStyle]="{ 'color': (event?.eventDate < today ? 'rgb(89,89,89)' : 'black') }">
+                          <b>{{(event?.eventDate?.substring(8,10))}}</b>
+                        </h3>
+                      </div>
                     </div>
                   </div>
+                  <div class="col s8">
+                    <div class="row valign-wrapper" style="margin-bottom: 0px;">
+                      <div class="col s7">
+                        <div class="row" #eventTitleRow style="margin-bottom: 0px;">
+                          <div class="col m3" style="padding-left: 0px;">
+                            <div class="row valign-wrapper" style="margin-bottom: 0px;" (window:resize)="0" [ngStyle]="{ 'min-height.px': eventTitleRow.offsetHeight, 'max-height.px': eventTitleRow.offsetHeight }">
+                              <div class="col m12" style="padding: 0px;">
+                                <h4 class="text-lighten-1" style="font-weight: normal;" [ngClass]="(event?.eventDate < today ? 'grey-text' : (event?.isCancelled ? 'red-text' : (event?.eventDate > today ? 'blue-text' : 'green-text')))">
+                                  <div *ngIf="!event?.isCancelled && event?.eventDate?.slice(0, 10) == today" style="font-weight: bold;">Today</div>
+                                  <div *ngIf="!event?.isCancelled && event?.eventDate?.slice(0, 10) > today">Upcoming</div>
+                                  <div *ngIf="!event?.isCancelled && event?.eventDate?.slice(0, 10) < today">Ended</div>
+                                  <div *ngIf="event?.isCancelled">Cancelled</div>
+                                </h4>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col m9" style="padding-left: 0px;">
+                            <div class="row valign-wrapper" style="margin-bottom: 0px;" (window:resize)="0" [ngStyle]="{ 'min-height.px': eventTitleRow.offsetHeight, 'max-height.px': eventTitleRow.offsetHeight }">
+                              <h4 class="white-text">{{event?.eventTitle}}</h4>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col s5" *ngIf="event?.address">
+                        <a class="white-grey-link" (click)="navigateToMaps(event?.address)" mz-tooltip [tooltip]="'View on Google Maps'" [position]="'right'" [html]="true">
+                          <span style="font-size: 16px; font-weight: 500;"><i class="material-icons">location_on</i> {{event?.address?.addressLine1}}, {{event?.address?.city}} {{event?.address?.state}}</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col s3">
+                    <a class="right waves-effect waves-light btn blue-bt" (click)="navigateToTickets(event?.eventTitle)"
+                    mz-tooltip [tooltip]="'Get tickets on TicketMaster'" [position]="'left'" [html]="true"
+                    [ngClass]="((event?.isCancelled || event?.eventDate < today) ? 'disabled' : '')">
+                      Get Tickets
+                    </a>
+                  </div>
                 </div>
-                <div class="col m3">
-                  <a class="right waves-effect waves-light btn blue-bt">Get Tickets</a>
-                </div>
+              </li>
+              <li class="fade-in-1-sec valign-wrapper center-align" style="text-align: center; font-size: 18px; font-weight: bold; min-height: 50px;" *ngIf="!showAllEvents && artist?.events?.length > 10">
+                <div style="min-width: 100%;">
+                  <a class="white-grey-link" (click)="showAllEvents = true">Show all upcoming events</a>
                 </div>
               </li>
             </ul>

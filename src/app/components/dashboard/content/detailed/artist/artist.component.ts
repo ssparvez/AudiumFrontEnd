@@ -31,13 +31,15 @@ export class ArtistComponent implements OnInit {
   private id;
   artist: Artist;
   mediaPath: string;
-  events: Event[];
-  showAllSongs: boolean;
-  showAllAlbums: boolean;
+  showAllSongs: boolean = false;
+  showAllAlbums: boolean = false;
+  showAllEvents: boolean = false;
   public currentAccountId: number;
   public isPlaying;
   public playbackCondition = "play_circle_outline";
-  monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+  monthNames:      string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+  monthNamesShort: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+  today: string = ("" + new Date().getFullYear());
 
   constructor(
     private route: ActivatedRoute,
@@ -48,19 +50,30 @@ export class ArtistComponent implements OnInit {
     private toastService: MzToastService
   ) {
     this.currentAccountId = JSON.parse(sessionStorage.getItem("currentUser"))['_accountId'];
-    this.showAllSongs = false;
-    this.showAllAlbums = false;
   }
 
 
   ngOnInit() {
+    let date = new Date();
+
     this.router.events.subscribe((event) => {
       if (!(event instanceof NavigationEnd)) {
           return;
       }
       window.scrollTo(0, 0);
     });
-    this.events = [];
+
+    if((date.getMonth()+1) < 10){
+      this.today += "-0" + (date.getMonth()+1);
+    }else{
+      this.today += "-" + (date.getMonth()+1);
+    }
+    if(date.getDate() < 10){
+      this.today += "-0" + date.getDate();
+    }else{
+      this.today += "-" + date.getDate();
+    }
+
     this.mediaPath = this.dataService.mediaURL;
     this.route.params.subscribe(param => {
       this.id = + param['id'];
@@ -77,7 +90,7 @@ export class ArtistComponent implements OnInit {
           this.generalService.get("/artists/" + this.id + "/albums").subscribe((albums) => {
             this.artist.albums = albums;
             // Get artist upcoming events
-            this.generalService.get("/artist/" + this.id + "/events").subscribe((events) => {
+            this.generalService.get("/artists/" + this.id + "/events").subscribe((events) => {
               this.artist.events = events;
             });
           });
@@ -95,9 +108,28 @@ export class ArtistComponent implements OnInit {
       this.playerService.loadSongs(0, songs);
     });
   }
+
   navigateToMaps(address: Address) {
     window.open("https://maps.google.com/?q=" + address.addressLine1 + ", " + address.city + " " + address.state, "_blank");
-}
+  }
+
+  navigateToTickets(eventTitle: string) {
+    let navUrl: string = "https://www.ticketmaster.com/search?q=";
+    let firstTerm: boolean = true;
+    for(let term of eventTitle.replace("+", "%2B").split(" ")){
+      if(!firstTerm){
+        navUrl += "+";
+      }else{
+        firstTerm = false;
+      }
+      navUrl += term;
+    }
+    window.open(navUrl);
+  }
+
+  getFullDate(date: string) {
+    return this.monthNames[(+date.substring(5,7))-1] + ' ' + parseInt(date.substring(8,10)) + ', ' + date.substring(0,4)
+  }
 
   changeFollowStatus(status) {
     this.generalService.update('/accounts/' + this.currentAccountId + '/artist/'  + this.id + '/follow/'
