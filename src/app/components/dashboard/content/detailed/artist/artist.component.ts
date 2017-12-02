@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { Artist } from '../../../../../classes/Artist';
 import { GeneralService } from '../../../../../services/general/general.service';
@@ -7,9 +7,9 @@ import { DataService } from '../../../../../services/data.service';
 import { Song } from '../../../../../classes/Song';
 import { Event } from '../../../../../classes/Event';
 import { Address } from '../../../../../classes/Address';
-import {MzToastService} from "ng2-materialize";
-import {AppError} from "../../../../../errors/AppError";
-import {animate, style, transition, trigger} from "@angular/animations";
+import { MzToastService } from "ng2-materialize";
+import { AppError } from "../../../../../errors/AppError";
+import { animate, style, transition, trigger } from "@angular/animations";
 
 @Component({
   selector: 'app-artist',
@@ -30,9 +30,11 @@ export class ArtistComponent implements OnInit {
 
   private id;
   artist: Artist;
+  similarArtists: Artist[];
   mediaPath: string;
   showAllSongs: boolean = false;
   showAllAlbums: boolean = false;
+  showAllSimilarArtists: boolean = false;
   showAllEvents: boolean = false;
   public currentAccountId: number;
   public isPlaying;
@@ -41,13 +43,23 @@ export class ArtistComponent implements OnInit {
   monthNamesShort: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
   today: string = ("" + new Date().getFullYear());
 
+  // Stylization variables
+  @ViewChild('artistBannerDiv') artistBannerDiv: ElementRef;
+  bannerWidth: number = 800;
+  bannerHeight: number = 400;
+  nAlbumsPerRow: number = 4;
+  albumCardWidth: number = ((this.bannerWidth * 0.92) / this.nAlbumsPerRow);
+  nSimilarArtistsPerRow: number = 4;
+  similarArtistCardWidth: number = ((this.bannerWidth * 0.92) / this.nSimilarArtistsPerRow);
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private generalService: GeneralService,
     private playerService: PlayerService,
     private dataService: DataService,
-    private toastService: MzToastService
+    private toastService: MzToastService,
+    private cdRef: ChangeDetectorRef
   ) {
     this.currentAccountId = JSON.parse(sessionStorage.getItem("currentUser"))['_accountId'];
   }
@@ -89,14 +101,30 @@ export class ArtistComponent implements OnInit {
           // Get artist albums
           this.generalService.get("/artists/" + this.id + "/albums").subscribe((albums) => {
             this.artist.albums = albums;
-            // Get artist upcoming events
-            this.generalService.get("/artists/" + this.id + "/events").subscribe((events) => {
-              this.artist.events = events;
+            // Get similar artists
+            this.generalService.get("/artists/" + this.id + "/similar").subscribe((similarArtists) => {
+              this.similarArtists = similarArtists;
+              // Get artist upcoming events
+              this.generalService.get("/artists/" + this.id + "/events").subscribe((events) => {
+                this.artist.events = events;
+              });
             });
           });
         });
       });
     });
+  }
+
+  ngAfterViewChecked() {
+    if(this.artistBannerDiv != null && this.artistBannerDiv.nativeElement != null
+        && this.artistBannerDiv.nativeElement.offsetWidth != null
+        && this.artistBannerDiv.nativeElement.offsetWidth > 0){
+      this.bannerWidth = this.artistBannerDiv.nativeElement.offsetWidth;
+      this.bannerHeight = this.bannerWidth / 2;
+      this.albumCardWidth = ((this.bannerWidth * 0.92) / this.nAlbumsPerRow);
+      this.similarArtistCardWidth = ((this.bannerWidth * 0.92) / this.nSimilarArtistsPerRow);
+      this.cdRef.detectChanges();
+    }
   }
 
   playArtistSongs(index: number, songs: Song[]): void {
@@ -173,7 +201,7 @@ export class ArtistComponent implements OnInit {
     localStorage.setItem("artistsfollowed", JSON.stringify(artistsFollowed));
   }
 
-  pausePlayback($event: MouseEvent, albumId) {
+  pausePlayback($event: MouseEvent) {
     this.isPlaying = false;
     $event.preventDefault();
     $event.stopPropagation();
