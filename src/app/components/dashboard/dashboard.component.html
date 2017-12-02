@@ -1,3 +1,4 @@
 <app-sidenav *ngIf="currentAccountRole === 'BasicUser' || 'PremiumUser'"></app-sidenav>
 <app-admin-sidenav *ngIf="currentAccountRole === 'Admin'"></app-admin-sidenav>
+<app-artist-sidenav *ngIf="currentAccountRole === 'Artist'"></app-artist-sidenav>
 <app-content></app-content>

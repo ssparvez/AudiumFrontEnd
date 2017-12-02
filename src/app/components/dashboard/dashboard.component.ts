@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   constructor() {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     this.currentAccountRole = this.currentUser['_role'];
+    console.log(this.currentAccountRole);
   }
 
   ngOnInit() {

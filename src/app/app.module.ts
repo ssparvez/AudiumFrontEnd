@@ -47,6 +47,7 @@ import { AdminAccountsComponent } from './components/dashboard/content/admin/adm
 import { AdminContentComponent } from "./components/dashboard/content/admin/admin-content/admin-content.component";
 import { AccountsComponent } from "./modals/admin/accounts/accounts.component";
 import { ArtistHomeComponent } from "./components/dashboard/content/artist/artist-home/artist-home.component";
+import { ArtistSidenavComponent } from "./components/dashboard/sidenav/artist-sidenav/artist-sidenav.component";
 
 // Services
 import { AuthenticationService } from "./services/authentication/authentication.service";
@@ -84,7 +85,7 @@ const appRoutes: Routes = [
     {path: "admin-content" , component: AdminContentComponent},
     {path: "admin-artists" , component: AdminArtistsComponent},    
     // ARTIST
-    {path: "artist-home" , component: AdminHomeComponent},
+    {path: "artist-home" , component: ArtistHomeComponent},
     // DETAILED
     {path: "artist/:id", component: ArtistComponent},
     {path: "album/:id", component: AlbumComponent},
@@ -155,6 +156,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ArtistSearchComponent,
     AdminModifyProfilesComponent,
     AlbumSearchComponent,
+    ArtistHomeComponent,
+    ArtistSidenavComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,
