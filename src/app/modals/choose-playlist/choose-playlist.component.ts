@@ -54,7 +54,7 @@ export class ChoosePlaylistComponent implements OnInit {
       response => {
         this.closeDialog(true);
       }, (error: AppError) => {
-        this.toastService.show("Song was not added", 3000, 'blue');
+        this.toastService.show("Song was not added", 3000, 'red');
       }
     );
   }

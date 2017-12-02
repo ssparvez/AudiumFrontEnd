@@ -65,7 +65,7 @@ export class AlbumComponent implements OnInit {
             this.toastService.show("Album was removed", 3000, 'blue');
           }
         }, (error: AppError) => {
-          this.toastService.show("Album save status could not be changed", 3000, 'blue');
+          this.toastService.show("Album save status could not be changed", 3000, 'red');
         }
       );
   }

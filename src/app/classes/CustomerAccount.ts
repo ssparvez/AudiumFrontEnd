@@ -8,6 +8,7 @@ export class CustomerAccount extends Account {
   private _gender: string;
   private _profilePicURL: string;
   private _followerCount?: number;
+  private _bio?: string;
 
   constructor() {
     super();
@@ -43,6 +44,15 @@ export class CustomerAccount extends Account {
 
   set followerCount(value: number) {
     this._followerCount = value;
+  }
+
+
+  get bio(): string {
+    return this._bio;
+  }
+
+  set bio(value: string) {
+    this._bio = value;
   }
 
   loadWithJSON( json) {

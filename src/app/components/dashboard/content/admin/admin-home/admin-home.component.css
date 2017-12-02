@@ -9,11 +9,11 @@
     background-color: white;
 }
 .admin-console-button:hover {
-    background-color: #29b6f6;
+    background-color: white;
 }
 .admin-console-button:hover > .admin-icon {
-    background-color: #29b6f6;
-    color: white;
+    background-color: white;
+    color: #01579b  ;;
 }
 
 .admin-button-label {

@@ -35,44 +35,17 @@ button {
     color: white;
 }
 
-/** FOR ADDING **/
 
-.admin-content-add > .row > .input-field input{
+
+.admin-content-inputs > .row > .input-field input{
     margin-top: 5%;
     font-size: x-large;
 }
 
-.admin-content-add > .row > .input-field  label {
+.admin-content-inputs > .row > .input-field  label {
     font-size: x-large;
 }
 
-
-input[type="checkbox"], input[type="radio"] + label {
-    pointer-events: auto;
-
+textarea {
+    min-height: 200px;
 }
-
-input[type="radio"]:checked + label:after {
-    background-color: #2196f3;
-}
-
-.radio-button-title {
-    color: white;
-}
-
-.radio-button label {
-    padding: 0;
-    padding-left: 30px;
-}
-
-/** FOR DELETING  **/
-
-.admin-content-delete > .row > .input-field > input{
-    margin-top: 5%;
-    font-size: x-large;
-}
-
-.admin-content-delete > .row > .input-field label {
-    font-size: x-large;
-}
-

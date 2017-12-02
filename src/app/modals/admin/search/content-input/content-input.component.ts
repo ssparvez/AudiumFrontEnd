@@ -25,10 +25,10 @@ export class ContentInputComponent implements OnInit {
   ngOnInit() {
     this.contentTypeToChange = this.data.contentType;
     if ( this.data.contentType === 'Playlist' ) {
-      this.title = "Add a Playlist";
+      this.title = "Modify a Playlist";
     }
     if ( this.data.contentType === 'Album' ) {
-      this.title = "Add an Album";
+      this.title = "Modify an Album";
     }
   }
 

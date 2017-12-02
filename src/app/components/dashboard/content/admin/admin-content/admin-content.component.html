@@ -35,7 +35,7 @@
       <div class="admin-button-label">Delete Playlist</div>
     </div>
     <div class="col s3 center">
-      <button class="admin-console-button" (click)="openAddSongToPlaylistWindow()">
+      <button class="admin-console-button" (click)="openAddSongToContent('Playlist')">
         <i class="material-icons admin-icon">add</i>
       </button>
       <div class="admin-button-label">Add Song to Playlist</div>
@@ -52,13 +52,13 @@
       <div class="admin-button-label">Add Album</div>
     </div>
     <div class="col s3 center">
-      <button class="admin-console-button" (click)="openDeleteWindow('Album')">
+      <button class="admin-console-button" (click)="openDeleteSearchWindow('Album')">
         <i class="material-icons admin-icon">delete_forever</i>
       </button>
       <div class="admin-button-label">Delete Album</div>
     </div>
     <div class="col s3 center">
-      <button class="admin-console-button" (click)="openAddSongToContent('Album')">
+      <button class="admin-console-button" (click)="openAddSearchWindow('Album')">
         <i class="material-icons admin-icon">add</i>
       </button>
       <div class="admin-button-label">Add Song to Album</div>

@@ -113,7 +113,7 @@ export class ArtistComponent implements OnInit {
             this.toastService.show("Artist was unfollowed", 3000, 'blue');
           }
         }, (error: AppError) => {
-          this.toastService.show("Artist follow status could not be changed", 3000, 'blue');
+          this.toastService.show("Artist follow status could not be changed", 3000, 'red');
         }
       );
   }

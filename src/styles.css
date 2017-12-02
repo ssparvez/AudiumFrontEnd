@@ -593,3 +593,9 @@ tr:hover > .song-number > .song-playback-icon {
     -ms-transform: scale(0.8);
     transform: scale(0.8);
 }
+
+/* Search Box */
+
+input[type=search] {
+    font-size: large;
+}

@@ -98,7 +98,7 @@ export class AccountComponent implements OnInit {
                     }
                   },
                   (error: AppError) => {
-                    this.toastService.show("There was an error. Please try again.", 3000, 'blue');
+                    this.toastService.show("There was an error. Please try again.", 3000, 'red');
                   }
                 );
               }
@@ -162,7 +162,7 @@ export class AccountComponent implements OnInit {
             }
         }, (error: AppError) => {
 
-            this.toastService.show("There was an error. Please try again.", 3000, 'blue');
+            this.toastService.show("There was an error. Please try again.", 3000, 'red');
             if (error instanceof NotFoundError) {
                 console.log("working");
             }

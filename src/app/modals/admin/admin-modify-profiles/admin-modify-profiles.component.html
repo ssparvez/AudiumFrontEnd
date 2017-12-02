@@ -1,0 +1,26 @@
+<div class="row center" >
+  <div class="white-text darken-2 left admincontent-title-text">{{this.title}}</div>
+  <form #form="ngForm">
+    <div class="input-field col s12">
+      <mz-textarea-container>
+              <textarea ngModel name="bio" id="bio" [(ngModel)]="artist.bio"
+                        placeholder="Enter a brief description">
+              </textarea>
+      </mz-textarea-container>
+      <label for="bio" class="active">Bio</label>
+    </div>
+  </form>
+
+</div>
+
+  <mat-dialog-actions class="row">
+    <div class="col s12 center">
+      <button mz-button
+              type='button'
+              [flat]="true"
+              class=" waves-effect"
+              (click)="updateInfo()"
+      > Update
+      </button>
+    </div>
+  </mat-dialog-actions>

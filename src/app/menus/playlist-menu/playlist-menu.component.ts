@@ -125,7 +125,7 @@ export class PlaylistMenuComponent implements OnInit {
                 }
                 this.toastService.show("Playlist was deleted", 3000, 'blue');
               }, (error: AppError) => {
-                this.toastService.show("Playlist could not be deleted", 3000, 'blue');
+                this.toastService.show("Playlist could not be deleted", 3000, 'red');
               }
             );
         }}
@@ -141,7 +141,7 @@ export class PlaylistMenuComponent implements OnInit {
         playlist.isPublic = !playlist.isPublic;
         this.toastService.show("Playlist visibility was changed", 3000, 'blue');
       }, (error: AppError) => {
-        this.toastService.show("Playlist visibility could not be changed", 3000, 'blue');
+        this.toastService.show("Playlist visibility could not be changed", 3000, 'red');
       }
     );
   }
@@ -161,7 +161,7 @@ export class PlaylistMenuComponent implements OnInit {
             this.toastService.show("You are no longer following this playlistt", 3000, 'blue');
           }
         }, (error: AppError) => {
-          this.toastService.show("Playlist follow status could not be changed", 3000, 'blue');
+          this.toastService.show("Playlist follow status could not be changed", 3000, 'red');
         }
       );
   }

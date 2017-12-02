@@ -59,6 +59,11 @@ import {ContextMenuModule, ContextMenuService} from "ngx-contextmenu";
 import { ContentAddComponent } from './modals/admin/content-add/content-add.component';
 import { SongSearchComponent } from './modals/admin/search/song-search/song-search.component';
 import { ContentInputComponent } from './modals/admin/search/content-input/content-input.component';
+import { AdminArtistsComponent } from './components/dashboard/content/admin/admin-artists/admin-artists.component';
+import { AdminArtistsConsoleComponent } from './modals/admin/admin-artists-console/admin-artists-console.component';
+import { ArtistSearchComponent } from './modals/admin/search/artist-search/artist-search.component';
+import { AdminModifyProfilesComponent } from './modals/admin/admin-modify-profiles/admin-modify-profiles.component';
+import { AlbumSearchComponent } from './modals/admin/search/album-search/album-search.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -77,6 +82,7 @@ const appRoutes: Routes = [
     {path: "admin-home" , component: AdminHomeComponent},
     {path: "admin-accounts" , component: AdminAccountsComponent},
     {path: "admin-content" , component: AdminContentComponent},
+    {path: "admin-artists" , component: AdminArtistsComponent},    
     // ARTIST
     {path: "artist-home" , component: AdminHomeComponent},
     // DETAILED
@@ -144,6 +150,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ContentAddComponent,
     SongSearchComponent,
     ContentInputComponent,
+    AdminArtistsComponent,
+    AdminArtistsConsoleComponent,
+    ArtistSearchComponent,
+    AdminModifyProfilesComponent,
+    AlbumSearchComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,
@@ -154,7 +165,11 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AccountsComponent,
     ContentAddComponent,
     SongSearchComponent,
-    ContentInputComponent
+    ContentInputComponent,
+    AdminArtistsConsoleComponent,
+    ArtistSearchComponent,
+    AlbumSearchComponent,
+    AdminModifyProfilesComponent
   ],
   imports: [
     ContextMenuModule,

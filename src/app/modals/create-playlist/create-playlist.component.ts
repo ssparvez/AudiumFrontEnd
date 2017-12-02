@@ -52,7 +52,7 @@ export class CreatePlaylistComponent implements OnInit {
           console.log(response);
           this.closeDialog({isValid: true, newName: this.playlist.name});
         }, (error: AppError) => {
-          this.toastService.show("Playlist name could not be changed", 3000, 'blue');
+          this.toastService.show("Playlist name could not be changed", 3000, 'red');
         });
     }
   }

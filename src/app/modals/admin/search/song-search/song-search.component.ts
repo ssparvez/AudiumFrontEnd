@@ -18,8 +18,6 @@ export class SongSearchComponent implements OnInit {
 
   constructor(private dialogRef:MatDialogRef<SongSearchComponent>,
               private service: GeneralService,
-              private dialog: MatDialog,
-              private router: Router,
               private generalService: GeneralService,
               private toastService: MzToastService,
               @Inject(MAT_DIALOG_DATA) private data:{ adminId: number, contentId: number, contentType: string}) { }
