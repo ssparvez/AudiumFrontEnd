@@ -75,7 +75,7 @@
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input ngModel #title required name="title" id="albumTitle" [ngModel]="sT"
+            <input ngModel #title required name="title" id="albumTitle" [(ngModel)]="sT"
                    type="text" class="validate" (blur)="sT = formatFirstLetter(sT)">
             <label for="albumTitle" class="active">Album Title</label>
           </div>

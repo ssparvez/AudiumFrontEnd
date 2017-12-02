@@ -97,6 +97,7 @@ export class AccountsComponent implements OnInit {
   }
 
   formatFirstLetterFN() {
+    console.log(this.fN);
     const value = this.fN;
     if ( value !== undefined) {
       this.fN = value.charAt(0).toUpperCase() + value.slice(1);

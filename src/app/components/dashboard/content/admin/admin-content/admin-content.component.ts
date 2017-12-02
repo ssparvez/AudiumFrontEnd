@@ -4,6 +4,7 @@ import {MzToastService} from "ng2-materialize";
 import {MatDialog} from "@angular/material";
 import {SongSearchComponent} from "../../../../../modals/admin/search/song-search/song-search.component";
 import {ContentInputComponent} from "../../../../../modals/admin/search/content-input/content-input.component";
+import {AlbumSearchComponent} from "../../../../../modals/admin/search/album-search/album-search.component";
 
 @Component({
   selector: 'app-admin-songs',
@@ -37,10 +38,10 @@ export class AdminContentComponent implements OnInit {
           this.toastService.show( contentType + " was added", 3000, 'blue');
           console.log(contentToEdit);
           if ( contentType === 'Playlist') {
-            this.openAddOptions(contentToEdit, contentType);
+            this.openSongSearch(contentToEdit, contentType);
           } else
             if (contentType === 'Album') {
-              this.openAddOptions(contentToEdit, contentType);
+              this.openSongSearch(contentToEdit, contentType);
           }
         }
       });
@@ -61,16 +62,38 @@ export class AdminContentComponent implements OnInit {
       });
   }
 
-  openAddSongToPlaylistWindow() {
-    this.dialog.open(ContentInputComponent, {
+  openDeleteSearchWindow(contentType: string) {
+    let typeOfSearch;
+    if ( contentType === 'Album') {
+      typeOfSearch = AlbumSearchComponent;
+    }
+    this.dialog.open(typeOfSearch, {
       data: {
         adminId: this.currentAdminId,
-        contentType: 'Playlist'
-      }
+        toDelete: true,
+      }, width: '850px', height: '800px'
+    }).afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.toastService.show( contentType + " was deleted", 3000, 'blue');
+        }
+      });
+  }
+
+  openAddSearchWindow(contentType: string) {
+    let typeOfSearch;
+    if ( contentType === 'Album') {
+      typeOfSearch = AlbumSearchComponent;
+    }
+    this.dialog.open(typeOfSearch, {
+      data: {
+        adminId: this.currentAdminId,
+        toAddSong: true,
+      }, width: '850px', height: '800px'
     }).afterClosed()
       .subscribe(contentToEdit => {
-        if ( contentToEdit) {
-          this.openAddOptions(contentToEdit, 'Playlist');
+        if (contentToEdit) {
+          this.openSongSearch(contentToEdit, contentType);
         }
       });
   }
@@ -84,13 +107,13 @@ export class AdminContentComponent implements OnInit {
     }).afterClosed()
       .subscribe(contentToEdit => {
         if ( contentToEdit) {
-          this.openAddOptions(contentToEdit, contentType);
+          this.openSongSearch(contentToEdit, contentType);
         }
       });
   }
 
 
-  openAddOptions(contentToEdit, contentType) {
+  openSongSearch(contentToEdit, contentType) {
     if (contentToEdit) {
       this.dialog.open(SongSearchComponent, {
         data: {

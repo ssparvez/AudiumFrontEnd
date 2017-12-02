@@ -107,10 +107,6 @@ export class ContentAddComponent implements OnInit {
       });
   }
 
-  addSongToPlaylist() {
-
-  }
-
   private initializeSongDialog(): void {
     if (this.toDelete) {
       this.title = "Delete a Song";
@@ -157,12 +153,4 @@ export class ContentAddComponent implements OnInit {
     this.dialogRef.close(argument);
   }
 
-}
-
-interface SongToAdd {
-  name: string;
-  year: number;
-  genre: { genreId: number};
-  isExplicit: boolean;
-  duration: string;
 }

@@ -132,7 +132,7 @@ export class SongMenuComponent implements OnInit {
          this.toastService.show("Song was removed from your playlist", 3000, 'blue');
          this.songs.splice(this.songs.indexOf(songToRemove),1);
        }, (error: AppError) => {
-         this.toastService.show("Song could not be removed", 3000, 'blue');
+         this.toastService.show("Song could not be removed", 3000, 'red');
        }
      );
 
@@ -165,7 +165,7 @@ export class SongMenuComponent implements OnInit {
           }
 
         }, (error: AppError) => {
-          this.toastService.show("Song could not be saved", 3000, 'blue');
+          this.toastService.show("Song could not be saved", 3000, 'red');
         });
   }
 
@@ -176,7 +176,7 @@ export class SongMenuComponent implements OnInit {
           this.toastService.show("Song was removed from your music", 3000, 'blue');
           this.songs.splice(this.songs.indexOf(songToRemove), 1);
         },(error: AppError) => {
-          this.toastService.show("Song could not be removed", 3000, 'blue');
+          this.toastService.show("Song could not be removed", 3000, 'red');
         }
       );
     }

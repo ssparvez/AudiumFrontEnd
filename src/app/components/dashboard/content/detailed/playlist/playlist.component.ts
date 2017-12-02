@@ -93,7 +93,7 @@ export class PlaylistComponent implements OnInit {
             this.toastService.show("You are no longer following this playlistt", 3000, 'blue');
           }
         }, (error: AppError) => {
-            this.toastService.show("Playlist follow status could not be changed", 3000, 'blue');
+            this.toastService.show("Playlist follow status could not be changed", 3000, 'red');
         }
       );
   }

@@ -1,0 +1,28 @@
+textarea {
+    min-height: 200px;
+}
+.admincontent-title-text {
+    font-size: xx-large;
+    margin-bottom: 20px;
+}
+.input-field {
+    font-size: large;
+    color: white;
+}
+
+/* label color */
+.input-field label {
+    font-size: x-large;
+    color: white;
+}
+
+button {
+    color: white;
+}
+button:hover {
+    background-color: #2196f3;
+}
+
+textarea{
+    height: 500px;
+}
