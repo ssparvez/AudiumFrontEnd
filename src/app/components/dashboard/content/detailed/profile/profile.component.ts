@@ -1,9 +1,9 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
-import {GeneralService} from "../../../../../services/general/general.service";
-import {AppError} from "../../../../../errors/AppError";
-import {Profile} from "../../../../../classes/Profile";
-import {NotFoundError} from "../../../../../errors/not-found-error";
+import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
+import { GeneralService } from "../../../../../services/general/general.service";
+import { AppError } from "../../../../../errors/AppError";
+import { Profile } from "../../../../../classes/Profile";
+import { NotFoundError } from "../../../../../errors/not-found-error";
 
 @Component({
   selector: 'app-profile',
@@ -33,7 +33,9 @@ export class ProfileComponent implements OnInit {
     private cdRef: ChangeDetectorRef
   ) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    this.currentAccountId = this.currentUser['_accountId'];
+    if(this.currentUser != null){
+      this.currentAccountId = this.currentUser['_accountId'];
+    }
   }
 
   ngOnInit() {

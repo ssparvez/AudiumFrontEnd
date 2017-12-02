@@ -19,7 +19,9 @@ export class AdminContentComponent implements OnInit {
   constructor(private dialog: MatDialog,
               private toastService: MzToastService) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    this.currentAdminId = this.currentUser['_accountId'];
+    if(this.currentUser != null){
+      this.currentAdminId = this.currentUser['_accountId'];
+    }
   }
 
   ngOnInit() {

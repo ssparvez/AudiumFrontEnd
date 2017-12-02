@@ -61,7 +61,10 @@ export class ArtistComponent implements OnInit {
     private toastService: MzToastService,
     private cdRef: ChangeDetectorRef
   ) {
-    this.currentAccountId = JSON.parse(sessionStorage.getItem("currentUser"))['_accountId'];
+    let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    if(currUser != null){
+      this.currentAccountId = currUser['_accountId'];
+    }
   }
 
 

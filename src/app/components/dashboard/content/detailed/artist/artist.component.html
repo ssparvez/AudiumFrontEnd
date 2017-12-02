@@ -205,10 +205,18 @@
                   </div>
                 </div>
                 <div class="col s12 center" style="margin-top: 5px;">
-                  <a class="white-grey-link bold-text truncate" [routerLink]="['../../artist', similarArtist?.artistId]">{{similarArtist?.artistName}}</a>
+                  <a class="white-grey-link bold-text truncate" style="font-size: 18px;" [routerLink]="['../../artist', similarArtist?.artistId]">{{similarArtist?.artistName}}</a>
                 </div>
               </div>
             </div>
+          </div>
+          <div class="col s12 fade-in-half-sec" style="margin-bottom: 40px;" *ngIf="artist && similarArtists?.length == 0">
+            <div class="card-panel large transparent z-depth-0 center">
+              <h3 class="grey-text">No similar artists</h3>
+            </div>
+          </div>
+          <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!artist || !similarArtists">
+            <div class="loader">Loading...</div>
           </div>
         </div>
       </mz-tab-item>

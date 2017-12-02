@@ -27,11 +27,16 @@ export class SongsComponent implements OnInit {
       }
       window.scrollTo(0, 0);
     });
-    this.accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;
-    this.generalService.get("/accounts/" + this.accountId + "/songs").subscribe((songs) => {
-      this.songs = songs;
-      console.log(this.songs);
-    });
+    let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    if(currUser != null){
+      this.accountId = currUser._accountId;
+    }
+    if(this.accountId != null){
+      this.generalService.get("/accounts/" + this.accountId + "/songs").subscribe((songs) => {
+        this.songs = songs;
+        console.log(this.songs);
+      });
+    }
   }
 
   playAllSongs() {
