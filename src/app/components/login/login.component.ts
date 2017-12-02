@@ -83,7 +83,11 @@ export class LoginComponent implements OnInit {
 
             if ( currentAccountRole === "Admin" ) {
               this.router.navigate(['/dash/admin-home']);
-            } else {
+            } 
+            else if( currentAccountRole === "Artist") {
+              this.router.navigate(['/dash/artist-home']);
+            }
+            else {
               this.router.navigate(['/dash/home']);
             }
 

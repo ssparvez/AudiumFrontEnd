@@ -44,9 +44,10 @@ import { QueueComponent } from './components/dashboard/content/queue/queue.compo
 import { SearchComponent } from './components/dashboard/content/search/search.component';
 import { InputFormatDirective } from './directives/input-format.directive';
 import { AdminAccountsComponent } from './components/dashboard/content/admin/admin-accounts/admin-accounts.component';
-import {AdminContentComponent} from "./components/dashboard/content/admin/admin-content/admin-content.component";
+import { AdminContentComponent } from "./components/dashboard/content/admin/admin-content/admin-content.component";
+import { AccountsComponent } from "./modals/admin/accounts/accounts.component";
+import { ArtistHomeComponent } from "./components/dashboard/content/artist/artist-home/artist-home.component";
 
-import {AccountsComponent} from "./modals/admin/accounts/accounts.component";
 // Services
 import { AuthenticationService } from "./services/authentication/authentication.service";
 import { PlayerService } from './services/player/player.service';
@@ -76,6 +77,8 @@ const appRoutes: Routes = [
     {path: "admin-home" , component: AdminHomeComponent},
     {path: "admin-accounts" , component: AdminAccountsComponent},
     {path: "admin-content" , component: AdminContentComponent},
+    // ARTIST
+    {path: "artist-home" , component: AdminHomeComponent},
     // DETAILED
     {path: "artist/:id", component: ArtistComponent},
     {path: "album/:id", component: AlbumComponent},
