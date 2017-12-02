@@ -1,8 +1,8 @@
 <div class="row fade-in-1-sec" #mainContentDiv style="margin-bottom: 0px;">
-  <div class="card col s12 z-depth-0 transparent" *ngIf="profile">
-    <div class="card-image" #profileBannerDiv (window:resize)="0" [ngStyle]="{'min-height.px': (profileBannerDiv.offsetWidth / 2), 'max-height.px': (profileBannerDiv.offsetWidth / 2) }">
-      <div class="profile-banner" [ngStyle]="{'min-height.px': (profileBannerDiv.offsetWidth / 2), 'max-height.px': (profileBannerDiv.offsetWidth / 2) }">
-        <img src="{{mediaPath}}/images/profiles/{{profile?.accountId}}/Banner.jpg" onError="this.src='assets/images/defaults/banner.png'" [ngStyle]="{'min-width.px': profileBannerDiv.offsetWidth }">
+  <div class="card col s12 z-depth-0 transparent" *ngIf="profile" style="padding-left: 0px; padding-right: 0px;">
+    <div class="card-image" #profileBannerDiv (window:resize)="0" [ngStyle]="{ 'height.px': bannerHeight }">
+      <div class="profile-banner" [ngStyle]="{ 'height.px': bannerHeight }">
+        <img src="{{mediaPath}}/images/profiles/{{profile?.accountId}}/Banner.jpg" onError="this.src='assets/images/defaults/banner.png'" [ngStyle]="{ 'width.px': bannerWidth }">
         <!-- Use the div below to apply opacity or color masks to the banner image -->
         <div class="profile-banner-mask" style="width: 100%; height: 100%; position: absolute; top: 0px; left: 0px;"></div>
         <span class="card-title black fade-in-half-sec" id="large-card-title">
@@ -25,7 +25,7 @@
     [responsiveThreshold]="'true'"
     >
     <mz-tab-item [label]="'Overview'" [active]="true">
-      <div (window:resize)="0" [ngStyle]="{'min-height.px': (mainContentDiv.offsetWidth / 4)}">
+      <div (window:resize)="0" [ngStyle]="{ 'min-height.px': (mainContentDiv.offsetWidth / 4)}">
         <div class="row fade-in-half-sec" style="margin-top: 30px;" *ngIf="profile?.recentSongs">
           <h2 style="text-align: center;">Recently Played</h2>
         </div>
@@ -42,7 +42,7 @@
             </thead>
             <tbody class="tracklist">
               <tr *ngFor="let song of profile?.recentSongs?.slice(0, 10); let i = index" (dblclick)="playProfileSongs(i)"
-                  [ngClass]="{'playing': song.isPlaying}" >
+                  [ngClass]="{ 'playing': song.isPlaying }" >
                 <td class="song-number">
                   <!-- <div class="song-number-value">{{i+1}}.</div> -->
                   <div class="song-number-value"> </div>
@@ -81,11 +81,11 @@
       <div class="row fade-in-half-sec" *ngIf="profile?.createdPlaylists?.length > 0">
         <div class="col s12 m3 fade-in-1-sec" *ngFor="let playlist of profile?.createdPlaylists">
           <div class="card transparent" *ngIf="playlist">
-            <div class="card-image hoverable fade-in-1-sec" #playlistCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
-              <div class="playlist-div" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
-                <div class="transparent playlist-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
-                  <img src="assets/images/defaults/playlist.svg" [ngStyle]="{'min-width.px': playlistCardDiv.offsetWidth }">
-                  <div class="playlist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../../playlist', playlist?.playlistId]" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
+            <div class="card-image hoverable fade-in-1-sec" [ngStyle]="{ 'height.px': playlistCardWidth }">
+              <div class="playlist-div" [ngStyle]="{ 'height.px': playlistCardWidth }">
+                <div class="transparent playlist-img valign-wrapper" style="padding: 0px;" [ngStyle]="{ 'height.px': playlistCardWidth }">
+                  <img src="assets/images/defaults/playlist.svg" [ngStyle]="{ 'min-width.px': playlistCardWidth }">
+                  <div class="playlist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../../playlist', playlist?.playlistId]" [ngStyle]="{ 'height.px': playlistCardWidth + 2 }">
                     <div class="playlist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
                     <ng-template #play>
                       <h1 class="col s12 playlist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
