@@ -22,4 +22,5 @@ export interface Song {
   sound?: Howl;
 
   isSaved?: boolean;
+  timePlayed?: number;
 }

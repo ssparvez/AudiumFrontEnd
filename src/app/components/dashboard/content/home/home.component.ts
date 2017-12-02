@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   topSongs: Song[];
   genres: Genre[];
   mediaPath: string;
+  showAllGenres: boolean = false;
   public isPlaying;
   constructor(
     private generalService: GeneralService,

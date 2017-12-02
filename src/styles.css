@@ -180,18 +180,9 @@ td > a:hover{
     color: #9e9e9e ;
 }
 
-/*tbody.tracklist tr:hover {
-    background-color: transparent;
-    color: #ffab00;
+li.tracklist div a:hover {
+    color: #9e9e9e ;
 }
-
-tbody.tracklist tr td a {
-    color: inherit;
-}
-
-tbody.tracklist tr td a:hover {
-    color: #ffd480;
-}*/
 
 @keyframes fadein {
     from { opacity: 0; }

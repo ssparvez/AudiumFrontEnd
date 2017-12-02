@@ -1,11 +1,11 @@
 <header>
   <div *ngIf="currentAccountRole == 'BasicUser' && !upgradeBannerIsHidden" class="green accent-3" [@upgradeBannerTrigger]='upgradeBannerState'>
     <div class="row" style="margin-bottom: 0px;">
-      <a [routerLink]="['account']" class="upgrade-nag col s4 offset-s4 center">
+      <a [routerLink]="['account']" class="upgrade-nag col s4 offset-s4 center" style="padding-top: 4px;">
         <b>Upgrade to Audium Premium!</b>
       </a>
       <a>
-        <i (click)="upgradeBannerIsHidden = true" class="material-icons upgrade-nag right">close</i>
+        <i (click)="upgradeBannerIsHidden = true" class="material-icons upgrade-nag right small">close</i>
       </a>
     </div>
   </div>
@@ -32,8 +32,8 @@
     <router-outlet></router-outlet>
   </div>
 </main>
-<footer class="fixed" *ngIf="currentUser._role == 'BasicUser' && !adBannerIsHidden" [@adBannerTrigger]>
-  <div class="card" style="margin: 0px;">
+<footer class="fixed" >
+  <div class="card" style="margin-bottom: 0px;" *ngIf="currentUser._role == 'BasicUser' && !adBannerIsHidden" [@adBannerTrigger]>
     <div class="card-image">
       <a [routerLink]="">
         <img class="responsive-img" src="assets/images/cyber.gif" mz-tooltip [tooltip]="'<b>Advertisement</b>'" [position]="'top'" [html]="true">

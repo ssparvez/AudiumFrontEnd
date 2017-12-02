@@ -1,8 +1,8 @@
 <div class="row fade-in-1-sec" #mainContentDiv style="margin-bottom: 0px;">
   <div class="card col s12 z-depth-0 transparent" *ngIf="artist"   (contextmenu)="artistMenu.onContextMenu($event, artist)">
-    <div class="card-image" #artistbannerdiv (window:resize)="0" [ngStyle]="{'min-height.px': (artistbannerdiv.offsetWidth / 2), 'max-height.px': (artistbannerdiv.offsetWidth / 2) }">
-      <div class="artist-banner" [ngStyle]="{'min-height.px': (artistbannerdiv.offsetWidth / 2), 'max-height.px': (artistbannerdiv.offsetWidth / 2) }">
-        <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Banner.jpg" onError="this.src='assets/images/defaults/banner.png'" [ngStyle]="{'min-width.px': artistbannerdiv.offsetWidth }">
+    <div class="card-image" #artistBannerDiv (window:resize)="0" [ngStyle]="{'min-height.px': (artistBannerDiv.offsetWidth / 2), 'max-height.px': (artistBannerDiv.offsetWidth / 2) }">
+      <div class="artist-banner" [ngStyle]="{'min-height.px': (artistBannerDiv.offsetWidth / 2), 'max-height.px': (artistBannerDiv.offsetWidth / 2) }">
+        <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Banner.jpg" onError="this.src='assets/images/defaults/banner.png'" [ngStyle]="{'min-width.px': artistBannerDiv.offsetWidth }">
         <!-- Use the div below to apply opacity or color masks to the artist banner image -->
         <div class="artist-banner-mask" style="width: 100%; height: 100%; position: absolute; top: 0px; left: 0px;"></div>
         <span class="card-title black fade-in-half-sec" id="large-card-title">
@@ -160,7 +160,8 @@
       </mz-tab-item>
       <mz-tab-item [label]="'About'" class="fade-in-half-sec">
         <div class="col s10 offset-s1" style="background-color: rgba(0, 0, 0, 0.1); margin-top: 3px;" *ngIf="artist" (window:resize)="0" [ngStyle]="{'min-height.px': (mainContentDiv.offsetWidth / 4)}">
-          <h3 style="margin-top: 10px;">
+          <h2 class="center" style="margin-top: 30px;">Bio</h2>
+          <h3 style="margin-top: 10px; margin-bottom: 20px; font-weight: 500; line-height: 25px;">
             <div [innerHTML]="artist?.bio"></div>
           </h3>
         </div>
