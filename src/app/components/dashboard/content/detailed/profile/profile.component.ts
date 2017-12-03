@@ -4,6 +4,7 @@ import {GeneralService} from "../../../../../services/general/general.service";
 import {AppError} from "../../../../../errors/AppError";
 import {Profile} from "../../../../../classes/Profile";
 import {NotFoundError} from "../../../../../errors/not-found-error";
+import {MzToastService} from "ng2-materialize";
 
 @Component({
   selector: 'app-profile',
@@ -30,6 +31,7 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: GeneralService,
+    private toastService: MzToastService,
     private cdRef: ChangeDetectorRef
   ) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -41,9 +43,8 @@ export class ProfileComponent implements OnInit {
     this.route.params.subscribe(param => {
       this.currentProfileId = param['id'];
     });
-    //this.profile = {};
     this.loadProfileInfo();
-    //this.loadFollowStatus();
+    this.loadFollowStatus();
 
     this.router.events.subscribe((event) => {
       if (!(event instanceof NavigationEnd)) {
@@ -69,8 +70,8 @@ export class ProfileComponent implements OnInit {
       (profile) => {
         this.profile = profile;
 
-        if(this.profile != null){
-          if(this.profile.publicProfile){
+        if(this.profile != null) {
+          if(this.profile.publicProfile) {
             // Public profile; retrieve additional profile info
 
             this.service.get('/profiles/' + this.currentProfileId + '/recent').subscribe(
@@ -107,10 +108,10 @@ export class ProfileComponent implements OnInit {
               }
             );
 
-          }else{
+          }else {
             // Profile is private
           }
-        }else{
+        }else {
           // Failed to find profile
         }
       },(error: AppError) => {
@@ -137,9 +138,24 @@ export class ProfileComponent implements OnInit {
   }
 
   checkIfOwner() {
-    return ( this.currentProfileId === this.currentProfileId);
+    return ( this.currentProfileId === this.currentAccountId);
   }
+
   changeFollowStatus(status): void {
+    this.service.update('/accounts/' + this.currentAccountId + '/profile/'  + this.currentProfileId + '/follow/'
+      + status, "")
+      .subscribe(
+        response => {
+          this.profile.isFollowing = status;
+          if (status) {
+            this.toastService.show("You are now following this person", 3000, 'blue');
+          } else {
+            this.toastService.show("Person was unfollowed", 3000, 'blue');
+          }
+        }, (error: AppError) => {
+          this.toastService.show("Person follow status could not be changed", 3000, 'red');
+        }
+      );
   }
 
   pausePlayback($event: MouseEvent) {
