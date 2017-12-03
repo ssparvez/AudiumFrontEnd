@@ -191,7 +191,6 @@ export class PlaylistMenuComponent implements OnInit {
 
   removePlaylistFromFollowed(playlist: Playlist) {
     this.playlistsFollowed = JSON.parse(localStorage.getItem("playlistsfollowed"));
-    console.log("Before: " + this.playlistsFollowed);
     this.playlistsFollowed.splice(this.playlistsFollowed.indexOf(playlist.playlistId),1);
     if(this.library) {
       for(let p of this.playlists) {
@@ -200,15 +199,12 @@ export class PlaylistMenuComponent implements OnInit {
         }
       }
     }
-    console.log("After: " + this.playlistsFollowed);
     localStorage.setItem("playlistsfollowed", JSON.stringify(this.playlistsFollowed));
   }
 
   addPlaylistToFollow(playlist: Playlist) {
     this.playlistsFollowed = JSON.parse(localStorage.getItem("playlistsfollowed"));
-    console.log("Before: " + this.playlistsFollowed);
     this.playlistsFollowed.unshift(playlist.playlistId);
-    console.log("After: " + this.playlistsFollowed);
     localStorage.setItem("playlistsfollowed", JSON.stringify(this.playlistsFollowed));
   }
 
@@ -221,10 +217,8 @@ export class PlaylistMenuComponent implements OnInit {
     this.playlistsFollowed = JSON.parse(localStorage.getItem("playlistsfollowed"));
     let p = this.playlistsFollowed.find( x => x == playlist.playlistId);
     if (p) {
-      console.log("Following " + playlist.playlistId + "? True.  Check: " + this.playlistsFollowed);
       return true;
     } else {
-      console.log("Following" + playlist.playlistId + "? False.  Check: " + this.playlistsFollowed);
       return false;
     }
   }
