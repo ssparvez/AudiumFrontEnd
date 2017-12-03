@@ -3,7 +3,7 @@ export class UserPreferences {
   private _language: string = 'English';
   private _publicProfile: boolean = true;
   private _defaultPublicSession: boolean = true;
-  private _showExplicitContent: boolean = false;
+  private _showExplicitContent: boolean = true;
   private _quality: string = '192kbps';
 
   constructor() {}
