@@ -68,84 +68,20 @@
           <div class="loader">Loading...</div>
         </div>
 
-        <div class="row fade-in-half-sec" style="margin-top: 60px;" *ngIf="artist?.songs || artist?.albums">
-          <h2 class="center">Albums</h2>
-        </div>
-        <div class="row fade-in-half-sec center-align" *ngIf="artist?.albums?.length > 0">
-          <div class="fade-in-1-sec center-align" [ngClass]="getAlbumCardGridClass()"
-          *ngFor="let album of showAllAlbums ? artist?.albums : artist?.albums?.slice(0, (artist?.albums?.length > (this.nAlbumRows * this.nAlbumsPerRow) ? ((this.nAlbumRows * this.nAlbumsPerRow) - 1) : (this.nAlbumRows * this.nAlbumsPerRow)))">
-            <div class="card transparent center-align" *ngIf="album" [ngStyle]="{ 'width.px': albumCardWidth }">
-              <div class="card-image hoverable fade-in-1-sec" [ngStyle]="{ 'width.px': albumCardWidth, 'height.px': albumCardWidth }">
-                <div class="album-div" [ngStyle]="{ 'width.px': albumCardWidth, 'height.px': albumCardWidth }">
-                  <div class="transparent valign-wrapper" style="padding: 0px;" [ngStyle]="{ 'width.px': albumCardWidth, 'height.px': albumCardWidth }">
-                    <img src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{ 'width.px': albumCardWidth, 'height': 'auto' }">
-                    <div class="album-play-button-wrapper valign-wrapper noSelect" style="position: absolute; top: 0px;" [routerLink]="['../../album', album?.albumId]" [ngStyle]="{ 'width.px': albumCardWidth, 'height.px': albumCardWidth }">
-                      <div class="album-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
-                      <ng-template #play>
-                        <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                          <a (click)="playPlayback($event, album?.albumId)">
-                            <i class="material-icons album-play-icon" [ngStyle]="{ 'font-size.px': getAlbumCardIconSize() }">play_circle_outline</i>
-                          </a>
-                        </h1>
-                      </ng-template>
-                      <ng-template #pause>
-                        <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                          <a (click)="pausePlayback($event)">
-                            <i class="material-icons album-play-icon" [ngStyle]="{ 'font-size.px': getAlbumCardIconSize() }">pause_circle_outline</i>
-                          </a>
-                        </h1>
-                      </ng-template>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col s12 center card-album-info" style="margin-top: 8px;">
-                <h3 class="white-grey-link"><a class="truncate" [routerLink]="['../../album', album?.albumId]">{{album?.albumTitle}}</a></h3>
-                <h4 style="margin-top: 3px;">{{album?.releaseYear?.substring(0,4)}}</h4>
-              </div>
-            </div>
-          </div>
-          <div class="fade-in-1-sec" [ngClass]="getAlbumCardGridClass()" *ngIf="getShowMoreAlbumsBt()">
-            <div class="card transparent hoverable" [ngStyle]="{ 'width.px': albumCardWidth }">
-              <div class="card-image" [ngStyle]="{ 'width.px': albumCardWidth, 'height.px': albumCardWidth }">
-                <div class="valign-wrapper grey darken-3" [ngStyle]="{ 'width.px': albumCardWidth, 'height.px': albumCardWidth }">
-                  <a (click)="showAllAlbums = true">
-                    <div class="btn transparent more-albums" style="padding: 0px;" [ngStyle]="{ 'width.px': albumCardWidth, 'height.px': albumCardWidth }">
-                      <div style="padding: 0px;" [ngClass]="getMoreBtAlbumGridClass()"
-                      *ngFor="let album of artist?.albums?.slice(((this.nAlbumRows * this.nAlbumsPerRow) - 1), getMoreBtAlbumsEndIndex())">
-                        <div class="card transparent" style="margin: 0px;">
-                          <div class="card-image" *ngIf="album" [ngStyle]="{ 'width.px': (albumCardWidth / nMoreBtAlbumRows), 'height.px': (albumCardWidth / nMoreBtAlbumRows) }">
-                            <div class="album-div valign-wrapper" [ngStyle]="{ 'width.px': (albumCardWidth / nMoreBtAlbumRows), 'height.px': (albumCardWidth / nMoreBtAlbumRows) }">
-                                <img src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{ 'width.px': (albumCardWidth / nMoreBtAlbumRows), 'height.px': 'auto' }">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="grey darken-3" [ngClass]="getMoreBtAlbumGridClass()" style="padding: 0px;" *ngIf="artist?.events && getShowRemainingAlbumCount()">
-                        <div class="card-image" [ngStyle]="{ 'width.px': (albumCardWidth / nMoreBtAlbumRows), 'height.px': (albumCardWidth / nMoreBtAlbumRows) }">
-                          <div class="valign-wrapper" [ngStyle]="{ 'width.px': (albumCardWidth / nMoreBtAlbumRows), 'height.px': (albumCardWidth / nMoreBtAlbumRows) }">
-                              <div class="col s12 grey-text" style="text-align: center;">+{{getRemainingAlbumCount()}}</div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="more-albums-label valign-wrapper" style="position: absolute;" [ngStyle]="{ 'width.px': albumCardWidth, 'height.px': albumCardWidth }">
-                        <h2 class="col s12" style="text-align: center;" [ngStyle]="{ 'font-size.px': (albumCardWidth / 8) }">Show all</h2>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col s12 fade-in-half-sec" style="margin-bottom: 40px;" *ngIf="artist?.songs?.length > 0 && artist?.albums?.length == 0">
-          <div class="card-panel large transparent z-depth-0 center">
-            <h3 class="grey-text">No albums by this artist</h3>
-          </div>
-        </div>
-        <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!artist?.albums">
-          <div class="loader">Loading...</div>
-        </div>
+        <entity-card-collection #albumCollection
+          [nRows]="3"
+          [nPerRow]="4"
+          [nRowsInShowAllBt]="3"
+          [title]="'Albums'"
+          [noEntitiesMessage]="'No albums by this artist'"
+          [albums]="artist?.albums"
+          [tryAllImageTypes]="false"
+          [forceDefaultImage]="false"
+          [showAll]="false"
+          [displayAuthor]="false"
+          [displayYear]="true"
+          [loadingAnimation]="true"
+        ></entity-card-collection>
 
         <div class="row fade-in-2-sec" *ngIf="artist?.songs?.length == 0 && artist?.albums?.length == 0">
           <div class="col s12">
