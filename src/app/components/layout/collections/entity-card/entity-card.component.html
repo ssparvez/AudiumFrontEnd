@@ -4,8 +4,9 @@
     <h2 class="center">{{title}}</h2>
   </div>
   <div class="entity-card-collection-content row fade-in-half-sec center-align" *ngIf="entities()?.length > 0">
-    <div class="fade-in-1-sec center-align" [ngStyle]="{ 'margin-bottom.px': (cardWidth / 20) }" [ngClass]="getCardGridClass()"
-    *ngFor="let entity of showAll ? entities() : entities()?.slice(0, (entities()?.length > (this.nRows * this.nPerRow) ? ((this.nRows * this.nPerRow) - 1) : (this.nRows * this.nPerRow))); let i = index; let entityId = 'id(index)';">
+    <div class="fade-in-1-sec center-align entity-card-collection-grid" #entityCollectionGrid [ngStyle]="{ 'margin-bottom.px': (cardWidth / 20) }" [ngClass]="getCardGridClass()"
+    *ngFor="let entity of showAll ? entities() : entities()?.slice(0, (displayShowAllBt ? (entities()?.length > (this.nRows * this.nPerRow) ? ((this.nRows * this.nPerRow) - 1) : (this.nRows * this.nPerRow)) : (this.nRows * this.nPerRow))); let i = index; let entityId = 'id(index)';"
+    (contextmenu)="e == ALBUM ? albumContextMenu.onContextMenu($event, entities()[i]) : (e == ARTIST ? artistContextMenu.onContextMenu($event, entities()[i]) : playlistContextMenu.onContextMenu($event, entities()[i]))" [attr.data-index]="i">
       <div class="card transparent center-align" *ngIf="entity" [ngStyle]="{ 'width.px': cardWidth }">
         <div class="card-image hoverable fade-in-1-sec" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
           <div class="entity-div" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
@@ -32,20 +33,20 @@
           </div>
         </div>
         <div class="col s12 center card-entity-info" style="margin-top: 8px;">
-          <h3 class="white-grey-link"><a class="truncate" [routerLink]="[detailedEntityPage(i)]">{{entities()[i][titleAttr[e]]}}</a></h3>
+          <h3 class="white-grey-link" *ngIf="displayName"><a class="truncate" [routerLink]="[detailedEntityPage(i)]">{{entities()[i][titleAttr[e]]}}</a></h3>
           <h4 style="margin-top: 3px;" *ngIf="displayAuthor"><a class="truncate" [routerLink]="[detailedAuthorPage(i)]">{{entities()[i][authorNameAttr[e]]}}</a></h4>
           <h4 style="margin-top: 3px;" *ngIf="displayYear">{{entities()[i]['releaseYear'].substring(0,4)}}</h4>
         </div>
       </div>
     </div>
-    <div class="fade-in-1-sec" [ngClass]="getCardGridClass()" *ngIf="getShowMoreBt()">
+    <div class="fade-in-1-sec entity-card-collection-show-all-bt" @fade #showAllBt [ngClass]="getCardGridClass()" *ngIf="getShowAllBt()">
       <div class="card transparent hoverable" [ngStyle]="{ 'width.px': cardWidth }">
         <div class="card-image" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
           <div class="valign-wrapper grey darken-3" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
             <a (click)="showAll = true">
               <div class="btn transparent more-bt" style="padding: 0px;" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
-                <div style="padding: 0px;" [ngClass]="getMoreBtImgGridClass()"
-                *ngFor="let entity of entities()?.slice(((this.nRows * this.nPerRow) - 1), getMoreBtEndIndex()); let i = index;">
+                <div style="padding: 0px;" [ngClass]="getShowAllBtImgGridClass()"
+                *ngFor="let entity of entities()?.slice(((this.nRows * this.nPerRow) - 1), getShowAllBtEndIndex()); let i = index;">
                   <div class="card transparent" style="margin: 0px;">
                     <div class="card-image" *ngIf="entity" [ngStyle]="{ 'width.px': (cardWidth / nRowsInShowAllBt), 'height.px': (cardWidth / nRowsInShowAllBt) }">
                       <div class="entity-div valign-wrapper" [ngStyle]="{ 'width.px': (cardWidth / nRowsInShowAllBt), 'height.px': (cardWidth / nRowsInShowAllBt) }">
@@ -54,7 +55,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="grey darken-3" [ngClass]="getMoreBtImgGridClass()" style="padding: 0px;" *ngIf="getShowRemainingCount()">
+                <div class="grey darken-3" [ngClass]="getShowAllBtImgGridClass()" style="padding: 0px;" *ngIf="getShowRemainingCount()">
                   <div class="card-image" [ngStyle]="{ 'width.px': (cardWidth / nRowsInShowAllBt), 'height.px': (cardWidth / nRowsInShowAllBt) }">
                     <div class="valign-wrapper" [ngStyle]="{ 'width.px': (cardWidth / nRowsInShowAllBt), 'height.px': (cardWidth / nRowsInShowAllBt) }">
                         <div class="col s12 grey-text" style="text-align: center;">+{{getRemainingCount()}}</div>
@@ -80,3 +81,9 @@
     <div class="loader">Loading...</div>
   </div>
 </div>
+
+
+  <app-album-menu #albumContextMenu [albums]="albums" [library]="libraryContextMenu"></app-album-menu>
+  <app-artist-menu #artistContextMenu [artists]="artists" [library]="libraryContextMenu"></app-artist-menu>
+  <app-playlist-menu #playlistContextMenu [playlists]="playlists" [library]="libraryContextMenu" [detailed]="detailedContextMenu"></app-playlist-menu>
+
