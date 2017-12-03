@@ -17,6 +17,7 @@ export class AlbumMenuComponent implements OnInit {
   @Input('albums') public albums: Album[];
   @Input('library') public library: boolean;
   @ViewChild('albumMenu') public artistMenu: ContextMenuComponent;
+  public albumsSaved: number[] = JSON.parse(localStorage.getItem("albumssaved"));
   public currentUser: JSON;
   public currentAccountId: number;
   public albumMenuActions = [
@@ -95,16 +96,18 @@ export class AlbumMenuComponent implements OnInit {
       album.saved = true;
     }
   }
+
   removeAlbumFromSaved(album: Album) {
-    const albumsSaved: number[] = JSON.parse(localStorage.getItem("albumssaved"));
-    albumsSaved.splice(albumsSaved.indexOf(album.albumId),1);
-    localStorage.setItem("albumssaved", JSON.stringify(albumsSaved));
+    this.albumsSaved = JSON.parse(localStorage.getItem("albumssaved"));
+    this.albumsSaved.splice(this.albumsSaved.indexOf(album.albumId),1);
+    localStorage.setItem("albumssaved", JSON.stringify(this.albumsSaved));
+    album.saved = false;
   }
 
   addAlbumToSaved(album: Album) {
-    const albumsSaved: number[] = JSON.parse(localStorage.getItem("albumssaved"));
-    albumsSaved.unshift(album.albumId);
-    localStorage.setItem("albumssaved", JSON.stringify(albumsSaved));
+    this.albumsSaved = JSON.parse(localStorage.getItem("albumssaved"));
+    this.albumsSaved.unshift(album.albumId);
+    localStorage.setItem("albumssaved", JSON.stringify(this.albumsSaved));
   }
 
   addAlbumToQueue(album: Album) {

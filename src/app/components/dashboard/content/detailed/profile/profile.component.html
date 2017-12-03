@@ -78,7 +78,7 @@
     </mz-tab-item>
     <mz-tab-item [label]="'Library'">
       <entity-card-collection
-        #playlistCollection
+        #createdPlaylistCollection
         [nRows]="3"
         [nPerRow]="4"
         [nRowsInShowAllBt]="3"
@@ -91,9 +91,13 @@
         [tryAllImageTypes]="false"
         [forceDefaultImage]="true"
         [showAll]="false"
+        [displayShowAllBt]="true"
+        [displayName]="true"
         [displayAuthor]="false"
         [displayYear]="false"
         [loadingAnimation]="true"
+        [libraryContextMenu]="false"
+        [detailedContextMenu]="false"
       ></entity-card-collection>
     </mz-tab-item>
     <mz-tab-item [label]="'Following'">

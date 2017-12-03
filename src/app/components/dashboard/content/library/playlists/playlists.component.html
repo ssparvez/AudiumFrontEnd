@@ -60,4 +60,4 @@
 <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!playlists">
   <div class="loader">Loading...</div>
 </div>
-<app-playlist-menu #playlistMenu [playlists]="playlists" [detailed]="false"></app-playlist-menu>
+<app-playlist-menu #playlistMenu [playlists]="playlists" [library]="true" [detailed]="false"></app-playlist-menu>

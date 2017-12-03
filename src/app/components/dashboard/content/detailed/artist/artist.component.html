@@ -82,9 +82,13 @@
           [tryAllImageTypes]="false"
           [forceDefaultImage]="false"
           [showAll]="false"
+          [displayShowAllBt]="true"
+          [displayName]="true"
           [displayAuthor]="false"
           [displayYear]="true"
           [loadingAnimation]="true"
+          [libraryContextMenu]="false"
+          [detailedContextMenu]="false"
         ></entity-card-collection>
 
         <div class="row fade-in-2-sec" *ngIf="artist?.songs?.length == 0 && artist?.albums?.length == 0">
@@ -127,9 +131,13 @@
           [tryAllImageTypes]="false"
           [forceDefaultImage]="false"
           [showAll]="false"
+          [displayShowAllBt]="true"
+          [displayName]="true"
           [displayAuthor]="false"
           [displayYear]="false"
           [loadingAnimation]="true"
+          [libraryContextMenu]="false"
+          [detailedContextMenu]="false"
         ></entity-card-collection>
       </mz-tab-item>
 

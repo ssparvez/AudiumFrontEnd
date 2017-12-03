@@ -32,6 +32,9 @@ enum Entity {
 })
 export class EntityCardComponent implements OnInit {
 
+  public readonly ALBUM: Entity = Entity.Album;
+  public readonly ARTIST: Entity = Entity.Artist;
+  public readonly PLAYLIST: Entity = Entity.Playlist;
   public static readonly DEFAULT_nRows:            number = 3;
   public static readonly DEFAULT_nPerRow:          number = 4;
   public static readonly DEFAULT_nRowsInShowAllBt: number = 3;
@@ -71,17 +74,31 @@ export class EntityCardComponent implements OnInit {
   @Input() public tryAllImageTypes:  boolean = false; // (NOTE: Setting tryAllImageTypes = true seems to be significantly slower)
   // If true, default entity image will always be used
   @Input() public forceDefaultImage: boolean = false;
+  // Determines whether all entities in collection are shown by default
   @Input() public showAll: boolean = false;
+  // Determines whether "Show all" button is displayed when showAll == false but all entities don't fit in the specified grid size
+  @Input() public displayShowAllBt: boolean = true;
+  // Entity name/title (Album.albumTitle, Artist.artistName, or Playlist.name)
+  @Input() public displayName:   boolean = true;
   // Entity author (Album.artist or Playlist.creator; not used for Artist)
-  @Input() private displayAuthor: boolean = true;
-  @Input() private displayYear:   boolean = false;
+  @Input() public displayAuthor: boolean = true;
+  // Year of creation (Album.releaseYear only)
+  @Input() public displayYear:   boolean = false;
 
   // If true, the loading animation will play until entities have loaded
-  @Input() private loadingAnimation: boolean = true;
+  @Input() public loadingAnimation: boolean = true;
 
   @Input() private albums: Album[];
   @Input() private artists: Artist[];
   @Input() private playlists: Playlist[];
+
+
+  // Context menu variables
+
+  // Should be set to true if viewing a detailed page (Only used for Playlists)
+  @Input() public detailedContextMenu: boolean = false; // If true, redirects to library playlists page if "delete" menu option is used
+  // Should be set to true if viewing a library page
+  @Input() public libraryContextMenu: boolean = false;
 
 
   // Stylization variables
@@ -211,17 +228,17 @@ export class EntityCardComponent implements OnInit {
   }
 
   // Returns the materialize grid column class for an entity image displayed inside the "Show all" card
-  getMoreBtImgGridClass(): string {
+  getShowAllBtImgGridClass(): string {
     return (" col m" + (12 / this.nRowsInShowAllBt) + " ");
   }
 
   // Returns whether or not to display "Show all" card
-  getShowMoreBt(): boolean {
-    return ((!this.showAll) && this.entities().length > (this.nRows * this.nPerRow));
+  getShowAllBt(): boolean {
+    return (this.displayShowAllBt && (!this.showAll) && this.entities().length > (this.nRows * this.nPerRow));
   }
 
   // Returns the index of the last entity image to display in "Show all" card
-  getMoreBtEndIndex(): number {
+  getShowAllBtEndIndex(): number {
     if(this.showAll){
       return 0;
     }
