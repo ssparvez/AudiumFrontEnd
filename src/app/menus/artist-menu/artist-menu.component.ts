@@ -92,9 +92,7 @@ export class ArtistMenuComponent implements OnInit {
 
   assignFollowStatus(artist: Artist): void {
     const artistsFollowed: number[] = JSON.parse(localStorage.getItem("artistsfollowed"));
-    if (artistsFollowed.find( x => x === artist.artistId) != null ) {
-      artist.followed = true;
-    }
+    artist.followed = (artistsFollowed.find( x => x === artist.artistId) != null );
   }
   removeArtistFromFollowed(artist: Artist) {
     const artistsFollowed: number[] = JSON.parse(localStorage.getItem("artistsfollowed"));

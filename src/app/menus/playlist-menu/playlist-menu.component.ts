@@ -112,7 +112,6 @@ export class PlaylistMenuComponent implements OnInit {
   }
 
   deletePlaylist(playlistToDelete) {
-    console.log(playlistToDelete);
     this.dialog.open(ConfirmComponent, {
       data: {
         message: "Are you sure you want to delete this playlist?"
@@ -140,7 +139,6 @@ export class PlaylistMenuComponent implements OnInit {
   changeVisibility(playlist) {
     const playlistToSend = { playlistId: playlist.playlistId, name:"", description: "", isPublic: !playlist.isPublic,
       creator: {accountId: this.currentUser['_accountId']}};
-    console.log(playlistToSend);
     this.service.update('/playlist/visibility', playlistToSend).subscribe(
       response => {
         playlist.isPublic = !playlist.isPublic;
@@ -157,7 +155,6 @@ export class PlaylistMenuComponent implements OnInit {
       + status, "")
       .subscribe(
         response => {
-          playlist.followed = status;
           if (status) {
             this.addPlaylistToFollow(playlist);
             this.toastService.show("You are now following this playlist", 3000, 'blue');
@@ -193,19 +190,17 @@ export class PlaylistMenuComponent implements OnInit {
     this.playlistsFollowed = JSON.parse(localStorage.getItem("playlistsfollowed"));
     this.playlistsFollowed.splice(this.playlistsFollowed.indexOf(playlist.playlistId),1);
     if(this.library) {
-      for(let p of this.playlists) {
-        if(p.playlistId == playlist.playlistId) {
-          this.playlists.splice(this.playlists.indexOf(p), 1);
-        }
-      }
+      this.playlists.splice(this.playlists.indexOf(playlist), 1);
     }
     localStorage.setItem("playlistsfollowed", JSON.stringify(this.playlistsFollowed));
+    playlist.followed = false;
   }
 
   addPlaylistToFollow(playlist: Playlist) {
     this.playlistsFollowed = JSON.parse(localStorage.getItem("playlistsfollowed"));
     this.playlistsFollowed.unshift(playlist.playlistId);
     localStorage.setItem("playlistsfollowed", JSON.stringify(this.playlistsFollowed));
+    playlist.followed = true;
   }
 
   checkOwnership(playlistOwner): boolean {
@@ -215,10 +210,11 @@ export class PlaylistMenuComponent implements OnInit {
   // Checks if a playlist is followed by the current user
   checkFollowStatus(playlist: Playlist): boolean {
     this.playlistsFollowed = JSON.parse(localStorage.getItem("playlistsfollowed"));
-    let p = this.playlistsFollowed.find( x => x == playlist.playlistId);
-    if (p) {
+    if (this.playlistsFollowed.find( x => x === playlist.playlistId) != null ) {
+      playlist.followed = true;
       return true;
     } else {
+      playlist.followed = false;
       return false;
     }
   }
@@ -230,7 +226,6 @@ export class PlaylistMenuComponent implements OnInit {
   addPlaylistToQueue(playlist: Playlist) {
     this.service.get( "/playlist/" + playlist.playlistId + "/songs").subscribe((songs) => {
       this.playerService.queueSongs(songs);
-      console.log(songs);
     });
   }
 
