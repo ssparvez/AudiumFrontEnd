@@ -68,7 +68,7 @@ export class PlaylistMenuComponent implements OnInit {
       html:(item) => 'Unfollow playlist',
       click:(item) => this.changeFollowStatus(item,false),
       enabled: (item) => true,
-      visible: (item) => item.followed === true || item.followed == null
+      visible: (item) => item.followed === true
     }
   ];
 
@@ -94,6 +94,7 @@ export class PlaylistMenuComponent implements OnInit {
     if (this.checkOwnership(item['accountId'])) {
       contextMenu = this.ownerMenu;
     } else {
+      this.assignFollowStatus(item);
       contextMenu = this.regularMenu;
     }
     this.contextMenuService.show.next({
@@ -148,6 +149,12 @@ export class PlaylistMenuComponent implements OnInit {
     );
   }
 
+  assignFollowStatus(playlist: Playlist): void {
+    const playlistsFollowed: number[] = JSON.parse(localStorage.getItem("playlistsfollowed"));
+    if (playlistsFollowed.find( x => x === playlist.playlistId) != null ) {
+      playlist.followed = true;
+    }
+  }
 
   changeFollowStatus(playlist: Playlist, status) {
     this.service.update('/accounts/' + this.currentAccountId + '/playlist/'  + playlist.playlistId + '/follow/'
@@ -159,8 +166,11 @@ export class PlaylistMenuComponent implements OnInit {
             this.addPlaylistToFollow(playlist);
             this.toastService.show("You are now following this playlist", 3000, 'blue');
           } else {
+            if (this.library) {
+              this.playlists.splice(this.playlists.indexOf(playlist), 1);
+            }
             this.removePlaylistFromFollowed(playlist);
-            this.toastService.show("You are no longer following this playlistt", 3000, 'blue');
+            this.toastService.show("You are no longer following this playlist", 3000, 'blue');
           }
         }, (error: AppError) => {
           this.toastService.show("Playlist follow status could not be changed", 3000, 'red');
@@ -188,7 +198,7 @@ export class PlaylistMenuComponent implements OnInit {
   removePlaylistFromFollowed(playlist: Playlist) {
     const playlistsFollowed: number[] = JSON.parse(localStorage.getItem("playlistsfollowed"));
     playlistsFollowed.splice(playlistsFollowed.indexOf(playlist.playlistId),1);
-    localStorage.setItem("artistsfollowed", JSON.stringify(playlistsFollowed));
+    localStorage.setItem("playlistsfollowed", JSON.stringify(playlistsFollowed));
   }
 
   addPlaylistToFollow(playlist: Playlist) {
