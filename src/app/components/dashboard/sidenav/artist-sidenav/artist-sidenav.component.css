@@ -1,0 +1,64 @@
+mz-sidenav {
+    height: 50vh;
+}
+mz-sidenav-header div {
+    font-size: 32px;
+    padding: 4px 0px 4px 16px;
+}
+
+mz-sidenav-header span {
+    vertical-align: middle; margin-left: 12px; font-weight:300;
+}
+
+mz-sidenav-header i {
+    vertical-align: middle; margin-right: 32px;
+}
+mz-sidenav-header img {
+    width:50px;
+    height:50px;
+    vertical-align:middle;
+}
+
+app-musicplayer {
+    position: absolute;
+    bottom: 4%;
+
+}
+
+mz-sidenav-link a{
+    font-size: large;
+    color: white;
+}
+
+mz-sidenav-collapsible span {
+    font-size: large;
+}
+
+
+.sidenav-text {
+    vertical-align: middle;
+    margin-left: 11%;
+}
+
+span.thumb.active {
+    display: none;
+}
+
+.audium-logo {
+    color: white;
+}
+
+.audium-logo:hover {
+    color: #c7c7c7;
+}
+
+.logout-bt {
+    color: white;
+}
+
+.logout-bt:hover {
+    color: #c7c7c7;
+}
+
+
+

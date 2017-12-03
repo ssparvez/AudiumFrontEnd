@@ -1,3 +1,48 @@
-<p>
-  artist-sidenav works!
-</p>
+<mz-sidenav fixed="true" backgroundClass="grey darken-3" [id]="'sidenav'">
+  <mz-sidenav-header>
+    <div class="blue">
+      <a class="audium-logo" [routerLink]="['/dash/artist-home']" (mouseover)="onMouseOverLogo()"
+         (mouseout)="onMouseOutLogo()">
+        <img [src]="logoImg">
+        <span>Audium</span>
+      </a>
+      <a class="waves-effect right logout-bt" (click)="logout()">
+        <i class="material-icons">exit_to_app</i>
+      </a>
+    </div>
+  </mz-sidenav-header>
+  <mz-sidenav-link>
+    <a routerLinkActive="blue-text text-lighten-2" [routerLink]="['artist-home']" class="waves-effect">
+      <div>
+        <i class="material-icons" style="vertical-align: text-top">trending_up</i>
+        <span class="sidenav-text">Home</span>
+      </div>
+    </a>
+  </mz-sidenav-link>
+  <mz-sidenav-link>
+    <a routerLinkActive="blue-text text-lighten-2" [routerLink]="['artist-account']" class="waves-effect">
+      <div>
+        <img width="24" height="24" style="vertical-align: middle;" class="circle" src="{{mediaURL + '/images/artists/' + currentUser._accountId + '/Profile.jpg'}}" onerror="this.src='assets/images/defaults/user_profile.svg'">          
+        <span class="sidenav-text">{{currentUser._username}}</span>
+      </div>
+    </a>
+  </mz-sidenav-link>
+  <mz-sidenav-link>
+    <a routerLinkActive="blue-text text-lighten-2" [routerLink]="['artist-content']" class="waves-effect">
+      <div>
+        <i class="material-icons" style="vertical-align: text-top">music_note</i>
+        <span class="sidenav-text">Content</span>
+      </div>
+    </a>
+  </mz-sidenav-link>
+  <mz-sidenav-link>
+    <a routerLinkActive="blue-text text-lighten-2" [routerLink]="['admin-artists']" class="waves-effect">
+      <div>
+        <i class="material-icons" style="vertical-align: text-top">attach_money</i>
+        <span class="sidenav-text">Royalties</span>
+      </div>
+    </a>
+  </mz-sidenav-link>
+
+</mz-sidenav>
+

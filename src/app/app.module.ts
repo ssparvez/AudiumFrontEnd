@@ -65,6 +65,10 @@ import { AdminArtistsConsoleComponent } from './modals/admin/admin-artists-conso
 import { ArtistSearchComponent } from './modals/admin/search/artist-search/artist-search.component';
 import { AdminModifyProfilesComponent } from './modals/admin/admin-modify-profiles/admin-modify-profiles.component';
 import { AlbumSearchComponent } from './modals/admin/search/album-search/album-search.component';
+import { ArtistContentComponent } from './components/dashboard/content/artist/artist-content/artist-content.component';
+import { ArtistAccountComponent } from './components/dashboard/content/artist/artist-account/artist-account.component';
+import { ArtistAccount } from './classes/ArtistAccount';
+import { ArtistContentSongsComponent } from './components/dashboard/content/artist/artist-content/artist-content-songs/artist-content-songs.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -86,6 +90,10 @@ const appRoutes: Routes = [
     {path: "admin-artists" , component: AdminArtistsComponent},    
     // ARTIST
     {path: "artist-home" , component: ArtistHomeComponent},
+    {path: "artist-content" , component: ArtistContentComponent},
+    {path: "artist-content-songs/:id" , component: ArtistContentSongsComponent},
+    {path: "artist-account" , component: ArtistAccountComponent},
+    
     // DETAILED
     {path: "artist/:id", component: ArtistComponent},
     {path: "album/:id", component: AlbumComponent},
@@ -158,6 +166,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AlbumSearchComponent,
     ArtistHomeComponent,
     ArtistSidenavComponent,
+    ArtistContentComponent,
+    ArtistAccountComponent,
+    ArtistContentSongsComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,
@@ -194,6 +205,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AuthGuard,
     AuthHttp,
     CustomerAccount,
+    ArtistAccount,
     {
       provide: AuthHttp,
       useFactory: authHttpServiceFactory,

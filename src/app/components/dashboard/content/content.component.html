@@ -9,10 +9,10 @@
       </a>
     </div>
   </div>
-  <div class="navbar" *ngIf="currentUser && currentAccountRole">
+  <div class="navbar" *ngIf="currentUser && currentAccountRole && currentAccountRole == 'BasicUser' || currentAccountRole == 'PremiumUser'">
     <nav style="height: 60px;">
       <div class="nav-wrapper grey darken-3">
-        <form *ngIf="currentAccountRole !== 'Admin'">
+        <form>
           <div class="input-field">
             <input #search id="search" type="search" required (keyup.enter)="onEnter(search.value)">
             <label class="label-icon" for="search">

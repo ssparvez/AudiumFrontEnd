@@ -1,3 +1,32 @@
-<p>
-  artist-home works!
-</p>
+<div class="row fade-in-half-sec">
+  <h1 class="col s12">Home</h1>
+</div>
+
+<div class="row fade-in-half-sec" style="margin-top: 30px;" *ngIf="songs || albums">
+    <h2 class="center">Popular Songs</h2>
+  </div>
+  <div class="row fade-in-1-sec" *ngIf="songs">
+    <table class="bordered responsive-table white-text" *ngIf="songs?.length > 0">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Title</th>
+          <th>Album</th>
+          <th class="center">Plays</th>
+        </tr>
+      </thead>
+      <tbody class="tracklist" *ngIf="songs">
+        <tr *ngFor="let song of songs?.slice(0, 10); let i = index">
+          <td>{{i+1}}.</td>
+          <td>{{song?.title}}</td>
+          <td *ngIf="song">{{song?.albumTitle}}</td>
+          <td class="center">{{song?.playCount}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="col s12 fade-in-half-sec" style="margin-bottom: 20px;" *ngIf="songs?.length == 0 && albums?.length > 0">
+      <div class="card-panel large transparent z-depth-0 center">
+        <h3 class="grey-text">No songs by this artist</h3>
+      </div>
+    </div>
+  </div>
