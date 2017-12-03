@@ -1,0 +1,68 @@
+<!-- Album Information -->
+<div *ngIf="album" class="creator row fade-in-1-sec album-info">
+  <div class="row" style="margin-top: 10px; margin-bottom: 10px;">
+    <h4>Album</h4>
+  </div>
+  <div class="row" style="margin-bottom: 0px; padding-bottom: 0px;">
+    <h1 class="left">{{album?.albumTitle}}</h1>
+    <div class="right">
+      <a class="btn btn-floating btn-large blue-bt fade-in-half-sec" mz-tooltip [tooltip]="'<b>Add a song</b>'" [position]="'left'"
+        [html]="true" (click)="openAddWindow('Song')">
+        <i class="material-icons">add</i>
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="chip fade-in-half-sec" *ngIf="album?.releaseYear">
+      {{album?.releaseYear.substring(0,4)}}
+    </div>
+    <div class="chip fade-in-half-sec" *ngIf="album?.songs">
+      {{album?.songs?.length}} song
+      <span *ngIf="album?.songs?.length != 1">s</span>
+    </div>
+  </div>
+</div>
+<!-- Album Tracklist -->
+<div class="row fade-in-1-sec" style="margin-bottom: 0px;">
+  <table class="bordered responsive-table white-text" *ngIf="album && album?.songs">
+    <thead>
+      <tr>
+        <th>Track</th>
+        <th>Title</th>
+        <th>Duration</th>
+      </tr>
+    </thead>
+    <tbody class="tracklist">
+      <tr *ngFor="let song of album?.songs; let i = index" (dblclick)="playSongs(i)" (contextmenu)="songMenu.onContextMenu($event, song)">
+        <td>{{song?.trackNumber}}</td>
+        <td>
+          {{song?.title}}
+          <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
+        </td>
+        <td>
+          <!-- NOTE: Putting these spans on separate lines creates a space. Though ugly, we should keep them on the same line -->
+          <span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span>
+          <span *ngIf="song?.duration?.substring(3,4) != '0' || song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- If no songs in album -->
+<div class="row fade-in-2-sec" *ngIf="album?.songs?.length == 0" style="margin-bottom: 0px;">
+  <div class="col s12">
+    <div class="card-panel large transparent z-depth-0">
+      <div class="row"></div>
+    </div>
+  </div>
+  <div class="col s12">
+    <div class="card-panel large transparent z-depth-0 center">
+      <h2 class="grey-text">No songs in album</h2>
+    </div>
+  </div>
+</div>
+<!-- Loading animation -->
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!album">
+  <div class="loader">Loading...</div>
+</div>
+<app-song-menu #songMenu [songs]="album?.songs"></app-song-menu>

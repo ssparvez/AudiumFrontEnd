@@ -1,9 +1,9 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
-import {GeneralService} from "../../../../../services/general/general.service";
-import {AppError} from "../../../../../errors/AppError";
-import {Profile} from "../../../../../classes/Profile";
-import {NotFoundError} from "../../../../../errors/not-found-error";
+import { Router, NavigationEnd, ActivatedRoute } from "@angular/router";
+import { GeneralService } from "../../../../../services/general/general.service";
+import { AppError } from "../../../../../errors/AppError";
+import { Profile } from "../../../../../classes/Profile";
+import { NotFoundError } from "../../../../../errors/not-found-error"
 import {MzToastService} from "ng2-materialize";
 
 @Component({

@@ -39,7 +39,7 @@
               </tr>
             </thead>
             <tbody class="tracklist" *ngIf="artist?.songs">
-              <tr *ngFor="let song of artist?.songs?.slice(0, 10); let i = index" (dblclick)="playArtistSongs(i, artist?.songs)"
+              <tr *ngFor="let song of showAllSongs ? artist?.songs : artist?.songs?.slice(0, nPopularSongs); let i = index" (dblclick)="playArtistSongs(i, artist?.songs)"
                   (contextmenu)="songMenu.onContextMenu($event, song)">
                 <td class="song-number">
                   <a class="song-number-value" >{{i+1}}.</a>
@@ -68,82 +68,24 @@
           <div class="loader">Loading...</div>
         </div>
 
-        <div class="row fade-in-half-sec" style="margin-top: 60px;" *ngIf="artist?.songs || artist?.albums">
-          <h2 class="center">Albums</h2>
-        </div>
-        <div class="row fade-in-half-sec" *ngIf="artist?.albums?.length > 0">
-          <div class="col s12 m3 fade-in-1-sec" *ngFor="let album of showAllAlbums ? artist?.albums : artist?.albums?.slice(0, (artist?.albums?.length > 12 ? 11 : 12))">
-            <div class="card transparent" *ngIf="album">
-              <div class="card-image hoverable fade-in-1-sec" [ngStyle]="{ 'height.px': albumCardWidth }">
-                <div class="album-div" [ngStyle]="{ 'height.px': albumCardWidth }">
-                  <div class="transparent album-img valign-wrapper" style="padding: 0px;" [ngStyle]="{ 'height.px': albumCardWidth }">
-                    <img src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{ 'min-width.px': albumCardWidth }">
-                    <div class="album-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../../album', album?.albumId]" [ngStyle]="{ 'height.px': albumCardWidth }">
-                      <div class="album-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
-                      <ng-template #play>
-                        <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                          <a (click)="playPlayback($event, album?.albumId)">
-                            <i class="material-icons album-play-icon large">play_circle_outline</i>
-                          </a>
-                        </h1>
-                      </ng-template>
-                      <ng-template #pause>
-                        <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                          <a (click)="pausePlayback($event)">
-                            <i class="material-icons album-play-icon large">pause_circle_outline</i>
-                          </a>
-                        </h1>
-                      </ng-template>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col s12 center card-album-info" style="margin-top: 8px;">
-                <h3 class="white-grey-link"><a class="truncate" [routerLink]="['../../album', album?.albumId]">{{album?.albumTitle}}</a></h3>
-                <h4 style="margin-top: 3px;">{{album?.releaseYear?.substring(0,4)}}</h4>
-              </div>
-            </div>
-          </div>
-          <div class="col s12 m3 fade-in-1-sec" *ngIf="artist?.albums?.length > 12 && !showAllAlbums">
-            <div class="card transparent hoverable">
-              <div class="card-image" [ngStyle]="{ 'height.px': albumCardWidth }">
-                <div class="valign-wrapper grey darken-3" [ngStyle]="{ 'height.px': albumCardWidth }">
-                  <a (click)="showAllAlbums = true">
-                    <div class="btn transparent more-albums" style="padding: 0px;" [ngStyle]="{ 'height.px': albumCardWidth }">
-                      <div class="col s12 m4" style="padding: 0px;" *ngFor="let album of artist?.albums?.slice(11, (artist?.albums?.length > 20 ? 19 : 20))">
-                        <div class="card transparent" style="margin: 0px;">
-                          <div class="card-image" *ngIf="album" [ngStyle]="{ 'height.px': (albumCardWidth / 3) }">
-                            <div class="album-div valign-wrapper" [ngStyle]="{ 'height.px': (albumCardWidth / 3) }">
-                                <img class="album-img" src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{ 'min-width.px': (albumCardWidth / 3) }">
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col s12 m4 grey darken-3" style="padding: 0px;" *ngIf="artist?.albums?.length > 20 && artist?.events">
-                        <div class="card-image" [ngStyle]="{ 'height.px': (albumCardWidth / 3) }">
-                          <div class="valign-wrapper" [ngStyle]="{ 'height.px': (albumCardWidth / 3) }">
-                              <div class="col s12 grey-text" style="text-align: center;">+{{artist?.albums?.length - 19}}</div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="more-albums-label valign-wrapper" style="position: absolute; width: 100%;" [ngStyle]="{ 'height.px': albumCardWidth }">
-                        <h2 class="col s12" style="text-align: center;">Show all</h2>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col s12 fade-in-half-sec" style="margin-bottom: 40px;" *ngIf="artist?.songs?.length > 0 && artist?.albums?.length == 0">
-          <div class="card-panel large transparent z-depth-0 center">
-            <h3 class="grey-text">No albums by this artist</h3>
-          </div>
-        </div>
-        <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!artist?.albums">
-          <div class="loader">Loading...</div>
-        </div>
+        <entity-card-collection
+          #albumCollection
+          [nRows]="3"
+          [nPerRow]="4"
+          [nRowsInShowAllBt]="3"
+          [title]="'Albums'"
+          [noEntitiesMessage]="'No albums by this artist'"
+          [showAllBtHoverText]="'Show all albums'"
+          [albums]="artist?.albums"
+          [artists]=""
+          [playlists]=""
+          [tryAllImageTypes]="false"
+          [forceDefaultImage]="false"
+          [showAll]="false"
+          [displayAuthor]="false"
+          [displayYear]="true"
+          [loadingAnimation]="true"
+        ></entity-card-collection>
 
         <div class="row fade-in-2-sec" *ngIf="artist?.songs?.length == 0 && artist?.albums?.length == 0">
           <div class="col s12">
@@ -171,46 +113,24 @@
       </mz-tab-item>
 
       <mz-tab-item [label]="'Similar Artists'" class="fade-in-half-sec">
-        <div (window:resize)="0" [ngStyle]="{ 'min-height.px': (mainContentDiv.offsetWidth / 4)}">
-          <div *ngIf="artist && similarArtists">
-            <h2 class="center" style="margin-top: 30px;">Similar Artists</h2>
-          </div>
-          <div *ngIf="artist && similarArtists?.length > 0">
-            <div class="col s3 artist-container fade-in-1-sec" style="padding-bottom: 15px;"
-            *ngFor="let similarArtist of showAllSimilarArtists ? similarArtists : similarArtists?.slice(0, (similarArtists?.length > 12 ? 11 : 12)); let i = index;"
-            (contextmenu)="artistMenu.onContextMenu($event, similarArtist)">
-              <div class="card transparent" *ngIf="similarArtist">
-                <div class="card-image hoverable fade-in-1-sec" [ngStyle]="{ 'height.px': similarArtistCardWidth }">
-                  <div class="artist-div" [ngStyle]="{ 'height.px': similarArtistCardWidth }">
-                    <div class="transparent artist-img valign-wrapper" style="padding: 0px;" [ngStyle]="{ 'height.px': similarArtistCardWidth }">
-                      <img src="{{mediaPath}}/images/artists/{{similarArtist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{ 'min-width.px': similarArtistCardWidth }">
-                      <div class="artist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../../artist', similarArtist?.artistId]" [ngStyle]="{ 'height.px': similarArtistCardWidth }">
-                        <div class="artist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
-                        <ng-template #play>
-                          <h1 class="col s12 artist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                            <a (click)="playArtistSongs(i, similarArtist?.songs)">
-                              <i class="material-icons artist-play-icon large">play_circle_outline</i>
-                            </a>
-                          </h1>
-                        </ng-template>
-                        <ng-template #pause>
-                          <h1 class="col s12 artist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                            <a (click)="pausePlayback($event)">
-                              <i class="material-icons artist-play-icon large">pause_circle_outline</i>
-                            </a>
-                          </h1>
-                        </ng-template>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col s12 center" style="margin-top: 5px;">
-                  <a class="white-grey-link bold-text truncate" [routerLink]="['../../artist', similarArtist?.artistId]">{{similarArtist?.artistName}}</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <entity-card-collection
+          #similarArtistCollection
+          [nRows]="3"
+          [nPerRow]="4"
+          [nRowsInShowAllBt]="3"
+          [title]="'Similar Artists'"
+          [noEntitiesMessage]="'No similar artists'"
+          [showAllBtHoverText]="'Show all'"
+          [albums]=""
+          [artists]="similarArtists"
+          [playlists]=""
+          [tryAllImageTypes]="false"
+          [forceDefaultImage]="false"
+          [showAll]="false"
+          [displayAuthor]="false"
+          [displayYear]="false"
+          [loadingAnimation]="true"
+        ></entity-card-collection>
       </mz-tab-item>
 
       <mz-tab-item [label]="'Events'" class="fade-in-half-sec">

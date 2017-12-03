@@ -1,0 +1,34 @@
+
+.admin-console-button{
+    padding: 0;
+    background-color: white;
+}
+.admin-icon {
+    font-size: 8rem;
+    color: #2196f3;
+    background-color: white;
+    padding: 20px;
+}
+.admin-console-button:hover {
+    background-color: white;
+}
+.admin-console-button:hover > .admin-icon {
+    background-color: white;
+    color: #01579b  ;
+}
+.admin-button-label {
+    color: white;
+    font-size: x-large;
+    margin-top: 0;
+}
+
+.admin-content-label {
+    font-size: xx-large;
+    color: white;
+    padding-bottom: 20px;
+    font-weight: bold;
+}
+
+.padding-bot {
+    padding-bottom: 30px;
+}

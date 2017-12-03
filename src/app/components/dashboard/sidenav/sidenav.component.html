@@ -1,11 +1,11 @@
-<mz-sidenav fixed="true" backgroundClass="grey darken-3" [id]="'sidenav'">
+<mz-sidenav fixed="true" backgroundClass="grey darken-3" [id]="'sidenav'" *ngIf="currentUser">
   <mz-sidenav-header>
     <div class="blue">
       <a class="audium-logo" [routerLink]="['/dash/home']" (mouseover)="onMouseOverLogo()" (mouseout)="onMouseOutLogo()">
         <img [src]="logoImg">
         <span>Audium</span>
       </a>
-      <a class="waves-effect right logout-bt" (click)="logout()" 
+      <a class="waves-effect right logout-bt" (click)="logout()"
       mz-tooltip [tooltip]="'<b>Log out</b>'" [position]="'right'" [html]="true">
         <i class="material-icons">exit_to_app</i>
       </a>
@@ -21,7 +21,7 @@
   </mz-sidenav-link>
   <mz-sidenav-link>
     <a routerLinkActive="blue-text text-lighten-2" [routerLink]="['account']" class="waves-effect">
-      <div>
+      <div *ngIf="accountName">
           <img width="24" height="24" style="vertical-align: middle;" class="circle" src="{{accountImage}}" onerror="this.src='assets/images/defaults/user_profile.svg'">
           <!-- <i class="material-icons" style="vertical-align: text-top">account_box</i> -->
         <span class="sidenav-text">{{accountName}}</span>
@@ -32,8 +32,8 @@
     <mz-sidenav-collapsible-header>
       <i class="material-icons white-text" style="padding: 0 16px;">library_music</i>
       <span class="white-text" style="padding-left:8px;">Your Library
-        <i *ngIf="isExpanded == false" class="material-icons white-text right">keyboard_arrow_down</i>
-        <i *ngIf="isExpanded == true" class="material-icons white-text right">keyboard_arrow_up</i>
+        <i *ngIf="!isExpanded" class="material-icons white-text right">keyboard_arrow_down</i>
+        <i *ngIf="isExpanded" class="material-icons white-text right">keyboard_arrow_up</i>
       </span>
     </mz-sidenav-collapsible-header>
     <mz-sidenav-collapsible-content>

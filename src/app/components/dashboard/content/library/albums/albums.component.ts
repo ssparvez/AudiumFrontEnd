@@ -25,7 +25,7 @@ export class AlbumsComponent implements OnInit {
   accountId: number;
   albums: Album[];
   mediaPath: string;
-  public isPlaying;
+  public isPlaying: boolean;
   constructor(
     private router: Router,
     private generalService: GeneralService,
@@ -41,11 +41,16 @@ export class AlbumsComponent implements OnInit {
       window.scrollTo(0, 0)
     });
     this.mediaPath = this.dataService.mediaURL;
-    this.accountId = JSON.parse(sessionStorage.getItem("currentUser"))._accountId;
-    this.generalService.get("/accounts/" + this.accountId + "/albums").subscribe((albums) => {
-      this.albums = albums
-      console.log(this.albums);
-    });
+    let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    if(currUser != null){
+      this.accountId = currUser._accountId;
+    }
+    if(this.accountId != null){
+      this.generalService.get("/accounts/" + this.accountId + "/albums").subscribe((albums) => {
+        this.albums = albums
+        console.log(this.albums);
+      });
+    }
   }
   updateUrl() {
 

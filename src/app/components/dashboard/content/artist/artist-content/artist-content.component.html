@@ -1,0 +1,53 @@
+<div class="row fade-in-half-sec" style="margin-bottom: 0px;">
+  <div class="left fade-in-half-sec">
+    <h1>Content Control</h1>
+  </div>
+  <div class="right">
+    <a class="btn btn-floating btn-large blue-bt fade-in-half-sec" mz-tooltip
+    [tooltip]="'<b>Add an album</b>'"
+    [position]="'left'"
+    [html]="true">
+      <i class="material-icons" (click)="openAddWindow('Album')">add</i>
+    </a>
+  </div>
+</div>
+<div class="row fade-in-half-sec" style="padding-right: 8px;">
+    <div class="right">
+      <a class="btn btn-floating btn-small amber fade-in-half-sec" mz-tooltip
+      [tooltip]="'<b>Edit Albums</b>'"
+      [position]="'left'"
+      [html]="true">
+        <i class="material-icons" (click)="editMode = !editMode">edit</i>
+      </a>
+    </div>
+  </div>
+<div class="row" style="margin-bottom:0;" *ngIf="albums">
+  <div class="col s3 album-container fade-in-1-sec" style="padding-bottom: 15px;" *ngFor="let album of albums; let i = index;"
+    (contextmenu)="artistAlbumMenu.onContextMenu($event, album)">
+    <div class="card transparent" *ngIf="album">
+      <div class="card-image hoverable fade-in-1-sec" #albumCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
+        <div class="album-div" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
+          <div class="transparent album-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
+            <img src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'"
+              [ngStyle]="{'min-width.px': albumCardDiv.offsetWidth }">
+          </div>
+        </div>
+        <a *ngIf="editMode == true" class="btn-floating halfway-fab waves-effect waves-light red">
+          <i class="material-icons">remove</i>
+        </a>
+      </div>
+      <div class="col s12 center card-album-info" style="margin-top: 24px;">
+        <h3>
+          <a class="truncate" [routerLink]="['../artist-content-songs', album?.albumId]">{{album?.albumTitle}}</a>
+        </h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading animation -->
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!albums">
+    <div class="loader">Loading...</div>
+</div>
+<app-album-menu #artistAlbumMenu [albums]="albums"></app-album-menu>
+  

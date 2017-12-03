@@ -45,7 +45,9 @@ export class AlbumMenuComponent implements OnInit {
               private contextMenuService: ContextMenuService,
               private toastService: MzToastService) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    this.currentAccountId = this.currentUser['_accountId'];
+    if(this.currentUser != null){
+      this.currentAccountId = this.currentUser['_accountId'];
+    }
   }
 
   ngOnInit() {

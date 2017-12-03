@@ -1,23 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import {ContentAddComponent} from "../../../../../modals/admin/content-add/content-add.component";
-import {MzToastService} from "ng2-materialize";
-import {MatDialog} from "@angular/material";
-import {SongSearchComponent} from "../../../../../modals/admin/search/song-search/song-search.component";
-import {ContentInputComponent} from "../../../../../modals/admin/search/content-input/content-input.component";
-import {AlbumSearchComponent} from "../../../../../modals/admin/search/album-search/album-search.component";
+import { MatDialog } from '@angular/material';
+import { MzToastService } from 'ng2-materialize';
+import { ContentAddComponent } from '../../../../../modals/admin/content-add/content-add.component';
+import { AlbumSearchComponent } from '../../../../../modals/admin/search/album-search/album-search.component';
+import { ContentInputComponent } from '../../../../../modals/admin/search/content-input/content-input.component';
+import { SongSearchComponent } from '../../../../../modals/admin/search/song-search/song-search.component';
+import { Album } from '../../../../../classes/Album';
+import { GeneralService } from '../../../../../services/general/general.service';
+import { DataService } from '../../../../../services/data.service';
 
 @Component({
-  selector: 'app-admin-songs',
-  templateUrl: './admin-content.component.html',
-  styleUrls: ['./admin-content.component.css']
+  selector: 'app-artist-content',
+  templateUrl: './artist-content.component.html',
+  styleUrls: ['./artist-content.component.css']
 })
-export class AdminContentComponent implements OnInit {
-
+export class ArtistContentComponent implements OnInit {
+  editMode = false;
+  albums: Album[]
   private currentUser;
   private currentAdminId;
+  mediaPath: string;
 
   constructor(private dialog: MatDialog,
-              private toastService: MzToastService) {
+              private toastService: MzToastService,
+              private generalService: GeneralService,
+              private dataService: DataService) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     if(this.currentUser != null){
       this.currentAdminId = this.currentUser['_accountId'];
@@ -25,7 +32,12 @@ export class AdminContentComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
+    this.mediaPath = this.dataService.mediaURL;
+    this.generalService.get("/artists/accounts/" + this.currentUser['_accountId'] + "/albums").subscribe((albums) => {
+      this.albums = albums;
+      console.log(albums);
+      // Get artist albums
+    });  }
 
   openAddWindow(contentType: string) {
     this.dialog.open(ContentAddComponent, {
@@ -128,4 +140,7 @@ export class AdminContentComponent implements OnInit {
         });
     }
   }
+
+  
+
 }

@@ -1,27 +1,27 @@
 import { Component, OnInit } from '@angular/core';
+import { SidenavComponent } from '../sidenav.component';
 import { Router } from '@angular/router';
-import { AuthenticationService } from "../../../services/authentication/authentication.service";
+import { AuthenticationService } from '../../../../services/authentication/authentication.service';
+import { DataService } from '../../../../services/data.service';
 
 @Component({
-  selector: 'app-sidenav',
-  templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.css']
+  selector: 'app-artist-sidenav',
+  templateUrl: './artist-sidenav.component.html',
+  styleUrls: ['./artist-sidenav.component.css']
 })
-export class SidenavComponent implements OnInit {
-
+export class ArtistSidenavComponent implements OnInit {
   public currentUser;
   isExpanded: boolean = false;
-  accountName: string;
-  accountImage: string;
   logoImg: string = "assets/images/logo.png";
+  mediaURL: string;
 
-  constructor(private router: Router, private authService: AuthenticationService) {
+  constructor(
+    private router: Router, 
+    private authService: AuthenticationService, 
+    private dataService: DataService) {
     //const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    if(this.currentUser != null){
-      this.accountName = this.currentUser._firstName + " " + this.currentUser._lastName;
-      this.accountImage = this.currentUser._profilePicUrl;
-    }
+    this.mediaURL = this.dataService.mediaURL;
   }
 
   ngOnInit() {
@@ -51,5 +51,3 @@ export class SidenavComponent implements OnInit {
   }
 
 }
-
-
