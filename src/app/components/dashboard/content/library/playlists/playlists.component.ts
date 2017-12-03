@@ -51,7 +51,7 @@ export class PlaylistsComponent implements OnInit {
       if (!(event instanceof NavigationEnd)) {
           return;
       }
-      window.scrollTo(0, 0)
+      window.scrollTo(0, 0);
     });
     this.service.get("/accounts/" + this.currentAccountId + "/playlists").subscribe((playlists) => {
       this.playlists = playlists;

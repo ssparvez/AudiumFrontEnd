@@ -1,3 +1,4 @@
+import { UserPreferences } from './UserPreferences'
 
 export class Account {
 
@@ -8,6 +9,7 @@ export class Account {
   private _accountId: number;
   private _role: string;
   private _isActive: number;
+  private _userPreferences?: UserPreferences;
 
   constructor() {}
 
@@ -39,6 +41,10 @@ export class Account {
     this._role = value;
   }
 
+  set userPreferences(value: UserPreferences) {
+    this.userPreferences = value;
+  }
+
   get isActive(): number {
     return this._isActive;
   }
@@ -66,5 +72,8 @@ export class Account {
     return this._role;
   }
 
+  get userPreferences(): UserPreferences {
+    return this.userPreferences;
+  }
 
 }

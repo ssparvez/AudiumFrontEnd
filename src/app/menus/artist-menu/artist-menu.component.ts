@@ -100,6 +100,7 @@ export class ArtistMenuComponent implements OnInit {
     const artistsFollowed: number[] = JSON.parse(localStorage.getItem("artistsfollowed"));
     artistsFollowed.splice(artistsFollowed.indexOf(artist.artistId),1);
     localStorage.setItem("artistsfollowed", JSON.stringify(artistsFollowed));
+    artist.followed = false;
   }
 
   addArtistToFollow(artist: Artist) {

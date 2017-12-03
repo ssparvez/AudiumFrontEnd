@@ -7,14 +7,16 @@
         <div class="profile-banner-mask" style="width: 100%; height: 100%; position: absolute; top: 0px; left: 0px;"></div>
         <span class="card-title black fade-in-half-sec" id="large-card-title">
           <h1 class="fade-in-1-sec" style="display: inline; vertical-align: middle;">{{profile?.username}}</h1>
+          <span  class="follow-status" *ngIf="!isOwner">
           <button mz-button class="detailed-follow-btn btn-medium waves-effect"
-                  *ngIf="profile?.publicProfile && !isFollowing()" (click)="changeFollowStatus(true)">
+                  *ngIf="profile?.publicProfile && !isFollowing()" (click)="changeFollowStatus(true, profile)">
           FOLLOW
           </button>
           <button mz-button class="detailed-follow-btn btn-medium waves-effect"
-                  *ngIf="profile?.publicProfile && isFollowing()" (click)="changeFollowStatus(false)">
+                  *ngIf="profile?.publicProfile && isFollowing()" (click)="changeFollowStatus(false, profile.accountId)">
           UNFOLLOW
           </button>
+          </span>
         </span>
       </div>
     </div>
@@ -75,45 +77,28 @@
       </div>
     </mz-tab-item>
     <mz-tab-item [label]="'Library'">
-      <div class="row fade-in-half-sec" style="margin-top: 30px;" *ngIf="profile?.createdPlaylists">
-        <h2 style="text-align: center;">Playlists</h2>
-      </div>
-      <div class="row fade-in-half-sec" *ngIf="profile?.createdPlaylists?.length > 0">
-        <div class="col s12 m3 fade-in-1-sec" *ngFor="let playlist of profile?.createdPlaylists">
-          <div class="card transparent" *ngIf="playlist">
-            <div class="card-image hoverable fade-in-1-sec" [ngStyle]="{ 'height.px': playlistCardWidth }">
-              <div class="playlist-div" [ngStyle]="{ 'height.px': playlistCardWidth }">
-                <div class="transparent playlist-img valign-wrapper" style="padding: 0px;" [ngStyle]="{ 'height.px': playlistCardWidth }">
-                  <img src="assets/images/defaults/playlist.svg" [ngStyle]="{ 'min-width.px': playlistCardWidth }">
-                  <div class="playlist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../../playlist', playlist?.playlistId]" [ngStyle]="{ 'height.px': playlistCardWidth + 2 }">
-                    <div class="playlist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
-                    <ng-template #play>
-                      <h1 class="col s12 playlist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                        <a (click)="playPlaylist($event, playlist?.playlistId)">
-                          <i class="material-icons playlist-play-icon large">play_circle_outline</i>
-                        </a>
-                      </h1>
-                    </ng-template>
-                    <ng-template #pause>
-                      <h1 class="col s12 playlist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                        <a (click)="pausePlayback($event)">
-                          <i class="material-icons playlist-play-icon large">pause_circle_outline</i>
-                        </a>
-                      </h1>
-                    </ng-template>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col s12 center card-playlist-info" style="margin-top: 8px;">
-              <h3><a class="truncate" [routerLink]="['../../playlist', playlist?.playlistId]">{{playlist?.name}}</a></h3>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!profile?.createdPlaylists">
-        <div class="loader">Loading...</div>
-      </div>
+      <entity-card-collection
+        #createdPlaylistCollection
+        [nRows]="3"
+        [nPerRow]="4"
+        [nRowsInShowAllBt]="3"
+        [title]="'Playlists'"
+        [noEntitiesMessage]="'User hasn\'t created any playlists'"
+        [showAllBtHoverText]="'Show all playlists'"
+        [albums]=""
+        [artists]=""
+        [playlists]="profile?.createdPlaylists"
+        [tryAllImageTypes]="false"
+        [forceDefaultImage]="true"
+        [showAll]="false"
+        [displayShowAllBt]="true"
+        [displayName]="true"
+        [displayAuthor]="false"
+        [displayYear]="false"
+        [loadingAnimation]="true"
+        [libraryContextMenu]="false"
+        [detailedContextMenu]="false"
+      ></entity-card-collection>
     </mz-tab-item>
     <mz-tab-item [label]="'Following'">
       <div class="col s12" *ngIf="profile?.recentSongs || profile?.createdPlaylists || profile?.following">
@@ -126,8 +111,15 @@
             <p class="white-text">{{following?.followerCount}} Follower<span *ngIf="following?.followerCount != 1">s</span>
               <br>
             </p>
-            <a href="#!" class="secondary-content">
-              <a class="waves-effect waves-light btn blue-bt">Follow</a>
+            <a class="secondary-content">
+              <button mz-button class="detailed-follow-btn btn-medium waves-effect"
+                      (click)="changeFollowStatus(false, following)" *ngIf="!isOwner">
+                FOLLOW
+              </button>
+              <button mz-button class="detailed-follow-btn btn-medium waves-effect"
+                      (click)="changeFollowStatus(false, following)" *ngIf="isOwner">
+                UNFOLLOW
+              </button>
             </a>
           </li>
         </ul>
@@ -153,7 +145,10 @@
               <br>
             </p>
             <a href="#!" class="secondary-content">
-              <a class="waves-effect waves-light btn blue-bt">Follow</a>
+              <button mz-button class="detailed-follow-btn btn-medium waves-effect"
+                      (click)="changeFollowStatus(false, follower)" *ngIf="!isOwner">
+                FOLLOW
+              </button>
             </a>
           </li>
         </ul>
