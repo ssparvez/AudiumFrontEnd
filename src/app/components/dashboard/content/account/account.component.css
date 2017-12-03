@@ -96,3 +96,7 @@
     width: 200px;
     height: 200px;
 }
+
+.account-username-link:hover {
+    color: #cccccc;
+}

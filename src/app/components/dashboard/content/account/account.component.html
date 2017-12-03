@@ -6,7 +6,7 @@
         <div class="row">
             <img class="circle tst responsive-img" src="{{getCurrentUser().profilePicURL}}" onerror="this.src='assets/images/defaults/user_profile.svg'">
         </div>
-        <div class="row account-username">{{getCurrentUser().username}}</div>
+        <div class="row account-username"><a class="account-username-link" [routerLink]="['../profile', getCurrentUser().accountId]">{{getCurrentUser().username}}</a></div>
       </div>
     </div>
   </div>
@@ -95,7 +95,7 @@
         <div class="row">
           <div class="col s12">
             <button mz-button class="account-btn btn" (click)="editProfile()">
-              EDIT PROFILE
+              EDIT INFORMATION
             </button>
           </div>
         </div>

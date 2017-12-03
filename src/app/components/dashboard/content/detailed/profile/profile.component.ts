@@ -44,8 +44,10 @@ export class ProfileComponent implements OnInit {
       this.currentProfileId = param['id'];
     });
     this.loadProfileInfo();
-    this.loadFollowStatus();
-
+    this.isOwner = this.checkIfOwner();
+    if ( !this.isOwner) {
+      this.loadFollowStatus();
+    }
     this.router.events.subscribe((event) => {
       if (!(event instanceof NavigationEnd)) {
           return;
@@ -138,11 +140,12 @@ export class ProfileComponent implements OnInit {
   }
 
   checkIfOwner() {
-    return ( this.currentProfileId === this.currentAccountId);
+    console.log(( +this.currentProfileId === this.currentAccountId));
+    return ( +this.currentProfileId === this.currentAccountId);
   }
 
-  changeFollowStatus(status): void {
-    this.service.update('/accounts/' + this.currentAccountId + '/profile/'  + this.currentProfileId + '/follow/'
+  changeFollowStatus(status, profile): void {
+    this.service.update('/accounts/' + this.currentAccountId + '/profile/'  + profile.accountId + '/follow/'
       + status, "")
       .subscribe(
         response => {
@@ -150,13 +153,18 @@ export class ProfileComponent implements OnInit {
           if (status) {
             this.toastService.show("You are now following this person", 3000, 'blue');
           } else {
+            if ( this.isOwner) {
+              this.profile.following.splice(this.profile.following.indexOf(profile),1);
+            }
             this.toastService.show("Person was unfollowed", 3000, 'blue');
+
           }
         }, (error: AppError) => {
           this.toastService.show("Person follow status could not be changed", 3000, 'red');
         }
       );
   }
+
 
   pausePlayback($event: MouseEvent) {
     this.isPlaying = false;
