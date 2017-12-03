@@ -68,13 +68,17 @@
           <div class="loader">Loading...</div>
         </div>
 
-        <entity-card-collection #albumCollection
+        <entity-card-collection
+          #albumCollection
           [nRows]="3"
           [nPerRow]="4"
           [nRowsInShowAllBt]="3"
           [title]="'Albums'"
           [noEntitiesMessage]="'No albums by this artist'"
+          [showAllBtHoverText]="'Show all albums'"
           [albums]="artist?.albums"
+          [artists]=""
+          [playlists]=""
           [tryAllImageTypes]="false"
           [forceDefaultImage]="false"
           [showAll]="false"
@@ -109,54 +113,24 @@
       </mz-tab-item>
 
       <mz-tab-item [label]="'Similar Artists'" class="fade-in-half-sec">
-        <div (window:resize)="0" [ngStyle]="{ 'min-height.px': (mainContentDiv.offsetWidth / 4)}">
-          <div *ngIf="artist && similarArtists">
-            <h2 class="center" style="margin-top: 30px;">Similar Artists</h2>
-          </div>
-          <div *ngIf="artist && similarArtists?.length > 0">
-            <div class="col s3 artist-container fade-in-1-sec" style="padding-bottom: 15px;"
-            *ngFor="let similarArtist of showAllSimilarArtists ? similarArtists : similarArtists?.slice(0, (similarArtists?.length > 12 ? 11 : 12)); let i = index;"
-            (contextmenu)="artistMenu.onContextMenu($event, similarArtist)">
-              <div class="card transparent" *ngIf="similarArtist">
-                <div class="card-image hoverable fade-in-1-sec" [ngStyle]="{ 'height.px': similarArtistCardWidth }">
-                  <div class="artist-div" [ngStyle]="{ 'height.px': similarArtistCardWidth }">
-                    <div class="transparent artist-img valign-wrapper" style="padding: 0px;" [ngStyle]="{ 'height.px': similarArtistCardWidth }">
-                      <img src="{{mediaPath}}/images/artists/{{similarArtist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{ 'min-width.px': similarArtistCardWidth }">
-                      <div class="artist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../../artist', similarArtist?.artistId]" [ngStyle]="{ 'height.px': similarArtistCardWidth }">
-                        <div class="artist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
-                        <ng-template #play>
-                          <h1 class="col s12 artist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                            <a (click)="playArtistSongs(i, similarArtist?.songs)">
-                              <i class="material-icons artist-play-icon large">play_circle_outline</i>
-                            </a>
-                          </h1>
-                        </ng-template>
-                        <ng-template #pause>
-                          <h1 class="col s12 artist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                            <a (click)="pausePlayback($event)">
-                              <i class="material-icons artist-play-icon large">pause_circle_outline</i>
-                            </a>
-                          </h1>
-                        </ng-template>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col s12 center" style="margin-top: 5px;">
-                  <a class="white-grey-link bold-text truncate" style="font-size: 18px;" [routerLink]="['../../artist', similarArtist?.artistId]">{{similarArtist?.artistName}}</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col s12 fade-in-half-sec" style="margin-bottom: 40px;" *ngIf="artist && similarArtists?.length == 0">
-            <div class="card-panel large transparent z-depth-0 center">
-              <h3 class="grey-text">No similar artists</h3>
-            </div>
-          </div>
-          <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!artist || !similarArtists">
-            <div class="loader">Loading...</div>
-          </div>
-        </div>
+        <entity-card-collection
+          #similarArtistCollection
+          [nRows]="3"
+          [nPerRow]="4"
+          [nRowsInShowAllBt]="3"
+          [title]="'Similar Artists'"
+          [noEntitiesMessage]="'No similar artists'"
+          [showAllBtHoverText]="'Show all'"
+          [albums]=""
+          [artists]="similarArtists"
+          [playlists]=""
+          [tryAllImageTypes]="false"
+          [forceDefaultImage]="false"
+          [showAll]="false"
+          [displayAuthor]="false"
+          [displayYear]="false"
+          [loadingAnimation]="true"
+        ></entity-card-collection>
       </mz-tab-item>
 
       <mz-tab-item [label]="'Events'" class="fade-in-half-sec">

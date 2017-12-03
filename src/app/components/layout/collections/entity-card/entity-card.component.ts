@@ -32,8 +32,8 @@ enum Entity {
 })
 export class EntityCardComponent implements OnInit {
 
-  public static readonly DEFAULT_nRows:       number = 3;
-  public static readonly DEFAULT_nPerRow:     number = 4;
+  public static readonly DEFAULT_nRows:            number = 3;
+  public static readonly DEFAULT_nPerRow:          number = 4;
   public static readonly DEFAULT_nRowsInShowAllBt: number = 3;
 
   public mediaPath: string;
@@ -64,16 +64,17 @@ export class EntityCardComponent implements OnInit {
   // Input variables
 
   @Input() public title: string = "";
-  @Input() public noEntitiesMessage: string = "";
+  @Input() public noEntitiesMessage:   string = "";
+  @Input() public showAllBtHoverText: string = "Show all";
 
   // If true, server will try all file extensions before using default image
-  @Input() public tryAllImageTypes: boolean = false; // (NOTE: Setting tryAllImageTypes = true seems to be significantly slower)
+  @Input() public tryAllImageTypes:  boolean = false; // (NOTE: Setting tryAllImageTypes = true seems to be significantly slower)
   // If true, default entity image will always be used
   @Input() public forceDefaultImage: boolean = false;
   @Input() public showAll: boolean = false;
   // Entity author (Album.artist or Playlist.creator; not used for Artist)
   @Input() private displayAuthor: boolean = true;
-  @Input() private displayYear: boolean = false;
+  @Input() private displayYear:   boolean = false;
 
   // If true, the loading animation will play until entities have loaded
   @Input() private loadingAnimation: boolean = true;
@@ -86,12 +87,12 @@ export class EntityCardComponent implements OnInit {
   // Stylization variables
 
   // Number of entity card rows to show if showAll == false
-  @Input() private nRows: number = EntityCardComponent.DEFAULT_nRows;
+  @Input() private nRows:   number = EntityCardComponent.DEFAULT_nRows;
   // Number of entity cards per row (Must be a value in { 1, 2, 3, 4, 6, 12 })
   @Input() private nPerRow: number = EntityCardComponent.DEFAULT_nPerRow;
   // Number of entity rows in "Show all" card (Is equivalent to the number of of albus per row and must be a value in { 1, 2, 3, 4, 6, 12 })
   @Input() private nRowsInShowAllBt: number = EntityCardComponent.DEFAULT_nRowsInShowAllBt;
-  private collectionWidth: number = 800;
+  @Input() private collectionWidth: number = 800;
   private cardWidth: number = ((this.collectionWidth * 0.92) / this.nPerRow);
 
   constructor(
@@ -181,6 +182,10 @@ export class EntityCardComponent implements OnInit {
         break;
     }
     return false;
+  }
+
+  public recheckSize(): void {
+    this.cdRef.detectChanges();
   }
 
   public play($event: MouseEvent, i: number): void {

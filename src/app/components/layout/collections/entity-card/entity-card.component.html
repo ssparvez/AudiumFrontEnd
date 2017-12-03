@@ -49,7 +49,7 @@
                   <div class="card transparent" style="margin: 0px;">
                     <div class="card-image" *ngIf="entity" [ngStyle]="{ 'width.px': (cardWidth / nRowsInShowAllBt), 'height.px': (cardWidth / nRowsInShowAllBt) }">
                       <div class="entity-div valign-wrapper" [ngStyle]="{ 'width.px': (cardWidth / nRowsInShowAllBt), 'height.px': (cardWidth / nRowsInShowAllBt) }">
-                          <img class="entity-card-img" [src]="imagePath(i)" (error)="onImageError(i)" [ngStyle]="{ 'width.px': (cardWidth / nRowsInShowAllBt), 'height.px': 'auto' }">
+                          <img class="entity-card-img" [src]="imagePath(i + ((this.nRows * this.nPerRow) - 1))" (error)="onImageError(i + ((this.nRows * this.nPerRow) - 1))" [ngStyle]="{ 'width.px': (cardWidth / nRowsInShowAllBt), 'height.px': 'auto' }">
                       </div>
                     </div>
                   </div>
@@ -62,7 +62,7 @@
                   </div>
                 </div>
                 <div class="more-bt-label valign-wrapper" style="position: absolute;" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
-                  <h2 class="col s12" style="text-align: center;" [ngStyle]="{ 'font-size.px': (cardWidth / 8) }">Show all</h2>
+                  <h2 class="col s12" style="text-align: center;" [ngStyle]="{ 'font-size.px': (cardWidth / 8) }">{{showAllBtHoverText}}</h2>
                 </div>
               </div>
             </a>
