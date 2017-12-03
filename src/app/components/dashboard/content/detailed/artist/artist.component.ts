@@ -7,6 +7,7 @@ import { DataService } from '../../../../../services/data.service';
 import { Song } from '../../../../../classes/Song';
 import { Event } from '../../../../../classes/Event';
 import { Address } from '../../../../../classes/Address';
+import { Album } from '../../../../../classes/Album';
 import { MzToastService } from "ng2-materialize";
 import { AppError } from "../../../../../errors/AppError";
 import { animate, style, transition, trigger } from "@angular/animations";
@@ -46,10 +47,14 @@ export class ArtistComponent implements OnInit {
   // Stylization variables
   @ViewChild('artistBannerDiv') artistBannerDiv: ElementRef;
   bannerWidth: number = 800;
-  bannerHeight: number = 400;
-  nAlbumsPerRow: number = 4;
-  albumCardWidth: number = ((this.bannerWidth * 0.92) / this.nAlbumsPerRow);
+  bannerHeight: number = this.bannerWidth / 2;
+  nPopularSongs: number = 10; // Number songs to show if showAllSongs == false
+  nAlbumRows: number = 3; // Number of album card rows to show if showAllAlbums == false
+  nAlbumsPerRow: number = 4; // Number of album cards per row (Must be a value in { 1, 2, 3, 4, 6, 12 })
+  nMoreBtAlbumRows: number = 3; // Number of album rows in "Show all albums" card (Is equivalent to the number of of albus per row and must be a value in { 1, 2, 3, 4, 6, 12 })
+  nSimilarArtistRows: number = 3;
   nSimilarArtistsPerRow: number = 4;
+  albumCardWidth: number = ((this.bannerWidth * 0.92) / this.nAlbumsPerRow);
   similarArtistCardWidth: number = ((this.bannerWidth * 0.92) / this.nSimilarArtistsPerRow);
 
   constructor(
@@ -100,7 +105,6 @@ export class ArtistComponent implements OnInit {
         // get artist songs
 		    this.generalService.get("/artists/" + this.id + "/songs").subscribe((songs) => {
           this.artist.songs = songs;
-          console.log(this.artist.songs);
           // Get artist albums
           this.generalService.get("/artists/" + this.id + "/albums").subscribe((albums) => {
             this.artist.albums = albums;
@@ -160,6 +164,53 @@ export class ArtistComponent implements OnInit {
 
   getFullDate(date: string) {
     return this.monthNames[(+date.substring(5,7))-1] + ' ' + parseInt(date.substring(8,10)) + ', ' + date.substring(0,4)
+  }
+
+  // Returns the materialize grid column class for an album card
+  getAlbumCardGridClass(): string {
+    return (" col m" + (12 / this.nAlbumsPerRow) + " ");
+  }
+
+  // Returns the size of the materialize icon used for the play/pause button on an album card
+  getAlbumCardIconSize(): number {
+    return (this.albumCardWidth / 2);
+  }
+
+  // Returns the materialize grid column class for an album art displayed inside the "Show all albums" card
+  getMoreBtAlbumGridClass(): string {
+    return (" col m" + (12 / this.nMoreBtAlbumRows) + " ");
+  }
+
+  // Returns whether or not to display "Show all albums" card
+  getShowMoreAlbumsBt(): boolean {
+    return ((!this.showAllAlbums) && this.artist.albums.length > (this.nAlbumRows * this.nAlbumsPerRow));
+  }
+
+  // Returns the index of the last album to display in "Show all albums" card
+  getMoreBtAlbumsEndIndex(): number {
+    if(this.showAllAlbums){
+      return 0;
+    }
+    let nAlbums = (this.nAlbumRows * this.nAlbumsPerRow);
+    let nBtAlbums = (nAlbums + (this.nMoreBtAlbumRows * this.nMoreBtAlbumRows)) - 1;
+    return this.artist.albums.length > nBtAlbums ? (nBtAlbums - 1) : nBtAlbums;
+  }
+
+  // Returns whether or not to display hidden album count in "Show all albums" card
+  getShowRemainingAlbumCount(): boolean {
+    let nAlbums = (this.nAlbumRows * this.nAlbumsPerRow) - 1;
+    let nBtAlbums = (this.nMoreBtAlbumRows * this.nMoreBtAlbumRows);
+    return ((!this.showAllAlbums) && this.artist.albums.length > (nAlbums + nBtAlbums));
+  }
+
+  // Returns number of hidden albums
+  getRemainingAlbumCount(): number {
+    if(this.showAllAlbums){
+      return 0;
+    }
+    let nAlbums = (this.nAlbumRows * this.nAlbumsPerRow) - 1;
+    let nBtAlbums = (this.nMoreBtAlbumRows * this.nMoreBtAlbumRows) - 1;
+    return this.artist.albums.length - (nAlbums + nBtAlbums);
   }
 
   changeFollowStatus(status) {

@@ -96,14 +96,11 @@ h5 {
 }
 
 .album-div, .artist-div, .artist-banner {
-    max-height: inherit;
     overflow: hidden;
     background: rgba(0, 0, 1, 1.0);
 }
 
 .album-img, .artist-img {
-    min-width: 100%;
-    max-width: 100%;
     height: auto;
 }
 
