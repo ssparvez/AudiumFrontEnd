@@ -21,6 +21,6 @@ export interface Song {
   isPlaying?: boolean;
   sound?: Howl;
 
-  isSaved?: boolean;
+  saved?: boolean;
   timePlayed?: number;
 }
