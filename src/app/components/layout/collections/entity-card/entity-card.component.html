@@ -77,13 +77,13 @@
       <h3 class="grey-text">{{noEntitiesMessage}}</h3>
     </div>
   </div>
-  <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="loadingAnimation && !entities()">
-    <div class="loader">Loading...</div>
-  </div>
 </div>
 
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="loadingAnimation && (!e || !entities())">
+  <div class="loader">Loading...</div>
+</div>
 
-  <app-album-menu #albumContextMenu [albums]="albums" [library]="libraryContextMenu"></app-album-menu>
-  <app-artist-menu #artistContextMenu [artists]="artists" [library]="libraryContextMenu"></app-artist-menu>
-  <app-playlist-menu #playlistContextMenu [playlists]="playlists" [library]="libraryContextMenu" [detailed]="detailedContextMenu"></app-playlist-menu>
+<app-album-menu #albumContextMenu [albums]="albums" [library]="libraryContextMenu"></app-album-menu>
+<app-artist-menu #artistContextMenu [artists]="artists" [library]="libraryContextMenu"></app-artist-menu>
+<app-playlist-menu #playlistContextMenu [playlists]="playlists" [library]="libraryContextMenu" [detailed]="detailedContextMenu"></app-playlist-menu>
 

@@ -7,7 +7,7 @@ import { Playlist } from '../../../../classes/Playlist';
 import { DataService } from '../../../../services/data.service';
 
 
-// Supported entity types (only 1 type allowed)
+// Supported entity types (only 1 type allowed per entity collection element)
 enum Entity {
   None = 0,
   Album = 1,
@@ -183,6 +183,7 @@ export class EntityCardComponent implements OnInit {
         this.nRowsInShowAllBt = EntityCardComponent.DEFAULT_nRowsInShowAllBt;
       }
     }
+    this.cdRef.detectChanges();
   }
 
   public static validRowLength(length: number): boolean {

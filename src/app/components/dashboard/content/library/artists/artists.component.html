@@ -1,58 +1,22 @@
-<div class="row fade-in-half-sec">
-  <h1 class="col s12">Artists</h1>
-</div>
-<div class="row" style="margin-bottom:0;" *ngIf="artists">
-  <div class="col s3 artist-container fade-in-1-sec" style="padding-bottom: 15px;" @fade *ngFor="let artist of artists; let i = index;"
-       (contextmenu)="artistMenu.onContextMenu($event, artist)">
-    <div class="card transparent" *ngIf="artist">
-      <div class="card-image hoverable fade-in-1-sec" #artistCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
-        <div class="artist-div" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
-          <div class="transparent artist-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
-            <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{'min-width.px': artistCardDiv.offsetWidth }">
-            <div class="artist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../artist', artist?.artistId]" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
-              <div class="artist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
-              <ng-template #play>
-                <h1 class="col s12 artist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                  <a (click)="playPlayback($event)">
-                    <i class="material-icons artist-play-icon large">play_circle_outline</i>
-                  </a>
-                </h1>
-              </ng-template>
-              <ng-template #pause>
-                <h1 class="col s12 artist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                  <a (click)="pausePlayback($event)">
-                    <i class="material-icons artist-play-icon large">pause_circle_outline</i>
-                  </a>
-                </h1>
-              </ng-template>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col s12 center artist-name" style="margin-top: 5px;">
-        <a class="truncate" [routerLink]="['../artist', artist?.artistId]">{{artist?.artistName}}</a>
-      </div>
-    </div>
-  </div>
-</div>
-<ng-container  *ngIf="artists?.length == 0">
-  <div class="row fade-in-2-sec" style="margin-bottom: 0px;">
-    <div class="col s12">
-      <div class="card-panel large transparent z-depth-0">
-        <div class="row"></div>
-      </div>
-    </div>
-    <div class="col s12">
-      <div class="card-panel large transparent z-depth-0 center">
-        <h2 class="grey-text">No artists followed</h2>
-      </div>
-    </div>
-  </div>
-</ng-container>
-
-<!-- Loading animation -->
-<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!artists">
-  <div class="loader">Loading...</div>
-</div>
-
-<app-artist-menu #artistMenu [artists]="artists" [library]="true"></app-artist-menu>
+<entity-card-collection
+  #artistCollection
+  [nRows]="3"
+  [nPerRow]="4"
+  [nRowsInShowAllBt]="3"
+  [title]="'Artists'"
+  [noEntitiesMessage]="'No artists followed'"
+  [showAllBtHoverText]="'Show all artists'"
+  [albums]=""
+  [artists]="artists"
+  [playlists]=""
+  [tryAllImageTypes]="false"
+  [forceDefaultImage]="false"
+  [showAll]="true"
+  [displayShowAllBt]="false"
+  [displayName]="true"
+  [displayAuthor]="false"
+  [displayYear]="false"
+  [loadingAnimation]="true"
+  [libraryContextMenu]="true"
+  [detailedContextMenu]="false"
+></entity-card-collection>

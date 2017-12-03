@@ -1,56 +1,22 @@
-<div class="row fade-in-half-sec">
-  <h1 class="col s12">Albums</h1>
-</div>
-<div class="row" style="margin-bottom:0;" *ngIf="albums">
-  <div class="col s3 album-container fade-in-1-sec" style="padding-bottom: 15px;" @fade *ngFor="let album of albums; let i = index;"
-        (contextmenu)="albumMenu.onContextMenu($event, album)">
-    <div class="card transparent" *ngIf="album">
-      <div class="card-image hoverable fade-in-1-sec" #albumCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-        <div class="album-div" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-          <div class="transparent album-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-            <img src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': albumCardDiv.offsetWidth }">
-            <div class="album-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../album', album?.albumId]" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-              <div class="album-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
-              <ng-template #play>
-                <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                  <a (click)="playPlayback($event, album?.albumId)">
-                    <i class="material-icons album-play-icon large">play_circle_outline</i>
-                  </a>
-                </h1>
-              </ng-template>
-              <ng-template #pause>
-                <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                  <a (click)="pausePlayback($event, album?.albumId)">
-                    <i class="material-icons album-play-icon large">pause_circle_outline</i>
-                  </a>
-                </h1>
-              </ng-template>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col s12 center card-album-info" style="margin-top: 8px;">
-        <h3><a class="truncate" [routerLink]="['../album', album?.albumId]">{{album?.albumTitle}}</a></h3>
-        <h4 style="margin-top: 3px;"><a class="truncate" [routerLink]="['../artist', album?.artistId]">{{album?.artistName}}</a></h4>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row fade-in-2-sec" *ngIf="albums?.length == 0" style="margin-bottom: 0px;">
-  <div class="col s12">
-    <div class="card-panel large transparent z-depth-0">
-      <div class="row"></div>
-    </div>
-  </div>
-  <div class="col s12">
-    <div class="card-panel large transparent z-depth-0 center">
-      <h2 class="grey-text">No albums in library</h2>
-    </div>
-  </div>
-</div>
-
-<!-- Loading animation -->
-<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!albums">
-  <div class="loader">Loading...</div>
-</div>
-<app-album-menu #albumMenu [albums]="albums" [library]="true"></app-album-menu>
+<entity-card-collection
+  #albumCollection
+  [nRows]="3"
+  [nPerRow]="4"
+  [nRowsInShowAllBt]="3"
+  [title]="'Albums'"
+  [noEntitiesMessage]="'No albums in library'"
+  [showAllBtHoverText]="'Show all albums'"
+  [albums]="albums"
+  [artists]=""
+  [playlists]=""
+  [tryAllImageTypes]="false"
+  [forceDefaultImage]="false"
+  [showAll]="true"
+  [displayShowAllBt]="false"
+  [displayName]="true"
+  [displayAuthor]="true"
+  [displayYear]="false"
+  [loadingAnimation]="true"
+  [libraryContextMenu]="true"
+  [detailedContextMenu]="false"
+></entity-card-collection>
