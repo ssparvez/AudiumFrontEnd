@@ -32,7 +32,7 @@
               [ngStyle]="{'min-width.px': albumCardDiv.offsetWidth }">
           </div>
         </div>
-        <a *ngIf="editMode == true" class="btn-floating halfway-fab waves-effect waves-light red">
+        <a *ngIf="editMode == true" class="btn-floating halfway-fab waves-effect waves-light red" (click)="deleteAlbum(album.albumId)">
           <i class="material-icons">remove</i>
         </a>
       </div>

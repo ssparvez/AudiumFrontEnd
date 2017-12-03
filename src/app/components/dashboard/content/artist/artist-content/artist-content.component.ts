@@ -8,6 +8,8 @@ import { SongSearchComponent } from '../../../../../modals/admin/search/song-sea
 import { Album } from '../../../../../classes/Album';
 import { GeneralService } from '../../../../../services/general/general.service';
 import { DataService } from '../../../../../services/data.service';
+import { AppError } from '../../../../../errors/AppError';
+import { ConfirmComponent } from '../../../../../modals/confirm-modal/confirm.component';
 
 @Component({
   selector: 'app-artist-content',
@@ -39,6 +41,21 @@ export class ArtistContentComponent implements OnInit {
       // Get artist albums
     });  }
 
+  deleteAlbum(albumId: number) {
+    this.dialog.open(ConfirmComponent, {  data: {message: "Are you sure you want to delete this album?"}, height: '180px'})
+    .afterClosed()
+    .subscribe(
+      result => {
+        if(result) {
+          this.generalService.deleteResource("adasdasd").subscribe(
+            response => {
+            }, (error: AppError) => {
+          });
+        }
+      }
+    );
+  }
+
   openAddWindow(contentType: string) {
     this.dialog.open(ContentAddComponent, {
       data: {
@@ -57,39 +74,6 @@ export class ArtistContentComponent implements OnInit {
             if (contentType === 'Album') {
               this.openSongSearch(contentToEdit, contentType);
           }
-        }
-      });
-  }
-
-  openDeleteWindow(contentType: string) {
-    this.dialog.open(ContentAddComponent, {
-      data: {
-        adminId: this.currentAdminId,
-        toDelete: true,
-        contentType: contentType
-      }
-    }).afterClosed()
-      .subscribe(result => {
-        if (result) {
-          this.toastService.show( contentType + " was deleted", 3000, 'blue');
-        }
-      });
-  }
-
-  openDeleteSearchWindow(contentType: string) {
-    let typeOfSearch;
-    if ( contentType === 'Album') {
-      typeOfSearch = AlbumSearchComponent;
-    }
-    this.dialog.open(typeOfSearch, {
-      data: {
-        adminId: this.currentAdminId,
-        toDelete: true,
-      }, width: '850px', height: '800px'
-    }).afterClosed()
-      .subscribe(result => {
-        if (result) {
-          this.toastService.show( contentType + " was deleted", 3000, 'blue');
         }
       });
   }
