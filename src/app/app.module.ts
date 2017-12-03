@@ -4,12 +4,12 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterializeModule } from 'ng2-materialize';
 import { RouterModule, Routes } from '@angular/router';
-import {Http, HttpModule, RequestOptions} from '@angular/http';
+import { Http, HttpModule, RequestOptions } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt/angular2-jwt';
 import { TimeAgoPipe } from 'time-ago-pipe';
-import {MatDialogModule} from "@angular/material";
-import {MatMenuModule} from "@angular/material/";
+import { MatDialogModule } from "@angular/material";
+import { MatMenuModule } from "@angular/material/";
 // Components
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -56,7 +56,7 @@ import { AuthGuard } from "./guards/authguard.service";
 import { DataService } from "./services/data.service";
 import { CustomerAccount } from "./classes/CustomerAccount";
 import { GeneralService } from "./services/general/general.service";
-import {ContextMenuModule, ContextMenuService} from "ngx-contextmenu";
+import { ContextMenuModule, ContextMenuService } from "ngx-contextmenu";
 import { ContentAddComponent } from './modals/admin/content-add/content-add.component';
 import { SongSearchComponent } from './modals/admin/search/song-search/song-search.component';
 import { ContentInputComponent } from './modals/admin/search/content-input/content-input.component';
@@ -69,6 +69,7 @@ import { ArtistContentComponent } from './components/dashboard/content/artist/ar
 import { ArtistAccountComponent } from './components/dashboard/content/artist/artist-account/artist-account.component';
 import { ArtistAccount } from './classes/ArtistAccount';
 import { ArtistContentSongsComponent } from './components/dashboard/content/artist/artist-content/artist-content-songs/artist-content-songs.component';
+import { EntityCardComponent } from './components/layout/collections/entity-card/entity-card.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -87,7 +88,7 @@ const appRoutes: Routes = [
     {path: "admin-home" , component: AdminHomeComponent},
     {path: "admin-accounts" , component: AdminAccountsComponent},
     {path: "admin-content" , component: AdminContentComponent},
-    {path: "admin-artists" , component: AdminArtistsComponent},    
+    {path: "admin-artists" , component: AdminArtistsComponent},
     // ARTIST
     {path: "artist-home" , component: ArtistHomeComponent},
     {path: "artist-content" , component: ArtistContentComponent},
@@ -169,6 +170,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ArtistContentComponent,
     ArtistAccountComponent,
     ArtistContentSongsComponent,
+    EntityCardComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,
