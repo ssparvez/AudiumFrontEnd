@@ -1,8 +1,16 @@
 
-<div class="entity-card-collection-main" style="margin-top: 50px;" #mainDiv *ngIf="e">
-  <div class="entity-card-collection-title row fade-in-half-sec" *ngIf="entities() && title?.length > 0">
-    <h2 class="center">{{title}}</h2>
+<div class="entity-card-collection-main" style="background-color: transparent; color: inherit;" #mainDiv *ngIf="e">
+  <div #headerDiv class="entity-card-collection-header" *ngIf="injectHeaderDivSelector || injectHeaderElement"></div>
+  <div #titleDiv class="entity-card-collection-title row" *ngIf="entities() && (title?.length > 0 || injectTitleElementSelector || injectTitleElement)">
+    <ng-template class="fade-in-half-sec" *ngIf="titleUseHtml; then htmlTitleElement else defaultTitleElement"></ng-template>
+    <ng-template #defaultTitleElement>
+      <h2 class="center"  style="margin-top: 50px;" *ngIf="title?.length > 0">{{title}}</h2>
+    </ng-template>
+    <ng-template #htmlTitleElement>
+      <div [innerHTML]="title | safeHtml"></div>
+    </ng-template>
   </div>
+  <div #subtitleDiv class="entity-card-collection-subtitle" *ngIf="injectSubtitleDivSelector || injectSubtitleElement"></div>
   <div class="entity-card-collection-content row fade-in-half-sec center-align" *ngIf="entities()?.length > 0">
     <div class="fade-in-1-sec center-align entity-card-collection-grid" @fade #entityCollectionGrid [ngStyle]="{ 'margin-bottom.px': (cardWidth / 20) }" [ngClass]="getCardGridClass()"
     *ngFor="let entity of showAll ? entities() : entities()?.slice(0, (displayShowAllBt ? (entities()?.length > (this.nRows * this.nPerRow) ? ((this.nRows * this.nPerRow) - 1) : (this.nRows * this.nPerRow)) : (this.nRows * this.nPerRow))); let i = index; let entityId = 'id(index)';"
@@ -77,6 +85,7 @@
       <h3 class="grey-text">{{noEntitiesMessage}}</h3>
     </div>
   </div>
+  <div #footerDiv class="entity-card-collection-footer" *ngIf="injectFooterDivSelector || injectFooterElement"></div>
 </div>
 
 <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="loadingAnimation && (!e || !entities())">

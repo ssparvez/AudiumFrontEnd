@@ -70,7 +70,7 @@ import { ArtistContentComponent } from './components/dashboard/content/artist/ar
 import { ArtistAccountComponent } from './components/dashboard/content/artist/artist-account/artist-account.component';
 import { ArtistAccount } from './classes/ArtistAccount';
 import { ArtistContentSongsComponent } from './components/dashboard/content/artist/artist-content/artist-content-songs/artist-content-songs.component';
-import { EntityCardComponent } from './components/layout/collections/entity-card/entity-card.component';
+import { EntityCardComponent, SafeHtmlPipe } from './components/layout/collections/entity-card/entity-card.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -95,7 +95,7 @@ const appRoutes: Routes = [
     {path: "artist-content" , component: ArtistContentComponent},
     {path: "artist-content-songs/:id" , component: ArtistContentSongsComponent},
     {path: "artist-account" , component: ArtistAccountComponent},
-    
+
     // DETAILED
     {path: "artist/:id", component: ArtistComponent},
     {path: "album/:id", component: AlbumComponent},
@@ -172,6 +172,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ArtistAccountComponent,
     ArtistContentSongsComponent,
     EntityCardComponent,
+    SafeHtmlPipe,
   ],
   entryComponents: [
     PaymentInfoComponent,

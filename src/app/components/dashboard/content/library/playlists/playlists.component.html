@@ -1,22 +1,22 @@
+<div [hidden]="true">
+  <div id="newPlaylistBt" class='right fade-in-half-sec' *ngIf="playlists">
+    <a class='btn btn-floating btn-large blue-bt fade-in-half-sec'>
+      <i class='material-icons' (click)='openNewPlaylistForm($event)'>add</i>
+    </a>
+  </div>
+</div>
+
 <entity-card-collection
   #playlistCollection
-  [nRows]="3"
+  [title]="'<h1 class=\'left fade-in-half-sec\'>Playlists</h1>'"
+  [titleUseHtml]="true"
+  [injectTitleDiv]="'newPlaylistBt'"
   [nPerRow]="4"
-  [nRowsInShowAllBt]="3"
-  [title]="'Playlists'"
   [noEntitiesMessage]="'You haven\'t created or followed any playlists'"
   [showAllBtHoverText]="'Show all playlists'"
-  [albums]=""
-  [artists]=""
   [playlists]="playlists"
-  [tryAllImageTypes]="false"
   [forceDefaultImage]="true"
   [showAll]="true"
-  [displayShowAllBt]="false"
-  [displayName]="true"
   [displayAuthor]="true"
-  [displayYear]="false"
-  [loadingAnimation]="true"
   [libraryContextMenu]="true"
-  [detailedContextMenu]="false"
 ></entity-card-collection>

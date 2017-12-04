@@ -1,10 +1,12 @@
 import { animate, style, transition, trigger } from "@angular/animations";
-import { AfterViewChecked, ChangeDetectorRef, Directive, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Directive, Component, ElementRef, Renderer2, Input, OnDestroy, OnInit, Pipe, PipeTransform, ViewChild } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Album } from '../../../../classes/Album';
 import { Artist } from '../../../../classes/Artist';
 import { Playlist } from '../../../../classes/Playlist';
 import { DataService } from '../../../../services/data.service';
+//import { safeHtml } from './entity-card.component'
 
 
 // Supported entity types (only 1 type allowed per entity collection element)
@@ -15,9 +17,19 @@ enum Entity {
   Playlist = 3
 }
 
+@Pipe({ name: 'safeHtml'})
+export class SafeHtmlPipe implements PipeTransform  {
+  constructor(private sanitized: DomSanitizer) {}
+  transform(value) {
+    //console.log(this.sanitized.bypassSecurityTrustHtml(value))
+    return this.sanitized.bypassSecurityTrustHtml(value);
+  }
+}
+
 @Component({
   selector: 'entity-card-collection',
   templateUrl: './entity-card.component.html',
+  styles: [':host { width: 100%; }'],
   styleUrls: ['./entity-card.component.css'],
   animations: [
     trigger('fade',[
@@ -32,6 +44,8 @@ enum Entity {
 })
 export class EntityCardComponent implements OnInit {
 
+  private static _DEFAULT_width: number;
+  public static readonly injectedFlagClass: string = "entity-card-collection-inject";
   public readonly ALBUM: Entity = Entity.Album;
   public readonly ARTIST: Entity = Entity.Artist;
   public readonly PLAYLIST: Entity = Entity.Playlist;
@@ -42,10 +56,11 @@ export class EntityCardComponent implements OnInit {
   public mediaPath: string;
   public currentAccountId: number;
   public playing: boolean = false;
+  private lastSizeCheck: number;
+  private _destroyed: boolean = false;
 
   // Entity type for collection (only 1 type allowed)
   private _e: Entity = Entity.None;
-  // Entity collection
   private collection: any[4];
   // Unique image directory structure for the collection entity type
   private readonly imgPath: string[][] = [ [ null, null ], [ 'album_arts', 'Album' ], [ 'artists', 'Profile' ],  [ 'playlists', 'Playlist' ] ];
@@ -62,6 +77,18 @@ export class EntityCardComponent implements OnInit {
   private imageRetryCount: number[] = [];
 
   @ViewChild('mainDiv') public mainDiv: ElementRef;
+  @ViewChild('headerDiv') public headerDiv: ElementRef;
+  @ViewChild('titleDiv') public titleDiv: ElementRef;
+  @ViewChild('subtitleDiv') public subtitleDiv: ElementRef;
+  @ViewChild('footerDiv') public footerDiv: ElementRef;
+  @Input('injectHeaderDiv') public injectHeaderDivSelector: string;
+  @Input('injectTitleDiv') public injectTitleDivSelector: string;
+  @Input('injectSubtitleDiv') public injectSubtitleDivSelector: string;
+  @Input('injectFooterDiv') public injectFooterDivSelector: string;
+  public injectedHeaderDiv: HTMLDivElement;
+  public injectedTitleDiv: HTMLDivElement;
+  public injectedSubtitleDiv: HTMLDivElement;
+  public injectedFooterDiv: HTMLDivElement;
 
 
   // Input variables
@@ -70,6 +97,7 @@ export class EntityCardComponent implements OnInit {
   @Input() public noEntitiesMessage:   string = "";
   @Input() public showAllBtHoverText: string = "Show all";
 
+  @Input() public titleUseHtml: boolean = false;
   // If true, server will try all file extensions before using default image
   @Input() public tryAllImageTypes:  boolean = false; // (NOTE: Setting tryAllImageTypes = true seems to be significantly slower)
   // If true, default entity image will always be used
@@ -109,32 +137,63 @@ export class EntityCardComponent implements OnInit {
   @Input() private nPerRow: number = EntityCardComponent.DEFAULT_nPerRow;
   // Number of entity rows in "Show all" card (Is equivalent to the number of of albus per row and must be a value in { 1, 2, 3, 4, 6, 12 })
   @Input() private nRowsInShowAllBt: number = EntityCardComponent.DEFAULT_nRowsInShowAllBt;
-  @Input() private collectionWidth: number = 800;
-  private cardWidth: number = ((this.collectionWidth * 0.92) / this.nPerRow);
+  @Input() private collectionWidth: number;
+  private cardWidth: number;
+
 
   constructor(
     private router: Router,
     private dataService: DataService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private renderer: Renderer2
   ) {
     let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
     if(currUser != null){
       this.currentAccountId = currUser['_accountId'];
     }
+    if ((!this.collectionWidth) && EntityCardComponent.DEFAULT_width && EntityCardComponent.DEFAULT_width > 0) {
+      this.collectionWidth = EntityCardComponent.DEFAULT_width;
+    }
+    if (this.collectionWidth) {
+      this.cardWidth = ((this.collectionWidth * 0.92) / this.nPerRow);
+    }
   }
 
   ngOnInit() {
     this.mediaPath = this.dataService.mediaURL;
+
+    var root = this;
+    setTimeout(function() {
+      if ((!root.destroyed) && root.collectionWidth) {
+        root.recheckSize(true);
+      }
+    }, 100);
+
+    setTimeout(function() {
+      if (!root.destroyed) {
+        root.recheckSize(true);
+      }
+    }, 500);
+  }
+
+  ngOnDestroy() {
+    this._destroyed = true;
   }
 
   ngAfterViewChecked() {
-    if(this.mainDiv != null && this.mainDiv.nativeElement != null
+    if (this.mainDiv != null && this.mainDiv.nativeElement != null
         && this.mainDiv.nativeElement.offsetWidth != null
         && this.mainDiv.nativeElement.offsetWidth > 0){
       this.collectionWidth = this.mainDiv.nativeElement.offsetWidth;
       this.cardWidth = ((this.collectionWidth * 0.92) / this.nPerRow);
-      this.cdRef.detectChanges();
+      this.recheckSize(true);
     }
+
+    // Inject extra elements
+    this._injectDiv(this.headerDiv, this.injectHeaderDivSelector, this.injectedHeaderDiv);
+    this._injectDiv(this.titleDiv, this.injectTitleDivSelector, this.injectedTitleDiv);
+    this._injectDiv(this.subtitleDiv, this.injectSubtitleDivSelector, this.injectedSubtitleDiv);
+    this._injectDiv(this.footerDiv, this.injectFooterDivSelector, this.injectedFooterDiv);
 
     if (this.e == Entity.None) {
       if (this.albums != null) {
@@ -146,6 +205,7 @@ export class EntityCardComponent implements OnInit {
       }
       this.initializeCollection();
     }
+    this.recheckSize(false);
   }
 
   private initializeCollection(): void {
@@ -157,6 +217,7 @@ export class EntityCardComponent implements OnInit {
       case Entity.Artist:
         this.collection[this.e] = this.artists;
         this.displayYear = false;
+        this.displayAuthor = false;
         break;
       case Entity.Playlist:
         this.collection[this.e] = this.playlists;
@@ -182,8 +243,12 @@ export class EntityCardComponent implements OnInit {
           + "Default value (" + EntityCardComponent.DEFAULT_nRowsInShowAllBt + ") will be used instead.");
         this.nRowsInShowAllBt = EntityCardComponent.DEFAULT_nRowsInShowAllBt;
       }
+
+      if(this.showAll) {
+        this.displayShowAllBt = false;
+      }
     }
-    this.cdRef.detectChanges();
+    this.recheckSize(true);
   }
 
   public static validRowLength(length: number): boolean {
@@ -202,8 +267,57 @@ export class EntityCardComponent implements OnInit {
     return false;
   }
 
-  public recheckSize(): void {
-    this.cdRef.detectChanges();
+  public static get DEFAULT_width (): number {
+    return EntityCardComponent._DEFAULT_width;
+  }
+
+  public static set DEFAULT_width (value: number) {
+    if (value > 0) {
+      EntityCardComponent.DEFAULT_width = value;
+    } else {
+      console.log("ERROR: DEFAULT_width must be a positive number.");
+    }
+  }
+
+  public recheckSize(force: boolean): void {
+    if((force || (!this.lastSizeCheck) || ((new Date().getTime()) - this.lastSizeCheck) > 500) && (!this.destroyed)) {
+      this.collectionWidth += 1;
+      this.cardWidth = ((this.collectionWidth * 0.92) / this.nPerRow);
+      this.collectionWidth -= 1;
+      this.cdRef.detectChanges();
+      this.lastSizeCheck = new Date().getTime();
+    }
+  }
+
+  private _injectDiv(childDiv: ElementRef, newDivSelector: string, newDiv: HTMLDivElement): boolean {
+    if (childDiv != null && childDiv.nativeElement != null && (!newDiv) && newDivSelector) {
+      newDiv = (<HTMLDivElement>document.getElementById(newDivSelector));
+      if (newDiv && (!newDiv.classList.contains(EntityCardComponent.injectedFlagClass))) {
+        // If new div was found, inject it and recheck component size
+        this.renderer.appendChild(childDiv.nativeElement, newDiv);
+        this.renderer.addClass(newDiv, EntityCardComponent.injectedFlagClass);
+        this.recheckSize(false);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+    @param childDiv       Angular selector of existing div in this entity card collection component
+    @param newDivSelector DOM selector (id) of div to be injected
+  */
+  public injectDiv(childDiv: ElementRef, newDivSelector: string): boolean {
+    if (childDiv != null && childDiv.nativeElement != null && newDivSelector) {
+      let newDiv: HTMLDivElement = (<HTMLDivElement>document.getElementById(newDivSelector));
+      if (newDiv) {
+        // If new div was found, inject it and recheck component size
+        this.renderer.appendChild(childDiv.nativeElement, newDiv);
+        this.recheckSize(false);
+        return true;
+      }
+    }
+    return false;
   }
 
   public play($event: MouseEvent, i: number): void {
@@ -330,6 +444,10 @@ export class EntityCardComponent implements OnInit {
 
   get_nRowsInShowAllBt (): number {
     return this.nRowsInShowAllBt;
+  }
+
+  get destroyed (): boolean {
+    return this._destroyed;
   }
 
 
