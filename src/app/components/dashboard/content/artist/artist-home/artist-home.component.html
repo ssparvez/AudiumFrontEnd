@@ -9,7 +9,7 @@
   </h2>
 </div>
 <div class="row">
-  <ngx-charts-bar-vertical [view]="[900,300]" [results]="data" [scheme]="colorScheme"></ngx-charts-bar-vertical>
+  <ngx-charts-bar-vertical [view]="[900,300]" [results]="data" [scheme]="colorScheme" [legend]="true"></ngx-charts-bar-vertical>
 </div>
 <div class="row fade-in-1-sec" *ngIf="songs">
   <table class="bordered responsive-table white-text" *ngIf="songs?.length > 0">

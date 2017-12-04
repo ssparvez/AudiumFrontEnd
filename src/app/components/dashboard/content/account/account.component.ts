@@ -18,7 +18,8 @@ import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
-
+  languages = [ "English", "Spanish", "French", "Chinese" ]
+  streamingRates = [ "128kbps", "192kbps", "256kbps", "320kbps" ]
   public dateOptions: Pickadate.DateOptions = {
     clear: 'Clear', // Clear button text
     close: 'Ok',
