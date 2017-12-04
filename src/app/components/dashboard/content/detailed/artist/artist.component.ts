@@ -238,8 +238,14 @@ export class ArtistComponent implements OnInit {
 
   assignFollowStatus(): void {
     const artistsFollowed: number[] = JSON.parse(localStorage.getItem("artistsfollowed"));
-    if (artistsFollowed.find( x => x === this.artist.artistId) != null ) {
-      this.artist.followed = true;
+    if (artistsFollowed != null) {
+      if (artistsFollowed.find( x => x === this.artist.artistId) != null ) {
+        this.artist.followed = true;
+      }
+      else {
+        this.artist.followed = false;
+        
+      }
     }
   }
 

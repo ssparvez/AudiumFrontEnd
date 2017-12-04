@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
   public currentAccountId;
   public currentProfileId;
   public profile: Profile;
+  public profileExists = true;
   public isOwner: boolean;
   public isPlaying: boolean;
 
@@ -42,18 +43,18 @@ export class ProfileComponent implements OnInit {
 
     this.route.params.subscribe(param => {
       this.currentProfileId = param['id'];
-    });
-    this.loadProfileInfo();
-    this.isOwner = this.checkIfOwner();
-    if ( !this.isOwner) {
-      this.loadFollowStatus();
-    }
-    this.router.events.subscribe((event) => {
-      if (!(event instanceof NavigationEnd)) {
-          return;
+      this.loadProfileInfo();
+      this.isOwner = this.checkIfOwner();
+      if ( !this.isOwner) {
+        this.loadFollowStatus();
       }
-      window.scrollTo(0, 0);
-    });
+      this.router.events.subscribe((event) => {
+        if (!(event instanceof NavigationEnd)) {
+            return;
+        }
+        window.scrollTo(0, 0);
+      });
+    }); 
   }
 
   ngAfterViewChecked() {
@@ -68,9 +69,12 @@ export class ProfileComponent implements OnInit {
   }
 
   loadProfileInfo() {
+    console.log(this.currentProfileId);
     this.service.get('/profiles/' + this.currentProfileId).subscribe(
       (profile) => {
+        console.log(profile);
         this.profile = profile;
+        this.profileExists = true;
 
         if(this.profile != null) {
           if(this.profile.publicProfile) {
@@ -86,6 +90,7 @@ export class ProfileComponent implements OnInit {
 
                     this.service.get('/profiles/' + this.currentProfileId + '/following').subscribe(
                       (following) => {
+                        console.log(following);
                         this.profile.following = following;
 
                         this.service.get('/profiles/' + this.currentProfileId + '/followers').subscribe(
@@ -118,18 +123,21 @@ export class ProfileComponent implements OnInit {
         }
       },(error: AppError) => {
         // Error retrieving profile
+        if(error instanceof NotFoundError) {
+          this.profileExists = false;
+        }
       }
     );
   }
 
   loadFollowStatus() {
-    this.service.get('/accounts/' + this.currentAccountId + '/profile/' + this.currentProfileId + '/following').subscribe(
-      response => {
-        this.profile.isFollowing = true;
+    this.service.get('/accounts/' + this.currentAccountId + '/profile/' + this.currentProfileId + '/isfollowing').subscribe(
+      (isFollowing) => {
+        console.log(this.profile);
+        this.profile.isFollowing = isFollowing;
       }, (error: AppError) => {
         if ( error instanceof  NotFoundError) {
           console.log('Failed to obtain follow status');
-          this.profile.isFollowing = false;
         }
       }
     );

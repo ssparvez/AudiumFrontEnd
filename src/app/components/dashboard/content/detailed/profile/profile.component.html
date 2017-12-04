@@ -200,7 +200,19 @@
     </div>
   </div>
 
-  <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!profile">
+  <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!profile && profileExists">
     <div class="loader">Loading...</div>
   </div>
+  <div class="row fade-in-2-sec" *ngIf="!profile && !profileExists" style="margin-bottom: 0px;">
+      <div class="col s12">
+        <div class="card-panel large transparent z-depth-0">
+          <div class="row"></div>
+        </div>
+      </div>
+      <div class="col s12">
+        <div class="card-panel large transparent z-depth-0 center">
+          <h2 class="grey-text">User's profile doesn't exist</h2>
+        </div>
+      </div>
+    </div>
 </div>
