@@ -79,14 +79,30 @@
       <div class="input-field col s12  center">
         <input ngModel
                #accountId
-               name="ccNumber" id="cc"
+               name="accountId" id="accountId"
                type="text"
-               [(ngModel)]="this.accountIdToDelete.accountId"
+               [(ngModel)]="this.accountIdToUse"
         >
-        <label class="active" for="cc">Account ID</label>
+        <label class="active" for="accountId">Account ID</label>
       </div>
     </div>
   </div>
+
+<!-- BAN/UNBAN ACCOUNT -->
+
+<div *ngIf="toBanAccount || toUnbanAccount" class="delete-account">
+  <div class="row">
+    <div class="input-field col s12  center">
+      <input ngModel
+             #accountId
+             name="ccNumber" id="cc"
+             type="text"
+             [(ngModel)]="this.accountIdToUse"
+      >
+      <label class="active" for="cc">Account ID</label>
+    </div>
+  </div>
+</div>
 </div>
 
 <mat-dialog-actions class="row">
@@ -95,9 +111,25 @@
             type='button'
             [flat]="true"
             class=" waves-effect"
-            [disabled]="this.accountIdToDelete.accountId == ''"
+            [disabled]="this.accountIdToUse == ''"
             (click)="deleteAccount()"
     > Delete
+    </button>
+    <button mz-button *ngIf="toBanAccount"
+            type='button'
+            [flat]="true"
+            class=" waves-effect"
+            [disabled]="this.accountIdToUse == ''"
+            (click)="changeBanStatus(true)"
+    > Ban
+    </button>
+    <button mz-button *ngIf="toUnbanAccount"
+            type='button'
+            [flat]="true"
+            class=" waves-effect"
+            [disabled]="this.accountIdToUse == ''"
+            (click)="changeBanStatus(false)"
+    > Unban
     </button>
     <button mz-button *ngIf="this.toAddAccount"
             [flat]="true"

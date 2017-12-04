@@ -16,6 +16,7 @@
             <div class="col s12 grey darken-1">
               <form #f="ngForm" (ngSubmit)="login(f.value)">
                 <div *ngIf="invalidLogin" class="card-panel red lighten-1 center-align">Invalid username and/or password.</div>
+                <div *ngIf="suspended" class="card-panel red lighten-1 center-align">Your account has been suspended</div>
                 <div class="row">
                   <div class="input-field col s12 ">
                     <i class="material-icons prefix white-text">email</i>

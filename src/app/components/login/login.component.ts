@@ -13,6 +13,7 @@ import { AppError } from "../../errors/AppError";
 })
 export class LoginComponent implements OnInit {
 
+  private suspended: boolean;
   invalidLogin: boolean;
   registrationCheck = true;
   registerCheck: String;
@@ -73,17 +74,14 @@ export class LoginComponent implements OnInit {
     } else {
       this.authService.login(values)
         .subscribe(correctInfo => {
-          if (correctInfo) {
-            // let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-            // this.router.navigate([returnUrl || '/']);
-            /* Hiding the login form triggers the "Save password?" prompt on many newer browsers */
+          if (correctInfo === 1) {
             const currentAccountRole =  JSON.parse(sessionStorage.getItem("currentUser"))['_role'];
             this.renderer.selectRootElement('form').style.display = 'none';
             this.invalidLogin = false;
 
             if ( currentAccountRole === "Admin" ) {
               this.router.navigate(['/dash/admin-home']);
-            } 
+            }
             else if( currentAccountRole === "Artist") {
               this.router.navigate(['/dash/artist-home']);
             }
@@ -91,8 +89,10 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/dash/home']);
             }
 
-          } else {
+          } else if ( correctInfo === 0) {
             this.invalidLogin = true;
+          } else if ( correctInfo === 2) {
+            this.suspended = true;
           }
         });
     }

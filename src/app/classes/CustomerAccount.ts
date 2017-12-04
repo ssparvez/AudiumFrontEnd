@@ -64,6 +64,6 @@ export class CustomerAccount extends Account {
     this.accountId = json['_accountId'];
     this.lastName = json['_lastName'];
     this.gender = json['_gender'];
-    this.followerCount = json['_followerCount']
+    this.followerCount = json['_followerCount'];
   }
 }

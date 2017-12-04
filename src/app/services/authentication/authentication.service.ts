@@ -29,16 +29,21 @@ export class AuthenticationService {
         const result = {
           token: response['_body']
         };
-
         if ( result && result.token) {
           localStorage.setItem('token', result.token);
-          this.storeInfo();
-          if ( this.currentUserInfo.role == 'BasicUser' || this.currentUserInfo.role == 'PremiumUser') {
-            this.loadPersonalizedData();
+          console.log(this.currentUserInfo.isValid);
+          if ( this.currentUserInfo.isValid) {
+            this.storeInfo();
+            if ( this.currentUserInfo.role === 'BasicUser' || this.currentUserInfo.role === 'PremiumUser') {
+              this.loadPersonalizedData();
+            }
+            return 1;
           }
-          return true;
+          else {
+            return 2;
+          }
         } else {
-          return false;
+          return 0;
         }
       });
   }

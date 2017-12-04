@@ -54,5 +54,33 @@ export class AdminAccountsComponent implements OnInit {
         }
       });
   }
+
+  openBanStatusWindow(status) {
+    let message = "";
+    let data = null;
+    if ( status) {
+      data = {
+        adminId: this.currentAdminId,
+        toBanAccount: true
+      };
+      message = "Account was banned";
+    } else {
+      data = {
+        adminId: this.currentAdminId,
+        toUnbanAccount: true
+      };
+      message = "Account was unbanned";
+    }
+    this.dialog.open(AccountsComponent, {
+      data: data
+    })
+      .afterClosed()
+      .subscribe(result => {
+        if ( result) {
+          this.toastService.show(message, 3000, 'blue');
+        }
+      });
+  }
+
 }
 
