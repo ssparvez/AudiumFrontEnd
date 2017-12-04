@@ -1,15 +1,21 @@
 <div class="row fade-in-half-sec" style="margin-bottom: 0px;">
   <div class="col s6 m4">
-    <div class="card transparent fade-in-1-sec">
-      <div class="card-image" #albumcarddiv (window:resize)="0" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
-        <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': albumcarddiv.offsetWidth, 'max-height.px': albumcarddiv.offsetWidth }">
-          <img style="z-index: 1" src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'">
-          <a (click)="playSongs(0)" class="btn-floating halfway-fab waves-effect waves-light blue-bt" *ngIf="album?.songs?.length > 0">
-            <i class="material-icons">play_arrow</i>
-          </a>
-        </div>
-      </div>
-    </div>
+    <entity-card-collection
+      #albumImageCard
+      *ngIf="album"
+      [nRows]="1"
+      [nPerRow]="1"
+      [showAllBtHoverText]=""
+      [albums]="[ album ]"
+      [tryAllImageTypes]="true"
+      [showAll]="true"
+      [displayShowAllBt]="false"
+      [displayName]="false"
+      [displayAuthor]="false"
+      [loadingAnimation]="false"
+      [detailedContextMenu]="true"
+      [disableHoverable]="true"
+    ></entity-card-collection>
   </div>
   <!-- Album Information -->
   <div *ngIf="album" class="creator col s6 m8 fade-in-1-sec album-info">

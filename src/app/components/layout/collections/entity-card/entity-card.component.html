@@ -1,26 +1,34 @@
 
 <div class="entity-card-collection-main" style="background-color: transparent; color: inherit;" #mainDiv *ngIf="e">
   <div #headerDiv class="entity-card-collection-header" *ngIf="injectHeaderDivSelector || injectHeaderElement"></div>
-  <div #titleDiv class="entity-card-collection-title row" *ngIf="entities() && (title?.length > 0 || injectTitleElementSelector || injectTitleElement)">
+  <div #titleDiv class="entity-card-collection-title row" *ngIf="entities() && (title?.length > 0 || forceDisplayTitleDiv || injectTitleElementSelector || injectTitleElement)">
     <ng-template class="fade-in-half-sec" *ngIf="titleUseHtml; then htmlTitleElement else defaultTitleElement"></ng-template>
     <ng-template #defaultTitleElement>
-      <h2 class="center"  style="margin-top: 50px;" *ngIf="title?.length > 0">{{title}}</h2>
+      <h2 class="fade-in-1-sec center"  style="margin-top: 50px;" *ngIf="title?.length > 0">{{title}}</h2>
     </ng-template>
     <ng-template #htmlTitleElement>
       <div [innerHTML]="title | safeHtml"></div>
     </ng-template>
   </div>
+  <!-- Entity cards -->
   <div #subtitleDiv class="entity-card-collection-subtitle" *ngIf="injectSubtitleDivSelector || injectSubtitleElement"></div>
-  <div class="entity-card-collection-content row fade-in-half-sec center-align" *ngIf="entities()?.length > 0">
-    <div class="fade-in-1-sec center-align entity-card-collection-grid" @fade #entityCollectionGrid [ngStyle]="{ 'margin-bottom.px': (cardWidth / 20) }" [ngClass]="getCardGridClass()"
+  <div class="entity-card-collection-content row fade-in-half-sec center-align" *ngIf="entities()?.length > 0"
+    [ngStyle]="{ 'margin.px': collectionPadding ? '' : 0 }" >
+    <div class="fade-in-1-sec center-align entity-card-collection-grid" @fade #entityCollectionGrid [ngStyle]="{ 'margin-bottom.px': entityPadding ? (cardWidth / 20) : 0, 'padding.px': entityPadding ? '' : 0 }" [ngClass]="getCardGridClass() + ' ' + collectionAddClass"
     *ngFor="let entity of showAll ? entities() : entities()?.slice(0, (displayShowAllBt ? (entities()?.length > (this.nRows * this.nPerRow) ? ((this.nRows * this.nPerRow) - 1) : (this.nRows * this.nPerRow)) : (this.nRows * this.nPerRow))); let i = index; let entityId = 'id(index)';"
-    (contextmenu)="e == ALBUM ? albumContextMenu.onContextMenu($event, entities()[i]) : (e == ARTIST ? artistContextMenu.onContextMenu($event, entities()[i]) : playlistContextMenu.onContextMenu($event, entities()[i]))" [attr.data-index]="i">
-      <div class="card transparent center-align" *ngIf="entity" [ngStyle]="{ 'width.px': cardWidth }">
-        <div class="card-image hoverable fade-in-1-sec" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
-          <div class="entity-div" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
-            <div class="transparent valign-wrapper" style="padding: 0px;" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
-              <img class="entity-card-img" [src]="imagePath(i)" (error)="onImageError(i)" [ngStyle]="{ 'width.px': cardWidth, 'height': 'auto' }">
-              <div class="card-play-bt-wrapper valign-wrapper noSelect" style="position: absolute; top: 0px;" [routerLink]="[detailedEntityPage(i)]" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
+    (contextmenu)="disableContextMenu ? doNothing($event, i) : (e == ALBUM ? albumContextMenu.onContextMenu($event, entities()[i]) : (e == ARTIST ? artistContextMenu.onContextMenu($event, entities()[i]) : e == PLAYLIST ? playlistContextMenu.onContextMenu($event, entities()[i]) : profileContextMenu.onContextMenu($event, entities()[i])))" [attr.data-index]="i">
+      <div class="card transparent center-align fade-in-1-sec" *ngIf="entity" [ngStyle]="{ 'width.px': cardWidth, 'margin': entityPadding ? '' : 0 }" [ngClass]="entityAddClass">
+        <div class="card-image fade-in-1-sec" [ngClass]="disableHoverable ? '' : 'hoverable'" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
+          <div class="entity-div fade-in-1-sec" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
+            <div class="transparent valign-wrapper fade-in-1-sec" style="padding: 0px;" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
+              <img class="entity-card-img fade-in-1-sec" [src]="imagePath(i)" (error)="onImageError(i)" [ngStyle]="{ 'width.px': cardWidth, 'height': cardWidth }">
+              <div
+                *ngIf="!disablePlayPauseBt"disableContextMenu
+                class="card-play-bt-wrapper valign-wrapper noSelect"
+                style="position: absolute; top: 0px;"
+                [routerLink]="[detailedEntityPage(i)]"
+                [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth, 'cursor': (disableImageLink || ((router?.url == detailedEntityPage(i)) && (!forceEnableImageLink))) ? 'default' : 'pointer' }"
+              >
                 <div class="card-play-bt-inner-wrapper" *ngIf="playing; then pauseElement else playElement"></div>
                 <ng-template #playElement>
                   <h1 class="col s12 card-play-bt-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
@@ -42,13 +50,14 @@
         </div>
         <div class="col s12 center card-entity-info" style="margin-top: 8px;">
           <h3 class="white-grey-link" *ngIf="displayName"><a class="truncate" [routerLink]="[detailedEntityPage(i)]">{{entities()[i][titleAttr[e]]}}</a></h3>
-          <h4 style="margin-top: 3px;" *ngIf="displayAuthor"><a class="truncate" [routerLink]="[detailedAuthorPage(i)]">{{entities()[i][authorNameAttr[e]]}}</a></h4>
+          <h4 style="margin-top: 3px;" *ngIf="displayAuthor"><a class="truncate" [routerLink]="[detailedAuthorPage(i)]">{{authorName(i)}}</a></h4>
           <h4 style="margin-top: 3px;" *ngIf="displayYear">{{entities()[i]['releaseYear'].substring(0,4)}}</h4>
         </div>
       </div>
     </div>
-    <div class="fade-in-1-sec entity-card-collection-show-all-bt" @fade #showAllBt [ngClass]="getCardGridClass()" *ngIf="getShowAllBt()">
-      <div class="card transparent hoverable" [ngStyle]="{ 'width.px': cardWidth }">
+    <!-- "Show all" button -->
+    <div class="fade-in-1-sec entity-card-collection-show-all-bt" @fade #showAllBt [ngStyle]="{ 'margin-bottom.px': entityPadding ? (cardWidth / 20) : 0, 'padding.px': entityPadding ? '' : 0 }" [ngClass]="collectionAddClass + ' ' + getCardGridClass()" *ngIf="getShowAllBt()">
+      <div class="card transparent" [ngClass]="entityAddClass + ' ' + (disableHoverable ? '' : 'hoverable')" [ngStyle]="{ 'width.px': cardWidth }">
         <div class="card-image" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
           <div class="valign-wrapper grey darken-3" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
             <a (click)="showAll = true">
@@ -66,7 +75,7 @@
                 <div class="grey darken-3" [ngClass]="getShowAllBtImgGridClass()" style="padding: 0px;" *ngIf="getShowRemainingCount()">
                   <div class="card-image" [ngStyle]="{ 'width.px': (cardWidth / nRowsInShowAllBt), 'height.px': (cardWidth / nRowsInShowAllBt) }">
                     <div class="valign-wrapper" [ngStyle]="{ 'width.px': (cardWidth / nRowsInShowAllBt), 'height.px': (cardWidth / nRowsInShowAllBt) }">
-                        <div class="col s12 grey-text" style="text-align: center;">+{{getRemainingCount()}}</div>
+                        <div class="col s12 grey-text" style="text-align: center; margin: 0px; padding: 0px;">+{{getRemainingCount()}}</div>
                     </div>
                   </div>
                 </div>
@@ -89,10 +98,12 @@
 </div>
 
 <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="loadingAnimation && (!e || !entities())">
-  <div class="loader">Loading...</div>
+  <div class="loader fade-in-2-sec" @fade>Loading...</div>
 </div>
 
 <app-album-menu #albumContextMenu [albums]="albums" [library]="libraryContextMenu"></app-album-menu>
 <app-artist-menu #artistContextMenu [artists]="artists" [library]="libraryContextMenu"></app-artist-menu>
 <app-playlist-menu #playlistContextMenu [playlists]="playlists" [library]="libraryContextMenu" [detailed]="detailedContextMenu"></app-playlist-menu>
-
+<!-- @TODO
+<app-profile-menu #profileContextMenu [profiles]="profiles" [library]="libraryContextMenu"></app-artist-menu>
+-->

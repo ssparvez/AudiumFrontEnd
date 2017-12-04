@@ -17,6 +17,28 @@
           UNFOLLOW
           </button>
           </span>
+          <div class="user-profile-pic-detailed right" style="position: absolute; bottom: 0px; right: 0px;" [ngStyle]="{ 'width.px': (bannerHeight / 2.5), 'height.px': (bannerHeight / 2.5) }">
+            <!-- Remove "false && " from ngIf to enable -->
+            <entity-card-collection
+              #userProfilePicCard
+              *ngIf="false && profile"
+              [nRows]="1"
+              [nPerRow]="1"
+              [showAllBtHoverText]=""
+              [profiles]="[ profile ]"
+              [tryAllImageTypes]="true"
+              [showAll]="true"
+              [displayShowAllBt]="false"
+              [displayName]="false"
+              [loadingAnimation]="false"
+              [detailedContextMenu]="true"
+              [disableHoverable]="true"
+              [collectionPadding]="false"
+              [entityPadding]="false"
+              [collectionAddClass]="'right'"
+              [entityAddClass]="'right'"
+            ></entity-card-collection>
+          </div>
         </span>
       </div>
     </div>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { animate, style, transition, trigger } from "@angular/animations";
+import { AfterViewChecked, Component, ChangeDetectorRef, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { GeneralService } from '../../../../services/general/general.service';
 import { AuthenticationService } from '../../../../services/authentication/authentication.service';
 import { CustomerAccount } from "../../../../classes/CustomerAccount";
@@ -12,7 +13,17 @@ import { DataService } from '../../../../services/data.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  animations: [
+    trigger('fade',[
+      transition('void => *',[
+        animate(500, style({opacity: 0}))
+      ]),
+      transition('* => void',[
+        animate(500, style({opacity: 0}))
+      ])
+    ])
+  ]
 })
 export class HomeComponent implements OnInit {
   recentListens: Song[];
@@ -20,6 +31,7 @@ export class HomeComponent implements OnInit {
   genres: Genre[];
   mediaPath: string;
   showAllGenres: boolean = false;
+  @ViewChild('recentListensCollection') public recentListensCollection: ElementRef;
   public isPlaying;
   constructor(
     private generalService: GeneralService,
@@ -27,6 +39,7 @@ export class HomeComponent implements OnInit {
     private playerService: PlayerService,
     private dataService: DataService,
     public currentUser: CustomerAccount,
+    private cdRef: ChangeDetectorRef,
     private router: Router
   ) { }
 
@@ -68,6 +81,12 @@ export class HomeComponent implements OnInit {
               });
           });
       });
+    }
+  }
+
+  ngAfterViewChecked() {
+    if(this.recentListensCollection != null) {
+      this.cdRef.detectChanges();
     }
   }
 

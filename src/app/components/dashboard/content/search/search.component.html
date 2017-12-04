@@ -36,200 +36,44 @@
   </table>
 </div>
 
-<div class="row" *ngIf="artists?.length > 0" style="margin-top: 50px;">
-  <h2 class="center fade-in-half-sec">Artists</h2>
-</div>
-<div class="row" style="margin-bottom: 0px;">
-  <div class="col s12 m2" *ngFor="let artist of showAllArtists ? artists : artists?.slice(0, (artists?.length > 12 ? 11 : 12))" style="padding-bottom: 10px;">
-    <div class="card transparent" *ngIf="artist">
-      <div class="card-image hoverable fade-in-1-sec" #artistCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
-        <div class="artist-div" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
-          <div class="transparent artist-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
-            <img src="{{mediaPath}}/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{'min-width.px': artistCardDiv.offsetWidth }">
-            <div class="artist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../../artist', artist?.artistId]" [ngStyle]="{'min-height.px': artistCardDiv.offsetWidth, 'max-height.px': artistCardDiv.offsetWidth }">
-              <div class="artist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
-              <ng-template #play>
-                <h1 class="col s12 artist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                  <a (click)="playArtistSongs($event, artist?.artistId)">
-                    <i class="material-icons artist-play-icon medium">play_circle_outline</i>
-                  </a>
-                </h1>
-              </ng-template>
-              <ng-template #pause>
-                <h1 class="col s12 artist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                  <a (click)="pausePlayback($event)">
-                    <i class="material-icons artist-play-icon medium">pause_circle_outline</i>
-                  </a>
-                </h1>
-              </ng-template>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col s12 center artist-name" style="margin-top: 5px;">
-        <a class="truncate" [routerLink]="['../../artist', artist?.artistId]">{{artist?.artistName}}</a>
-      </div>
-    </div>
-  </div>
-  <div class="col s12 m2 fade-in-1-sec" *ngIf="artists?.length > 12 && !showAllArtists">
-    <div class="card transparent hoverable">
-      <div class="card-image" #moreArtistsDiv (window:resize)="0" [ngStyle]="{'min-height.px': moreArtistsDiv.offsetWidth, 'max-height.px': moreArtistsDiv.offsetWidth }">
-        <div class="valign-wrapper grey darken-3" [ngStyle]="{'min-height.px': moreArtistsDiv.offsetWidth, 'max-height.px': moreArtistsDiv.offsetWidth }">
-          <a (click)="showAllArtists = true">
-            <div class="btn transparent more-artists" #moreArtistsBtn style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': moreArtistsDiv.offsetWidth, 'max-height.px': moreArtistsDiv.offsetWidth }">
-              <div class="col s12 m4" style="padding: 0px;" *ngFor="let artist of artists?.slice(11, (artists?.length > 20 ? 19 : 20))">
-                <div class="card transparent" style="margin: 0px;">
-                  <div class="card-image" *ngIf="artist" (window:resize)="0" [ngStyle]="{'min-height.px': (moreArtistsDiv.offsetWidth / 3), 'max-height.px': (moreArtistsDiv.offsetWidth / 3) }">
-                    <div class="artist-div valign-wrapper" [ngStyle]="{'min-height.px': (moreArtistsDiv.offsetWidth / 3), 'max-height.px': (moreArtistsDiv.offsetWidth / 3) }">
-                        <img class="artist-img" src="assets/images/artists/{{artist?.artistId}}/Profile.jpg" onError="this.src='assets/images/defaults/artist.svg'" [ngStyle]="{'min-width.px': (moreArtistsDiv.offsetWidth / 3) }"> <!--{{mediaPath}} -->
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col s12 m4 grey darken-3" style="padding: 0px;" *ngIf="artists?.length > 20">
-                <div class="card-image" #nMoreDiv (window:resize)="0" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
-                  <div class="valign-wrapper center-align" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
-                      <div class="col s12 grey-text" style="text-align: center; margin: 0px; padding: 0px;">+{{artists?.length - 19}}</div>
-                  </div>
-                </div>
-              </div>
-              <div class="more-artists-label valign-wrapper" style="position: absolute; width: 100%;" [ngStyle]="{'min-height.px': moreArtistsDiv.offsetWidth, 'max-height.px': moreArtistsDiv.offsetWidth }">
-                <h2 class="col s12" style="text-align: center;">Show all artist results</h2>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<entity-card-collection
+  #artistResultsCollection
+  *ngIf="artists?.length > 0"
+  [nRows]="2"
+  [nPerRow]="6"
+  [title]="'Artists'"
+  [artists]="artists"
+  [noEntitiesMessage]="''"
+  [showAllBtHoverText]="'Show all artist results'"
+  [loadingAnimation]="false"
+></entity-card-collection>
 
-<div class="row" *ngIf="albums?.length > 0" style="margin-top: 50px;">
-  <h2 class="center fade-in-half-sec">Albums</h2>
-</div>
-<div class="row" style="margin-bottom: 0px;">
-  <div class="col s12 m2" *ngFor="let album of showAllAlbums ? albums : albums?.slice(0, (albums?.length > 12 ? 11 : 12))" style="padding-bottom: 10px;">
-    <div class="card transparent" *ngIf="album">
-      <div class="card-image hoverable fade-in-1-sec" #albumCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-        <div class="album-div" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-          <div class="transparent album-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-            <img src="{{mediaPath}}/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': albumCardDiv.offsetWidth }">
-            <div class="album-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: 0px;" [routerLink]="['../../album', album?.albumId]" [ngStyle]="{'min-height.px': albumCardDiv.offsetWidth, 'max-height.px': albumCardDiv.offsetWidth }">
-              <div class="album-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
-              <ng-template #play>
-                <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                  <a (click)="playAlbumSongs($event, album?.albumId)">
-                    <i class="material-icons album-play-icon medium">play_circle_outline</i>
-                  </a>
-                </h1>
-              </ng-template>
-              <ng-template #pause>
-                <h1 class="col s12 album-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                  <a (click)="pausePlayback($event)">
-                    <i class="material-icons album-play-icon medium">pause_circle_outline</i>
-                  </a>
-                </h1>
-              </ng-template>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col s12 center card-album-info search-result" style="margin-top: 8px;">
-        <h4><a class="truncate" [routerLink]="['../../album', album?.albumId]">{{album?.albumTitle}}</a></h4>
-        <h5 style="margin-top: 3px; min-height: 8px;"><a class="truncate" [routerLink]="['../../artist', album?.artist?.artistId]">{{album?.artist?.artistName}}</a></h5>
-      </div>
-    </div>
-  </div>
-  <div class="col s12 m2 fade-in-1-sec" *ngIf="albums?.length > 12 && !showAllAlbums">
-    <div class="card transparent hoverable">
-      <div class="card-image" #moreAlbumsDiv (window:resize)="0" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
-        <div class="valign-wrapper grey darken-3" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
-          <a (click)="showAllAlbums = true">
-            <div class="btn transparent more-albums" #moreAlbumsBtn style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
-              <div class="col s12 m4" style="padding: 0px;" *ngFor="let album of albums?.slice(11, (albums?.length > 20 ? 19 : 20))">
-                <div class="card transparent" style="margin: 0px;">
-                  <div class="card-image" *ngIf="album" (window:resize)="0" [ngStyle]="{'min-height.px': (moreAlbumsDiv.offsetWidth / 3), 'max-height.px': (moreAlbumsDiv.offsetWidth / 3) }">
-                    <div class="album-div valign-wrapper" [ngStyle]="{'min-height.px': (moreAlbumsDiv.offsetWidth / 3), 'max-height.px': (moreAlbumsDiv.offsetWidth / 3) }">
-                        <img class="album-img" src="assets/images/album_arts/{{album?.albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'" [ngStyle]="{'min-width.px': (moreAlbumsDiv.offsetWidth / 3) }"> <!--{{mediaPath}} -->
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col s12 m4 grey darken-3" style="padding: 0px;" *ngIf="albums?.length > 20">
-                <div class="card-image" #nMoreDiv (window:resize)="0" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
-                  <div class="valign-wrapper center-align" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
-                      <div class="col s12 grey-text" style="text-align: center; margin: 0px; padding: 0px;">+{{albums?.length - 19}}</div>
-                  </div>
-                </div>
-              </div>
-              <div class="more-albums-label valign-wrapper" style="position: absolute; width: 100%;" [ngStyle]="{'min-height.px': moreAlbumsDiv.offsetWidth, 'max-height.px': moreAlbumsDiv.offsetWidth }">
-                <h2 class="col s12" style="text-align: center;">Show all album results</h2>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<ng-container *ngIf="albums?.length > 0">
+  <entity-card-collection
+    #albumResultsCollection
+    [nRows]="2"
+    [nPerRow]="6"
+    [title]="'Albums'"
+    [albums]="albums"
+    [noEntitiesMessage]="''"
+    [showAllBtHoverText]="'Show all album results'"
+    [loadingAnimation]="false"
+  ></entity-card-collection>
+</ng-container>
 
-<div class="row" *ngIf="playlists?.length > 0" style="margin-top: 50px;">
-  <h2 class="center fade-in-half-sec">Playlists</h2>
-</div>
-<div class="row" style="margin-bottom: 0px;">
-  <div class="col s12 m2" *ngFor="let playlist of showAllPlaylists ? playlists : playlists?.slice(0, (playlists?.length > 6 ? 5 : 6))" style="padding-bottom: 10px;">
-    <div class="card transparent" *ngIf="playlist">
-      <div class="card-image hoverable fade-in-1-sec" #playlistCardDiv (window:resize)="0" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
-        <div class="playlist-div" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
-          <div class="transparent playlist-img valign-wrapper" style="padding: 0px;" (window:resize)="0" [ngStyle]="{'min-height.px': playlistCardDiv.offsetWidth, 'max-height.px': playlistCardDiv.offsetWidth }">
-            <img src="assets/images/defaults/playlist.svg" [ngStyle]="{'min-width.px': playlistCardDiv.offsetWidth }">
-            <div class="playlist-play-button-wrapper valign-wrapper noSelect" style="position: absolute; width: 100%; top: -1px;" [routerLink]="['../../playlist', playlist?.playlistId]" [ngStyle]="{ 'min-height.px': playlistCardDiv.offsetWidth + 1, 'max-height.px': playlistCardDiv.offsetWidth + 1, 'min-width.px': playlistCardDiv.offsetWidth }">
-              <div class="playlist-play-button-inner-wrapper" *ngIf="isPlaying; then pause else play"></div>
-              <ng-template #play>
-                <h1 class="col s12 playlist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                  <a (click)="playPlaylistSongs($event, playlist?.playlistId)">
-                    <i class="material-icons playlist-play-icon medium">play_circle_outline</i>
-                  </a>
-                </h1>
-              </ng-template>
-              <ng-template #pause>
-                <h1 class="col s12 playlist-play-button-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
-                  <a (click)="pausePlayback($event)">
-                    <i class="material-icons playlist-play-icon medium">pause_circle_outline</i>
-                  </a>
-                </h1>
-              </ng-template>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col s12 center card-playlist-info search-result" style="margin-top: 8px;">
-        <h4><a class="truncate" [routerLink]="['../../playlist', playlist?.playlistId]">{{playlist?.name}}</a></h4>
-        <h5 style="margin-top: 3px;"><a class="truncate" [routerLink]="['../../profile', playlist?.accountId]">{{playlist?.username}}</a></h5>
-      </div>
-    </div>
-  </div>
-  <div class="col s12 m2 fade-in-1-sec" *ngIf="playlists?.length > 6 && !showAllPlaylists">
-    <div class="card transparent hoverable">
-      <div class="card-image" #morePlaylistsDiv (window:resize)="0" [ngStyle]="{'min-height.px': morePlaylistsDiv.offsetWidth, 'max-height.px': morePlaylistsDiv.offsetWidth }">
-        <div class="valign-wrapper grey darken-3" [ngStyle]="{'min-height.px': morePlaylistsDiv.offsetWidth, 'max-height.px': morePlaylistsDiv.offsetWidth }">
-          <a (click)="showAllPlaylists = true" style="width: 100%;">
-            <div class="btn transparent more-playlists" #morePlaylistsBtn style="padding: 0px; width: 100%;" (window:resize)="0" [ngStyle]="{'min-height.px': morePlaylistsDiv.offsetWidth, 'max-height.px': morePlaylistsDiv.offsetWidth }">
-              <div class="card-image" #nMoreDiv (window:resize)="0" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
-                <div class="valign-wrapper center-align" [ngStyle]="{'min-height.px': nMoreDiv.offsetWidth, 'max-height.px': nMoreDiv.offsetWidth }">
-                    <div class="col s12 grey-text" style="font-size: 30px; text-align: center; margin: 0px; padding: 0px;">+{{playlists?.length - 5}}</div>
-                </div>
-              </div>
-              <div class="more-playlists-label valign-wrapper" style="position: absolute; width: 100%; top: 0px;" [ngStyle]="{'min-height.px': morePlaylistsDiv.offsetWidth, 'max-height.px': morePlaylistsDiv.offsetWidth }">
-                <h2 class="col s12" style="text-align: center;">Show all playlist results</h2>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<ng-container *ngIf="playlists?.length > 0">
+  <entity-card-collection
+    #playlistResultsCollection
+    [nRows]="2"
+    [nPerRow]="6"
+    [title]="'Playlists'"
+    [playlists]="playlists"
+    [noEntitiesMessage]="''"
+    [showAllBtHoverText]="'Show all playlist results'"
+    [forceDefaultImage]="true"
+    [loadingAnimation]="false"
+  ></entity-card-collection>
+</ng-container>
 
 <ng-container *ngIf="genres?.length > 0">
   <div class="row" style="margin-top: 50px;">

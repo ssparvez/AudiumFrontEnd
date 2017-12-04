@@ -5,8 +5,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Album } from '../../../../classes/Album';
 import { Artist } from '../../../../classes/Artist';
 import { Playlist } from '../../../../classes/Playlist';
+import { Profile } from '../../../../classes/Profile';
 import { DataService } from '../../../../services/data.service';
-//import { safeHtml } from './entity-card.component'
 
 
 // Supported entity types (only 1 type allowed per entity collection element)
@@ -14,7 +14,8 @@ enum Entity {
   None = 0,
   Album = 1,
   Artist = 2,
-  Playlist = 3
+  Playlist = 3,
+  Profile = 4
 }
 
 @Pipe({ name: 'safeHtml'})
@@ -34,10 +35,10 @@ export class SafeHtmlPipe implements PipeTransform  {
   animations: [
     trigger('fade',[
       transition('void => *',[
-        animate(300, style({opacity: 0}))
+        animate(500, style({opacity: 0}))
       ]),
       transition('* => void',[
-        animate(300, style({opacity: 0}))
+        animate(500, style({opacity: 0}))
       ])
     ])
   ]
@@ -49,6 +50,7 @@ export class EntityCardComponent implements OnInit {
   public readonly ALBUM: Entity = Entity.Album;
   public readonly ARTIST: Entity = Entity.Artist;
   public readonly PLAYLIST: Entity = Entity.Playlist;
+  public readonly PROFILE: Entity = Entity.Profile;
   public static readonly DEFAULT_nRows:            number = 3;
   public static readonly DEFAULT_nPerRow:          number = 4;
   public static readonly DEFAULT_nRowsInShowAllBt: number = 3;
@@ -63,15 +65,17 @@ export class EntityCardComponent implements OnInit {
   private _e: Entity = Entity.None;
   private collection: any[4];
   // Unique image directory structure for the collection entity type
-  private readonly imgPath: string[][] = [ [ null, null ], [ 'album_arts', 'Album' ], [ 'artists', 'Profile' ],  [ 'playlists', 'Playlist' ] ];
-  private readonly entityTypeString: string[] = [ null, 'album', 'artist', 'playlist' ];
-  private readonly authorTypeString: string[] = [ null, 'artist', '', 'profile' ];
+  private readonly imgPath: string[][] = [ [ null, null ], [ 'album_arts', 'Album' ], [ 'artists', 'Profile' ],  [ 'playlists', 'Playlist' ], [ 'profiles', 'Profile' ] ];
+  private readonly entityTypeString: string[] = [ null, 'album', 'artist', 'playlist', 'user_profile' ];
+  private readonly authorTypeString: string[] = [ null, 'artist', '', 'profile', '' ];
   private readonly imageTypes: string[] = [ '.jpg', '.jpeg', '.png', '.gif', '.bmp'];
   // Unique ID attribute of the collection entity type
-  private readonly idAttr: string[] = [ null, 'albumId', 'artistId', 'playlistId' ];
-  private readonly titleAttr: string[] = [ null, 'albumTitle', 'artistName', 'name' ];
-  private readonly authorAttr: string[] = [ null, 'artistId', '', 'accountId' ];
-  private readonly authorNameAttr: string[] = [ null, 'artistName', '', 'username' ];
+  private readonly idAttr: string[] = [ null, 'albumId', 'artistId', 'playlistId', 'accountId' ];
+  private readonly titleAttr: string[] = [ null, 'albumTitle', 'artistName', 'name', 'username' ];
+  private readonly authorAttr: string[] = [ null, 'artistId', '', 'accountId', '' ];
+  // Secondary author object is only used on some pages (search page, etc)
+  private readonly authorEntityAttr: string[] = [ null, 'artist', '', 'creator', '' ];
+  private readonly authorNameAttr: string[] = [ null, 'artistName', '', 'username', '' ];
 
   // Number of times each collection entity failed to load image
   private imageRetryCount: number[] = [];
@@ -89,9 +93,18 @@ export class EntityCardComponent implements OnInit {
   public injectedTitleDiv: HTMLDivElement;
   public injectedSubtitleDiv: HTMLDivElement;
   public injectedFooterDiv: HTMLDivElement;
+  private _headerDivInjected: boolean = false;
+  private _titleDivInjected: boolean = false;
+  private _subtitleDivInjected: boolean = false;
+  private _footerDivInjected: boolean = false;
 
 
-  // Input variables
+  // Input variables:
+
+  @Input() private albums: Album[];
+  @Input() private artists: Artist[];
+  @Input() private playlists: Playlist[];
+  @Input() private profiles: Profile[];
 
   @Input() public title: string = "";
   @Input() public noEntitiesMessage:   string = "";
@@ -106,22 +119,29 @@ export class EntityCardComponent implements OnInit {
   @Input() public showAll: boolean = false;
   // Determines whether "Show all" button is displayed when showAll == false but all entities don't fit in the specified grid size
   @Input() public displayShowAllBt: boolean = true;
-  // Entity name/title (Album.albumTitle, Artist.artistName, or Playlist.name)
+  // Entity name/title (Album.albumTitle, Artist.artistName, Playlist.name, or Profile.username)
   @Input() public displayName:   boolean = true;
   // Entity author (Album.artist or Playlist.creator; not used for Artist)
   @Input() public displayAuthor: boolean = true;
   // Year of creation (Album.releaseYear only)
-  @Input() public displayYear:   boolean = false;
-
+  @Input() public displayYear:      boolean = false;
+  @Input() public disableImageLink: boolean = false;
+  // By default, image link is disabled when current route is the same as the link route, or if disableImageLink==true. Set to true to override
+  @Input() public forceEnableImageLink: boolean = false;
+  @Input() public forceDisplayTitleDiv: boolean = false;
+  @Input() public disablePlayPauseBt: boolean = false;
+  @Input() public disableHoverable: boolean = false;
+  @Input() public disableContextMenu: boolean = false;
   // If true, the loading animation will play until entities have loaded
   @Input() public loadingAnimation: boolean = true;
+  @Input() public collectionPadding: boolean = true; // Technically disables the margin
+  @Input() public entityPadding: boolean = true; // Technically disables the margin as well as the padding
+  @Input() public collectionAddClass: string = '';
+  @Input() public entityAddClass: string = '';
 
-  @Input() private albums: Album[];
-  @Input() private artists: Artist[];
-  @Input() private playlists: Playlist[];
 
 
-  // Context menu variables
+  // Context menu variables:
 
   // Should be set to true if viewing a detailed page (Only used for Playlists)
   @Input() public detailedContextMenu: boolean = false; // If true, redirects to library playlists page if "delete" menu option is used
@@ -129,7 +149,7 @@ export class EntityCardComponent implements OnInit {
   @Input() public libraryContextMenu: boolean = false;
 
 
-  // Stylization variables
+  // Layout variables:
 
   // Number of entity card rows to show if showAll == false
   @Input() private nRows:   number = EntityCardComponent.DEFAULT_nRows;
@@ -190,10 +210,10 @@ export class EntityCardComponent implements OnInit {
     }
 
     // Inject extra elements
-    this._injectDiv(this.headerDiv, this.injectHeaderDivSelector, this.injectedHeaderDiv);
-    this._injectDiv(this.titleDiv, this.injectTitleDivSelector, this.injectedTitleDiv);
-    this._injectDiv(this.subtitleDiv, this.injectSubtitleDivSelector, this.injectedSubtitleDiv);
-    this._injectDiv(this.footerDiv, this.injectFooterDivSelector, this.injectedFooterDiv);
+    this._injectDiv(this.headerDiv, this.injectHeaderDivSelector, this.injectedHeaderDiv) && (this._headerDivInjected = true);
+    this._injectDiv(this.titleDiv, this.injectTitleDivSelector, this.injectedTitleDiv) && (this._titleDivInjected = true);
+    this._injectDiv(this.subtitleDiv, this.injectSubtitleDivSelector, this.injectedSubtitleDiv) && (this._subtitleDivInjected = true);
+    this._injectDiv(this.footerDiv, this.injectFooterDivSelector, this.injectedFooterDiv) && (this._footerDivInjected = true);
 
     if (this.e == Entity.None) {
       if (this.albums != null) {
@@ -202,6 +222,8 @@ export class EntityCardComponent implements OnInit {
         this.e = Entity.Artist;
       } else if (this.playlists != null) {
         this.e = Entity.Playlist;
+      } else if (this.profiles != null) {
+        this.e = Entity.Profile;
       }
       this.initializeCollection();
     }
@@ -222,6 +244,12 @@ export class EntityCardComponent implements OnInit {
       case Entity.Playlist:
         this.collection[this.e] = this.playlists;
         this.displayYear = false;
+        break;
+      case Entity.Profile:
+        this.collection[this.e] = this.profiles;
+        this.displayYear = false;
+        this.displayAuthor = false;
+        this.disablePlayPauseBt = true; // Users don't have songs (unless we want to play their library or recent plays)
         break;
       default:
         break;
@@ -247,8 +275,20 @@ export class EntityCardComponent implements OnInit {
       if(this.showAll) {
         this.displayShowAllBt = false;
       }
+
+      if(this.forceEnableImageLink) {
+        this.disableImageLink = false;
+      }
     }
     this.recheckSize(true);
+  }
+
+  doNothing($event: MouseEvent, i: number): void {
+    // Does nothing; used for disabling context menu
+    if (!$event.ctrlKey) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
   }
 
   public static validRowLength(length: number): boolean {
@@ -419,7 +459,17 @@ export class EntityCardComponent implements OnInit {
 
   // Detailed page for the author of the collection entity at index i (only for Album and Playlist entities)
   public detailedAuthorPage(i: number): string {
-    return '/dash/' + this.authorTypeString[this.e] + '/' + this.entities()[i][this.authorAttr[this.e]];
+    if(this.entities()[i][this.authorAttr[this.e]]) {
+      return '/dash/' + this.authorTypeString[this.e] + '/' + this.entities()[i][this.authorAttr[this.e]];
+    }
+    return '/dash/' + this.authorTypeString[this.e] + '/' + this.entities()[i][this.authorEntityAttr[this.e]][this.authorAttr[this.e]];
+  }
+
+  public authorName(i: number): string {
+    if(this.entities()[i][this.authorNameAttr[this.e]]) {
+      return this.entities()[i][this.authorNameAttr[this.e]];
+    }
+    return this.entities()[i][this.authorEntityAttr[this.e]][this.authorNameAttr[this.e]];
   }
 
   getCollectionWidth (): number {
@@ -448,6 +498,22 @@ export class EntityCardComponent implements OnInit {
 
   get destroyed (): boolean {
     return this._destroyed;
+  }
+
+  get headerDivInjected (): boolean {
+    return this._headerDivInjected;
+  }
+
+  get titleDivInjected (): boolean {
+    return this._titleDivInjected;
+  }
+
+  get subtitleDivInjected (): boolean {
+    return this._subtitleDivInjected;
+  }
+
+  get footerDivInjected (): boolean {
+    return this._footerDivInjected;
   }
 
 

@@ -16,6 +16,29 @@
           UNFOLLOW
           </button>
         </span>
+        <div class="artist-profile-pic-detailed right" style="position: absolute; bottom: 0px; right: 0px;" [ngStyle]="{ 'width.px': (bannerHeight / 2.5), 'height.px': (bannerHeight / 2.5) }">
+          <!-- Remove "false && " from ngIf to enable -->
+          <entity-card-collection
+            #artistProfilePicCard
+            *ngIf="false && artist"
+            [nRows]="1"
+            [nPerRow]="1"
+            [showAllBtHoverText]=""
+            [artists]="[ artist ]"
+            [tryAllImageTypes]="true"
+            [showAll]="true"
+            [displayShowAllBt]="false"
+            [displayName]="false"
+            [displayAuthor]="false"
+            [loadingAnimation]="false"
+            [detailedContextMenu]="true"
+            [disableHoverable]="true"
+            [collectionPadding]="false"
+            [entityPadding]="false"
+            [collectionAddClass]="'right'"
+            [entityAddClass]="'right'"
+          ></entity-card-collection>
+        </div>
         <a (click)="playArtistSongs(0, artist?.songs)" class="btn-floating halfway-fab waves-effect waves-light hoverable blue-bt" *ngIf="artist?.songs?.length > 0">
           <i class="material-icons">play_arrow</i>
         </a>
