@@ -180,7 +180,19 @@
   </div>
 </div>
 
+<div class="col s12 fade-in-2-sec" style="margin-top: 150px;" *ngIf="keywords?.length < 1">
+  <div class="card-panel large transparent z-depth-0 center">
+    <h2 class="grey-text">Enter search terms above to find songs, albums, artists, genres, events, and users</h2>
+  </div>
+</div>
+
+<div class="col s12 fade-in-2-sec" style="margin-top: 150px;" *ngIf="finishedSearch && keywords?.length > 0 && songs?.length < 1 && albums?.length < 1 && artists?.length < 1 && playlists?.length < 1 && genres?.length < 1 && profiles?.length < 1 && events?.length < 1">
+  <div class="card-panel large transparent z-depth-0 center">
+    <h2 class="grey-text">No results</h2>
+  </div>
+</div>
+
 <!-- Loading animation -->
-<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!songs || !albums || !artists || !playlists || !genres || !profiles || !events">
+<div class="row fade-in-2-sec valign-wrapper" style="margin-top: 150px; min-height: 250px; margin-bottom: 0px;" *ngIf="keywords?.length > 0 && (!songs || !albums || !artists || !playlists || !genres || !profiles || !events)">
   <div class="loader">Loading...</div>
 </div>

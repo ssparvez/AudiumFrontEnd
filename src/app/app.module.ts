@@ -52,6 +52,7 @@ import { ArtistHomeComponent } from "./components/dashboard/content/artist/artis
 import { ArtistSidenavComponent } from "./components/dashboard/sidenav/artist-sidenav/artist-sidenav.component";
 import { EntityCardComponent } from './components/layout/collections/entity-card/entity-card.component';
 import { GenreCardComponent } from './components/layout/collections/genre-card/genre-card.component';
+import { TrackListComponent } from './components/layout/collections/track-list/track-list.component';
 
 // Services
 import { AuthenticationService } from "./services/authentication/authentication.service";
@@ -84,6 +85,7 @@ const appRoutes: Routes = [
 
     {path: "home" , component: HomeComponent},
     {path: "search/:keywords", component: SearchComponent},
+    {path: "search", component: SearchComponent},
     {path: "songs", component: SongsComponent},
     {path: "account", component: AccountComponent},
     {path: "albums", component: AlbumsComponent},
@@ -101,7 +103,7 @@ const appRoutes: Routes = [
     {path: "artist-content" , component: ArtistContentComponent},
     {path: "artist-content-songs/:id" , component: ArtistContentSongsComponent},
     {path: "artist-account" , component: ArtistAccountComponent},
-	{path: "artist-royalties" , component: ArtistRoyaltiesComponent},
+	  {path: "artist-royalties" , component: ArtistRoyaltiesComponent},
 
     // DETAILED
     {path: "artist/:id", component: ArtistComponent},
@@ -180,6 +182,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ArtistContentSongsComponent,
     EntityCardComponent,
     GenreCardComponent,
+    TrackListComponent,
     SafeHtmlPipe,
 	ArtistRoyaltiesComponent,
   ],

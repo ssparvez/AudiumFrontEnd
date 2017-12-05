@@ -20,7 +20,17 @@
   </ng-container>
 
   <ng-container *ngIf="currentUser && recentListens && recentListensCollection">
-    <div class="row">
+
+    <track-list-component
+      #topSongsList
+      [nRows]="5"
+      [title]="'Top Songs'"
+      [songs]="topSongs"
+      [noEntitiesMessage]="'No data available'"
+      [displayTrackNumber]="false"
+      [displayPlayCount]="true"
+    ></track-list-component>
+    <!-- <div class="row">
       <h2 class="center fade-in-2-sec"><br>
         Top Songs
       </h2>
@@ -43,15 +53,11 @@
               <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
             </td>
             <td>
-              <!--IN SPAN: *ngFor="let artist of song.artists; last as isLast"-->
-              <!--{{artist.name}}{{isLast ? '' : ', '}}-->
               <a [routerLink]="['../artist', song?.artistId]" (contextmenu)="artistMenu.onContextMenu($event, { artistId: song?.artistId, followed: false } )">
                 {{song?.artistName}}
               </a>
             </td>
             <td>
-              <!-- IN SPAN: *ngFor="let album of song.albums; last as isLast" -->
-              <!--{{album.title}}{{isLast ? '' : ', '}}-->
               <a [routerLink]="['../album', song?.albumId]" (contextmenu)="albumMenu.onContextMenu($event, { albumId: song?.artistId, saved: false } )">
                 {{song?.albumTitle}}</a>
             </td>
@@ -71,7 +77,7 @@
     </div>
     <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!topSongs">
       <div class="loader fade-in-2-sec" @fade>Loading...</div>
-    </div>
+    </div> -->
   </ng-container>
   <ng-container *ngIf="currentUser && recentListens && recentListensCollection && topSongs">
     <genre-card-collection

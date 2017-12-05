@@ -28,16 +28,15 @@ export class GenreCardComponent implements OnInit {
   public static readonly DEFAULT_nRows:   number = 3;
   public static readonly DEFAULT_nPerRow: number = 4;
 
+  public static readonly idAttr: string = 'genreId';
+  private static readonly titleAttr: string = 'genreName';
+
   public mediaPath: string;
   public currentAccountId: number;
   public playing: boolean = false;
   private lastSizeCheck: number;
   private _initialized: boolean = false;
   private _destroyed: boolean = false;
-
-  // Unique ID attribute genre
-  public readonly idAttr: string = 'genreId';
-  private readonly titleAttr: string = 'genreName';
 
   @ViewChild('mainDiv') public mainDiv: ElementRef;
   @ViewChild('headerDiv') public headerDiv: ElementRef;
@@ -331,7 +330,7 @@ export class GenreCardComponent implements OnInit {
 
   // Returns the genreID of the genre in the card at index i
   public id(i: number): number {
-    return this.genres[i][this.idAttr];
+    return this.genres[i].genreId;
   }
 
   // Detailed entity page for the collection entity at index i

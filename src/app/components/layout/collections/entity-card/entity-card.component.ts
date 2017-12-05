@@ -1,6 +1,6 @@
 import { animate, style, transition, trigger } from "@angular/animations";
-import { AfterViewChecked, ChangeDetectorRef, Directive, Component, ElementRef, Renderer2, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NavigationStart, Router } from "@angular/router";
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, Renderer2, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from "@angular/router";
 import { Album } from '../../../../classes/Album';
 import { Artist } from '../../../../classes/Artist';
 import { Playlist } from '../../../../classes/Playlist';
@@ -188,16 +188,12 @@ export class EntityCardComponent implements OnInit {
   ngOnChanges() {
     if (this.e === Entity.None) {
       if (this.albums != undefined) {
-        console.log("albums");
         this.e = Entity.Album;
       } else if (this.artists  != undefined) {
-        console.log("artists");
         this.e = Entity.Artist;
       } else if (this.playlists  != undefined) {
-        console.log("playlists");
         this.e = Entity.Playlist;
       } else if (this.profiles  != undefined) {
-        console.log("profiles");
         this.e = Entity.Profile;
       }
       this.initializeCollection();
@@ -475,6 +471,14 @@ export class EntityCardComponent implements OnInit {
   // Detailed entity page for the collection entity at index i
   public detailedEntityPage(i: number): string {
     return '/dash/' + this.entityTypeString[this.e] + '/' + this.id(i);
+  }
+
+  // Detailed page for the author of the collection entity at index i (only for Album and Playlist entities)
+  public authorId(i: number): string {
+    if(this.entities()[i][this.authorAttr[this.e]]) {
+      return this.entities()[i][this.authorAttr[this.e]];
+    }
+    return this.entity(i)[this.authorEntityAttr[this.e]][this.authorAttr[this.e]];
   }
 
   // Detailed page for the author of the collection entity at index i (only for Album and Playlist entities)

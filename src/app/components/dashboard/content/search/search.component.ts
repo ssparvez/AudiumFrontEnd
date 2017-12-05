@@ -34,6 +34,7 @@ export class SearchComponent implements OnInit {
   showAllProfiles: boolean = false;
   showAllGenres: boolean = false;
   showAllEvents: boolean = false;
+  finishedSearch: boolean = false;
   public isPlaying;
 
   monthNames:      string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
@@ -79,6 +80,7 @@ export class SearchComponent implements OnInit {
                   this.profiles = profiles;
                   this.generalService.get("/search/events/" + this.keywords).subscribe((events) => {
                     this.events = events;
+                    this.finishedSearch = true;
                   });
                 });
               });

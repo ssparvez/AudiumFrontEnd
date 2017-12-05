@@ -111,7 +111,7 @@
     Fix for the very minor img element twitching when
     using 'transform: scale' in other elements
 */
-.entity-card-img {
+.genre-card-img {
     backface-visibility: hidden;
     transform: translateZ(0) scale(1.0, 1.0);
     -webkit-backface-visibility: hidden;

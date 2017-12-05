@@ -52,7 +52,7 @@
           <h3 class="white-grey-link" *ngIf="displayName"><a class="truncate" [routerLink]="[detailedEntityPage(i)]">{{entities()[i][titleAttr[e]]}}</a></h3>
           <h4 style="margin-top: 3px;" *ngIf="displayAuthor">
             <a class="truncate" [routerLink]="[detailedAuthorPage(i)]"
-            (contextmenu)="(disableContextMenu || (e != ALBUM && e != PLAYLIST)) ? absorbRightClick($event, i, false) : (e == ALBUM ? artistContextMenu.onContextMenu($event, { artistId: entities()[i].artistId, followed: false }) : profileContextMenu.onContextMenu($event, { accountId: entities()[i].accountId, followed: false }))"
+            (contextmenu)="(disableContextMenu || (e != ALBUM && e != PLAYLIST)) ? absorbRightClick($event, i, false) : (e == ALBUM ? artistContextMenu.onContextMenu($event, { artistId: authorId(i), followed: false }) : profileContextMenu.onContextMenu($event, { accountId: authorId(i), followed: false }))"
             >{{authorName(i)}}</a>
           </h4>
           <h4 style="margin-top: 3px;" *ngIf="displayYear">{{entities()[i]['releaseYear'].substring(0,4)}}</h4>
@@ -60,7 +60,7 @@
       </div>
     </div>
     <!-- "Show all" button -->
-    <div class="fade-in-1-sec entity-card-collection-show-all-bt" @fade #showAllBt [ngStyle]="{ 'margin-bottom.px': entityPadding ? (cardWidth / 20) : 0, 'padding.px': entityPadding ? '' : 0 }" [ngClass]="collectionAddClass + ' ' + getCardGridClass()" *ngIf="getShowAllBt()">
+    <div class="fade-in-1-sec entity-card-collection-show-all-bt" #showAllBt [ngStyle]="{ 'margin-bottom.px': entityPadding ? (cardWidth / 20) : 0, 'padding.px': entityPadding ? '' : 0 }" [ngClass]="collectionAddClass + ' ' + getCardGridClass()" *ngIf="getShowAllBt()">
       <div class="card transparent" [ngClass]="entityAddClass + ' ' + (disableHoverable ? '' : 'hoverable')" [ngStyle]="{ 'width.px': cardWidth }">
         <div class="card-image" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
           <div class="valign-wrapper grey darken-3" [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth }">
