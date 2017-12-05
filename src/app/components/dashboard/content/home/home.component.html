@@ -73,6 +73,21 @@
       <div class="loader fade-in-2-sec" @fade>Loading...</div>
     </div>
   </ng-container>
+  <ng-container *ngIf="currentUser && recentListens && recentListensCollection && topSongs">
+    <genre-card-collection
+      #genreCollection
+      [title]="'<h2 style=\'margin-top: 50px\' class=\'center fade-in-half-sec\'>Browse by Genre</h2>'"
+      [titleUseHtml]="true"
+      [forceDisplayTitleDiv]="true"
+      [nRows]="4"
+      [nPerRow]="4"
+      [noEntitiesMessage]="'No data available'"
+      [showAllBtText]="'Show all genres'"
+      [genres]="genres"
+      [showAll]="false"
+    ></genre-card-collection>
+  </ng-container>
+  <!--
   <ng-container>
     <div class="row" *ngIf="currentUser && topSongs">
       <h2 class="center fade-in-half-sec"><br>
@@ -97,6 +112,7 @@
         </div>
       </div>
     </ng-container>
+
     <div *ngIf="genres?.length == 0">
       <div class="row fade-in-2-sec">
         <div class="col s12">
@@ -110,6 +126,7 @@
       <div class="loader fade-in-2-sec" @fade>Loading...</div>
     </div>
   </ng-container>
+  -->
 </div>
 
 

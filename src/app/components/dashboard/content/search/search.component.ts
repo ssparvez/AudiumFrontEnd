@@ -49,12 +49,6 @@ export class SearchComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (!(event instanceof NavigationEnd)) {
-          return;
-      }
-      window.scrollTo(0, 0);
-    });
 
     let date = new Date();
     if((date.getMonth()+1) < 10){
@@ -94,7 +88,12 @@ export class SearchComponent implements OnInit {
 
       });
 
-
+      this.router.events.subscribe((event) => {
+        if (!(event instanceof NavigationEnd)) {
+            return;
+        }
+        window.scrollTo(0, 0);
+      });
     });
   }
 

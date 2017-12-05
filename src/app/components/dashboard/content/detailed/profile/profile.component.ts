@@ -36,7 +36,9 @@ export class ProfileComponent implements OnInit {
     private cdRef: ChangeDetectorRef
   ) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    this.currentAccountId = this.currentUser['_accountId'];
+    if(this.currentUser) {
+      this.currentAccountId = this.currentUser['_accountId'];
+    }
   }
 
   ngOnInit() {
@@ -54,7 +56,7 @@ export class ProfileComponent implements OnInit {
         }
         window.scrollTo(0, 0);
       });
-    }); 
+    });
   }
 
   ngAfterViewChecked() {

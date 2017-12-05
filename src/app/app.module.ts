@@ -3,7 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterializeModule } from 'ng2-materialize';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, RouteReuseStrategy } from '@angular/router';
+import { CustomRouteReuseStrategy } from "./routing/custom-reuse-strategy";
 import { Http, HttpModule, RequestOptions } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt/angular2-jwt';
@@ -49,6 +50,8 @@ import { AdminContentComponent } from "./components/dashboard/content/admin/admi
 import { AccountsComponent } from "./modals/admin/accounts/accounts.component";
 import { ArtistHomeComponent } from "./components/dashboard/content/artist/artist-home/artist-home.component";
 import { ArtistSidenavComponent } from "./components/dashboard/sidenav/artist-sidenav/artist-sidenav.component";
+import { EntityCardComponent } from './components/layout/collections/entity-card/entity-card.component';
+import { GenreCardComponent } from './components/layout/collections/genre-card/genre-card.component';
 
 // Services
 import { AuthenticationService } from "./services/authentication/authentication.service";
@@ -70,8 +73,10 @@ import { ArtistContentComponent } from './components/dashboard/content/artist/ar
 import { ArtistAccountComponent } from './components/dashboard/content/artist/artist-account/artist-account.component';
 import { ArtistAccount } from './classes/ArtistAccount';
 import { ArtistContentSongsComponent } from './components/dashboard/content/artist/artist-content/artist-content-songs/artist-content-songs.component';
-import { EntityCardComponent, SafeHtmlPipe } from './components/layout/collections/entity-card/entity-card.component';
 import { ArtistRoyaltiesComponent } from './components/dashboard/content/artist/artist-royalties/artist-royalties.component';
+
+// Pipes
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -96,7 +101,7 @@ const appRoutes: Routes = [
     {path: "artist-content" , component: ArtistContentComponent},
     {path: "artist-content-songs/:id" , component: ArtistContentSongsComponent},
     {path: "artist-account" , component: ArtistAccountComponent},
-    {path: "artist-royalties" , component: ArtistRoyaltiesComponent},
+	{path: "artist-royalties" , component: ArtistRoyaltiesComponent},
 
     // DETAILED
     {path: "artist/:id", component: ArtistComponent},
@@ -174,8 +179,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ArtistAccountComponent,
     ArtistContentSongsComponent,
     EntityCardComponent,
+    GenreCardComponent,
     SafeHtmlPipe,
-    ArtistRoyaltiesComponent,
+	ArtistRoyaltiesComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,
@@ -219,6 +225,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
       useFactory: authHttpServiceFactory,
       deps: [Http, RequestOptions]
     },
+    /*{
+      provide: RouteReuseStrategy,
+      useClass: CustomRouteReuseStrategy
+    }*/
   ],
   bootstrap: [AppComponent]
 })

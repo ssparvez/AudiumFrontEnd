@@ -1,12 +1,12 @@
 import { animate, style, transition, trigger } from "@angular/animations";
-import { AfterViewChecked, ChangeDetectorRef, Directive, Component, ElementRef, Renderer2, Input, OnDestroy, OnInit, Pipe, PipeTransform, ViewChild } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from "@angular/router";
+import { AfterViewChecked, ChangeDetectorRef, Directive, Component, ElementRef, Renderer2, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NavigationStart, Router } from "@angular/router";
 import { Album } from '../../../../classes/Album';
 import { Artist } from '../../../../classes/Artist';
 import { Playlist } from '../../../../classes/Playlist';
 import { Profile } from '../../../../classes/Profile';
 import { DataService } from '../../../../services/data.service';
+import { SafeHtmlPipe } from '../../../../pipes/safe-html.pipe';
 
 
 // Supported entity types (only 1 type allowed per entity collection element)
@@ -16,15 +16,6 @@ enum Entity {
   Artist = 2,
   Playlist = 3,
   Profile = 4
-}
-
-@Pipe({ name: 'safeHtml'})
-export class SafeHtmlPipe implements PipeTransform  {
-  constructor(private sanitized: DomSanitizer) {}
-  transform(value) {
-    //console.log(this.sanitized.bypassSecurityTrustHtml(value))
-    return this.sanitized.bypassSecurityTrustHtml(value);
-  }
 }
 
 @Component({
@@ -63,7 +54,6 @@ export class EntityCardComponent implements OnInit {
 
   // Entity type for collection (only 1 type allowed)
   private _e: Entity = Entity.None;
-  private collection: any[4];
   // Unique image directory structure for the collection entity type
   private readonly imgPath: string[][] = [ [ null, null ], [ 'album_arts', 'Album' ], [ 'artists', 'Profile' ],  [ 'playlists', 'Playlist' ], [ 'profiles', 'Profile' ] ];
   private readonly entityTypeString: string[] = [ null, 'album', 'artist', 'playlist', 'user_profile' ];
@@ -181,7 +171,6 @@ export class EntityCardComponent implements OnInit {
 
   ngOnInit() {
     this.mediaPath = this.dataService.mediaURL;
-
     var root = this;
     setTimeout(function() {
       if ((!root.destroyed) && root.collectionWidth) {
@@ -194,6 +183,25 @@ export class EntityCardComponent implements OnInit {
         root.recheckSize(true);
       }
     }, 500);
+  }
+
+  ngOnChanges() {
+    if (this.e === Entity.None) {
+      if (this.albums != undefined) {
+        console.log("albums");
+        this.e = Entity.Album;
+      } else if (this.artists  != undefined) {
+        console.log("artists");
+        this.e = Entity.Artist;
+      } else if (this.playlists  != undefined) {
+        console.log("playlists");
+        this.e = Entity.Playlist;
+      } else if (this.profiles  != undefined) {
+        console.log("profiles");
+        this.e = Entity.Profile;
+      }
+      this.initializeCollection();
+    }
   }
 
   ngOnDestroy() {
@@ -215,38 +223,25 @@ export class EntityCardComponent implements OnInit {
     this._injectDiv(this.subtitleDiv, this.injectSubtitleDivSelector, this.injectedSubtitleDiv) && (this._subtitleDivInjected = true);
     this._injectDiv(this.footerDiv, this.injectFooterDivSelector, this.injectedFooterDiv) && (this._footerDivInjected = true);
 
-    if (this.e == Entity.None) {
-      if (this.albums != null) {
-        this.e = Entity.Album;
-      } else if (this.artists != null) {
-        this.e = Entity.Artist;
-      } else if (this.playlists != null) {
-        this.e = Entity.Playlist;
-      } else if (this.profiles != null) {
-        this.e = Entity.Profile;
-      }
-      this.initializeCollection();
-    }
     this.recheckSize(false);
-  }
+}
 
   private initializeCollection(): void {
-    this.collection = [ null, null, null, null ];
+    if(this.e === Entity.None) {
+      return;
+    }
+
     switch (this.e) {
       case Entity.Album:
-        this.collection[this.e] = this.albums;
         break;
       case Entity.Artist:
-        this.collection[this.e] = this.artists;
         this.displayYear = false;
         this.displayAuthor = false;
         break;
       case Entity.Playlist:
-        this.collection[this.e] = this.playlists;
         this.displayYear = false;
         break;
       case Entity.Profile:
-        this.collection[this.e] = this.profiles;
         this.displayYear = false;
         this.displayAuthor = false;
         this.disablePlayPauseBt = true; // Users don't have songs (unless we want to play their library or recent plays)
@@ -255,37 +250,36 @@ export class EntityCardComponent implements OnInit {
         break;
     }
 
-    if (this.e != Entity.None) {
-      while ( this.imageRetryCount.length <= this.entities().length) {
-        this.imageRetryCount.push(0);
-      }
+    this.imageRetryCount.length = 0;
+    while ( this.imageRetryCount.length <= this.entities().length) {
+      this.imageRetryCount.push(0);
+    }
 
-      if(!EntityCardComponent.validRowLength(this.nPerRow)) {
-        console.log("ERROR: Number of entity cards per row (nPerRow) must be one of the following values:\n  { 1, 2, 3, 4, 6, 12 }\n"
-          + "Default value (" + EntityCardComponent.DEFAULT_nPerRow + ") will be used instead.");
-        this.nPerRow = EntityCardComponent.DEFAULT_nPerRow;
-      }
+    if(!EntityCardComponent.validRowLength(this.nPerRow)) {
+      console.log("ERROR: Number of entity cards per row (nPerRow) must be one of the following values:\n  { 1, 2, 3, 4, 6, 12 }\n"
+        + "Default value (" + EntityCardComponent.DEFAULT_nPerRow + ") will be used instead.");
+      this.nPerRow = EntityCardComponent.DEFAULT_nPerRow;
+    }
 
-      if(!EntityCardComponent.validRowLength(this.nRowsInShowAllBt)) {
-        console.log("ERROR: Number of entity image rows in \"Show all\" button (nRowsInShowAllBt) must be one of the following values:\n  { 1, 2, 3, 4, 6, 12 }\n"
-          + "Default value (" + EntityCardComponent.DEFAULT_nRowsInShowAllBt + ") will be used instead.");
-        this.nRowsInShowAllBt = EntityCardComponent.DEFAULT_nRowsInShowAllBt;
-      }
+    if(!EntityCardComponent.validRowLength(this.nRowsInShowAllBt)) {
+      console.log("ERROR: Number of entity image rows in \"Show all\" button (nRowsInShowAllBt) must be one of the following values:\n  { 1, 2, 3, 4, 6, 12 }\n"
+        + "Default value (" + EntityCardComponent.DEFAULT_nRowsInShowAllBt + ") will be used instead.");
+      this.nRowsInShowAllBt = EntityCardComponent.DEFAULT_nRowsInShowAllBt;
+    }
 
-      if(this.showAll) {
-        this.displayShowAllBt = false;
-      }
+    if(this.showAll) {
+      this.displayShowAllBt = false;
+    }
 
-      if(this.forceEnableImageLink) {
-        this.disableImageLink = false;
-      }
+    if(this.forceEnableImageLink) {
+      this.disableImageLink = false;
     }
     this.recheckSize(true);
   }
 
-  doNothing($event: MouseEvent, i: number): void {
+  absorbRightClick($event: MouseEvent, i: number, blockEvent: boolean): void {
     // Does nothing; used for disabling context menu
-    if (!$event.ctrlKey) {
+    if ((!$event.ctrlKey) && blockEvent) {
       $event.preventDefault();
       $event.stopPropagation();
     }
@@ -421,12 +415,38 @@ export class EntityCardComponent implements OnInit {
 
   // Returns the active entity collection
   public entities(): any[] {
-    return this.collection[this.e];
+    switch(this.e) {
+      case Entity.Album:
+        return this.albums;
+      case Entity.Artist:
+        return this.artists;
+      case Entity.Playlist:
+        return this.playlists;
+      case Entity.Profile:
+       return this.profiles;
+      default:
+        return undefined;
+    }
+  }
+
+  public entity(i: number): any {
+    switch(this.e) {
+      case Entity.Album:
+        return this.albums[i];
+      case Entity.Artist:
+        return this.artists[i];
+      case Entity.Playlist:
+        return this.playlists[i];
+      case Entity.Profile:
+       return this.profiles[i];
+      default:
+        return undefined;
+    }
   }
 
   // Returns the entity ID of the collection entity at index i
   public id(i: number): number {
-    return this.entities()[i][this.idAttr[this.e]];
+    return this.entity(i)[this.idAttr[this.e]];
   }
 
   // Returns the path to the image for the collection entity at index i
@@ -460,16 +480,16 @@ export class EntityCardComponent implements OnInit {
   // Detailed page for the author of the collection entity at index i (only for Album and Playlist entities)
   public detailedAuthorPage(i: number): string {
     if(this.entities()[i][this.authorAttr[this.e]]) {
-      return '/dash/' + this.authorTypeString[this.e] + '/' + this.entities()[i][this.authorAttr[this.e]];
+      return '/dash/' + this.authorTypeString[this.e] + '/' + this.entity(i)[this.authorAttr[this.e]];
     }
-    return '/dash/' + this.authorTypeString[this.e] + '/' + this.entities()[i][this.authorEntityAttr[this.e]][this.authorAttr[this.e]];
+    return '/dash/' + this.authorTypeString[this.e] + '/' + this.entity(i)[this.authorEntityAttr[this.e]][this.authorAttr[this.e]];
   }
 
   public authorName(i: number): string {
-    if(this.entities()[i][this.authorNameAttr[this.e]]) {
-      return this.entities()[i][this.authorNameAttr[this.e]];
+    if(this.entity(i)[this.authorNameAttr[this.e]]) {
+      return this.entity(i)[this.authorNameAttr[this.e]];
     }
-    return this.entities()[i][this.authorEntityAttr[this.e]][this.authorNameAttr[this.e]];
+    return this.entity(i)[this.authorEntityAttr[this.e]][this.authorNameAttr[this.e]];
   }
 
   getCollectionWidth (): number {
