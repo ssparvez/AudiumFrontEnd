@@ -607,3 +607,17 @@ tr:hover > .song-number > .song-playback-icon {
 input[type=search] {
     font-size: large;
 }
+/* Chart text styling */
+
+.advanced-pie-legend, .legend-title {
+    color: #9fa9bc !important;
+}
+
+.legend-item:hover, .legend-label-text:hover, .legend-label .active .legend-label-text {
+    color: white !important;
+}
+
+.advanced-pie-legend .total-value::before, .advanced-pie-legend .item-value::before { 
+    content: "$";
+}
+
