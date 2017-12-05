@@ -171,10 +171,10 @@
   <mz-tab-item [label]="'Settings'" class="fade-in-half-sec">
     <div class="row" style="margin-top: 20px;">
       <div class="left">
-        <a class="btn btn-floating btn-large green fade-in-half-sec">
+        <a class="btn btn-floating btn-large fade-in-half-sec" [ngClass]="{'grey': getCurrentUser().role == 'BasicUser', 'green': getCurrentUser().role == 'PremiumUser'}">
           <i class="material-icons">translate</i>
         </a>
-        <span class="title white-text" style="margin-left: 20px;">
+        <span [ngClass]="{'grey-text': getCurrentUser().role == 'BasicUser', 'white-text': getCurrentUser().role == 'PremiumUser'}" style="margin-left: 20px;">
           <b>Language</b>
         </span>
       </div>
@@ -184,16 +184,16 @@
             [stopPropagation]="true">
             <mz-dropdown-item *ngFor="let language of languages"><a class="center">{{language | uppercase}}</a></mz-dropdown-item>            
           </mz-dropdown>
-          <a mz-button id="lang-dropdown-btn">ENGLISH</a>
+          <a mz-button id="lang-dropdown-btn" [disabled]="getCurrentUser().role == 'BasicUser'">ENGLISH</a>
         </div>
       </div>
     </div>
     <div class="row" style="margin-top: 20px;">
         <div class="left">
-            <a class="btn btn-floating btn-large red fade-in-half-sec">
+            <a class="btn btn-floating btn-large fade-in-half-sec" [ngClass]="{'grey': getCurrentUser().role == 'BasicUser', 'red': getCurrentUser().role == 'PremiumUser'}">
               <i class="material-icons">speaker</i>
             </a>
-            <span class="title white-text" style="margin-left: 20px;"><b>Sound Quality</b></span>
+            <span [ngClass]="{'grey-text': getCurrentUser().role == 'BasicUser', 'white-text': getCurrentUser().role == 'PremiumUser'}" style="margin-left: 20px;"><b>Sound Quality</b></span>
           </div>
           <div class="right">
             <div class="secondary-content">
@@ -206,7 +206,7 @@
                 [stopPropagation]="true">
                 <mz-dropdown-item *ngFor="let rate of streamingRates"><a class="center">{{rate | uppercase}}</a></mz-dropdown-item>
               </mz-dropdown>
-              <a mz-button id="sound-dropdown-btn">128Kbps</a>
+              <a mz-button id="sound-dropdown-btn" [disabled]="getCurrentUser().role == 'BasicUser'">128Kbps</a>
             </div>
           </div>
       </div>
@@ -218,7 +218,7 @@
               <span class="title white-text" style="margin-left: 20px;"><b>Private Session</b></span>
             </div>
             <div class="right">
-              <div class="secondary-content">
+              <div class="secondary-content" style="padding: 16px 12px 0px 0px;">
                   <mz-switch-container>
                       <input mz-switch
                         id="switch-id"
