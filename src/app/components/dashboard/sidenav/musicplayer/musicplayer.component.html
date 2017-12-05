@@ -24,14 +24,14 @@
           </div>
           <!-- Music controls -->
           <div class="right">
-            <i (click)="playbackService.previousSong()" class="material-icons" style="vertical-align: middle;">skip_previous</i>
+            <i (click)="previousSong()" class="material-icons" style="vertical-align: middle;">skip_previous</i>
             <a class="btn btn-floating btn-small white pulse" (click)="togglePlayback()" aria-hidden="true" *ngIf="!isCurrentlyPlaying" [ngClass]="{'pulse': !isCurrentlyPlaying}">
               <i class="material-icons blue-text">{{playIcon}}</i>
             </a>
             <a class="btn btn-floating btn-small white" (click)="togglePlayback()" aria-hidden="true" *ngIf="isCurrentlyPlaying">
               <i class="material-icons blue-text">pause</i>
             </a>
-            <i (click)="playbackService.nextSong()" class="material-icons" style="vertical-align: middle;">skip_next</i>
+            <i (click)="nextSong()" class="material-icons" style="vertical-align: middle;">skip_next</i>
           </div>
         </div>
         <div class="row" style="margin-bottom: 0px;">

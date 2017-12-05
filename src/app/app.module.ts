@@ -72,6 +72,7 @@ import { ArtistAccount } from './classes/ArtistAccount';
 import { ArtistContentSongsComponent } from './components/dashboard/content/artist/artist-content/artist-content-songs/artist-content-songs.component';
 import { EntityCardComponent, SafeHtmlPipe } from './components/layout/collections/entity-card/entity-card.component';
 import {PlaybackService} from "./services/playback/playback.service";
+import { ArtistAccountEditComponent } from './modals/artist/artist-account-edit/artist-account-edit.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -174,6 +175,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ArtistContentSongsComponent,
     EntityCardComponent,
     SafeHtmlPipe,
+    ArtistAccountEditComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,
@@ -188,7 +190,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     AdminArtistsConsoleComponent,
     ArtistSearchComponent,
     AlbumSearchComponent,
-    AdminModifyProfilesComponent
+    AdminModifyProfilesComponent,
+    ArtistAccountEditComponent
   ],
   imports: [
     ContextMenuModule,

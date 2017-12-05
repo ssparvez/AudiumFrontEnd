@@ -9,6 +9,7 @@ import {ChoosePlaylistComponent} from "../../modals/choose-playlist/choose-playl
 import {MatDialog} from "@angular/material";
 import { PlayerService } from '../../services/player/player.service';
 import { Router } from '@angular/router';
+import {PlaybackService} from "../../services/playback/playback.service";
 
 @Component({
   selector: 'app-song-menu',
@@ -178,6 +179,7 @@ export class SongMenuComponent implements OnInit {
       this.service.deleteResource('/accounts/' + this.currentAccountId + '/song/' + songToRemove.songId + "/remove").subscribe(
         response => {
           this.toastService.show("Song was removed from your music", 3000, 'blue');
+          this.playbackService.removeSongFromQueue(songToRemove);
           this.songs.splice(this.songs.indexOf(songToRemove), 1);
         },(error: AppError) => {
           this.toastService.show("Song could not be removed", 3000, 'red');

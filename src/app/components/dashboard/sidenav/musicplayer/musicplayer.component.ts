@@ -67,12 +67,12 @@ export class MusicplayerComponent implements OnInit {
         this.currentlyPlaying = song;
         this.volumeLevel = this.playbackService.getVolume();
         console.log(this.volumeLevel);
-        let test = this.playbackService.getCurrentSongTIme().subscribe(
+        let songTime = this.playbackService.getCurrentSongTIme().subscribe(
           time => {
             if ( time !== undefined) {
               this.seekPosition = time;
             } else {
-              test.unsubscribe();
+              songTime.unsubscribe();
             }
           }
         );
@@ -82,38 +82,38 @@ export class MusicplayerComponent implements OnInit {
 
   ngOnInit() {
 
-    // probably better if song queue was its own object, with properties
-    this.mediaPath = this.dataService.mediaURL;
-    this.songQueue = [];
-    // loads songs
-    this.playerService.songsToLoadSubject.subscribe((songQueue) => {
-      console.log(songQueue)
-      if(songQueue.songs != []) {
-        // destroy old queue first
-        if(this.songQueue != []) {
-          // unload each existing howl object
-          for(let song of this.songQueue) {
-            song.sound.unload();
-          }
-          this.songQueue = [];
-        }
-        this.songQueue = songQueue.songs.map(x => Object.assign({}, x)); // copy array
-        this.songQueue = this.initSongs(this.songQueue);
-        // get song index
-        this.queueIndex = songQueue.index;
-        console.log(this.queueIndex);
-        this.togglePlay();
-      }
-    });
-    // add songs to queue
-    this.playerService.songsToQueueSubject.subscribe((songs) => {
-      console.log("songs to add");
-      console.log(songs);
-      // spreading songs into songQueue
-      this.songQueue = [...this.songQueue, ...this.initSongs(songs)];
-      console.log("current queue:");
-      console.log(this.songQueue);
-    });
+    // // probably better if song queue was its own object, with properties
+    // this.mediaPath = this.dataService.mediaURL;
+    // this.songQueue = [];
+    // // loads songs
+    // this.playerService.songsToLoadSubject.subscribe((songQueue) => {
+    //   console.log(songQueue)
+    //   if(songQueue.songs != []) {
+    //     // destroy old queue first
+    //     if(this.songQueue != []) {
+    //       // unload each existing howl object
+    //       for(let song of this.songQueue) {
+    //         song.sound.unload();
+    //       }
+    //       this.songQueue = [];
+    //     }
+    //     this.songQueue = songQueue.songs.map(x => Object.assign({}, x)); // copy array
+    //     this.songQueue = this.initSongs(this.songQueue);
+    //     // get song index
+    //     this.queueIndex = songQueue.index;
+    //     console.log(this.queueIndex);
+    //     this.togglePlay();
+    //   }
+    // });
+    // // add songs to queue
+    // this.playerService.songsToQueueSubject.subscribe((songs) => {
+    //   console.log("songs to add");
+    //   console.log(songs);
+    //   // spreading songs into songQueue
+    //   this.songQueue = [...this.songQueue, ...this.initSongs(songs)];
+    //   console.log("current queue:");
+    //   console.log(this.songQueue);
+    // });
 
   }
 
@@ -147,6 +147,14 @@ export class MusicplayerComponent implements OnInit {
     this.playbackService.shuffle();
   }
 
+  public nextSong() {
+    this.playbackService.nextSong();
+  }
+
+  public previousSong() {
+    this.playbackService.previousSong();
+  }
+
   public playSong(index) {
     this.playbackService.playSongFromQueue(index);
   }
@@ -160,145 +168,145 @@ export class MusicplayerComponent implements OnInit {
     this.playbackService.repeat(this.isRepeating);
   }
 
-  initSongs(songs: Song[]): Song[] { // attaches howl object to each song
-    for(let song of songs) {
-      if(song.file == null) {
-        song.file = "assets/audio/Default.mp3";
-      }
-      song.sound = new Howl({
-        src: [this.mediaPath + "/audio/" + song.file.replace("E:/Music/", "")],
-        onloaderror: () => {
-          this.songQueue[this.queueIndex].sound.src = ['assets/audio/Default.mp3'];
-        },
-        onend: () => {
-          switch(this.repeatLevel) {
-            case 0: {
-              this.toggleNext();
-               break;
-            }
-            case 1: { // if last song, restart queue
-               if(this.queueIndex == this.songQueue.length - 1) {
-                this.songQueue[this.queueIndex].sound.stop();
-                this.queueIndex = 0;
-                this.togglePlay();
-               }
-               else {
-                 this.toggleNext();
-               }
-               break;
-            }
-            case 2: {
-               this.songQueue[this.queueIndex].sound.stop();
-               this.songQueue[this.queueIndex].sound.play();
-               break;
-            }
-         }
-        }
-      });
-    }
-    return songs;
-  }
+  // initSongs(songs: Song[]): Song[] { // attaches howl object to each song
+  //   for(let song of songs) {
+  //     if(song.file == null) {
+  //       song.file = "assets/audio/Default.mp3";
+  //     }
+  //     song.sound = new Howl({
+  //       src: [this.mediaPath + "/audio/" + song.file.replace("E:/Music/", "")],
+  //       onloaderror: () => {
+  //         this.songQueue[this.queueIndex].sound.src = ['assets/audio/Default.mp3'];
+  //       },
+  //       onend: () => {
+  //         switch(this.repeatLevel) {
+  //           case 0: {
+  //             this.toggleNext();
+  //              break;
+  //           }
+  //           case 1: { // if last song, restart queue
+  //              if(this.queueIndex == this.songQueue.length - 1) {
+  //               this.songQueue[this.queueIndex].sound.stop();
+  //               this.queueIndex = 0;
+  //               this.togglePlay();
+  //              }
+  //              else {
+  //                this.toggleNext();
+  //              }
+  //              break;
+  //           }
+  //           case 2: {
+  //              this.songQueue[this.queueIndex].sound.stop();
+  //              this.songQueue[this.queueIndex].sound.play();
+  //              break;
+  //           }
+  //        }
+  //       }
+  //     });
+  //   }
+  //   return songs;
+  // }
 
 
-  togglePause():void {
-    this.playIcon = "play_arrow";
-    this.isPlaying = false;
-    this.songQueue[this.queueIndex].sound.pause();
-  }
-  togglePlay(): void {
-    this.playIcon = "pause";
-    this.isPlaying = true;
-    this.songQueue[this.queueIndex].sound.volume(this.volumeLevel);
-    this.songQueue[this.queueIndex].sound.play();
-  }
-  toggleNext(): void {
-    if(this.queueIndex != this.songQueue.length - 1) {
-      this.songQueue[this.queueIndex].sound.stop();
-      this.queueIndex += 1;
-      this.playerService.queueIndexSubject.next(this.queueIndex);
-      this.togglePlay();
-    }
-  }
-  togglePrevious(): void {
-    if(this.queueIndex != 0) {
-      this.songQueue[this.queueIndex].sound.stop(); // stop current song
-      this.queueIndex -= 1;
-      this.playerService.queueIndexSubject.next(this.queueIndex);
-      this.togglePlay();
-    }
-  }
-
-  toggleMute():void {
-    if(this.isMuted) {
-      this.soundIcon = this.previousVolumeLevel > 0.5 ? "volume_up" : "volume_down";
-      this.volumeLevel = this.previousVolumeLevel;
-      this.isMuted = false;
-    }
-    else {
-      this.soundIcon = "volume_off";
-      this.previousVolumeLevel = this.volumeLevel;
-      this.volumeLevel = 0;
-      this.isMuted = true;
-    }
-    this.songQueue[this.queueIndex].sound.volume(this.volumeLevel);
-  }
-
-  changeVolume(value: number) {
-    this.volumeLevel = value / 100;
-    this.songQueue[this.queueIndex].sound.volume(this.volumeLevel)
-    if(this.volumeLevel == 0) {
-      this.soundIcon = "volume_off";
-      this.isMuted = true;
-    }
-    else {
-      if(this.volumeLevel > 0.5) {
-        this.soundIcon = "volume_up";
-      }
-      else {
-        this.soundIcon = "volume_down";
-      }
-      this.isMuted = false;
-    }
-  }
-
-  toggleShuffle(): void {
-    if(this.isShuffled) {
-      this.songQueue = this.previousQueue.map(x => Object.assign({}, x)); // copy array
-      this.isShuffled = false;
-    } else {
-      this.previousQueue = this.songQueue.map(x => Object.assign({}, x));
-      // fisher-yates shuffle
-      for (let i = this.songQueue.length - 1; i > this.queueIndex; i--) {
-        let j = Math.floor(Math.random() * (i - this.queueIndex)) + this.queueIndex + 1;
-        let x = this.songQueue[i];
-        this.songQueue[i] = this.songQueue[j];
-        this.songQueue[j] = x;
-      }
-      this.isShuffled = true;
-    }
-    console.log(this.songQueue);
-  }
-  toggleRepeat(): void {
-    if(this.repeatLevel == 2) {
-      this.repeatLevel = 0;
-      this.isRepeated = false;
-      this.repeatIcon = "repeat";
-    }
-    else {
-      this.repeatLevel++;
-      this.isRepeated = true;
-      if(this.repeatLevel == 2) {
-        this.repeatIcon = "repeat_one";
-      }
-    }
-    console.log("toggle level:" + this.repeatLevel);
-  }
-
-  seekTrack(value: number): void {
-    this.songQueue[this.queueIndex].sound.seek(value);
-    this.seekPosition = value;
-    console.log(this.songQueue[this.queueIndex].sound.seek())
-  }
+  // togglePause():void {
+  //   this.playIcon = "play_arrow";
+  //   this.isPlaying = false;
+  //   this.songQueue[this.queueIndex].sound.pause();
+  // }
+  // togglePlay(): void {
+  //   this.playIcon = "pause";
+  //   this.isPlaying = true;
+  //   this.songQueue[this.queueIndex].sound.volume(this.volumeLevel);
+  //   this.songQueue[this.queueIndex].sound.play();
+  // }
+  // toggleNext(): void {
+  //   if(this.queueIndex != this.songQueue.length - 1) {
+  //     this.songQueue[this.queueIndex].sound.stop();
+  //     this.queueIndex += 1;
+  //     this.playerService.queueIndexSubject.next(this.queueIndex);
+  //     this.togglePlay();
+  //   }
+  // }
+  // togglePrevious(): void {
+  //   if(this.queueIndex != 0) {
+  //     this.songQueue[this.queueIndex].sound.stop(); // stop current song
+  //     this.queueIndex -= 1;
+  //     this.playerService.queueIndexSubject.next(this.queueIndex);
+  //     this.togglePlay();
+  //   }
+  // }
+  //
+  // toggleMute():void {
+  //   if(this.isMuted) {
+  //     this.soundIcon = this.previousVolumeLevel > 0.5 ? "volume_up" : "volume_down";
+  //     this.volumeLevel = this.previousVolumeLevel;
+  //     this.isMuted = false;
+  //   }
+  //   else {
+  //     this.soundIcon = "volume_off";
+  //     this.previousVolumeLevel = this.volumeLevel;
+  //     this.volumeLevel = 0;
+  //     this.isMuted = true;
+  //   }
+  //   this.songQueue[this.queueIndex].sound.volume(this.volumeLevel);
+  // }
+  //
+  // changeVolume(value: number) {
+  //   this.volumeLevel = value / 100;
+  //   this.songQueue[this.queueIndex].sound.volume(this.volumeLevel)
+  //   if(this.volumeLevel == 0) {
+  //     this.soundIcon = "volume_off";
+  //     this.isMuted = true;
+  //   }
+  //   else {
+  //     if(this.volumeLevel > 0.5) {
+  //       this.soundIcon = "volume_up";
+  //     }
+  //     else {
+  //       this.soundIcon = "volume_down";
+  //     }
+  //     this.isMuted = false;
+  //   }
+  // }
+  //
+  // toggleShuffle(): void {
+  //   if(this.isShuffled) {
+  //     this.songQueue = this.previousQueue.map(x => Object.assign({}, x)); // copy array
+  //     this.isShuffled = false;
+  //   } else {
+  //     this.previousQueue = this.songQueue.map(x => Object.assign({}, x));
+  //     // fisher-yates shuffle
+  //     for (let i = this.songQueue.length - 1; i > this.queueIndex; i--) {
+  //       let j = Math.floor(Math.random() * (i - this.queueIndex)) + this.queueIndex + 1;
+  //       let x = this.songQueue[i];
+  //       this.songQueue[i] = this.songQueue[j];
+  //       this.songQueue[j] = x;
+  //     }
+  //     this.isShuffled = true;
+  //   }
+  //   console.log(this.songQueue);
+  // }
+  // toggleRepeat(): void {
+  //   if(this.repeatLevel == 2) {
+  //     this.repeatLevel = 0;
+  //     this.isRepeated = false;
+  //     this.repeatIcon = "repeat";
+  //   }
+  //   else {
+  //     this.repeatLevel++;
+  //     this.isRepeated = true;
+  //     if(this.repeatLevel == 2) {
+  //       this.repeatIcon = "repeat_one";
+  //     }
+  //   }
+  //   console.log("toggle level:" + this.repeatLevel);
+  // }
+  //
+  // seekTrack(value: number): void {
+  //   this.songQueue[this.queueIndex].sound.seek(value);
+  //   this.seekPosition = value;
+  //   console.log(this.songQueue[this.queueIndex].sound.seek())
+  // }
 
   viewQueue(): void {
     this.playerService.currentSongQueue = this.songQueue;
