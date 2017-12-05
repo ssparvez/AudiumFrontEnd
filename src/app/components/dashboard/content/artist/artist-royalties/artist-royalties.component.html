@@ -1,0 +1,18 @@
+<div class="row fade-in-half-sec">
+  <h1 class="col s3">Royalties</h1>
+  <h2 class="grey-text col s3" style="margin-top: 16px;">(Last month)</h2>
+</div>
+<div class="row">
+  <h1 style="font-weight: 200; font-size: 80px;">Total Revenue: ${{totalRevenue}}</h1>
+  
+</div>
+<hr>
+
+<div class="row fade-in-half-sec" style="margin-top: 30px;" *ngIf="songs || albums">
+  <h2 class="center">
+    Revenue Per Top 10 Songs
+  </h2>
+</div>
+<div class="row">
+  <ngx-charts-advanced-pie-chart [view]="[900,300]" [results]="data" [scheme]="colorScheme"></ngx-charts-advanced-pie-chart>
+</div>

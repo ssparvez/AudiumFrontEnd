@@ -10,7 +10,7 @@ import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt/
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { MatDialogModule } from "@angular/material";
 import { MatMenuModule } from "@angular/material/";
-import {NgxChartsModule} from "@swimlane/ngx-charts";
+import {NgxChartsModule} from "@swimlane/ngx-charts"
 // Components
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -49,6 +49,10 @@ import { AdminContentComponent } from "./components/dashboard/content/admin/admi
 import { AccountsComponent } from "./modals/admin/accounts/accounts.component";
 import { ArtistHomeComponent } from "./components/dashboard/content/artist/artist-home/artist-home.component";
 import { ArtistSidenavComponent } from "./components/dashboard/sidenav/artist-sidenav/artist-sidenav.component";
+import { EntityCardComponent } from './components/layout/collections/entity-card/entity-card.component';
+import { GenreCardComponent } from './components/layout/collections/genre-card/genre-card.component';
+import { TrackListComponent } from './components/layout/collections/track-list/track-list.component';
+import { ArtistAccountEditComponent } from './modals/artist/artist-account-edit/artist-account-edit.component';
 
 // Services
 import { AuthenticationService } from "./services/authentication/authentication.service";
@@ -70,9 +74,12 @@ import { ArtistContentComponent } from './components/dashboard/content/artist/ar
 import { ArtistAccountComponent } from './components/dashboard/content/artist/artist-account/artist-account.component';
 import { ArtistAccount } from './classes/ArtistAccount';
 import { ArtistContentSongsComponent } from './components/dashboard/content/artist/artist-content/artist-content-songs/artist-content-songs.component';
-import { EntityCardComponent, SafeHtmlPipe } from './components/layout/collections/entity-card/entity-card.component';
+import { ArtistRoyaltiesComponent } from './components/dashboard/content/artist/artist-royalties/artist-royalties.component';
 import {PlaybackService} from "./services/playback/playback.service";
-import { ArtistAccountEditComponent } from './modals/artist/artist-account-edit/artist-account-edit.component';
+
+// Pipes
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { GenreComponent } from './components/dashboard/content/detailed/genre/genre.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -80,6 +87,7 @@ const appRoutes: Routes = [
 
     {path: "home" , component: HomeComponent},
     {path: "search/:keywords", component: SearchComponent},
+    {path: "search", component: SearchComponent},
     {path: "songs", component: SongsComponent},
     {path: "account", component: AccountComponent},
     {path: "albums", component: AlbumsComponent},
@@ -97,12 +105,14 @@ const appRoutes: Routes = [
     {path: "artist-content" , component: ArtistContentComponent},
     {path: "artist-content-songs/:id" , component: ArtistContentSongsComponent},
     {path: "artist-account" , component: ArtistAccountComponent},
+	  {path: "artist-royalties" , component: ArtistRoyaltiesComponent},
 
     // DETAILED
     {path: "artist/:id", component: ArtistComponent},
     {path: "album/:id", component: AlbumComponent},
     {path: "playlist/:id", component: PlaylistComponent},
     {path: "profile/:id", component: ProfileComponent},
+    {path: "genre/:id", component: GenreComponent},
   ]
   },
   {path: "login/:login", component: LoginComponent},
@@ -174,8 +184,12 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ArtistAccountComponent,
     ArtistContentSongsComponent,
     EntityCardComponent,
+    GenreCardComponent,
+    TrackListComponent,
     SafeHtmlPipe,
-    ArtistAccountEditComponent,
+	ArtistRoyaltiesComponent,
+	GenreComponent,
+    ArtistAccountEditComponent
   ],
   entryComponents: [
     PaymentInfoComponent,

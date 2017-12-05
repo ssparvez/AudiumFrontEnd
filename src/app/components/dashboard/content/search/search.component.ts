@@ -34,6 +34,7 @@ export class SearchComponent implements OnInit {
   showAllProfiles: boolean = false;
   showAllGenres: boolean = false;
   showAllEvents: boolean = false;
+  finishedSearch: boolean = false;
   public isPlaying;
 
   monthNames:      string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
@@ -49,12 +50,6 @@ export class SearchComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (!(event instanceof NavigationEnd)) {
-          return;
-      }
-      window.scrollTo(0, 0);
-    });
 
     let date = new Date();
     if((date.getMonth()+1) < 10){
@@ -85,6 +80,7 @@ export class SearchComponent implements OnInit {
                   this.profiles = profiles;
                   this.generalService.get("/search/events/" + this.keywords).subscribe((events) => {
                     this.events = events;
+                    this.finishedSearch = true;
                   });
                 });
               });
@@ -94,7 +90,12 @@ export class SearchComponent implements OnInit {
 
       });
 
-
+      this.router.events.subscribe((event) => {
+        if (!(event instanceof NavigationEnd)) {
+            return;
+        }
+        window.scrollTo(0, 0);
+      });
     });
   }
 

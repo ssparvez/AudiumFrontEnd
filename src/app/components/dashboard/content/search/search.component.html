@@ -36,9 +36,8 @@
   </table>
 </div>
 
-<entity-card-collection
+<entity-card-collection *ngIf="artists?.length > 0"
   #artistResultsCollection
-  *ngIf="artists?.length > 0"
   [nRows]="2"
   [nPerRow]="6"
   [title]="'Artists'"
@@ -76,25 +75,14 @@
 </ng-container>
 
 <ng-container *ngIf="genres?.length > 0">
-  <div class="row" style="margin-top: 50px;">
-    <h2 class="center fade-in-half-sec">Genres</h2>
-  </div>
-  <div class="row">
-    <div class="col s12 m3 fade-in-half-sec" *ngFor="let genre of showAllGenres ? genres : genres?.slice(0, (genres?.length > 12 ? 8 : 12))">
-      <a class="genre" [routerLink]="['../home']">
-        <div class="card-panel hoverable center blue-bt waves-effect waves-light fade-in-half-sec" style="width: 100%;">
-          <h3 class="truncate" style="color: inherit;">{{genre?.genreName}}</h3>
-        </div>
-      </a>
-    </div>
-    <div class="col s12 fade-in-half-sec" *ngIf="!showAllGenres && genres?.length > 12">
-      <a class="genre">
-        <div class="card-panel hoverable center blue-bt waves-effect waves-light fade-in-half-sec" style="width: 100%;" (click)="showAllGenres = true">
-          <h3 class="truncate" style="color: inherit; font-weight: bold;">Show all genres</h3>
-        </div>
-      </a>
-    </div>
-  </div>
+  <genre-card-collection
+    #genreCollection
+    [title]="'Genres'"
+    [nRows]="4"
+    [nPerRow]="4"
+    [genres]="genres"
+    [showAllBtText]="'Show all genre results'"
+  ></genre-card-collection>
 </ng-container>
 
 <div class="row" *ngIf="profiles?.length > 0" style="margin-top: 50px;">
@@ -192,7 +180,19 @@
   </div>
 </div>
 
+<div class="col s12 fade-in-2-sec" style="margin-top: 150px;" *ngIf="keywords?.length < 1">
+  <div class="card-panel large transparent z-depth-0 center">
+    <h2 class="grey-text">Enter search terms above to find songs, albums, artists, genres, events, and users</h2>
+  </div>
+</div>
+
+<div class="col s12 fade-in-2-sec" style="margin-top: 150px;" *ngIf="finishedSearch && keywords?.length > 0 && songs?.length < 1 && albums?.length < 1 && artists?.length < 1 && playlists?.length < 1 && genres?.length < 1 && profiles?.length < 1 && events?.length < 1">
+  <div class="card-panel large transparent z-depth-0 center">
+    <h2 class="grey-text">No results</h2>
+  </div>
+</div>
+
 <!-- Loading animation -->
-<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!songs || !albums || !artists || !playlists || !genres || !profiles || !events">
+<div class="row fade-in-2-sec valign-wrapper" style="margin-top: 150px; min-height: 250px; margin-bottom: 0px;" *ngIf="keywords?.length > 0 && (!songs || !albums || !artists || !playlists || !genres || !profiles || !events)">
   <div class="loader">Loading...</div>
 </div>

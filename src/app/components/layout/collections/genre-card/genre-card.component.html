@@ -1,0 +1,51 @@
+
+<div class="genre-card-collection-main" style="background-color: transparent; color: inherit;" #mainDiv *ngIf="genres">
+  <div #headerDiv class="genre-card-collection-header" *ngIf="injectHeaderDivSelector || injectHeaderElement"></div>
+  <div #titleDiv class="genre-card-collection-title row" *ngIf="genres && (title?.length > 0 || forceDisplayTitleDiv || injectTitleElementSelector || injectTitleElement)">
+    <ng-template class="fade-in-half-sec" *ngIf="titleUseHtml; then htmlTitleElement else defaultTitleElement"></ng-template>
+    <ng-template #defaultTitleElement>
+      <h2 class="fade-in-1-sec center" style="margin-top: 50px;" *ngIf="title?.length > 0">{{title}}</h2>
+    </ng-template>
+    <ng-template #htmlTitleElement>
+      <div [innerHTML]="title | safeHtml"></div>
+    </ng-template>
+  </div>
+  <div #subtitleDiv class="genre-card-collection-subtitle" *ngIf="injectSubtitleDivSelector || injectSubtitleElement"></div>
+  <!-- Genre cards -->
+  <div class="genre-card-collection-content row fade-in-half-sec center-align" @fade *ngIf="genres?.length > 0"
+      [ngStyle]="{ 'margin.px': entityPadding ? '' : 0, 'padding.px': entityPadding ? '' : 0 }">
+    <div class="fade-in-1-sec genre-card-collection-grid " [ngClass]="getCardGridClass() + ' ' + collectionAddClass"
+      *ngFor="let genre of (showAll || (genres?.length <= (nRows * nPerRow))) ? genres : genres?.slice(0, smallShowAllBt ? ((nRows * nPerRow) - 1) : ((nRows - 1) * nPerRow)); let i = index;">
+      <a class="genre" [routerLink]="[detailedEntityPage(i)]">
+        <div class="card-panel hoverable center blue-bt waves-effect waves-light fade-in-half-sec "  [ngStyle]="{ 'width.px': cardWidth, 'height.px': (cardWidth / 3), 'padding.px': 0, 'margin': entityPadding ? '' : 0 }" [ngClass]="entityAddClass">
+          <h3 class="truncate" style="color: inherit; height: 100%; vertical-align: middle;" [ngStyle]="{ 'line-height.px': (cardWidth / 3) }">{{genres[i].genreName}}</h3>
+        </div>
+      </a>
+    </div>
+    <!-- "Show all" button -->
+    <div class="fade-in-1-sec genre-card-collection-show-all-bt " #showAllBt  *ngIf="getShowAllBt()" [ngClass]="getShowAllBtGridClass()"
+    [ngStyle]="{ 'margin.px': entityPadding ? '' : 0, 'padding.px': entityPadding ? '' : 0 }">
+      <a class="genre">
+        <div class="card-panel hoverable center blue-bt waves-effect waves-light fade-in-half-sec" #showAllBtInner style="width: 100%; padding: 0px;" (click)="showAll = true" [ngStyle]="{ 'width.px': smallShowAllBt ? cardWidth : '', 'height.px': (cardWidth / 3) }">
+          <h3 class="truncate" style="color: inherit; height: 100%; vertical-align: middle; font-weight: bold;" [ngStyle]="{ 'line-height.px': (cardWidth / 3) }">{{showAllBtText}}</h3>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="col s12 fade-in-half-sec" style="margin-bottom: 40px;" @fade *ngIf="genres?.length == 0 && noEntitiesMessage?.length > 0">
+    <div class="card-panel large transparent z-depth-0 center">
+      <h3 class="grey-text">{{noEntitiesMessage}}</h3>
+    </div>
+  </div>
+  <div #footerDiv class="genre-card-collection-footer" *ngIf="injectFooterDivSelector || injectFooterElement"></div>
+
+</div>
+
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="loadingAnimation && (!genres)">
+  <div class="loader fade-in-2-sec" @fade>Loading...</div>
+</div>
+
+<!-- @TODO
+<app-genre-menu #genreContextMenu [genres]="genres"></app-artist-menu>
+-->

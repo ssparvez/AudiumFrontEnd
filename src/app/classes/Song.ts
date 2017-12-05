@@ -16,6 +16,7 @@ export interface Song {
   genreId?: number;
   genreName?: string;
   playCount?: number;
+  playCountLastMonth?: number;
   //artists: Artist [],
   //album: Album []
   isPlaying?: boolean;
