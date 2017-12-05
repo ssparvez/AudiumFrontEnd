@@ -67,13 +67,13 @@
 
     <tbody class="tracklist" *ngIf="songsInPlaylist">
       <tr @fade *ngFor="let song of songsInPlaylist let i = index;" (contextmenu)="songMenu.onContextMenu($event, song)"
-          [ngClass]="{'playing': song.isPlaying}">
+          [ngClass]="{'playing': song.isPlaying}" (dblclick)="playSong(song,i)">
         <td class="song-number">
           <a class="song-number-value" >{{i+1}}.</a>
-            <a (click)="playbackSong($event,song)" class="song-playback-icon"  *ngIf="!song.isPlaying">
+            <a (click)="playSong(song,i)" class="song-playback-icon"  *ngIf="!song.isPlaying">
               <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">play_circle_outline</i>
             </a>
-          <a (click)="playbackSong($event,song)" class="song-playback-icon" *ngIf="song.isPlaying">
+          <a (click)="pauseSong(song)" class="song-playback-icon" *ngIf="song.isPlaying">
             <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">pause</i>
           </a>
         </td>

@@ -1,46 +1,51 @@
-<div class="card grey darken-3" *ngIf="songQueue != null && songQueue.length > 0; else other_content">
+
+
+<div class="card grey darken-3" *ngIf="currentlyPlaying">
   <div class="card-image">
-    <a [routerLink]="['album', songQueue[queueIndex].albumId]">
-      <img src="{{mediaPath}}/images/album_arts/{{songQueue[queueIndex].albumId}}/Album.jpg" onError="this.src='assets/images/defaults/album.svg'">
+    <a [routerLink]="['album', currentlyPlaying.albumId]">
+      <img src="{{ dataService.albumImg + currentlyPlaying.albumId + '/Album.jpg'}}" onError="this.src='assets/images/defaults/album.svg'">
     </a>
     <span class="card-title black" id="music-card-title">
       <div style="padding: 0px 16px;">
         <span class="track-slider">
-          <input #ref1 (change)="seekTrack(ref1.value)" class="track-slider" type=range min=0 max={{songQueue[queueIndex].sound.duration()}}
-            id=fader step=1 value={{songQueue[queueIndex]?.sound?.seek()}}>
+          <input #ref1 ngModel (change)="seek(ref1.value)" class="track-slider" type='range' min='0' max='{{playbackService.getDuration()}}'
+            id=fader step=1 [(ngModel)]="seekPosition">
         </span>
         <i (click)="viewQueue()" class="material-icons" mz-tooltip
         [tooltip]="'<b>View Queue</b>'"
         [position]="'right'"
-        [html]="true">playlist_play</i>        
+        [html]="true">playlist_play</i>
         <div class="row" style="margin-bottom: 0px;">
           <div class="left" style="height: 50px;">
             <h5>
-              <a [routerLink]="['artist', songQueue[queueIndex].artistId]">{{songQueue[queueIndex].artistName}}</a>
+              <a [routerLink]="['artist', currentlyPlaying.artistId]">{{currentlyPlaying.artistName}}</a>
             </h5>
-            <h4>{{songQueue[queueIndex].title}}</h4>
+            <h4>{{currentlyPlaying.title}}</h4>
           </div>
           <!-- Music controls -->
           <div class="right">
-            <i (click)="togglePrevious()" class="material-icons" style="vertical-align: middle;">skip_previous</i>
-            <a class="btn btn-floating btn-small white pulse" (click)="togglePlayback()" aria-hidden="true" [ngClass]="{'pulse': !isPlaying, '': !isPlaying}">
+            <i (click)="playbackService.previousSong()" class="material-icons" style="vertical-align: middle;">skip_previous</i>
+            <a class="btn btn-floating btn-small white pulse" (click)="togglePlayback()" aria-hidden="true" *ngIf="!isCurrentlyPlaying" [ngClass]="{'pulse': !isCurrentlyPlaying}">
               <i class="material-icons blue-text">{{playIcon}}</i>
             </a>
-            <i (click)="toggleNext()" class="material-icons" style="vertical-align: middle;">skip_next</i>
+            <a class="btn btn-floating btn-small white" (click)="togglePlayback()" aria-hidden="true" *ngIf="isCurrentlyPlaying">
+              <i class="material-icons blue-text">pause</i>
+            </a>
+            <i (click)="playbackService.nextSong()" class="material-icons" style="vertical-align: middle;">skip_next</i>
           </div>
         </div>
         <div class="row" style="margin-bottom: 0px;">
-          <i (click)="toggleShuffle()" class="material-icons" [ngClass]="{'white-text': !isShuffled, 'blue-text': isShuffled}" 
+          <i (click)="shuffle()" class="material-icons" [ngClass]="{'white-text': !isShuffled, 'blue-text': isShuffled}"
           mz-tooltip [tooltip]="'<b>Shuffle</b>'" [position]="'top'" [html]="true">shuffle</i>
-          <i (click)="toggleRepeat()" class="material-icons" [ngClass]="{'white-text': !isRepeated, 'blue-text': isRepeated}"
+          <i (click)="repeat()" class="material-icons" [ngClass]="{'white-text': !isRepeating, 'blue-text': isRepeating}"
           mz-tooltip [tooltip]="'<b>Repeat</b>'" [position]="'top'" [html]="true">{{repeatIcon}}</i>
           <h4 style="display: inline; vertical-align: middle;">
-            <a [routerLink]="['song', songQueue[queueIndex].songId, 'lyrics']">LYRICS</a>
+            <a [routerLink]="['song', currentlyPlaying.songId, 'lyrics']">LYRICS</a>
           </h4>
-          <i (click)="toggleMute()" class="material-icons" style="margin-left: 28px;">{{soundIcon}}</i>
+          <i (click)="mute()" class="material-icons" style="margin-left: 28px;">{{soundIcon}}</i>
           <span class="volume-slider">
-            <input #ref2 [(ngModel)]="mymodel2" (ngModelChange)="changeVolume($event)" class="volume-slider" type=range min=0 max=100
-              value={{volumeLevel*100}} id=fader step=1>
+            <input #ref2 ngModel [(ngModel)]="volumeLevel" (ngModelChange)="setVolume(ref2.value)" class="volume-slider" type=range min=0.0 max=1.0
+                   id=fader step="0.1">
           </span>
         </div>
       </div>
@@ -48,7 +53,7 @@
   </div>
 </div>
 <!-- If no songs loaded yet -->
-<ng-template #other_content>
+<div *ngIf="!currentlyPlaying">
   <div class="card transparent">
     <div class="card-image">
       <img src="assets/images/defaults/album.svg">
@@ -59,4 +64,4 @@
       </span>
     </div>
   </div>
-</ng-template>
+</div>

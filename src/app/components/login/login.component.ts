@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
             const currentAccountRole =  JSON.parse(sessionStorage.getItem("currentUser"))['_role'];
             this.renderer.selectRootElement('form').style.display = 'none';
             this.invalidLogin = false;
-
+            this.suspended = false;
             if ( currentAccountRole === "Admin" ) {
               this.router.navigate(['/dash/admin-home']);
             }

@@ -6,6 +6,7 @@ import { AppError } from "../../../../../errors/AppError";
 import { Song } from "../../../../../classes/Song";
 import { MzToastService } from "ng2-materialize";
 import { animate, style, transition, trigger } from "@angular/animations";
+import {PlaybackService} from "../../../../../services/playback/playback.service";
 
 @Component({
   selector: 'app-playlist',
@@ -29,18 +30,21 @@ export class PlaylistComponent implements OnInit {
   private currentUser;
   private currentAccountId;
   public numberOfSongs = 0;
-  public songCounter = 0;
+  private previousSongPlaying: number;
+
   public playbackCondition = "play_circle_outline";
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private service: GeneralService,
+    private playbackService: PlaybackService,
     private toastService: MzToastService ) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    if(this.currentUser != null){
+    if(this.currentUser != null) {
       this.currentAccountId = this.currentUser['_accountId'];
     }
+
   }
 
   ngOnInit() {
@@ -74,7 +78,7 @@ export class PlaylistComponent implements OnInit {
       songs => {
         this.songsInPlaylist = songs;
         this.numberOfSongs = this.songsInPlaylist.length;
-        console.log(this.songsInPlaylist);
+        this.playbackService.loadSongQueue(this.songsInPlaylist);
       }, (error: AppError) => {
         this.songsInPlaylist = null;
       }
@@ -134,7 +138,29 @@ export class PlaylistComponent implements OnInit {
   playbackSong($event: MouseEvent, song:Song) {
     this.isPlaying = !this.isPlaying;
     song.isPlaying = !song.isPlaying;
+  }
 
+  playSong(song: Song, index) {
+    if (this.playbackService.playSongFromQueue(index)) {
+      if ( this.previousSongPlaying !== undefined && this.previousSongPlaying !== index) {
+        this.songsInPlaylist[this.previousSongPlaying].isPlaying = false;
+      }
+      this.previousSongPlaying = index;
+      song.isPlaying = true;
+      this.isPlaying = true;
+      this.playbackService.getPlayback()
+        .on('play', () => {
+        this.songsInPlaylist[this.previousSongPlaying].isPlaying = true; }
+        ).on('pause', () => {
+        this.songsInPlaylist[this.previousSongPlaying].isPlaying = false; }
+        );
+    }
+  }
+
+  pauseSong(song: Song) {
+    song.isPlaying = false;
+    this.isPlaying = false;
+    this.playbackService.pause();
   }
 
 }

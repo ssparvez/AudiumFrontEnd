@@ -6,6 +6,8 @@ import { DataService } from '../../../../services/data.service';
 import { Router } from '@angular/router';
 import { SongQueue } from '../../../../classes/SongQueue';
 import { GeneralService } from '../../../../services/general/general.service';
+import {PlaybackService} from "../../../../services/playback/playback.service";
+import {isUndefined} from "util";
 
 
 @Component({
@@ -24,31 +26,62 @@ export class MusicplayerComponent implements OnInit {
     previousVolumeLevel: 1,
     repeatLevel: 0,
     seekPosition: 0,
-  }
+  };
   mediaPath: string;
   songQueue: any[];
   previousQueue: any[];
   queueIndex = 0;
   playIcon = "play_arrow";
   soundIcon = "volume_up";
-  repeatIcon = "repeat"
+  repeatIcon = "repeat";
   isPlaying = false;
-  isMuted = false;
+  // isMuted = false;
   isShuffled = false;
   isRepeated = false;
-  volumeLevel = 1;
   previousVolumeLevel = 1;
   repeatLevel = 0;
   seekPosition = 0;
 
+  private currentlyPlaying: Song;
+  private isCurrentlyPlaying: boolean;
+  private volumeLevel: number;
+  private isMuted: boolean;
+  private isRepeating: boolean;
+
   constructor(
-    private playerService: PlayerService, 
+    private playerService: PlayerService,
     private dataService: DataService,
     private generalService: GeneralService,
-    private router: Router    
-  ) { }
+    private playbackService: PlaybackService,
+    private router: Router ) {
+    this.playbackService.isPlaying.subscribe(
+      isPlaying => {
+        console.log(isPlaying);
+        this.isCurrentlyPlaying = isPlaying;
+      }
+    );
+
+    this.playbackService.currentlyPlaying.subscribe(
+      song => {
+        console.log(song);
+        this.currentlyPlaying = song;
+        this.volumeLevel = this.playbackService.getVolume();
+        console.log(this.volumeLevel);
+        let test = this.playbackService.getCurrentSongTIme().subscribe(
+          time => {
+            if ( time !== undefined) {
+              this.seekPosition = time;
+            } else {
+              test.unsubscribe();
+            }
+          }
+        );
+      }
+    );
+  }
 
   ngOnInit() {
+
     // probably better if song queue was its own object, with properties
     this.mediaPath = this.dataService.mediaURL;
     this.songQueue = [];
@@ -64,7 +97,7 @@ export class MusicplayerComponent implements OnInit {
           }
           this.songQueue = [];
         }
-        this.songQueue = songQueue.songs.map(x => Object.assign({}, x)); // copy array 
+        this.songQueue = songQueue.songs.map(x => Object.assign({}, x)); // copy array
         this.songQueue = this.initSongs(this.songQueue);
         // get song index
         this.queueIndex = songQueue.index;
@@ -74,7 +107,7 @@ export class MusicplayerComponent implements OnInit {
     });
     // add songs to queue
     this.playerService.songsToQueueSubject.subscribe((songs) => {
-      console.log("songs to add")
+      console.log("songs to add");
       console.log(songs);
       // spreading songs into songQueue
       this.songQueue = [...this.songQueue, ...this.initSongs(songs)];
@@ -83,7 +116,50 @@ export class MusicplayerComponent implements OnInit {
     });
 
   }
-  
+
+  togglePlayback():void {
+    this.isCurrentlyPlaying ? this.playbackService.pause() : this.playbackService.resumePlay();
+  }
+
+  public seek(value) {
+    this.playbackService.setSeek(value);
+    this.seekPosition = value;
+  }
+
+  public setVolume(value) {
+    this.playbackService.setVolume(value);
+    this.volumeLevel = value;
+  }
+
+  public mute() {
+    if(this.isMuted) {
+      this.playbackService.mute(false);
+      this.soundIcon =  "volume_up";
+      this.isMuted = false;
+    } else {
+      this.playbackService.mute(true);
+      this.soundIcon = "volume_off";
+      this.isMuted = true;
+    }
+  }
+
+  public shuffle() {
+    this.playbackService.shuffle();
+  }
+
+  public playSong(index) {
+    this.playbackService.playSongFromQueue(index);
+  }
+
+  public pauseSong() {
+    this.playbackService.pause();
+  }
+
+  public repeat() {
+    this.isRepeating = !this.isRepeating;
+    this.playbackService.repeat(this.isRepeating);
+  }
+
   initSongs(songs: Song[]): Song[] { // attaches howl object to each song
     for(let song of songs) {
       if(song.file == null) {
@@ -123,9 +199,7 @@ export class MusicplayerComponent implements OnInit {
     return songs;
   }
 
-  togglePlayback():void {
-    this.isPlaying ? this.togglePause() : this.togglePlay();
-  }
+
   togglePause():void {
     this.playIcon = "play_arrow";
     this.isPlaying = false;

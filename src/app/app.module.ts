@@ -10,7 +10,7 @@ import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt/
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { MatDialogModule } from "@angular/material";
 import { MatMenuModule } from "@angular/material/";
-import {NgxChartsModule} from "@swimlane/ngx-charts"
+import {NgxChartsModule} from "@swimlane/ngx-charts";
 // Components
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -71,6 +71,7 @@ import { ArtistAccountComponent } from './components/dashboard/content/artist/ar
 import { ArtistAccount } from './classes/ArtistAccount';
 import { ArtistContentSongsComponent } from './components/dashboard/content/artist/artist-content/artist-content-songs/artist-content-songs.component';
 import { EntityCardComponent, SafeHtmlPipe } from './components/layout/collections/entity-card/entity-card.component';
+import {PlaybackService} from "./services/playback/playback.service";
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -207,6 +208,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     DataService,
     AuthenticationService,
     PlayerService,
+    PlaybackService,
     AuthGuard,
     AuthHttp,
     CustomerAccount,

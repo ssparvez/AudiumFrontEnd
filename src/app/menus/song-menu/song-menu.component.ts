@@ -96,6 +96,7 @@ export class SongMenuComponent implements OnInit {
               private dialog: MatDialog,
               private toastService: MzToastService,
               private playerService: PlayerService,
+              private playbackService: PlaybackService,
               private router: Router) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     if(this.currentUser != null){
@@ -127,11 +128,12 @@ export class SongMenuComponent implements OnInit {
 
 
   public removeSongFromPlaylist(songToRemove: Song) {
+    console.log(songToRemove.songId);
    this.service.deleteResource('/accounts/' + this.currentAccountId + '/playlist/' + this.currentPlaylist +
-     '/remove/song/' + songToRemove.songId)
-     .subscribe(
+     '/remove/song/' + songToRemove.songId).subscribe(
        response => {
          this.toastService.show("Song was removed from your playlist", 3000, 'blue');
+         this.playbackService.removeSongFromQueue(songToRemove);
          this.songs.splice(this.songs.indexOf(songToRemove),1);
        }, (error: AppError) => {
          this.toastService.show("Song could not be removed", 3000, 'red');
