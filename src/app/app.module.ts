@@ -78,6 +78,7 @@ import { ArtistRoyaltiesComponent } from './components/dashboard/content/artist/
 
 // Pipes
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { GenreComponent } from './components/dashboard/content/detailed/genre/genre.component';
 
 const appRoutes: Routes = [
   {path: "dash", component: DashboardComponent, canActivate: [AuthGuard] ,
@@ -110,6 +111,7 @@ const appRoutes: Routes = [
     {path: "album/:id", component: AlbumComponent},
     {path: "playlist/:id", component: PlaylistComponent},
     {path: "profile/:id", component: ProfileComponent},
+    {path: "genre/:id", component: GenreComponent},
   ]
   },
   {path: "login/:login", component: LoginComponent},
@@ -185,6 +187,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     TrackListComponent,
     SafeHtmlPipe,
 	ArtistRoyaltiesComponent,
+	GenreComponent,
   ],
   entryComponents: [
     PaymentInfoComponent,
