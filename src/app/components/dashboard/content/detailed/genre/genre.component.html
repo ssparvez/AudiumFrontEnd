@@ -1,3 +1,32 @@
-<p>
-  genre works!
-</p>
+
+<ng-container *ngIf="genre">
+
+  <h3>Browsing genre:</h3>
+  <h1 class="fade-in-half-sec" style="padding-bottom: 50px;">{{genre?.genreName}}</h1>
+
+  <ng-container *ngIf="genre?.songs">
+    <!-- NOTE: On this page, playCountLastMonth is actually the song's total playCount;
+      playCountLastMonth is being used to circumvent JPA because I'm lazy and we're out of time -->
+    <track-list-component
+      #topSongsList
+      [nRows]="15"
+      [title]="'Popular Songs'"
+      [songs]="genre?.songs"
+      [noEntitiesMessage]="'No popular songs in this genre'"
+      [displayPlayCountLastMonth]="true"
+      [playCountLastMonthHeader]="'Plays'"
+    ></track-list-component>
+  </ng-container>
+
+  <ng-container *ngIf="genre?.artists">
+    <entity-card-collection
+      #artistCollection
+      [nPerRow]="4"
+      [title]="'Artists in This Genre'"
+      [noEntitiesMessage]="'No artists in this genre'"
+      [showAllBtHoverText]="'Show all artists'"
+      [artists]="genre?.artists"
+    ></entity-card-collection>
+  </ng-container>
+
+</ng-container>

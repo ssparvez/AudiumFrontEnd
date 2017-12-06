@@ -15,9 +15,8 @@ import { Genre } from '../../../../../classes/Genre';
 export class GenreComponent implements OnInit {
 
   public mediaPath: string;
+  private id: number;
   public genre: Genre;
-  public songs: Song[];
-  public artists: Artist[];
 
   constructor(
     private router: Router,
@@ -36,15 +35,11 @@ export class GenreComponent implements OnInit {
     });
     this.mediaPath = this.dataService.mediaURL;
     this.route.params.subscribe(param => {
-      this.genre.genreId = + param['id'];
-      this.generalService.get("/genres/" + this.genre.genreId + "/songs").subscribe((songs) => {
-        this.songs = songs;
-        this.generalService.get("/genres/" + this.genre.genreId + "/artists").subscribe((artists) => {
-          this.artists = artists;
-        });
+      this.id = + param['id'];
+      this.generalService.get("/genres/" + this.id + "/browse").subscribe((genre) => {
+        this.genre = genre;
       });
     });
   }
-
 
 }
