@@ -29,7 +29,7 @@
                 [routerLink]="[detailedEntityPage(i)]"
                 [ngStyle]="{ 'width.px': cardWidth, 'height.px': cardWidth, 'cursor': (disableImageLink || ((router?.url == detailedEntityPage(i)) && (!forceEnableImageLink))) ? 'default' : 'pointer' }"
               >
-                <div class="card-play-bt-inner-wrapper" *ngIf="playing; then pauseElement else playElement"></div>
+                <div class="card-play-bt-inner-wrapper" *ngIf="isPlaying; then pauseElement else playElement"></div>
                 <ng-template #playElement>
                   <h1 class="col s12 card-play-bt-inner-wrapper" style="text-align: center; margin-bottom: 0px;">
                     <a (click)="play($event, i)">

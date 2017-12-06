@@ -48,7 +48,6 @@ export class EntityCardComponent implements OnInit {
 
   public mediaPath: string;
   public currentAccountId: number;
-  public playing: boolean = false;
   private lastSizeCheck: number;
   private _destroyed: boolean = false;
 
@@ -100,6 +99,7 @@ export class EntityCardComponent implements OnInit {
   @Input() public noEntitiesMessage:   string = "";
   @Input() public showAllBtHoverText: string = "Show all";
 
+  @Input() public isPlaying: boolean = false;
   @Input() public titleUseHtml: boolean = false;
   // If true, server will try all file extensions before using default image
   @Input() public tryAllImageTypes:  boolean = false; // (NOTE: Setting tryAllImageTypes = true seems to be significantly slower)
@@ -351,13 +351,13 @@ export class EntityCardComponent implements OnInit {
   }
 
   public play($event: MouseEvent, i: number): void {
-    this.playing = true;
+    this.isPlaying = true;
     $event.preventDefault();
     $event.stopPropagation();
   }
 
   public pause($event: MouseEvent): void {
-    this.playing = false;
+    this.isPlaying = false;
     $event.preventDefault();
     $event.stopPropagation();
   }
@@ -369,7 +369,7 @@ export class EntityCardComponent implements OnInit {
 
   // Returns the size of the materialize icon used for the play/pause button on an entity card
   getCardIconSize(): number {
-    return (this.cardWidth / 2);
+    return (this.cardWidth / 3);
   }
 
   // Returns the materialize grid column class for an entity image displayed inside the "Show all" card
