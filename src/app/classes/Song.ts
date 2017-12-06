@@ -20,7 +20,6 @@ export interface Song {
   //artists: Artist [],
   //album: Album []
   isPlaying?: boolean;
-  sound?: Howl;
 
   saved?: boolean;
   timePlayed?: number;

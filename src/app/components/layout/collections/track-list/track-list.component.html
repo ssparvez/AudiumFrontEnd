@@ -30,19 +30,18 @@
         </tr>
       </thead>
       <tbody class="tracklist track-list-collection-list">
-        <tr *ngFor="let song of (showAll || (songs?.length <= nRows)) ? songs : songs?.slice(0, nRows - 1); let i = index;"
-          (dblclick)="disableDoubleClick ? absorbMouseEvent($event, i, true) : play(i)" @fade
+        <tr *ngFor="let song of (showAll || (songs?.length <= nRows)) ? songs : songs?.slice(0, nRows - 1); let i = index;" @fade
           (contextmenu)="disableContextMenu ? absorbMouseEvent($event, i, true) : songContextMenu.onContextMenu($event, song)"
-          [ngClass]="{ 'playing': (displayPlaying && song.isPlaying) }"
+            (dblclick)="playSong(song,i)" [ngClass]="{ 'playing': (displayPlaying && song.isPlaying) }"
         >
           <td class="song-number" *ngIf="displayTrackNumber || (!disablePlayPauseBt)">
             <!-- <div class="song-number-value" *ngIf="displayTrackNumber && song?.trackNumber">{{song?.trackNumber}}.</div> -->
             <!-- <div class="song-number-value" *ngIf="displayTrackNumber && (!song?.trackNumber)">{{i+1}}.</div> -->
             <div class="song-number-value" *ngIf="displayTrackNumber">{{i+1}}.</div>
-            <a (click)="play($event, song)" class="song-playback-icon"  *ngIf="(!disablePlayPauseBt) && (!song.isPlaying)">
+            <a (click)="playSong(song,i)" class="song-playback-icon"  *ngIf="(!disablePlayPauseBt) && !song.isPlaying">
               <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">play_circle_outline</i>
             </a>
-            <a (click)="pause($event, song)" class="song-playback-icon" *ngIf="(!disablePlayPauseBt) && song.isPlaying">
+            <a (click)="pauseSong(song)" class="song-playback-icon" *ngIf="(!disablePlayPauseBt) && song.isPlaying">
               <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">pause</i>
             </a>
           </td>

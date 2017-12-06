@@ -106,7 +106,6 @@ const appRoutes: Routes = [
     {path: "artist-content-songs/:id" , component: ArtistContentSongsComponent},
     {path: "artist-account" , component: ArtistAccountComponent},
 	  {path: "artist-royalties" , component: ArtistRoyaltiesComponent},
-
     // DETAILED
     {path: "artist/:id", component: ArtistComponent},
     {path: "album/:id", component: AlbumComponent},
@@ -187,8 +186,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     GenreCardComponent,
     TrackListComponent,
     SafeHtmlPipe,
-	ArtistRoyaltiesComponent,
-	GenreComponent,
+    ArtistRoyaltiesComponent,
+    GenreComponent,
     ArtistAccountEditComponent
   ],
   entryComponents: [

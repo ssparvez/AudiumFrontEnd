@@ -1,10 +1,14 @@
 import { animate, style, transition, trigger } from "@angular/animations";
-import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, Renderer2, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewChecked, ChangeDetectorRef, Component, ElementRef, Renderer2, Input, OnChanges, OnDestroy, OnInit,
+  ViewChild, AfterContentInit, SimpleChanges, SimpleChange
+} from '@angular/core';
 import { Router } from "@angular/router";
 import { Playlist } from '../../../../classes/Playlist';
 import { Song } from '../../../../classes/Song';
 import { DataService } from '../../../../services/data.service';
 import { SafeHtmlPipe } from '../../../../pipes/safe-html.pipe';
+import {PlaybackService} from "../../../../services/playback/playback.service";
 
 
 @Component({
@@ -23,7 +27,7 @@ import { SafeHtmlPipe } from '../../../../pipes/safe-html.pipe';
     ])
   ]
 })
-export class TrackListComponent implements OnInit {
+export class TrackListComponent implements OnInit, OnChanges {
 
   public static DEFAULT_nRows: number = 10;
   private static DEFAULT_width: number;
@@ -35,6 +39,9 @@ export class TrackListComponent implements OnInit {
   private lastSizeCheck: number;
   private _initialized: boolean = false;
   private _destroyed: boolean = false;
+  private songCurrentlyPlaying: number;
+  private previousSongPlaying: number;
+  private isPlaying: boolean;
 
   public static readonly entityTypeString: string = 'song';
   public static readonly authorTypeString: string = 'artist';
@@ -155,6 +162,7 @@ export class TrackListComponent implements OnInit {
     private router: Router,
     private dataService: DataService,
     private cdRef: ChangeDetectorRef,
+    private playbackService: PlaybackService,
     private renderer: Renderer2
   ) {
     let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -170,6 +178,30 @@ export class TrackListComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.playbackService.previousPlaying.subscribe(
+      previousSong => {
+        console.log(previousSong);
+        this.previousSongPlaying = this.songs.indexOf(previousSong);
+      });
+
+    this.playbackService.currentlyPlaying.subscribe(
+      song => {
+        console.log('detected play');
+        this.songCurrentlyPlaying = this.songs.indexOf(song);
+        console.log(this.previousSongPlaying);
+        if (this.previousSongPlaying !== undefined && this.previousSongPlaying >=0 ) {
+          this.songs[this.songCurrentlyPlaying].isPlaying = true;
+          this.songs[this.previousSongPlaying].isPlaying = false;
+        }
+      });
+
+    this.playbackService.isPlaying.subscribe(
+      status => {
+        this.songs[this.songCurrentlyPlaying].isPlaying = status;
+      }
+
+    );
     this.mediaPath = this.dataService.mediaURL;
     var root = this;
     setTimeout(function() {
@@ -185,11 +217,15 @@ export class TrackListComponent implements OnInit {
     }, 500);
   }
 
-  ngOnChanges() {
-    if(!this.initialized && this.songs != undefined) {
+  ngOnChanges(changes: SimpleChanges) {
+    if(!this.initialized && this.songs !== undefined) {
       this.initializeCollection();
     }
+    const songs: SimpleChange = changes['songs'];
+    this.playbackService.loadSongQueue(songs.currentValue);
   }
+
+
 
   ngOnDestroy() {
     this._destroyed = true;
@@ -464,4 +500,17 @@ export class TrackListComponent implements OnInit {
       console.log("ERROR: Default row count (nRows) must be a positive integer");
     }
   }
+
+  //** PLAYBACK **//
+
+  playSong(song: Song, index) {
+    this.songCurrentlyPlaying = index;
+    this.playbackService.playSongFromQueue(index);
+  }
+
+  pauseSong(song: Song) {
+    this.isPlaying = false;
+    this.playbackService.pause();
+  }
+
 }

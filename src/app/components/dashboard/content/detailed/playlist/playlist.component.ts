@@ -78,7 +78,7 @@ export class PlaylistComponent implements OnInit {
       songs => {
         this.songsInPlaylist = songs;
         this.numberOfSongs = this.songsInPlaylist.length;
-        this.playbackService.loadSongQueue(this.songsInPlaylist);
+        // this.playbackService.loadSongQueue(this.songsInPlaylist);
       }, (error: AppError) => {
         this.songsInPlaylist = null;
       }

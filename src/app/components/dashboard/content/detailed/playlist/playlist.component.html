@@ -53,38 +53,19 @@
     </div>
   </div>
 </div>
-<div class="row fade-in-1-sec" *ngIf="playlist" style="margin-bottom: 0px;">
-  <table class="bordered responsive-table white-text">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Title</th>
-        <th>Artist</th>
-        <th>Album</th>
-        <th>Date Added</th>
-      </tr>
-    </thead>
-
-    <tbody class="tracklist" *ngIf="songsInPlaylist">
-      <tr @fade *ngFor="let song of songsInPlaylist let i = index;" (contextmenu)="songMenu.onContextMenu($event, song)"
-          [ngClass]="{'playing': song.isPlaying}" (dblclick)="playSong(song,i)">
-        <td class="song-number">
-          <a class="song-number-value" >{{i+1}}.</a>
-            <a (click)="playSong(song,i)" class="song-playback-icon"  *ngIf="!song.isPlaying">
-              <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">play_circle_outline</i>
-            </a>
-          <a (click)="pauseSong(song)" class="song-playback-icon" *ngIf="song.isPlaying">
-            <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">pause</i>
-          </a>
-        </td>
-        <td>{{song?.title}}</td>
-        <td><a [routerLink]="['../../artist', song?.artistId]" (contextmenu)="artistMenu.onContextMenu($event, { artistId: song?.artistId, followed: false } )" >{{song?.artistName}}</a></td>
-        <td><a [routerLink]="['../../album', song?.albumId]" (contextmenu)="albumMenu.onContextMenu($event, { albumId: song?.albumId, saved: false } )">{{song?.albumTitle}}</a></td>
-        <td>{{song?.timeAdded | timeAgo}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<ng-container *ngIf="playlist">
+  <track-list-component
+    #topSongsList
+    [nRows]="25"
+    [title]="''"
+    [songs]="songsInPlaylist"
+    [noEntitiesMessage]="'No songs in this playlist'"
+    [displayTrackNumber]="true"
+    [displayExplicit]="true"
+    [displayTimeAdded]="true"
+    [displayArtist]="true"
+  ></track-list-component>
+</ng-container>
 
 
 <div class="row fade-in-2-sec" *ngIf="playlist && !songsInPlaylist" style="margin-bottom: 0px;">

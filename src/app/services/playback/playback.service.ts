@@ -3,6 +3,8 @@ import {Song} from "../../classes/Song";
 import {DataService} from "../data.service";
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import { Howl } from 'howler';
+
 
 @Injectable()
 export class PlaybackService {
@@ -12,10 +14,12 @@ export class PlaybackService {
   public isPlaying = new Subject<boolean>();
   public currentlyPlaying = new Subject<Song>();
   public position = new Subject<number>();
+  public previousPlaying = new Subject<Song>();
   private queueOfSongs: Song[];
   private isCurrentlyPlaying: boolean;
   public currentSoundPlaying: number;
-  private currentSongPlaying: Song;
+  private previousSongPlaying: number;
+  private currentSongPlaying: number;
 
   constructor(private dataService: DataService) {
 
@@ -43,6 +47,7 @@ export class PlaybackService {
   }
 
   public playSongFromQueue(index: number) {
+    console.log(this.queueOfSongs);
     let error: boolean;
     if ( this.currentSoundPlaying !== undefined) {
       this.playback.stop(this.currentSoundPlaying);
@@ -56,6 +61,9 @@ export class PlaybackService {
       onplayerror : (soundId: number) => error = true,
       onend:  (soundId: number) => this.nextSong()
     });
+
+    this.checkForPrevious();
+
     this.playback.play();
     return (!error);
   }
@@ -64,17 +72,28 @@ export class PlaybackService {
     this.queueOfSongs.splice(this.queueOfSongs.indexOf(song), 1);
   }
 
+  private checkForPrevious() {
+    if ( this.previousSongPlaying !== this.currentSongPlaying) {
+      this.previousSongPlaying = this.currentSongPlaying;
+      this.previousPlaying.next(this.queueOfSongs[this.previousSongPlaying]);
+    }
+  }
   public nextSong() {
-    const index = this.queueOfSongs.indexOf(this.currentSongPlaying);
+    const index = this.currentSongPlaying;
     if ( index  !== this.queueOfSongs.length-1) {
+
       this.playSongFromQueue(index+1);
+    } else {
+      this.playSongFromQueue(0);
     }
   }
 
   public previousSong() {
-    const index = this.queueOfSongs.indexOf(this.currentSongPlaying);
+    const index = this.currentSongPlaying;
     if (index !== 0) {
       this.playSongFromQueue(index-1);
+    } else {
+      this.playSongFromQueue(this.queueOfSongs.length-1);
     }
   }
 
@@ -110,7 +129,7 @@ export class PlaybackService {
 
   public shuffle() {
     let randomNumber = this.randomIntFromInterval(0,this.queueOfSongs.length-1);
-    while ( randomNumber === this.queueOfSongs.indexOf(this.currentSongPlaying)) {
+    while ( randomNumber === this.currentSongPlaying) {
       randomNumber = this.randomIntFromInterval(0,this.queueOfSongs.length-1);
     }
     this.playSongFromQueue(randomNumber);
@@ -125,7 +144,7 @@ export class PlaybackService {
     this.currentlyPlaying.next(this.queueOfSongs[index]);
     this.isCurrentlyPlaying = true;
     this.currentSoundPlaying = soundId;
-    this.currentSongPlaying = this.queueOfSongs[index];
+    this.currentSongPlaying = index;
   }
 
   public getDuration() {

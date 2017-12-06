@@ -1,14 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PlayerService} from '../../../../services/player/player.service';
-import { Howl } from 'howler';
 import { Song } from '../../../../classes/Song';
 import { DataService } from '../../../../services/data.service';
 import { Router } from '@angular/router';
 import { SongQueue } from '../../../../classes/SongQueue';
 import { GeneralService } from '../../../../services/general/general.service';
 import {PlaybackService} from "../../../../services/playback/playback.service";
-import {isUndefined} from "util";
-
 
 @Component({
   selector: 'app-musicplayer',
@@ -56,7 +53,6 @@ export class MusicplayerComponent implements OnInit {
     private router: Router ) {
     this.playbackService.isPlaying.subscribe(
       isPlaying => {
-        console.log(isPlaying);
         this.isCurrentlyPlaying = isPlaying;
       }
     );
