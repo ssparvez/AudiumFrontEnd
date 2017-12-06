@@ -8,7 +8,7 @@ import { Playlist } from '../../../../classes/Playlist';
 import { Song } from '../../../../classes/Song';
 import { DataService } from '../../../../services/data.service';
 import { SafeHtmlPipe } from '../../../../pipes/safe-html.pipe';
-import {PlaybackService} from "../../../../services/playback/playback.service";
+import { PlaybackService } from "../../../../services/playback/playback.service";
 
 
 @Component({
@@ -123,6 +123,21 @@ export class TrackListComponent implements OnInit, OnChanges {
   @Input() public entityAddClass: string = '';
 
 
+  @Input() public trackNumberAlign: string = 'left';
+  @Input() public songTitleAlign: string = '';
+  @Input() public artistAlign: string = '';
+  @Input() public albumAlign: string = '';
+  @Input() public yearAlign: string = '';
+  @Input() public durationAlign: string = 'right';
+  @Input() public lyricsAlign: string = '';
+  @Input() public timeAddedAlign: string = '';
+  @Input() public timePlayedAlign: string = '';
+  @Input() public savedAlign: string = '';
+  @Input() public genreAlign: string = '';
+  @Input() public playCountAlign: string = 'right';
+  @Input() public playCountLastMonthAlign: string = 'right';
+
+
   @Input() public trackNumberHeader: string = '';
   @Input() public songTitleHeader: string = 'Title';
   @Input() public artistHeader: string = 'Artist';
@@ -138,19 +153,19 @@ export class TrackListComponent implements OnInit, OnChanges {
   @Input() public playCountLastMonthHeader: string = 'Plays (Last Month)';
 
 
-  @Input() public trackNumberAlign: string = 'left';
-  @Input() public songTitleAlign: string = '';
-  @Input() public artistAlign: string = '';
-  @Input() public albumAlign: string = '';
-  @Input() public yearAlign: string = '';
-  @Input() public durationAlign: string = 'right';
-  @Input() public lyricsAlign: string = '';
-  @Input() public timeAddedAlign: string = '';
-  @Input() public timePlayedAlign: string = '';
-  @Input() public savedAlign: string = '';
-  @Input() public genreAlign: string = '';
-  @Input() public playCountAlign: string = 'right';
-  @Input() public playCountLastMonthAlign: string = 'right';
+  @Input() public trackNumberHeaderAlign: string = 'left';
+  @Input() public songTitleHeaderAlign: string = '';
+  @Input() public artistHeaderAlign: string = '';
+  @Input() public albumHeaderAlign: string = '';
+  @Input() public yearHeaderAlign: string = '';
+  @Input() public durationHeaderAlign: string = 'right';
+  @Input() public lyricsHeaderAlign: string = '';
+  @Input() public timeAddedHeaderAlign: string = '';
+  @Input() public timePlayedHeaderAlign: string = '';
+  @Input() public savedHeaderAlign: string = '';
+  @Input() public genreHeaderAlign: string = '';
+  @Input() public playCountHeaderAlign: string = 'right';
+  @Input() public playCountLastMonthHeaderAlign: string = 'right';
 
 
 
@@ -240,8 +255,6 @@ export class TrackListComponent implements OnInit, OnChanges {
     const songs: SimpleChange = changes['songs'];
     this.playbackService.loadSongQueue(songs.currentValue);
   }
-
-
 
   ngOnDestroy() {
     this._destroyed = true;
@@ -528,5 +541,4 @@ export class TrackListComponent implements OnInit, OnChanges {
     this.isPlaying = false;
     this.playbackService.pause();
   }
-
 }

@@ -1,65 +1,31 @@
 
-<div class="row fade-in-half-sec" style="margin-bottom: 0px;">
-  <div class="left">
-    <h1>Songs</h1>
-  </div>
-  <div class="right" *ngIf="songs?.length > 0">
+
+<div [hidden]="true">
+  <div id="playAllBt" class="right" *ngIf="songs?.length > 0">
     <a class="btn btn-floating btn-large blue-bt pulse" (click)="playLibrarySongs(0)">
       <i class="material-icons">play_arrow</i>
     </a>
   </div>
 </div>
-<div class="row" style="margin-bottom:0;" *ngIf="songs">
-  <table class="bordered responsive-table white-text fade-in-half-sec" *ngIf="songs?.length > 0">
-    <thead>
-      <tr>
-        <th></th>
-        <th>Title</th>
-        <th>Artist</th>
-        <th>Album</th>
-        <th>Duration</th>
-        <th class="center">Date Added</th>
-      </tr>
-    </thead>
-    <tbody class="tracklist">
-      <tr *ngFor="let song of songs; let i = index" (dblclick)="playLibrarySongs(i)" (contextmenu)="songMenu.onContextMenu($event, song)"
-          [ngClass]="{'playing': song.isPlaying}" >
-        <td class="song-number">
-          <div class="song-number-value" >{{i+1}}.</div>
-          <a (click)="playbackSong($event,song)" class="song-playback-icon"  *ngIf="!song.isPlaying">
-            <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">play_circle_outline</i>
-          </a>
-          <a (click)="playbackSong($event,song)" class="song-playback-icon" *ngIf="song.isPlaying">
-            <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">pause</i>
-          </a>
-        </td>
-        <td>
-          {{song?.title}}
-          <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
-        </td>
-		    <td *ngIf="song"><a [routerLink]="['../artist', song?.artistId]" (contextmenu)="artistMenu.onContextMenu($event, { artistId: song?.artistId, followed: false } )">{{song?.artistName}}</a></td>
-        <td *ngIf="song"><a [routerLink]="['../album', song?.albumId]" (contextmenu)="albumMenu.onContextMenu($event, { albumId: song?.albumId, followed: false } )">{{song?.albumTitle}}</a></td>
-        <td>
-          <!-- NOTE: Putting these spans on separate lines creates a space for some reason. Though ugly, we should keep them on the same line -->
-          <span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span><span *ngIf="song?.duration?.substring(3,4) != '0' || song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}
-        </td>
-        <td class="center">{{song?.timeAdded | timeAgo}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="row fade-in-2-sec" *ngIf="songs?.length == 0" style="margin-bottom: 0px;">
-  <div class="col s12">
-    <div class="card-panel large transparent z-depth-0">
-      <div class="row"></div>
-    </div>
-  </div>
-  <div class="col s12">
-    <div class="card-panel large transparent z-depth-0 center">
-      <h2 class="grey-text">No songs in library</h2>
-    </div>
-  </div>
-</div>
+
+<ng-container>
+  <track-list-component
+    #librarySongs
+    [title]="'<h1 class=\'left fade-in-half-sec\'>Songs</h1>'"
+    [titleUseHtml]="true"
+    [injectTitleDiv]="'playAllBt'"
+    [songs]="songs"
+    [showAll]="true"
+    [displayDuration]="true"
+    [displayTimeAdded]="true"
+    [timeAddedHeader]="'Date Added'"
+    [noEntitiesMessage]="'No songs in library'"
+    [trackNumberSuffix]="'.'"
+    [durationAlign]="'left'"
+    [inMusic]="true"
+  ></track-list-component>
+</ng-container>
+
 
 <!-- Loading animation -->
 <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!songs">

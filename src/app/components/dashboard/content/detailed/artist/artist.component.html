@@ -48,45 +48,20 @@
   <ng-container *ngIf="artist">
     <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'">
       <mz-tab-item class="fade-in-half-sec" [label]="'Overview'" [active]="true">
-        <div class="row fade-in-half-sec" style="margin-top: 30px;" *ngIf="artist?.songs || artist?.albums">
-          <h2 class="center">Popular Songs</h2>
-        </div>
-        <div class="row fade-in-1-sec" *ngIf="artist?.songs">
-          <table class="bordered responsive-table white-text" *ngIf="artist?.songs?.length > 0">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Title</th>
-                <th>Album</th>
-                <th class="center">Plays</th>
-              </tr>
-            </thead>
-            <tbody class="tracklist" *ngIf="artist?.songs">
-              <tr *ngFor="let song of showAllSongs ? artist?.songs : artist?.songs?.slice(0, nPopularSongs); let i = index" (dblclick)="playArtistSongs(i, artist?.songs)"
-                  (contextmenu)="songMenu.onContextMenu($event, song)">
-                <td class="song-number">
-                  <a class="song-number-value" >{{i+1}}.</a>
-                  <a (click)="playbackSong($event,song)" class="song-playback-icon"  *ngIf="!song.isPlaying">
-                    <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">play_circle_outline</i>
-                  </a>
-                  <a (click)="playbackSong($event,song)" class="song-playback-icon" *ngIf="song.isPlaying">
-                    <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">pause</i>
-                  </a>
-                </td>
-                <td>{{song?.title}}</td>
-                <td *ngIf="song">
-                  <a [routerLink]="['../../album', song?.albumId]"  (contextmenu)="albumMenu.onContextMenu($event, { albumId: song?.albumId, followed: false } )">{{song?.albumTitle}}</a>
-                </td>
-                <td class="center">{{song?.playCount}}</td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="col s12 fade-in-half-sec" style="margin-bottom: 20px;" *ngIf="artist?.songs?.length == 0 && artist?.albums?.length > 0">
-            <div class="card-panel large transparent z-depth-0 center">
-              <h3 class="grey-text">No songs by this artist</h3>
-            </div>
-          </div>
-        </div>
+
+        <ng-container>
+          <track-list-component
+            #popularSongs
+            [title]="'Popular Songs'"
+            [songs]="artist?.songs"
+            [displayShowAllBt]="false"
+            [displayArtist]="false"
+            [displayPlayCount]="true"
+            [noEntitiesMessage]="'No popular songs by this artist'"
+            [trackNumberSuffix]="'.'"
+          ></track-list-component>
+        </ng-container>
+
         <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="!artist?.songs && artist?.albums">
           <div class="loader">Loading...</div>
         </div>

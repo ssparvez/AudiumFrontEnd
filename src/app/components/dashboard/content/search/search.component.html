@@ -1,40 +1,17 @@
 <h1>Search</h1>
 
-<div class="row" *ngIf="songs?.length > 0" style="margin-bottom: 0px;">
-  <div class="row fade-in-half-sec">
-    <h2 class="center">Songs</h2>
-  </div>
-  <table class="bordered responsive-table white-text fade-in-half-sec">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Artist</th>
-        <th>Album</th>
-        <th>Duration</th>
-      </tr>
-    </thead>
-    <tbody class="tracklist">
-      <tr class="fade-in-1-sec" *ngFor="let song of showAllSongs ? songs : songs?.slice(0, (songs?.length > 10 ? 9 : 10)); let i = index;" (dblclick)="playSongs(i)">
-        <td>{{song.title}}</td>
-        <td>
-          <a [routerLink]="['../../artist', song?.artistId]">{{song?.artistName}}</a>
-        </td>
-        <td>
-          <a [routerLink]="['../../album', song?.albumId]">{{song?.albumTitle}}</a>
-        </td>
-        <td>
-          <!-- NOTE: Putting these spans on separate lines creates a space for some reason. Though ugly, we should keep them on the same line -->
-          <span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span><span *ngIf="song?.duration?.substring(3,4) != '0' || song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}
-        </td>
-      </tr>
-      <tr class="fade-in-1-sec" *ngIf="!showAllSongs && songs?.length > 10">
-        <td colspan="4" style="text-align: center; font-weight: bold;">
-          <a (click)="showAllSongs = true">Show all song results</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<ng-container>
+  <track-list-component
+    #songResults
+    [title]="'Songs'"
+    [songs]="songs"
+    [displayDuration]="true"
+    [displayTrackNumber]="false"
+    [songTitleHeaderAlign]="'center'"
+    [durationAlign]="'left'"
+    [durationHeaderAlign]="'left'"
+  ></track-list-component>
+</ng-container>
 
 <entity-card-collection *ngIf="artists?.length > 0"
   #artistResultsCollection

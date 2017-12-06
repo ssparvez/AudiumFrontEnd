@@ -61,30 +61,22 @@
     [songs]="songsInPlaylist"
     [noEntitiesMessage]="'No songs in this playlist'"
     [displayTrackNumber]="true"
+    [trackNumberSuffix]="'.'"
     [displayExplicit]="true"
     [displayTimeAdded]="true"
+    [timeAddedAlign]="'center'"
+    [timeAddedHeaderAlign]="'center'"
     [displayArtist]="true"
+    [inPlaylist]="true"
+    [currentPlaylist]="playlist?.playlistId"
+    [playlistOwner]="playlist?.accountId"
   ></track-list-component>
 </ng-container>
 
-
-<div class="row fade-in-2-sec" *ngIf="playlist && !songsInPlaylist" style="margin-bottom: 0px;">
-  <div class="col s12">
-    <div class="card-panel large transparent z-depth-0">
-      <div class="row"></div>
-    </div>
-  </div>
-  <div class="col s12">
-    <div class="card-panel large transparent z-depth-0 center fade-in-2-sec">
-      <h2 class="grey-text">No songs in playlist</h2>
-    </div>
-  </div>
-</div>
-
 <!-- Loading animation -->
 <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!playlist">
-    <div class="loader">Loading...</div>
-  </div>
+  <div class="loader">Loading...</div>
+</div>
 
 <app-playlist-menu #playlistMenu [playlists]="playlist" [detailed]="true"></app-playlist-menu>
 <app-song-menu #songMenu [songs]="songsInPlaylist" [inPlaylist]="true"

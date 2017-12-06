@@ -15,30 +15,39 @@
     <table class="bordered responsive-table white-text" *ngIf="songs?.length > 0">
       <thead #trackTableHead class="fade-in-half-sec">
         <tr>
+          <!-- Option 1:
           <th *ngIf="displayTrackNumber || (!disablePlayPauseBt)" [ngStyle]="{ 'text-align': trackNumberAlign }">{{trackNumberHeader}}</th>
           <th *ngIf="displaySongTitle" [ngStyle]="{ 'text-align': songTitleAlign }">{{songTitleHeader}}</th>
-          <th *ngIf="displayArtist" [ngStyle]="{ 'text-align': artistAlign }">{{artistHeader}}</th>
-          <th *ngIf="displayAlbum" [ngStyle]="{ 'text-align': albumAlign }">{{albumHeader}}</th>
-          <th *ngIf="displayYear" [ngStyle]="{ 'text-align': yearAlign }">{{yearHeader}}</th>
-          <th *ngIf="displayGenre" [ngStyle]="{ 'text-align': genreAlign }">{{genreHeader}}</th>
-          <th *ngIf="displayDuration" [ngStyle]="{ 'text-align': durationAlign }">{{durationHeader}}</th>
-          <th *ngIf="displaySaved" [ngStyle]="{ 'text-align': savedAlign }">{{savedHeader}}</th>
-          <th *ngIf="displayTimeAdded" [ngStyle]="{ 'text-align': timeAddedAlign }">{{timeAddedHeader}}</th>
-          <th *ngIf="displayTimePlayed" [ngStyle]="{ 'text-align': timePlayedAlign }">{{timePlayedHeader}}</th>
-          <th *ngIf="displayPlayCount" [ngStyle]="{ 'text-align': playCountAlign }">{{playCountHeader}}</th>
-          <th *ngIf="displayPlayCountLastMonth" [ngStyle]="{ 'text-align': playCountLastMonthAlign }">{{playCountLastMonthHeader}}</th>
+          -->
+          <!-- Option 2:
+          <th *ngIf="displayTrackNumber" [ngStyle]="{ 'text-align': trackNumberAlign }">{{trackNumberHeader}}</th>
+          <th *ngIf="displaySongTitle" [attr.colspan]="((!displayTrackNumber) && (!disablePlayPauseBt)) ? 2 : 1" [ngStyle]="{ 'text-align': songTitleAlign }">{{songTitleHeader}}</th>
+          -->
+          <th *ngIf="displayTrackNumber" [ngStyle]="{ 'text-align': trackNumberHeaderAlign }">{{trackNumberHeader}}</th>
+          <th *ngIf="displaySongTitle" [attr.colspan]="((!displayTrackNumber) && (!disablePlayPauseBt)) ? 2 : 1" [ngStyle]="{ 'text-align': songTitleHeaderAlign }">{{songTitleHeader}}</th>
+          <th *ngIf="displayArtist" [ngStyle]="{ 'text-align': artistHeaderAlign }">{{artistHeader}}</th>
+          <th *ngIf="displayAlbum" [ngStyle]="{ 'text-align': albumHeaderAlign }">{{albumHeader}}</th>
+          <th *ngIf="displayYear" [ngStyle]="{ 'text-align': yearHeaderAlign }">{{yearHeader}}</th>
+          <th *ngIf="displayGenre" [ngStyle]="{ 'text-align': genreHeaderAlign }">{{genreHeader}}</th>
+          <th *ngIf="displayDuration" [ngStyle]="{ 'text-align': durationHeaderAlign }">{{durationHeader}}</th>
+          <th *ngIf="displaySaved" [ngStyle]="{ 'text-align': savedHeaderAlign }">{{savedHeader}}</th>
+          <th *ngIf="displayTimeAdded" [ngStyle]="{ 'text-align': timeAddedHeaderAlign }">{{timeAddedHeader}}</th>
+          <th *ngIf="displayTimePlayed" [ngStyle]="{ 'text-align': timePlayedHeaderAlign }">{{timePlayedHeader}}</th>
+          <th *ngIf="displayPlayCount" [ngStyle]="{ 'text-align': playCountHeaderAlign }">{{playCountHeader}}</th>
+          <th *ngIf="displayPlayCountLastMonth" [ngStyle]="{ 'text-align': playCountLastMonthHeaderAlign }">{{playCountLastMonthHeader}}</th>
         </tr>
       </thead>
       <tbody class="tracklist track-list-collection-list">
         <tr *ngFor="let song of (showAll || (songs?.length <= nRows)) ? songs : displayShowAllBt ? songs?.slice(0, nRows - 1) : songs?.slice(0, nRows); let i = index;"
-            (dblclick)="playSong(song,i)" (contextmenu)="disableContextMenu ? absorbMouseEvent($event, i, true) : songContextMenu.onContextMenu($event, song)"
+          (dblclick)="disableDoubleClick ? absorbMouseEvent($event, i, true) : playSong(song, i)"
+          (contextmenu)="disableContextMenu ? absorbMouseEvent($event, i, true) : songContextMenu.onContextMenu($event, song)"
           [ngClass]="{ 'playing': (displayPlaying && song.isPlaying) }"
         >
           <td class="song-number" *ngIf="displayTrackNumber || (!disablePlayPauseBt)" [ngStyle]="{ 'text-align': trackNumberAlign }">
             <!-- <div class="song-number-value" *ngIf="displayTrackNumber && song?.trackNumber">{{song?.trackNumber}}.</div> -->
             <!-- <div class="song-number-value" *ngIf="displayTrackNumber && (!song?.trackNumber)">{{i+1}}.</div> -->
             <div class="song-number-value" *ngIf="displayTrackNumber">{{i+1}}{{trackNumberSuffix}}</div>
-            <a (click)="playSong(song,i)" class="song-playback-icon"  *ngIf="(!disablePlayPauseBt) && (!song.isPlaying)">
+            <a (click)="playSong(song, i)" class="song-playback-icon"  *ngIf="(!disablePlayPauseBt) && (!song.isPlaying)">
               <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">play_circle_outline</i>
             </a>
             <a (click)="pauseSong(song)" class="song-playback-icon" *ngIf="(!disablePlayPauseBt) && song.isPlaying">
