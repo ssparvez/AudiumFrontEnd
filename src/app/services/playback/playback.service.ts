@@ -34,7 +34,7 @@ export class PlaybackService {
   }
 
   public loadSongQueue(songs: Song[]) {
-      this.queueOfSongs = songs;
+      this.queueOfSongs = Object.assign([], songs);
   }
 
   public playSong(song: Song) {
@@ -79,7 +79,9 @@ export class PlaybackService {
   }
 
   public removeSongFromQueue(song: Song) {
-    this.queueOfSongs.splice(this.queueOfSongs.indexOf(song), 1);
+    if(this.queueOfSongs != undefined) {
+      this.queueOfSongs.splice(this.queueOfSongs.indexOf(song), 1);
+    }
   }
 
   private checkForPrevious() {
@@ -164,13 +166,22 @@ export class PlaybackService {
   }
 
   public handleOnPlay(soundId:number, index:number) {
-    const song = this.queueOfSongs[index];
-    song.isPlaying = true;
+    let song = this.queueOfSongs[index];
+    if(song != undefined) {
+      song.isPlaying = true;
+      this.currentSongPlaying = this.queueOfSongs[index];
+      
+    }
+    else {
+      if(this.currentSongPlaying != undefined) {
+        console.log("asda")
+        song = this.currentSongPlaying;
+      }
+    }
     this.isPlaying.next(true);
     this.currentlyPlaying.next(song);
     this.isCurrentlyPlaying = true;
     this.currentSoundPlaying = soundId;
-    this.currentSongPlaying = this.queueOfSongs[index];
 
     this.playback.loop(this.isLooping,this.currentSoundPlaying);
 
@@ -181,8 +192,16 @@ export class PlaybackService {
   }
 
   private handleOnPause(index) {
-    const song = this.queueOfSongs[index];
-    song.isPlaying = false;
+    let song = this.queueOfSongs[index];
+    if(song != undefined) {
+      song.isPlaying = false;
+    }
+    else {
+      if(this.currentSongPlaying != undefined) {
+        console.log("asda")
+        song = this.currentSongPlaying;
+      }
+    }
     this.isCurrentlyPlaying = false;
     this.currentlyPlaying.next(song);
     this.isPlaying.next(false);

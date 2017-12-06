@@ -45,7 +45,7 @@
           <i (click)="mute()" class="material-icons" style="margin-left: 28px;">{{soundIcon}}</i>
           <span class="volume-slider">
             <input #ref2 ngModel [(ngModel)]="volumeLevel" (ngModelChange)="setVolume(ref2.value)" class="volume-slider" type=range min=0.0 max=1.0
-                   id=fader step="0.1">
+                   id=fader step="0.001">
           </span>
         </div>
       </div>

@@ -38,7 +38,7 @@ export class AdminModifyProfilesComponent implements OnInit {
     }).afterClosed()
       .subscribe( confirm => {
         if ( confirm) {
-          this.service.update('/admin/' + this.data.adminId + '/' + this.data.accountType.toLowerCase() +
+          this.service.update('/admin/' + this.data.adminId + '/' + this.data.accountType.toLowerCase() + '/' + this.artist.artistId +
           '/update',this.artist).subscribe(
             response => {
               this.closeDialog(true);

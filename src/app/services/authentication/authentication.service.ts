@@ -51,7 +51,9 @@ export class AuthenticationService {
   }
 
   logout() {
-    this.playbackService.getPlayback().unload();
+    if(this.playbackService.getPlayback() != undefined && this.playbackService.getPlayback().state() === "loaded")  {
+      this.playbackService.getPlayback().unload();
+    }
     sessionStorage.clear();
     localStorage.clear();
   }
