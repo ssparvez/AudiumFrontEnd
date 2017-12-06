@@ -4,6 +4,7 @@
     <ng-container>
       <h1 class="fade-in-half-sec">Home</h1>
     </ng-container>
+
     <ng-container *ngIf="recentListens">
       <entity-card-collection
         #recentListensCollection
@@ -20,7 +21,6 @@
   </ng-container>
 
   <ng-container *ngIf="currentUser && recentListens && recentListensCollection">
-
     <track-list-component
       #topSongsList
       [nRows]="5"
@@ -31,55 +31,8 @@
       [displayPlayCount]="true"
       [displayArtist]="true"
     ></track-list-component>
-    <!-- <div class="row">
-      <h2 class="center fade-in-2-sec"><br>
-        Top Songs
-      </h2>
-    </div>
-    <div class="row">
-      <table class="bordered responsive-table white-text fade-in-2-sec">
-        <thead>
-          <tr class="fade-in-half-sec" *ngIf="topSongs">
-            <th>Title</th>
-            <th>Artist</th>
-            <th>Album</th>
-            <th>Plays</th>
-          </tr>
-        </thead>
-        <tbody class="tracklist" *ngIf="topSongs?.length > 0">
-          <tr class="fade-in-half-sec" *ngFor="let song of topSongs; let i = index" (contextmenu)="songMenu.onContextMenu($event, song)"
-            (dblclick)="playTopSongs(i)">
-            <td>
-              {{song?.title}}
-              <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
-            </td>
-            <td>
-              <a [routerLink]="['../artist', song?.artistId]" (contextmenu)="artistMenu.onContextMenu($event, { artistId: song?.artistId, followed: false } )">
-                {{song?.artistName}}
-              </a>
-            </td>
-            <td>
-              <a [routerLink]="['../album', song?.albumId]" (contextmenu)="albumMenu.onContextMenu($event, { albumId: song?.artistId, saved: false } )">
-                {{song?.albumTitle}}</a>
-            </td>
-            <td>{{song?.playCount}}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div *ngIf="topSongs?.length == 0">
-        <div class="row fade-in-1-sec">
-          <div class="col s12">
-            <div class="card-panel large transparent z-depth-0 center">
-              <h3 class="grey-text">No data available</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!topSongs">
-      <div class="loader fade-in-2-sec" @fade>Loading...</div>
-    </div> -->
   </ng-container>
+
   <ng-container *ngIf="currentUser && recentListens && recentListensCollection && topSongs">
     <genre-card-collection
       #genreCollection
@@ -94,46 +47,7 @@
       [showAll]="false"
     ></genre-card-collection>
   </ng-container>
-  <!--
-  <ng-container>
-    <div class="row" *ngIf="currentUser && topSongs">
-      <h2 class="center fade-in-half-sec"><br>
-        Browse by Genre
-      </h2>
-    </div>
-    <ng-container *ngIf="genres?.length > 0">
-      <div class="row">
-        <div class="col s12 m3 fade-in-half-sec" *ngFor="let genre of showAllGenres ? genres : genres?.slice(0, (genres?.length > 16 ? 12 : 16))">
-          <a class="genre" [routerLink]="['../home']">
-            <div class="card-panel hoverable center blue-bt waves-effect waves-light fade-in-half-sec" style="width: 100%;">
-              <h3 class="truncate" style="color: inherit;">{{genre?.genreName}}</h3>
-            </div>
-          </a>
-        </div>
-        <div class="col s12 fade-in-half-sec" *ngIf="!showAllGenres && genres?.length > 16">
-          <a class="genre">
-            <div class="card-panel hoverable center blue-bt waves-effect waves-light fade-in-half-sec" style="width: 100%;" (click)="showAllGenres = true">
-              <h3 class="truncate" style="color: inherit; font-weight: bold;">Show all genres</h3>
-            </div>
-          </a>
-        </div>
-      </div>
-    </ng-container>
 
-    <div *ngIf="genres?.length == 0">
-      <div class="row fade-in-2-sec">
-        <div class="col s12">
-          <div class="card-panel large transparent z-depth-0 center">
-            <h3 class="grey-text">No data available</h3>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="recentListensCollection && topSongs && (!genres)">
-      <div class="loader fade-in-2-sec" @fade>Loading...</div>
-    </div>
-  </ng-container>
-  -->
 </div>
 
 
