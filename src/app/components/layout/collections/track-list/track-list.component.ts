@@ -79,6 +79,7 @@ export class TrackListComponent implements OnInit {
   @Input() public title: string = "";
   @Input() public noEntitiesMessage: string = "";
   @Input() public showAllBtText: string = "Show all";
+  @Input() public trackNumberSuffix: string = "";
 
   @Input() public titleUseHtml: boolean = false;
   // Determines whether all songs in collection are shown by default
@@ -128,6 +129,21 @@ export class TrackListComponent implements OnInit {
   @Input() public genreHeader: string = 'Genre';
   @Input() public playCountHeader: string = 'Plays';
   @Input() public playCountLastMonthHeader: string = 'Plays (Last Month)';
+
+
+  @Input() public trackNumberAlign: string = 'left';
+  @Input() public songTitleAlign: string = '';
+  @Input() public artistAlign: string = '';
+  @Input() public albumAlign: string = '';
+  @Input() public yearAlign: string = '';
+  @Input() public durationAlign: string = 'right';
+  @Input() public lyricsAlign: string = '';
+  @Input() public timeAddedAlign: string = '';
+  @Input() public timePlayedAlign: string = '';
+  @Input() public savedAlign: string = '';
+  @Input() public genreAlign: string = '';
+  @Input() public playCountAlign: string = 'right';
+  @Input() public playCountLastMonthAlign: string = 'right';
 
 
 
