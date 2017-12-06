@@ -105,3 +105,11 @@
 .song-info.search-result h5 a:hover {
     text-decoration: underline;
 }
+
+.visible-icons {
+    display: block;
+}
+
+.invisible-icons {
+    display: none;
+}

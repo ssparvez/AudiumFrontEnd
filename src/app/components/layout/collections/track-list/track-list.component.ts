@@ -42,6 +42,7 @@ export class TrackListComponent implements OnInit, OnChanges {
   private songCurrentlyPlaying: number;
   private previousSongPlaying: number;
   private isPlaying: boolean;
+  private hasLoadedSongs = false;
 
   public static readonly entityTypeString: string = 'song';
   public static readonly authorTypeString: string = 'artist';
@@ -206,33 +207,36 @@ export class TrackListComponent implements OnInit, OnChanges {
     if (this.collectionWidth) {
       this.cardWidth = (this.collectionWidth * 0.92);
     }
-  }
-
-  ngOnInit() {
-
     this.playbackService.previousPlaying.subscribe(
       previousSong => {
         console.log(previousSong);
-        this.previousSongPlaying = this.songs.indexOf(previousSong);
+        if (previousSong != undefined) {
+          this.previousSongPlaying = this.songs.indexOf(previousSong);
+        }
       });
 
     this.playbackService.currentlyPlaying.subscribe(
       song => {
-        console.log('detected play');
-        this.songCurrentlyPlaying = this.songs.indexOf(song);
-        console.log(this.previousSongPlaying);
-        if (this.previousSongPlaying !== undefined && this.previousSongPlaying >=0 ) {
-          this.songs[this.songCurrentlyPlaying].isPlaying = true;
-          this.songs[this.previousSongPlaying].isPlaying = false;
+        if ( this.songs.indexOf(song) !== -1) {
+          console.log('detected play');
+          this.songCurrentlyPlaying = this.songs.indexOf(song);
+          console.log('prev' + this.previousSongPlaying);
+          this.songs[this.songs.indexOf(song)].isPlaying = song.isPlaying;
+          if (this.previousSongPlaying !== undefined && this.previousSongPlaying >=0 ) {
+            this.songs[this.previousSongPlaying].isPlaying = false;
+          }
         }
       });
+    //
+    // this.playbackService.isPlaying.subscribe(
+    //   status => {
+    //     this.songs[this.songCurrentlyPlaying].isPlaying = status;
+    //   }
+    // );
+  }
 
-    this.playbackService.isPlaying.subscribe(
-      status => {
-        this.songs[this.songCurrentlyPlaying].isPlaying = status;
-      }
-
-    );
+  ngOnInit() {
+    this.playbackService.clean();
     this.mediaPath = this.dataService.mediaURL;
     var root = this;
     setTimeout(function() {
@@ -246,14 +250,19 @@ export class TrackListComponent implements OnInit, OnChanges {
         root.recheckSize(true);
       }
     }, 500);
+
   }
+
 
   ngOnChanges(changes: SimpleChanges) {
     if(!this.initialized && this.songs !== undefined) {
       this.initializeCollection();
     }
-    const songs: SimpleChange = changes['songs'];
-    this.playbackService.loadSongQueue(songs.currentValue);
+    // const songs: SimpleChange = changes['songs'];
+    // if ( songs != null) {
+    //   this.playbackService.loadSongQueue(songs.currentValue);
+    // }
+
   }
 
   ngOnDestroy() {
@@ -533,8 +542,16 @@ export class TrackListComponent implements OnInit, OnChanges {
   //** PLAYBACK **//
 
   playSong(song: Song, index) {
-    this.songCurrentlyPlaying = index;
-    this.playbackService.playSongFromQueue(index);
+    if ( !this.hasLoadedSongs) {
+      this.playbackService.loadSongQueue(this.songs);
+      this.hasLoadedSongs = true;
+    }
+    if ( this.songCurrentlyPlaying === index) {
+      this.playbackService.resumePlay();
+    } else {
+      this.songCurrentlyPlaying = index;
+      this.playbackService.playSongFromQueue(index);
+    }
   }
 
   pauseSong(song: Song) {

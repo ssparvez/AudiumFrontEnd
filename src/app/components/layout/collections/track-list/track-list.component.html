@@ -46,11 +46,11 @@
           <td class="song-number" *ngIf="displayTrackNumber || (!disablePlayPauseBt)" [ngStyle]="{ 'text-align': trackNumberAlign }">
             <!-- <div class="song-number-value" *ngIf="displayTrackNumber && song?.trackNumber">{{song?.trackNumber}}.</div> -->
             <!-- <div class="song-number-value" *ngIf="displayTrackNumber && (!song?.trackNumber)">{{i+1}}.</div> -->
-            <div class="song-number-value" *ngIf="displayTrackNumber">{{i+1}}{{trackNumberSuffix}}</div>
-            <a (click)="playSong(song, i)" class="song-playback-icon"  *ngIf="(!disablePlayPauseBt) && (!song.isPlaying)">
+            <div class="song-number-value" *ngIf="displayTrackNumber" [ngClass]="{'invisible-icons': song.isPlaying }">{{i+1}}{{trackNumberSuffix}}</div>
+            <a (click)="playSong(song,i)" class="song-playback-icon"  *ngIf="(!disablePlayPauseBt) && (!song.isPlaying)" [ngClass]="{'visible-icons': song.isPlaying }">
               <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">play_circle_outline</i>
             </a>
-            <a (click)="pauseSong(song)" class="song-playback-icon" *ngIf="(!disablePlayPauseBt) && song.isPlaying">
+            <a (click)="pauseSong(song)" class="song-playback-icon" *ngIf="(!disablePlayPauseBt) && song.isPlaying" [ngClass]="{'visible-icons': song.isPlaying }">
               <i class="material-icons" style=" font-size: 1.9rem; vertical-align: middle">pause</i>
             </a>
           </td>

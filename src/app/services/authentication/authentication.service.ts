@@ -9,6 +9,7 @@ import { DataService } from "../data.service";
 import { AppError } from "../../errors/AppError";
 import { NotFoundError } from "../../errors/not-found-error";
 import { ServerError } from "../../errors/server-error";
+import {PlaybackService} from "../playback/playback.service";
 
 @Injectable()
 export class AuthenticationService {
@@ -16,6 +17,7 @@ export class AuthenticationService {
   constructor(private http: Http,
               private dataService: DataService,
               private currentUser: CustomerAccount,
+              private playbackService: PlaybackService,
               private service: GeneralService) { }
 
 
@@ -49,6 +51,7 @@ export class AuthenticationService {
   }
 
   logout() {
+    this.playbackService.getPlayback().unload();
     sessionStorage.clear();
     localStorage.clear();
   }

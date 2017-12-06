@@ -15,18 +15,21 @@ export class PlaybackService {
   public currentlyPlaying = new Subject<Song>();
   public position = new Subject<number>();
   public previousPlaying = new Subject<Song>();
+
+
+
   private queueOfSongs: Song[];
   private isCurrentlyPlaying: boolean;
   public currentSoundPlaying: number;
   private previousSongPlaying: number;
-  private currentSongPlaying: number;
+  private currentSongPlaying: Song;
 
   constructor(private dataService: DataService) {
 
   }
 
   public loadSongQueue(songs: Song[]) {
-    this.queueOfSongs = songs;
+      this.queueOfSongs = songs;
   }
 
   public playSong(song: Song) {
@@ -38,26 +41,27 @@ export class PlaybackService {
       html5: true,
       volume: 0.2,
       onplay: (soundId: number) => this.handleOnPlay(soundId, 0),
-      onpause: (soundId: number) => this.handleOnPause(),
+      onpause: (soundId: number) => this.handleOnPause(0),
+      onstop: (soundId: number) => this.handleOnPause(0),
       onplayerror : (soundId: number) => error = true,
       onend:  (soundId: number) => this.nextSong()
     });
+    this.checkForPrevious();
     this.playback.play();
     return (!error);
   }
 
   public playSongFromQueue(index: number) {
-    console.log(this.queueOfSongs);
+    console.log("Now its playing");
     let error: boolean;
-    if ( this.currentSoundPlaying !== undefined) {
-      this.playback.stop(this.currentSoundPlaying);
-    }
+    this.stopCurrentSound();
     this.playback = new Howl({
       src: [this.dataService.songUrl + this.queueOfSongs[index].file ],
       html5: true,
       volume: 0.2,
       onplay: (soundId: number) => this.handleOnPlay(soundId, index),
-      onpause: (soundId: number) => this.handleOnPause(),
+      onpause: (soundId: number) => this.handleOnPause(index),
+      onstop: (soundId: number) => this.handleOnPause(index),
       onplayerror : (soundId: number) => error = true,
       onend:  (soundId: number) => this.nextSong()
     });
@@ -73,13 +77,21 @@ export class PlaybackService {
   }
 
   private checkForPrevious() {
-    if ( this.previousSongPlaying !== this.currentSongPlaying) {
-      this.previousSongPlaying = this.currentSongPlaying;
-      this.previousPlaying.next(this.queueOfSongs[this.previousSongPlaying]);
+    const check  = this.queueOfSongs.indexOf(this.currentSongPlaying);
+    if ( check !== -1) {
+      if ( this.previousSongPlaying !== check) {
+        this.previousSongPlaying = check;
+        this.previousPlaying.next(this.queueOfSongs[this.previousSongPlaying]);
+      }
+    } else {
+      this.previousSongPlaying = undefined;
+      this.previousPlaying.next(undefined);
     }
   }
+
   public nextSong() {
-    const index = this.currentSongPlaying;
+    this.stopCurrentSound();
+    const index = this.queueOfSongs.indexOf(this.currentSongPlaying);
     if ( index  !== this.queueOfSongs.length-1) {
 
       this.playSongFromQueue(index+1);
@@ -89,7 +101,8 @@ export class PlaybackService {
   }
 
   public previousSong() {
-    const index = this.currentSongPlaying;
+    this.stopCurrentSound();
+    const index = this.queueOfSongs.indexOf(this.currentSongPlaying);
     if (index !== 0) {
       this.playSongFromQueue(index-1);
     } else {
@@ -122,36 +135,42 @@ export class PlaybackService {
     return +this.playback.volume(this.currentSoundPlaying);
   }
 
-
   public mute(condition) {
     this.playback.mute(condition,this.currentSoundPlaying);
   }
 
   public shuffle() {
     let randomNumber = this.randomIntFromInterval(0,this.queueOfSongs.length-1);
-    while ( randomNumber === this.currentSongPlaying) {
+    while ( randomNumber === this.queueOfSongs.indexOf(this.currentSongPlaying)) {
       randomNumber = this.randomIntFromInterval(0,this.queueOfSongs.length-1);
     }
     this.playSongFromQueue(randomNumber);
   }
 
   public repeat(status) {
+    console.log(status);
     this.playback.loop(status,this.currentSoundPlaying);
   }
 
-  public  handleOnPlay(soundId:number, index:number) {
+  public handleOnPlay(soundId:number, index:number) {
+    const song = this.queueOfSongs[index];
+    song.isPlaying = true;
     this.isPlaying.next(true);
-    this.currentlyPlaying.next(this.queueOfSongs[index]);
+    this.currentlyPlaying.next(song);
     this.isCurrentlyPlaying = true;
     this.currentSoundPlaying = soundId;
-    this.currentSongPlaying = index;
+    this.currentSongPlaying = this.queueOfSongs[index];
   }
 
   public getDuration() {
     return this.playback.duration(this.currentSoundPlaying);
   }
 
-  handleOnPause() {
+  handleOnPause(index) {
+    const song = this.queueOfSongs[index];
+    song.isPlaying = false;
+    this.isCurrentlyPlaying = false;
+    this.currentlyPlaying.next(song);
     this.isPlaying.next(false);
   }
 
@@ -175,6 +194,16 @@ export class PlaybackService {
 
   public randomIntFromInterval(min,max) {
   return Math.floor(Math.random()*(max-min+1)+min);
+  }
+
+  public clean() {
+    this.previousPlaying.next(undefined);
+    this.previousSongPlaying = undefined;
+  }
+  private stopCurrentSound() {
+    if ( this.currentSoundPlaying !== undefined) {
+      this.playback.stop(this.currentSoundPlaying);
+    }
   }
 
 }
