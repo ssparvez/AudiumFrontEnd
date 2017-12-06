@@ -539,7 +539,7 @@ export class TrackListComponent implements OnInit, OnChanges {
     }
   }
 
-  //** PLAYBACK **//
+   // PLAYBACK
 
   playSong(song: Song, index) {
     if ( !this.hasLoadedSongs) {

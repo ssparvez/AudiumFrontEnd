@@ -18,11 +18,16 @@ export class PlaybackService {
 
 
 
+  public volumeLevel: number;
   private queueOfSongs: Song[];
   private isCurrentlyPlaying: boolean;
   public currentSoundPlaying: number;
   private previousSongPlaying: number;
   private currentSongPlaying: Song;
+
+  // Playback Conditionals
+  private isLooping: boolean;
+  private toShuffle: boolean;
 
   constructor(private dataService: DataService) {
 
@@ -36,16 +41,18 @@ export class PlaybackService {
     let error: boolean;
     this.queueOfSongs = [];
     this.queueOfSongs.unshift(song);
+    this.stopCurrentSound();
     this.playback = new Howl({
       src: [this.dataService.songUrl + song.file ],
       html5: true,
-      volume: 0.2,
+      volume: this.volumeLevel,
       onplay: (soundId: number) => this.handleOnPlay(soundId, 0),
       onpause: (soundId: number) => this.handleOnPause(0),
       onstop: (soundId: number) => this.handleOnPause(0),
       onplayerror : (soundId: number) => error = true,
-      onend:  (soundId: number) => this.nextSong()
+      onend:  (soundId: number) => this.handleEnd()
     });
+
     this.checkForPrevious();
     this.playback.play();
     return (!error);
@@ -58,16 +65,15 @@ export class PlaybackService {
     this.playback = new Howl({
       src: [this.dataService.songUrl + this.queueOfSongs[index].file ],
       html5: true,
-      volume: 0.2,
+      volume: this.volumeLevel,
       onplay: (soundId: number) => this.handleOnPlay(soundId, index),
       onpause: (soundId: number) => this.handleOnPause(index),
       onstop: (soundId: number) => this.handleOnPause(index),
       onplayerror : (soundId: number) => error = true,
-      onend:  (soundId: number) => this.nextSong()
+      onend:  (soundId: number) => this.handleEnd()
     });
 
     this.checkForPrevious();
-
     this.playback.play();
     return (!error);
   }
@@ -115,7 +121,7 @@ export class PlaybackService {
   this.playback.play(this.currentSoundPlaying);
   }
 
-  pause() {
+  public pause() {
     this.playback.pause(this.currentSoundPlaying);
   }
 
@@ -128,6 +134,7 @@ export class PlaybackService {
   }
 
   public setVolume(volumeLevel) {
+    this.volumeLevel = volumeLevel;
     this.playback.volume(volumeLevel, this.currentSoundPlaying);
   }
 
@@ -139,6 +146,10 @@ export class PlaybackService {
     this.playback.mute(condition,this.currentSoundPlaying);
   }
 
+  public setShuffle(status) {
+    this.toShuffle = status;
+  }
+
   public shuffle() {
     let randomNumber = this.randomIntFromInterval(0,this.queueOfSongs.length-1);
     while ( randomNumber === this.queueOfSongs.indexOf(this.currentSongPlaying)) {
@@ -148,7 +159,7 @@ export class PlaybackService {
   }
 
   public repeat(status) {
-    console.log(status);
+    this.isLooping = status;
     this.playback.loop(status,this.currentSoundPlaying);
   }
 
@@ -160,18 +171,31 @@ export class PlaybackService {
     this.isCurrentlyPlaying = true;
     this.currentSoundPlaying = soundId;
     this.currentSongPlaying = this.queueOfSongs[index];
+
+    this.playback.loop(this.isLooping,this.currentSoundPlaying);
+
   }
 
   public getDuration() {
     return this.playback.duration(this.currentSoundPlaying);
   }
 
-  handleOnPause(index) {
+  private handleOnPause(index) {
     const song = this.queueOfSongs[index];
     song.isPlaying = false;
     this.isCurrentlyPlaying = false;
     this.currentlyPlaying.next(song);
     this.isPlaying.next(false);
+  }
+
+  private handleEnd() {
+    if ( this.isLooping) {
+
+    } else if (this.toShuffle) {
+      this.shuffle();
+    } else if ( !this.isLooping) {
+      this.nextSong();
+    }
   }
 
   public getSongCurrentlyPlaying() {

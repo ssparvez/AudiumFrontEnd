@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="row" style="margin-bottom: 0px;">
-          <i (click)="shuffle()" class="material-icons" [ngClass]="{'white-text': !isShuffled, 'blue-text': isShuffled}"
+          <i (click)="shuffle()" class="material-icons" [ngClass]="{'white-text': !isShuffling, 'blue-text': isShuffling}"
           mz-tooltip [tooltip]="'<b>Shuffle</b>'" [position]="'top'" [html]="true">shuffle</i>
           <i (click)="repeat()" class="material-icons" [ngClass]="{'white-text': !isRepeating, 'blue-text': isRepeating}"
           mz-tooltip [tooltip]="'<b>Repeat</b>'" [position]="'top'" [html]="true">{{repeatIcon}}</i>

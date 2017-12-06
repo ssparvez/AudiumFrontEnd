@@ -32,9 +32,10 @@ export class MusicplayerComponent implements OnInit {
 
   private currentlyPlaying: Song;
   private isCurrentlyPlaying: boolean;
-  private volumeLevel: number;
+  private volumeLevel = 0.2;
   private isMuted: boolean;
   private isRepeating: boolean;
+  private isShuffling: boolean;
 
   constructor(
     private playerService: PlayerService,
@@ -47,13 +48,13 @@ export class MusicplayerComponent implements OnInit {
         this.isCurrentlyPlaying = isPlaying;
       }
     );
+    this.playbackService.volumeLevel = this.volumeLevel;
 
     this.playbackService.currentlyPlaying.subscribe(
       song => {
         console.log(song);
-        this.isRepeating = false;
         this.currentlyPlaying = song;
-        this.volumeLevel = this.playbackService.getVolume();
+        // this.volumeLevel = this.playbackService.getVolume();
         console.log(this.volumeLevel);
         let songTime = this.playbackService.getCurrentSongTIme().subscribe(
           time => {
@@ -99,7 +100,8 @@ export class MusicplayerComponent implements OnInit {
   }
 
   public shuffle() {
-    this.playbackService.shuffle();
+    this.isShuffling = !this.isShuffling;
+    this.playbackService.setShuffle(this.isShuffling);
   }
 
   public nextSong() {
