@@ -12,8 +12,8 @@
   <div #subtitleDiv class="track-list-collection-subtitle" *ngIf="injectSubtitleDivSelector || injectSubtitleElement"></div>
   <!-- Track list -->
   <div class="track-list-collection-content row" style="margin-bottom:0;" *ngIf="songs">
-    <table class="bordered responsive-table white-text fade-in-half-sec" *ngIf="songs?.length > 0">
-      <thead #trackTableHead>
+    <table class="bordered responsive-table white-text" *ngIf="songs?.length > 0">
+      <thead #trackTableHead class="fade-in-half-sec">
         <tr>
           <th *ngIf="displayTrackNumber || (!disablePlayPauseBt)">{{trackNumberHeader}}</th>
           <th *ngIf="displaySongTitle">{{songTitleHeader}}</th>
@@ -31,7 +31,7 @@
       </thead>
       <tbody class="tracklist track-list-collection-list">
         <tr *ngFor="let song of (showAll || (songs?.length <= nRows)) ? songs : songs?.slice(0, nRows - 1); let i = index;"
-          (dblclick)="disableDoubleClick ? absorbMouseEvent($event, i, true) : play(i)" @fade
+          (dblclick)="disableDoubleClick ? absorbMouseEvent($event, i, true) : play(i)"
           (contextmenu)="disableContextMenu ? absorbMouseEvent($event, i, true) : songContextMenu.onContextMenu($event, song)"
           [ngClass]="{ 'playing': (displayPlaying && song.isPlaying) }"
         >

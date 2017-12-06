@@ -1,4 +1,5 @@
 import { Address } from './Address'
+import { Artist } from './Artist'
 
 export interface Event {
     eventId?: string,
@@ -7,4 +8,5 @@ export interface Event {
     eventDate?: string,
     isCancelled?: boolean,
     address?: Address
+    Artists?: Artist[];
 }
