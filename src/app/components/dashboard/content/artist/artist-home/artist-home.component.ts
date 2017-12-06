@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Artist } from '../../../../../classes/Artist';
 import { Song } from '../../../../../classes/Song';
 import { GeneralService } from '../../../../../services/general/general.service';
 import {ColorHelper} from "@swimlane/ngx-charts"
@@ -19,23 +20,27 @@ export class ArtistHomeComponent implements OnInit {
   }
 
   data = [];
+  artist: Artist;
   currentUser: JSON;
   songs: Song[];
   constructor(private generalService: GeneralService) { }
 
   ngOnInit() {
-    this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));    
-    this.generalService.get("/artists/" + this.currentUser['_accountId'] + "/songs").subscribe((songs) => {
-      this.songs = songs;
-      this.data = []; // not sure why this needs to be done;
-      songs.slice(0,10).forEach((item, i, data) => { this.data.push({ name: (item.title), value: (item.playCount) }) });
-      
-      // for(let song of this.songs.slice(0,4)) {
-      //   this.data.push({name: song.title, value: song.playCount})
-      // }
-      console.log(this.data);
-      console.log(songs);
+    this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    console.log("accountID: /artists/account/" + this.currentUser['_accountId']);
+    this.generalService.get("/artists/account/" + this.currentUser['_accountId']).subscribe((artist) => {
+      this.artist = artist;
+      this.generalService.get("/artists/" + this.artist.artistId + "/songs").subscribe((songs) => {
+        this.songs = songs;
+        this.data = []; // not sure why this needs to be done;
+        songs.slice(0,10).forEach((item, i, data) => { this.data.push({ name: (item.title), value: (item.playCount) }) });
+
+        // for(let song of this.songs.slice(0,4)) {
+        //   this.data.push({name: song.title, value: song.playCount})
+        // }
+        console.log(this.data);
+        console.log(songs);
+      });
     });
   }
-
 }

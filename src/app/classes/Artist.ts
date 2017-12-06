@@ -4,6 +4,7 @@ import { Event } from './Event';
 
 export interface Artist {
     artistId?: number;
+    accountId?: number;
     artistName?: string;
     bio?: string;
     albums?: Album[];
