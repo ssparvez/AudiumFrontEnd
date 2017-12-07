@@ -15,6 +15,29 @@ export class CustomerAccount extends Account {
     super();
   }
 
+  public logout(): void {
+    this.username = null;
+    this.firstName = null;
+    this.lastName = null;
+    this.email = null;
+    this.accountId = null;
+    this.role = null;
+    this.isActive = null;
+
+    this.userPreferences.accountId = null;
+    this.userPreferences.language = UserPreferences.DEFAULT_language;
+    this.userPreferences.publicProfile = true;
+    this.userPreferences.defaultPublicSession = true;
+    this.userPreferences.showExplicitContent = true;
+    this.userPreferences.quality = UserPreferences.DEFAULT_quality;
+
+    this.dob = null;
+    this.gender = null;
+    this.profilePicURL = null;
+    this.followerCount = null;
+    this.bio = null;
+  }
+
   get dob(): string {
     return this._dob;
   }

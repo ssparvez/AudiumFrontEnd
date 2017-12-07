@@ -51,11 +51,13 @@ export class AuthenticationService {
   }
 
   logout() {
+    console.log("Logging out...");
     if(this.playbackService.getPlayback() != undefined && this.playbackService.getPlayback().state() === "loaded")  {
       this.playbackService.getPlayback().unload();
     }
     sessionStorage.clear();
     localStorage.clear();
+    this.currentUser.logout();
   }
 
   isLoggedIn() {

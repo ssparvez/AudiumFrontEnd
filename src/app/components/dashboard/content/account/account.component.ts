@@ -54,7 +54,7 @@ export class AccountComponent implements OnInit {
 
   constructor( private router: Router,
                private currentUser: CustomerAccount,
-               private dataService:DataService,
+               private dataService: DataService,
                private service: GeneralService,
                private authService: AuthenticationService,
                private dialog: MatDialog,
@@ -63,6 +63,10 @@ export class AccountComponent implements OnInit {
 
   ngOnInit() {
     this._privateSession = JSON.parse(sessionStorage.getItem("sessionPrivacy")).private;
+    if(this.currentUser == null){
+      this.currentUser = new CustomerAccount();
+      this.currentUser.loadWithJSON(JSON.parse(sessionStorage.getItem("currentUser")));
+    }
     if (this.currentUser.accountId == null) {
       this.currentUser.loadWithJSON(JSON.parse(sessionStorage.getItem("currentUser")));
       this.currentUser.loadPreferencesWithJSON(JSON.parse(sessionStorage.getItem("preferences")));
@@ -139,12 +143,43 @@ export class AccountComponent implements OnInit {
   }
 
   setQuality($event: MouseEvent, i: number): void {
-    this.currentUser.userPreferences.quality = this.streamingQualities[i];
+    let changed: string = "set"
+    if(this.currentUser.userPreferences.quality != this.streamingQualities[i]) {
+      this.currentUser.userPreferences.quality = this.streamingQualities[i];
+      changed = "changed";
+    }
+    console.log("Audio quality " + changed + " to " + this.currentUser.userPreferences.quality);
+    this.toastService.show("Audio quality " + changed + " to " + this.currentUser.userPreferences.quality, 3000, 'blue');
     this.checkForUnsavedChanges();
   }
 
   setLanguage($event: MouseEvent, i: number): void {
-    this.currentUser.userPreferences.language = this.languages[i];
+    let changed: string = "set"
+    if(this.currentUser.userPreferences.language != this.languages[i]) {
+      this.currentUser.userPreferences.language = this.languages[i];
+      changed = "changed";
+    }
+
+    console.log("Language " + changed + " to " + this.currentUser.userPreferences.language);
+    switch(this.currentUser.userPreferences.language) {
+      case "English":
+        this.toastService.show("Language " + changed + " to " + this.currentUser.userPreferences.language, 3000, 'blue');
+        break;
+      case "Spanish":
+        this.toastService.show("Idioma cambiado a español", 3000, 'blue');
+        break;
+      case "French":
+        this.toastService.show("Langue changée en français", 3000, 'blue');
+        break;
+      case "Chinese":
+        this.toastService.show("语言变成了中文", 3000, 'blue');
+        break;
+      default:
+        this.toastService.show("Error: Unknown language", 3000, 'red');
+        this.currentUser.userPreferences.language = "English";
+        break;
+    }
+    //this.toastService.show("Language " + changed + " to " + this.currentUser.userPreferences.language, 3000, 'blue');
     this.checkForUnsavedChanges();
   }
 
@@ -169,8 +204,8 @@ export class AccountComponent implements OnInit {
     return this.unsavedChanges;
   }
 
-  savePreferences(): void {
-    if(this.checkForUnsavedChanges()) {
+  savePreferences(forceSave: boolean): void {
+    if(this.checkForUnsavedChanges() || forceSave) {
       console.log("Saving user preferences: " + this.currentUser.userPreferences);
       let requestObject = {
         accountId: this.currentUser.accountId,
@@ -182,7 +217,7 @@ export class AccountComponent implements OnInit {
       };
       this.service.update("/accounts/" + this.currentUser.accountId + "/preferences/update", requestObject).subscribe(
         response => {
-          this.toastService.show("Account preferences updated", 3000, 'blue');
+          this.toastService.show("Account settings updated", 3000, 'blue');
           localStorage.setItem("preferences", JSON.stringify(requestObject));
           sessionStorage.setItem("preferences", JSON.stringify(requestObject));
           this.checkForUnsavedChanges();
@@ -200,6 +235,8 @@ export class AccountComponent implements OnInit {
     } else {
       this.profileIcon = this.profileIcons[0];
     }
+    console.log("Profile visibility set to " + (this.currentUser.userPreferences.publicProfile ? "private" : "public"));
+    this.toastService.show("Profile visibility set to " + (this.currentUser.userPreferences.publicProfile ? "private" : "public"), 3000, 'blue');
     this.checkForUnsavedChanges();
   }
 
@@ -213,9 +250,11 @@ export class AccountComponent implements OnInit {
     localStorage.setItem("sessionPrivacy", JSON.stringify( {private: this.privateSession} ));
     sessionStorage.setItem("sessionPrivacy", JSON.stringify( {private: this.privateSession} ));
     this.checkForUnsavedChanges();
+    console.log("Listening session set to " + (this.privateSession ? "private" : "public"));
+    this.toastService.show("Listening session set to " + (this.privateSession ? "private" : "public"), 3000, 'blue');
   }
 
-  downgradeAccount() {
+  downgradeAccount(): void {
     this.dialog.open(ConfirmComponent, {  data: {message: "Are you sure you want to downgrade?"}, height: '180px' })
       .afterClosed()
       .subscribe(
@@ -226,6 +265,8 @@ export class AccountComponent implements OnInit {
                 if (response && response.token) {
                   localStorage.setItem('token', response.token);
                   this.authService.storeInfo();
+                  // Set user preferences to basic settings
+                  this.setDefaultUserPreferences(true);
                   this.toastService.show("Your account was downgraded to Basic.", 3500, 'blue');
                 } else {
                   this.toastService.show("There was an error. Please try again.", 3000, 'red');
@@ -235,6 +276,20 @@ export class AccountComponent implements OnInit {
           }
         }
       );
+  }
+
+  public setDefaultUserPreferences(save: boolean): void {
+    if(this.privateSession) {
+      this.togglePrivateSession(null);
+    }
+    this.currentUser.userPreferences.defaultPublicSession = true;
+    this.currentUser.userPreferences.language = this.languages[0];
+    this.currentUser.userPreferences.quality = this.streamingQualities[1];
+    this.currentUser.userPreferences.publicProfile = true;
+    this.currentUser.userPreferences.showExplicitContent = true;
+    if(save) {
+      this.savePreferences(true);
+    }
   }
 
   getCurrentUser() {

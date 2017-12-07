@@ -288,7 +288,13 @@
       <div class="col s12 m10 l8 offset-m1 offset-l2 center">
         <h3 class="grey-text fade-in-1-sec" *ngIf="getCurrentUser().role == 'BasicUser'"><b>Upgrade to Premium to change profile settings</b></h3>
         <div class="center">
-          <button mz-button class="account-btn account-btn-pssw btn fade-in-half-sec" @fade *ngIf="(getCurrentUser().role != 'BasicUser') && unsavedChanges" (click)="savePreferences()">
+          <button mz-button @fade
+           class="account-btn account-btn-pssw btn fade-in-half-sec pulse"
+           *ngIf="(getCurrentUser().role != 'BasicUser') && unsavedChanges"
+           (click)="savePreferences(false)"
+           mz-tooltip
+           [tooltip]="'Settings will not take effect until changes are saved'" [position]="'bottom'"
+          >
             SAVE CHANGES
           </button>
         </div>
