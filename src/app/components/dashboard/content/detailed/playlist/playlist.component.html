@@ -3,6 +3,7 @@
     <entity-card-collection
       #playlistImageCard
       *ngIf="playlist"
+      [songs]="songsInPlaylist"
       [nRows]="1"
       [nPerRow]="1"
       [showAllBtHoverText]=""

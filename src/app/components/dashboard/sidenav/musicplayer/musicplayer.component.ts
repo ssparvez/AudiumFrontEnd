@@ -34,7 +34,7 @@ export class MusicplayerComponent implements OnInit {
   private isCurrentlyPlaying: boolean;
   private volumeLevel = 0.2;
   private isMuted: boolean;
-  private isRepeating: boolean;
+  private isRepeating  = 0;
   private isShuffling: boolean;
 
   constructor(
@@ -121,8 +121,16 @@ export class MusicplayerComponent implements OnInit {
   }
 
   public repeat() {
-    this.isRepeating = !this.isRepeating;
-    console.log(this.isRepeating);
+    if ( this.isRepeating === 0) {
+      this.repeatIcon = "repeat";
+      this.isRepeating++;
+    } else if (this.isRepeating === 1) {
+      this.repeatIcon = "repeat_one";
+      this.isRepeating++;
+    } else if (this.isRepeating === 2) {
+      this.repeatIcon = "repeat";
+      this.isRepeating = 0;
+    }
     this.playbackService.repeat(this.isRepeating);
   }
 
