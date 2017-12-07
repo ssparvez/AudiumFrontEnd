@@ -170,8 +170,10 @@ export class PlaybackService {
       this.playback.loop(true,this.currentSoundPlaying);
     } else if ( status === 1) {
       this.replayQueue = true;
+      this.playback.loop(false,this.currentSoundPlaying);
     } else if ( status === 0) {
       this.replayQueue = false;
+      this.playback.loop(false,this.currentSoundPlaying);
     }
   }
 
@@ -222,7 +224,7 @@ export class PlaybackService {
   private handleEnd() {
     console.log('the end: ' + this.isLooping);
     if ( this.isLooping === 2) {
-
+      this.replayQueue = false;
     } else if (this.toShuffle) {
       this.shuffle();
     } else if ( this.isLooping === 0) {
