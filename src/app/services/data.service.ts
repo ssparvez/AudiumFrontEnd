@@ -10,5 +10,4 @@ export class DataService {
     //songUrl = "assets/audio";
     //albumImg = "assets/images/album_arts/";
     profilePic = this.connectionURL + '/profile/';
-    public privateSession: boolean = false;
 }

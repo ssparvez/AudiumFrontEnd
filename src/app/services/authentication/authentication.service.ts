@@ -27,8 +27,7 @@ export class AuthenticationService {
     headers.append('content-type', 'application/json');
     const options = new RequestOptions({ headers: headers});*/
     return this.http.post( this.dataService.connectionURL + '/login', credentials
-      )
-      .map(response => {
+      ).map(response => {
         const result = {
           token: response['_body']
         };
@@ -74,7 +73,8 @@ export class AuthenticationService {
   loadPersonalizedData() {
     this.service.get('/accounts/'+ this.currentUser.accountId +'/preferences').subscribe(
       preferences => {
-        this.dataService.privateSession = !(preferences.defaultPublicSession);
+        localStorage.setItem("sessionPrivacy", JSON.stringify( {private: !(preferences.defaultPublicSession)} ));
+        sessionStorage.setItem("sessionPrivacy", JSON.stringify( {private: !(preferences.defaultPublicSession)} ));
         localStorage.setItem("preferences", JSON.stringify(preferences));
         sessionStorage.setItem("preferences", JSON.stringify(preferences));
       }, (error: AppError) => {
@@ -118,7 +118,6 @@ export class AuthenticationService {
     sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
 
   }
-
 }
 
 

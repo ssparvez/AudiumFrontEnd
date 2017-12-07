@@ -48,6 +48,7 @@ export class AccountComponent implements OnInit {
     max: new Date(this.now.getFullYear() - 13, this.now.getMonth(), this.now.getDate()),
   };
   public toEditProfile: boolean = false;
+  private _privateSession: boolean;
   public readonly premiumUser: string = "PremiumUser";
   public readonly basicUser: string = "BasicUser";
 
@@ -61,6 +62,7 @@ export class AccountComponent implements OnInit {
                private cdRef: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this._privateSession = JSON.parse(sessionStorage.getItem("sessionPrivacy")).private;
     if (this.currentUser.accountId == null) {
       this.currentUser.loadWithJSON(JSON.parse(sessionStorage.getItem("currentUser")));
       this.currentUser.loadPreferencesWithJSON(JSON.parse(sessionStorage.getItem("preferences")));
@@ -75,7 +77,7 @@ export class AccountComponent implements OnInit {
     } else {
       this.profileIcon = this.profileIcons[0];
     }
-    if(this.dataService.privateSession) {
+    if(this.privateSession) {
       this.sessionIcon = this.sessionIcons[0];
     } else {
       this.sessionIcon = this.sessionIcons[1];
@@ -202,12 +204,14 @@ export class AccountComponent implements OnInit {
   }
 
   togglePrivateSession($event: MouseEvent): void {
-    this.dataService.privateSession = !this.dataService.privateSession;
-    if(this.dataService.privateSession) {
+    this._privateSession = !this.privateSession;
+    if(this.privateSession) {
       this.sessionIcon = this.sessionIcons[0];
     } else {
       this.sessionIcon = this.sessionIcons[1];
     }
+    localStorage.setItem("sessionPrivacy", JSON.stringify( {private: this.privateSession} ));
+    sessionStorage.setItem("sessionPrivacy", JSON.stringify( {private: this.privateSession} ));
     this.checkForUnsavedChanges();
   }
 
@@ -267,6 +271,10 @@ export class AccountComponent implements OnInit {
             if (error instanceof NotFoundError) {
             }
         });
+  }
+
+  get privateSession(): boolean {
+    return this._privateSession;
   }
 }
 

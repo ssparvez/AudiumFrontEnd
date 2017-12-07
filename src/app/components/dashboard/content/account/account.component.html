@@ -275,10 +275,10 @@
         <div class="secondary-content" style="padding: 16px 12px 0px 0px;">
           <div class="switch">
             <label [ngStyle]="{ 'cursor': getCurrentUser().role == 'BasicUser' ? 'default' : '' }">
-              <span [ngClass]="{'grey-text': (getCurrentUser().role == 'BasicUser' || dataService?.privateSession), 'text-lighten-2': (getCurrentUser().role == 'PremiumUser' && (!dataService?.privateSession)), 'blue-text': (getCurrentUser().role == 'PremiumUser' && (!dataService?.privateSession))}">Public</span>
-              <input [checked]="dataService?.privateSession" (click)="togglePrivateSession($event)" type="checkbox" [disabled]="getCurrentUser().role == 'BasicUser'">
+              <span [ngClass]="{'grey-text': (getCurrentUser().role == 'BasicUser' || privateSession), 'text-lighten-2': (getCurrentUser().role == 'PremiumUser' && (!privateSession)), 'blue-text': (getCurrentUser().role == 'PremiumUser' && (!privateSession))}">Public</span>
+              <input [checked]="privateSession" (click)="togglePrivateSession($event)" type="checkbox" [disabled]="getCurrentUser().role == 'BasicUser'">
               <span class="lever"></span>
-              <span [ngClass]="{'grey-text': (getCurrentUser().role == 'BasicUser' || (!dataService?.privateSession)), 'text-lighten-2': (getCurrentUser().role == 'PremiumUser' && dataService?.privateSession), 'blue-text': (getCurrentUser().role == 'PremiumUser' && dataService?.privateSession)}">Private</span>
+              <span [ngClass]="{'grey-text': (getCurrentUser().role == 'BasicUser' || (!privateSession)), 'text-lighten-2': (getCurrentUser().role == 'PremiumUser' && privateSession), 'blue-text': (getCurrentUser().role == 'PremiumUser' && privateSession)}">Private</span>
             </label>
           </div>
         </div>
