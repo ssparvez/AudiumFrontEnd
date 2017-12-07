@@ -71,7 +71,6 @@ import { ArtistSearchComponent } from './modals/admin/search/artist-search/artis
 import { AdminModifyProfilesComponent } from './modals/admin/admin-modify-profiles/admin-modify-profiles.component';
 import { AlbumSearchComponent } from './modals/admin/search/album-search/album-search.component';
 import { ArtistContentComponent } from './components/dashboard/content/artist/artist-content/artist-content.component';
-import { ArtistAccountComponent } from './components/dashboard/content/artist/artist-account/artist-account.component';
 import { ArtistAccount } from './classes/ArtistAccount';
 import { ArtistContentSongsComponent } from './components/dashboard/content/artist/artist-content/artist-content-songs/artist-content-songs.component';
 import { ArtistRoyaltiesComponent } from './components/dashboard/content/artist/artist-royalties/artist-royalties.component';
@@ -104,7 +103,6 @@ const appRoutes: Routes = [
     {path: "artist-home" , component: ArtistHomeComponent},
     {path: "artist-content" , component: ArtistContentComponent},
     {path: "artist-content-songs/:id" , component: ArtistContentSongsComponent},
-    {path: "artist-account" , component: ArtistAccountComponent},
 	  {path: "artist-royalties" , component: ArtistRoyaltiesComponent},
     // DETAILED
     {path: "artist/:id", component: ArtistComponent},
@@ -180,7 +178,6 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ArtistHomeComponent,
     ArtistSidenavComponent,
     ArtistContentComponent,
-    ArtistAccountComponent,
     ArtistContentSongsComponent,
     EntityCardComponent,
     GenreCardComponent,

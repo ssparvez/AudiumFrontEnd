@@ -46,8 +46,8 @@
 <footer class="fixed" >
   <div class="card" style="margin-bottom: 0px;" *ngIf="currentUser?._role && currentUser?._role == 'BasicUser' && !adBannerIsHidden" [@adBannerTrigger]>
     <div class="card-image">
-      <a [routerLink]="">
-        <img class="responsive-img" src="assets/images/cyber.gif" mz-tooltip [tooltip]="'<b>Advertisement</b>'" [position]="'top'" [html]="true">
+      <a [href]="'https://www.walmart.com/browse/christmas-gifts/0/0/?_refineresult=true&_be_shelf_id=5922&search_sort=100&facet=shelf_id:5922'" [target]="_blank">
+        <img class="responsive-img" src="assets/images/walmartholidays.jpg" mz-tooltip [tooltip]="'<b>Advertisement</b>'" [position]="'top'" [html]="true">
       </a>
       <a class="close-ad" (click)="adBannerIsHidden = true">
         <span class="card-title" style="padding: 12px 12px 0px 12px;" mz-tooltip [tooltip]="'<b>Close advertisement</b>'" [position]="'right'" [html]="true">
