@@ -159,16 +159,6 @@
         </div>
       </div>
     </div>
-    <!--<div class="row">-->
-    <!--<div class="card grey darken-2 col s12">-->
-    <!--<div class="card-content center">-->
-    <!--<div class="row following-images">-->
-    <!--<img class="circle tst responsive-img" src="{{getCurrentUser().profilePicURL}}" onerror="this.src='assets/images/defaults/user_profile.svg'">-->
-    <!--<div>Name</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
   </mz-tab-item>
   <mz-tab-item [label]="'Settings'" class="fade-in-half-sec">
     <div class="row fade-in-1-sec" style="margin-top: 20px;">
@@ -188,11 +178,11 @@
             [constrainWidth]="true"
             [dropdownButtonId]="'language-dropdown-bt'"
             [hover]="true"
-            [inDuration]="300"
-            [outDuration]="300"
+            [inDuration]="100"
+            [outDuration]="100"
             [stopPropagation]="true"
           >
-            <mz-dropdown-item *ngFor="let language of languages; let i = index;"><a class="blue-text center" (click)="setLanguage($event, i)">{{language | uppercase}}<i class="material-icons right" style="padding-right: 5px; color: transparent;">arrow_drop_down</i></a></mz-dropdown-item>
+            <mz-dropdown-item *ngFor="let language of languages; let i = index;"><a class="blue-text center" [ngStyle]="{ 'font-weight': (language == currentUser.userPreferences.language) ? 'bold' : '' }" (click)="setLanguage($event, i)">{{language | uppercase}}<i class="material-icons right" style="padding-right: 5px; color: transparent;">arrow_drop_down</i></a></mz-dropdown-item>
           </mz-dropdown>
           <a mz-button
             id="language-dropdown-bt"
@@ -229,11 +219,11 @@
             [constrainWidth]="true"
             [dropdownButtonId]="'quality-dropdown-bt'"
             [hover]="true"
-            [inDuration]="300"
-            [outDuration]="300"
+            [inDuration]="100"
+            [outDuration]="100"
             [stopPropagation]="true"
           >
-            <mz-dropdown-item *ngFor="let quality of streamingQualities; let i = index;"><a class="blue-text center" (click)="setQuality($event, i)">{{quality | uppercase}}<i class="material-icons right" style="padding-right: 5px; color: transparent;">arrow_drop_down</i></a></mz-dropdown-item>
+            <mz-dropdown-item *ngFor="let quality of streamingQualities; let i = index;"><a class="blue-text center" [ngStyle]="{ 'font-weight': (quality == currentUser.userPreferences.quality) ? 'bold' : '' }" (click)="setQuality($event, i)">{{quality | uppercase}}<i class="material-icons right" style="padding-right: 5px; color: transparent;">arrow_drop_down</i></a></mz-dropdown-item>
           </mz-dropdown>
           <a mz-button
             id="quality-dropdown-bt"
@@ -296,7 +286,7 @@
     </div>
     <div class="row" style="margin-top: 20px;">
       <div class="col s12 m10 l8 offset-m1 offset-l2 center">
-        <h3 class="grey-text fade-in-1-sec" *ngIf="getCurrentUser().role == 'BasicUser'"><b>Upgrade to Premium to change these settings</b></h3>
+        <h3 class="grey-text fade-in-1-sec" *ngIf="getCurrentUser().role == 'BasicUser'"><b>Upgrade to Premium to change profile settings</b></h3>
         <div class="center">
           <button mz-button class="account-btn account-btn-pssw btn fade-in-half-sec" @fade *ngIf="(getCurrentUser().role != 'BasicUser') && unsavedChanges" (click)="savePreferences()">
             SAVE CHANGES

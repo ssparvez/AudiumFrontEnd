@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from "@angular/animations";
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CustomerAccount } from "../../../../classes/CustomerAccount";
 import { PaymentInfoComponent } from "../../../../modals/payment-info/payment-info.component";
 import { DataService } from "../../../../services/data.service";
@@ -11,7 +11,7 @@ import { MzToastService } from "ng2-materialize/dist";
 import { ChangePasswordComponent } from "../../../../modals/change-password/change-password.component";
 import { ConfirmComponent } from "../../../../modals/confirm-modal/confirm.component";
 import { MatDialog } from  "@angular/material";
-import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
+import { ActivatedRoute, Router, NavigationEnd, NavigationStart } from "@angular/router";
 import { UserPreferences } from '../../../../classes/UserPreferences';
 
 @Component({
@@ -57,15 +57,10 @@ export class AccountComponent implements OnInit {
                private service: GeneralService,
                private authService: AuthenticationService,
                private dialog: MatDialog,
-               private toastService: MzToastService) { }
+               private toastService: MzToastService,
+               private cdRef: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (!(event instanceof NavigationEnd)) {
-          return;
-      }
-      window.scrollTo(0, 0);
-    });
     if (this.currentUser.accountId == null) {
       this.currentUser.loadWithJSON(JSON.parse(sessionStorage.getItem("currentUser")));
       this.currentUser.loadPreferencesWithJSON(JSON.parse(sessionStorage.getItem("preferences")));
@@ -73,7 +68,7 @@ export class AccountComponent implements OnInit {
     }
     if(this.currentUser.userPreferences == null || this.currentUser.userPreferences.accountId == null) {
       this.currentUser.loadPreferencesWithJSON(JSON.parse(sessionStorage.getItem("preferences")));
-      console.log("preferences: " + sessionStorage.getItem("preferences"));
+      console.log("Current user preferences: " + sessionStorage.getItem("preferences"));
     }
     if(this.currentUser.userPreferences.publicProfile) {
       this.profileIcon = this.profileIcons[1];
@@ -85,11 +80,10 @@ export class AccountComponent implements OnInit {
     } else {
       this.sessionIcon = this.sessionIcons[1];
     }
+    console.log("Unsaved user preferences? " + this.checkForUnsavedChanges());
   }
 
-
   openNewPaymentDialog() {
-
     this.dialog.open(PaymentInfoComponent,{ data: {isNew: true}, width: '400px' }, )
       .afterClosed()
       .subscribe(result => {
@@ -163,17 +157,19 @@ export class AccountComponent implements OnInit {
   checkForUnsavedChanges(): boolean {
     let prefCheck: UserPreferences = new UserPreferences();
     prefCheck.loadWithJSON(JSON.parse(sessionStorage.getItem("preferences")));
+
     this.unsavedChanges = (prefCheck.publicProfile != this.currentUser.userPreferences.publicProfile
             || prefCheck.showExplicitContent != this.currentUser.userPreferences.showExplicitContent
             || prefCheck.defaultPublicSession != this.currentUser.userPreferences.defaultPublicSession
             || prefCheck.language != this.currentUser.userPreferences.language
             || prefCheck.quality != this.currentUser.userPreferences.quality);
+    this.cdRef.detectChanges();
     return this.unsavedChanges;
   }
 
   savePreferences(): void {
     if(this.checkForUnsavedChanges()) {
-      console.log(this.currentUser.userPreferences);
+      console.log("Saving user preferences: " + this.currentUser.userPreferences);
       let requestObject = {
         accountId: this.currentUser.accountId,
         language: this.currentUser.userPreferences.language,
@@ -185,8 +181,9 @@ export class AccountComponent implements OnInit {
       this.service.update("/accounts/" + this.currentUser.accountId + "/preferences/update", requestObject).subscribe(
         response => {
           this.toastService.show("Account preferences updated", 3000, 'blue');
-          localStorage.setItem("preferences", JSON.stringify(this.currentUser.userPreferences));
-          sessionStorage.setItem("preferences", JSON.stringify(this.currentUser.userPreferences));
+          localStorage.setItem("preferences", JSON.stringify(requestObject));
+          sessionStorage.setItem("preferences", JSON.stringify(requestObject));
+          this.checkForUnsavedChanges();
         }, (error: AppError) => {
           this.toastService.show("Unable to update preferences. Try again later.", 3000, 'red');
         }
@@ -236,7 +233,6 @@ export class AccountComponent implements OnInit {
       );
   }
 
-
   getCurrentUser() {
       return this.currentUser;
   }
@@ -267,16 +263,11 @@ export class AccountComponent implements OnInit {
               this.toastService.show("There was an error. Please try again.", 3000, 'blue');
             }
         }, (error: AppError) => {
-
             this.toastService.show("There was an error. Please try again.", 3000, 'red');
             if (error instanceof NotFoundError) {
-                console.log("working");
             }
-
         });
   }
-
-
 }
 
 
