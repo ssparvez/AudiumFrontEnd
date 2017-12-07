@@ -2,7 +2,7 @@
 
 <div [hidden]="true">
   <div id="playAllBt" class="right" *ngIf="songs?.length > 0">
-    <a class="btn btn-floating btn-large blue-bt pulse" (click)="playLibrarySongs(0)">
+    <a class="btn btn-floating btn-large blue-bt" (click)="playLibrarySongs(0)">
       <i class="material-icons">play_arrow</i>
     </a>
   </div>
@@ -25,12 +25,6 @@
     [inMusic]="true"
   ></track-list-component>
 </ng-container>
-
-
-<!-- Loading animation -->
-<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!songs">
-  <div class="loader">Loading...</div>
-</div>
 
 <app-song-menu #songMenu [songs]="songs" [inMusic]="true">
 </app-song-menu>
