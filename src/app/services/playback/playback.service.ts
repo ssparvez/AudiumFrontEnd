@@ -15,6 +15,7 @@ export class PlaybackService {
   public currentlyPlaying = new Subject<Song>();
   public position = new Subject<number>();
   public previousPlaying = new Subject<Song>();
+  public hasBeenLoaded = new Subject<boolean>();
 
 
 
@@ -26,8 +27,9 @@ export class PlaybackService {
   private currentSongPlaying: Song;
 
   // Playback Conditionals
-  private isLooping: boolean;
+  private isLooping = 0;
   private toShuffle: boolean;
+  private replayQueue: boolean;
 
   constructor(private dataService: DataService) {
 
@@ -35,6 +37,7 @@ export class PlaybackService {
 
   public loadSongQueue(songs: Song[]) {
       this.queueOfSongs = Object.assign([], songs);
+      this.hasBeenLoaded.next(true);
   }
 
   public playSong(song: Song) {
@@ -103,7 +106,7 @@ export class PlaybackService {
     if ( index  !== this.queueOfSongs.length-1) {
 
       this.playSongFromQueue(index+1);
-    } else {
+    } else if ( this.replayQueue) {
       this.playSongFromQueue(0);
     }
   }
@@ -113,7 +116,7 @@ export class PlaybackService {
     const index = this.queueOfSongs.indexOf(this.currentSongPlaying);
     if (index !== 0) {
       this.playSongFromQueue(index-1);
-    } else {
+    } else  if ( this.replayQueue) {
       this.playSongFromQueue(this.queueOfSongs.length-1);
     }
   }
@@ -162,19 +165,24 @@ export class PlaybackService {
 
   public repeat(status) {
     this.isLooping = status;
-    this.playback.loop(status,this.currentSoundPlaying);
+    if ( status === 2) {
+      this.replayQueue = false;
+      this.playback.loop(true,this.currentSoundPlaying);
+    } else if ( status === 1) {
+      this.replayQueue = true;
+    } else if ( status === 0) {
+      this.replayQueue = false;
+    }
   }
 
   public handleOnPlay(soundId:number, index:number) {
-    let song = this.queueOfSongs[index];
+    let song: Song = this.queueOfSongs[index];
     if(song != undefined) {
       song.isPlaying = true;
-      this.currentSongPlaying = this.queueOfSongs[index];
-      
-    }
-    else {
+      song.isPaused = false;
+      this.currentSongPlaying = song;
+    } else {
       if(this.currentSongPlaying != undefined) {
-        console.log("asda")
         song = this.currentSongPlaying;
       }
     }
@@ -183,7 +191,10 @@ export class PlaybackService {
     this.isCurrentlyPlaying = true;
     this.currentSoundPlaying = soundId;
 
-    this.playback.loop(this.isLooping,this.currentSoundPlaying);
+    if ( this.isLooping === 2) {
+      this.replayQueue = false;
+      this.playback.loop(true,this.currentSoundPlaying);
+    }
 
   }
 
@@ -195,6 +206,7 @@ export class PlaybackService {
     let song = this.queueOfSongs[index];
     if(song != undefined) {
       song.isPlaying = false;
+      song.isPaused = true;
     }
     else {
       if(this.currentSongPlaying != undefined) {
@@ -208,11 +220,16 @@ export class PlaybackService {
   }
 
   private handleEnd() {
-    if ( this.isLooping) {
+    console.log('the end: ' + this.isLooping);
+    if ( this.isLooping === 2) {
 
     } else if (this.toShuffle) {
       this.shuffle();
-    } else if ( !this.isLooping) {
+    } else if ( this.isLooping === 0) {
+      this.replayQueue = false;
+      this.nextSong();
+    } else if ( this.isLooping === 1) {
+      this.replayQueue = true;
       this.nextSong();
     }
   }

@@ -1,7 +1,7 @@
 import { animate, style, transition, trigger } from "@angular/animations";
 import {
   AfterViewChecked, ChangeDetectorRef, Component, ElementRef, Renderer2, Input, OnChanges, OnDestroy, OnInit,
-  ViewChild, AfterContentInit, SimpleChanges, SimpleChange
+  ViewChild, AfterContentInit, SimpleChanges, SimpleChange, EventEmitter, Output
 } from '@angular/core';
 import { Router } from "@angular/router";
 import { Playlist } from '../../../../classes/Playlist';
@@ -209,7 +209,6 @@ export class TrackListComponent implements OnInit, OnChanges {
     }
     this.playbackService.previousPlaying.subscribe(
       previousSong => {
-        console.log(previousSong);
         if (previousSong != undefined) {
           this.previousSongPlaying = this.songs.indexOf(previousSong);
         }
@@ -218,12 +217,12 @@ export class TrackListComponent implements OnInit, OnChanges {
     this.playbackService.currentlyPlaying.subscribe(
       song => {
         if ( this.songs.indexOf(song) !== -1) {
-          console.log('detected play');
           this.songCurrentlyPlaying = this.songs.indexOf(song);
-          console.log('prev' + this.previousSongPlaying);
           this.songs[this.songs.indexOf(song)].isPlaying = song.isPlaying;
+          this.songs[this.songs.indexOf(song)].isPaused = song.isPaused;
           if (this.previousSongPlaying !== undefined && this.previousSongPlaying >=0 ) {
             this.songs[this.previousSongPlaying].isPlaying = false;
+            this.songs[this.previousSongPlaying].isPaused = false;
           }
         }
       });
@@ -554,8 +553,7 @@ export class TrackListComponent implements OnInit, OnChanges {
     }
   }
 
-  pauseSong(song: Song) {
-    this.isPlaying = false;
+  pauseSong() {
     this.playbackService.pause();
   }
 }

@@ -7,6 +7,8 @@ import { Playlist } from '../../../../classes/Playlist';
 import { Profile } from '../../../../classes/Profile';
 import { DataService } from '../../../../services/data.service';
 import { SafeHtmlPipe } from '../../../../pipes/safe-html.pipe';
+import {PlaybackService} from "../../../../services/playback/playback.service";
+import {Song} from "../../../../classes/Song";
 
 
 // Supported entity types (only 1 type allowed per entity collection element)
@@ -50,6 +52,7 @@ export class EntityCardComponent implements OnInit {
   public currentAccountId: number;
   private lastSizeCheck: number;
   private _destroyed: boolean = false;
+  private  hasLoadedSongs: boolean;
 
   // Entity type for collection (only 1 type allowed)
   private _e: Entity = Entity.None;
@@ -94,6 +97,7 @@ export class EntityCardComponent implements OnInit {
   @Input() private artists: Artist[];
   @Input() private playlists: Playlist[];
   @Input() private profiles: Profile[];
+  @Input() private songs: Song[];
 
   @Input() public title: string = "";
   @Input() public noEntitiesMessage:   string = "";
@@ -155,6 +159,7 @@ export class EntityCardComponent implements OnInit {
     private router: Router,
     private dataService: DataService,
     private cdRef: ChangeDetectorRef,
+    private playbackService: PlaybackService,
     private renderer: Renderer2
   ) {
     let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -167,6 +172,22 @@ export class EntityCardComponent implements OnInit {
     if (this.collectionWidth) {
       this.cardWidth = ((this.collectionWidth * 0.92) / this.nPerRow);
     }
+
+    this.playbackService.currentlyPlaying.subscribe(
+      song => {
+        console.log(this.songs);
+        if ( this.songs !== undefined && this.songs.indexOf(song) !== -1) {
+          // this.songCurrentlyPlaying = this.songs.indexOf(song);
+          // this.songs[this.songs.indexOf(song)].isPlaying = song.isPlaying;
+          this.isPlaying = song.isPlaying;
+        }
+      });
+
+    this.playbackService.hasBeenLoaded.subscribe(
+      status => {
+        this.hasLoadedSongs = status;
+      }
+    );
   }
 
   ngOnInit() {
@@ -351,13 +372,19 @@ export class EntityCardComponent implements OnInit {
   }
 
   public play($event: MouseEvent, i: number): void {
-    this.isPlaying = true;
+    if ( !this.hasLoadedSongs) {
+      this.playbackService.loadSongQueue(this.songs);
+      this.hasLoadedSongs = true;
+      this.playbackService.playSongFromQueue(0);
+    } else {
+      this.playbackService.resumePlay();
+    }
     $event.preventDefault();
     $event.stopPropagation();
   }
 
   public pause($event: MouseEvent): void {
-    this.isPlaying = false;
+    this.playbackService.pause();
     $event.preventDefault();
     $event.stopPropagation();
   }
