@@ -28,7 +28,7 @@ enum Entity {
   animations: [
     trigger('fade',[
       transition('void => *',[
-        animate(500, style({opacity: 0}))
+        animate(500, style({opacity: 1}))
       ]),
       transition('* => void',[
         animate(500, style({opacity: 0}))
