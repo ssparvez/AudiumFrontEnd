@@ -6,7 +6,9 @@
         <div class="card grey darken-2">
           <div class="card-content center">
             <div class="row">
-              <img class="circle tst responsive-img" src="{{getCurrentUser().profilePicURL}}" onerror="this.src='assets/images/defaults/user_profile.svg'">
+              <a [routerLink]="['../profile', getCurrentUser().accountId]">
+                <img class="circle tst responsive-img" src="{{getCurrentUser().profilePicURL}}" onerror="this.src='assets/images/defaults/user_profile.svg'">
+              </a>
             </div>
             <div class="row account-username">
               <a class="account-username-link" [routerLink]="['../profile', getCurrentUser().accountId]">{{getCurrentUser().username}}</a>
@@ -182,7 +184,7 @@
         <div class="secondary-content">
           <mz-dropdown [id]="'lang-dropdown'" [belowOrigin]="false" [constrainWidth]="true" [dropdownButtonId]="'lang-dropdown-btn'" [hover]="true"
             [stopPropagation]="true">
-            <mz-dropdown-item *ngFor="let language of languages"><a class="center">{{language | uppercase}}</a></mz-dropdown-item>            
+            <mz-dropdown-item *ngFor="let language of languages"><a class="center">{{language | uppercase}}</a></mz-dropdown-item>
           </mz-dropdown>
           <a mz-button id="lang-dropdown-btn" [disabled]="getCurrentUser().role == 'BasicUser'">ENGLISH</a>
         </div>

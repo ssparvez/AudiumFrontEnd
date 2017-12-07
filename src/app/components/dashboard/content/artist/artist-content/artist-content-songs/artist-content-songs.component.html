@@ -33,7 +33,7 @@
       </tr>
     </thead>
     <tbody class="tracklist">
-      <tr *ngFor="let song of album?.songs; let i = index" (dblclick)="playSongs(i)" (contextmenu)="songMenu.onContextMenu($event, song)">
+      <tr *ngFor="let song of album?.songs; let i = index"  (contextmenu)="songMenu.onContextMenu($event, song)">
         <td>{{song?.trackNumber}}</td>
         <td>
           {{song?.title}}

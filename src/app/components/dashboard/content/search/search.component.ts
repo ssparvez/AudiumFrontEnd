@@ -11,6 +11,7 @@ import { Playlist } from '../../../../classes/Playlist';
 import { CustomerAccount } from '../../../../classes/CustomerAccount';
 import { PlayerService } from '../../../../services/player/player.service';
 import { DataService } from '../../../../services/data.service';
+import {MzToastService} from "ng2-materialize";
 
 @Component({
   selector: 'app-search',
@@ -35,6 +36,8 @@ export class SearchComponent implements OnInit {
   showAllGenres: boolean = false;
   showAllEvents: boolean = false;
   finishedSearch: boolean = false;
+  public currentUser: Account;
+  public currentAccountId;
   public isPlaying;
 
   monthNames:      string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
@@ -46,8 +49,14 @@ export class SearchComponent implements OnInit {
     private route: ActivatedRoute,
     private generalService: GeneralService,
     private playerService: PlayerService,
-    private dataService: DataService
-  ) { }
+    private dataService: DataService,
+    private toastService: MzToastService,
+  ) {
+    this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    if(this.currentUser) {
+      this.currentAccountId = this.currentUser['_accountId'];
+    }
+  }
 
   ngOnInit() {
 
@@ -121,9 +130,33 @@ export class SearchComponent implements OnInit {
     window.open(navUrl);
   }
 
+  changeFollowStatus(status, profile): void {
+    this.generalService.update('/accounts/' + this.currentAccountId + '/profile/'  + profile.accountId + '/follow/'
+      + status, "")
+      .subscribe(
+        response => {
+          if (status) {
+            if ( response) {
+              this.toastService.show("You are now following this person", 3000, 'blue');
+            }
+            else {
+              this.toastService.show("You are already following this person", 3000, 'blue');
+            }
+
+          } else {
+            this.toastService.show("Person was unfollowed", 3000, 'blue');
+
+          }
+        }, (error: AppError) => {
+          this.toastService.show("Person follow status could not be changed", 3000, 'red');
+        }
+      );
+  }
+
   playSongs(index: number): void {
     this.playerService.loadSongs(index, this.songs);
   }
+
 
   playArtistSongs($event: MouseEvent, artistId: number): void {
     this.generalService.get("/artists/" + artistId + "/songs").subscribe((songs) => {

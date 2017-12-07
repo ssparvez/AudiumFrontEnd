@@ -21,3 +21,7 @@ span h5 a:hover, span h4 a:hover, li span.profile-link a:hover {
     background-color: rgba(0,0,0,0.75);
     color: white;
 }
+
+.detailed-follow-btn {
+    background-color: #4eabec;
+}

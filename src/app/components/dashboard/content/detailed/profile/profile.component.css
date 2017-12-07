@@ -5,3 +5,7 @@ span h5 a:hover, span h4 a:hover, li span.profile-link a:hover {
 .follow-status {
     margin-left: 5%;
 }
+
+.detailed-follow-btn {
+    background-color: #4eabec;
+}

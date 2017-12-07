@@ -77,8 +77,11 @@
       <p class="white-text">{{profile?.followerCount}} Follower<span *ngIf="profile?.followerCount != 1">s</span>
         <br>
       </p>
-      <a href="#!" class="secondary-content">
-        <a class="waves-effect waves-light btn blue-bt">Follow</a>
+      <a class="secondary-content">
+        <button mz-button class="detailed-follow-btn btn-medium waves-effect"
+                (click)="changeFollowStatus(true, profile)">
+          FOLLOW
+        </button>
       </a>
     </li>
     <li class="fade-in-1-sec valign-wrapper center-align tracklist" style="text-align: center; font-size: 18px; font-weight: bold; min-height: 80px;" *ngIf="!showAllProfiles && profiles?.length > 5">
