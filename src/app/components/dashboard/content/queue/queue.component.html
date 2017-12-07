@@ -1,46 +1,44 @@
 <h1 class="fade-in-half-sec">Queue</h1>
-<div class="row" style="margin-bottom:0;" *ngIf="songs">
-  <table class="bordered responsive-table white-text fade-in-half-sec" *ngIf="songs?.length > 0">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Artist</th>
-        <th>Album</th>
-        <th>Duration</th>
-      </tr>
-    </thead>
-    <tbody class="tracklist">
-      <tr *ngFor="let song of songs; let i = index" (dblclick)="playLibrarySongs(i)" (contextmenu)="songMenu.onContextMenu($event, song)"
-      [ngClass]="{'current-track': queueIndex == i}">
-        <!-- [ngClass]="{'playing': song.isPlaying}" -->
-        <td>
-          {{song?.title}}
-          <i *ngIf="song.isExplicit" class="material-icons" style="margin-left: 20px; vertical-align: middle;">explicit</i>
-        </td>
-		    <td *ngIf="song"><a [routerLink]="['../artist', song?.artistId]" (contextmenu)="artistMenu.onContextMenu($event, { artistId: song?.artistId, followed: false } )">{{song?.artistName}}</a></td>
-        <td *ngIf="song"><a [routerLink]="['../album', song?.albumId]">{{song?.albumTitle}}</a></td>
-        <td>
-          <!-- NOTE: Putting these spans on separate lines creates a space for some reason. Though ugly, we should keep them on the same line -->
-          <span *ngIf="song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(0,3)}}</span><span *ngIf="song?.duration?.substring(3,4) != '0' || song?.duration?.substring(0,3) != '00:'">{{song?.duration?.substring(3,4)}}</span>{{song?.duration?.substring(4)}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="row fade-in-2-sec" *ngIf="songs?.length == 0" style="margin-bottom: 0px;">
-    <div class="col s12">
-      <div class="card-panel large transparent z-depth-0">
-        <div class="row"></div>
-      </div>
-    </div>
-    <div class="col s12">
-      <div class="card-panel large transparent z-depth-0 center">
-        <h2 class="grey-text">No songs in queue</h2>
-      </div>
-    </div>
-  </div>
-
-  <!-- Loading animation -->
-  <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!songs">
+<ng-container *ngIf="nowPlaying">
+  <track-list-component
+    [nRows]="1"
+    [title]="'Now Playing'"
+    [songs]="nowPlaying"
+    [noEntitiesMessage]="'Nothing currently playing'"
+    [trackNumberSuffix]="'.'"
+    [displayExplicit]="true"
+    [displayAlbum]="true"
+    [timeAddedHeaderAlign]="'center'"
+    [displayArtist]="true"
+  ></track-list-component>
+</ng-container>
+<ng-container *ngIf="nextInQueue && nextInQueue.length > 0">
+  <track-list-component
+    [nRows]="nextInQueue.length"
+    [title]="'Next in Queue'"
+    [songs]="nextInQueue"
+    [noEntitiesMessage]="'Nothing queued up'"
+    [trackNumberSuffix]="'.'"
+    [displayExplicit]="true"
+    [displayAlbum]="true"
+    [timeAddedHeaderAlign]="'center'"
+    [displayArtist]="true"
+  ></track-list-component>
+</ng-container>
+<ng-container *ngIf="nextUp">
+  <track-list-component
+    [nRows]="nextUp.length"
+    [title]="'Next Up'"
+    [songs]="nextUp"
+    [noEntitiesMessage]="'Nothing to play'"
+    [trackNumberSuffix]="'.'"
+    [displayExplicit]="true"
+    [displayAlbum]="true"
+    [timeAddedHeaderAlign]="'center'"
+    [displayArtist]="true"
+  ></track-list-component>
+</ng-container>
+<!-- Loading animation -->
+  <div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; margin-bottom: 0px;" *ngIf="!nowPlaying">
     <div class="loader">Loading...</div>
   </div>

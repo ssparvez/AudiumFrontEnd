@@ -189,7 +189,7 @@ export class SongMenuComponent implements OnInit {
   }
 
   addSongsToQueue(song: Song) {
-    this.playerService.queueSongs([song])
+    this.playbackService.addToUserQueue(song);
   }
 
   viewLyrics(song: Song) {

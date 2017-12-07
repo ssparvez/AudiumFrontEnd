@@ -217,21 +217,16 @@ export class TrackListComponent implements OnInit, OnChanges {
     this.playbackService.currentlyPlaying.subscribe(
       song => {
         if ( this.songs.indexOf(song) !== -1) {
-          this.songCurrentlyPlaying = this.songs.indexOf(song);
-          this.songs[this.songs.indexOf(song)].isPlaying = song.isPlaying;
-          this.songs[this.songs.indexOf(song)].isPaused = song.isPaused;
+          const index = this.songs.indexOf(song);
+          this.songCurrentlyPlaying = index;
+          this.songs[index].isPlaying = song.isPlaying;
+          this.songs[index].isPaused = song.isPaused;
           if (this.previousSongPlaying !== undefined && this.previousSongPlaying >=0 ) {
             this.songs[this.previousSongPlaying].isPlaying = false;
             this.songs[this.previousSongPlaying].isPaused = false;
           }
         }
       });
-    //
-    // this.playbackService.isPlaying.subscribe(
-    //   status => {
-    //     this.songs[this.songCurrentlyPlaying].isPlaying = status;
-    //   }
-    // );
   }
 
   ngOnInit() {

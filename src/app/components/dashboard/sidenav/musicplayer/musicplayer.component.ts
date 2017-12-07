@@ -52,10 +52,8 @@ export class MusicplayerComponent implements OnInit {
 
     this.playbackService.currentlyPlaying.subscribe(
       song => {
-        console.log(song);
         this.currentlyPlaying = song;
         // this.volumeLevel = this.playbackService.getVolume();
-        console.log(this.volumeLevel);
         let songTime = this.playbackService.getCurrentSongTIme().subscribe(
           time => {
             if ( time !== undefined) {

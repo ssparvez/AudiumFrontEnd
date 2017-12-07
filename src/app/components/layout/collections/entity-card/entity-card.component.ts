@@ -175,7 +175,6 @@ export class EntityCardComponent implements OnInit {
 
     this.playbackService.currentlyPlaying.subscribe(
       song => {
-        console.log(this.songs);
         if ( this.songs !== undefined && this.songs.indexOf(song) !== -1) {
           // this.songCurrentlyPlaying = this.songs.indexOf(song);
           // this.songs[this.songs.indexOf(song)].isPlaying = song.isPlaying;

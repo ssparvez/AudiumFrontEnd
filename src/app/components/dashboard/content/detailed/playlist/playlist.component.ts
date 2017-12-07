@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { Playlist } from "../../../../../classes/Playlist";
 import { GeneralService } from "../../../../../services/general/general.service";
@@ -7,6 +7,8 @@ import { Song } from "../../../../../classes/Song";
 import { MzToastService } from "ng2-materialize";
 import { animate, style, transition, trigger } from "@angular/animations";
 import {PlaybackService} from "../../../../../services/playback/playback.service";
+import "rxjs/add/operator/takeUntil";
+import { Subject } from "rxjs/Subject";
 
 @Component({
   selector: 'app-playlist',
@@ -21,7 +23,7 @@ import {PlaybackService} from "../../../../../services/playback/playback.service
   ]
 })
 
-export class PlaylistComponent implements OnInit {
+export class PlaylistComponent implements OnInit, OnDestroy {
 
   private id;
   public playlist: Playlist;
@@ -31,7 +33,7 @@ export class PlaylistComponent implements OnInit {
   private currentAccountId;
   public numberOfSongs = 0;
   private previousSongPlaying: number;
-
+  private unsubscribe: Subject<void> = new Subject<void>();
   public playbackCondition = "play_circle_outline";
 
   constructor(
@@ -57,12 +59,19 @@ export class PlaylistComponent implements OnInit {
     this.route.params.subscribe(param => {
       this.id = + param['id'];
       console.log(this.id);
-      this.service.get('/playlist/' + this.id + '/' + this.currentAccountId ).subscribe((playlist) => {
+      this.service.get('/playlist/' + this.id + '/' + this.currentAccountId )
+        .takeUntil(this.unsubscribe)
+        .subscribe((playlist) => {
         this.playlist = playlist;
         this.assignFollowStatus();
         this.loadSongs(this.playlist.playlistId);
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
   isOwnerOfPlaylist() {

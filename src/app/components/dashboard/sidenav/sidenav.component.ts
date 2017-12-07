@@ -16,9 +16,8 @@ export class SidenavComponent implements OnInit {
   logoImg: string = "assets/images/logo.png";
 
   constructor(private router: Router, private authService: AuthenticationService) {
-    //const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    if(this.currentUser != null){
+    if(this.currentUser != null) {
       this.accountName = this.currentUser._firstName + " " + this.currentUser._lastName;
       this.accountImage = this.currentUser._profilePicUrl;
     }
