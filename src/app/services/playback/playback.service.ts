@@ -33,6 +33,9 @@ export class PlaybackService {
   private isLooping = 0;
   private toShuffle: boolean;
   private replayQueue: boolean;
+  private previousIndex: number;
+  private isUserQueuePlaying: boolean;
+
 
   constructor(private dataService: DataService) {
 
@@ -78,6 +81,7 @@ export class PlaybackService {
       onend:  (soundId: number) => this.handleEnd()
     });
     this.checkForPrevious();
+    this.isUserQueuePlaying = false;
     this.playback.play();
     return (!error);
   }
@@ -85,15 +89,13 @@ export class PlaybackService {
   public playSongFromUserQueue() {
     this.stopCurrentSound();
     let  currentSong = Object.assign({}, this.userQueue[0]);
-    console.log('this');
-    console.log(currentSong);
     this.playback = new Howl({
       src: [this.dataService.songUrl + this.userQueue[0].file ],
       html5: true,
       volume: this.volumeLevel,
-      onplay: (soundId: number) => {this.handleOnPlay(soundId,0, currentSong);},
+      onplay: (soundId: number) => {this.isUserQueuePlaying = true; this.handleOnPlay(soundId,0, currentSong);},
       onpause: (soundId: number) => this.handleOnPause(0,currentSong),
-      onstop: (soundId: number) => { this.handleOnPause(0,currentSong);},
+      onstop: (soundId: number) => this.handleOnStop(currentSong),
       onend:  (soundId: number) => { this.handleEnd();}
     });
     this.playback.play();
@@ -112,6 +114,7 @@ export class PlaybackService {
       if ( this.previousSongPlaying !== check) {
         this.previousSongPlaying = check;
         this.previousPlaying.next(this.queueOfSongs[this.previousSongPlaying]);
+        this.previousIndex = check;
       }
     } else {
       this.previousSongPlaying = undefined;
@@ -125,17 +128,28 @@ export class PlaybackService {
      this.playSongFromUserQueue();
     } else {
       const index = this.queueOfSongs.indexOf(this.currentSongPlaying);
-      if ( index  !== this.queueOfSongs.length-1) {
-        this.playSongFromQueue(index+1);
-      } else if ( this.replayQueue) {
-        this.playSongFromQueue(0);
+      if (this.toShuffle) {
+        this.shuffle();
+      } else {
+        if ( index  !== this.queueOfSongs.length-1) {
+          this.playSongFromQueue(index+1);
+        } else if ( this.replayQueue) {
+          this.playSongFromQueue(0);
+        }
       }
     }
   }
 
   public previousSong() {
     this.stopCurrentSound();
-    const index = this.queueOfSongs.indexOf(this.currentSongPlaying);
+    let index;
+    console.log(this.userQueue);
+    if (this.isUserQueuePlaying ) {
+      index = this.previousIndex+2;
+      console.log(index);
+    } else {
+       index = this.queueOfSongs.indexOf(this.currentSongPlaying);
+    }
     if (index !== 0) {
       this.playSongFromQueue(index-1);
     } else  if ( this.replayQueue) {
@@ -201,7 +215,6 @@ export class PlaybackService {
 
   public handleOnPlay(soundId:number, index:number, songPlaying?: Song) {
     let song: Song;
-    console.log('song playing:' + songPlaying);
     if ( songPlaying !== undefined) {
       song = songPlaying;
     } else {
@@ -219,7 +232,6 @@ export class PlaybackService {
         song = this.currentSongPlaying;
       }
     }
-    console.log(song);
     this.isPlaying.next(true);
     this.currentlyPlaying.next(song);
     this.isCurrentlyPlaying = true;
@@ -245,6 +257,25 @@ export class PlaybackService {
     if(song != undefined) {
       song.isPlaying = false;
       song.isPaused = true;
+    } else {
+      if(this.currentSongPlaying != undefined) {
+        song = this.currentSongPlaying;
+      }
+    }
+    this.isCurrentlyPlaying = false;
+    this.currentlyPlaying.next(song);
+    this.isPlaying.next(false);
+  }
+
+  private handleOnStop(songPlaying: Song) {
+    let song: Song;
+    if ( songPlaying !== undefined ) {
+      song = songPlaying;
+    }
+
+    if(song != undefined) {
+      song.isPlaying = false;
+      song.isPaused = false;
     } else {
       if(this.currentSongPlaying != undefined) {
         song = this.currentSongPlaying;
@@ -338,6 +369,9 @@ export class PlaybackService {
     this.userQueue.push(song);
     this.songAddedToUserQueue.next(song);
   }
+   public addListToUserQueue(songs: Song[]) {
+    this.userQueue = Object.assign([], songs);
+   }
 
   public removeSongFromUserQueue() {
     this.songRemovedFromUserQueue.next(this.userQueue[0]);

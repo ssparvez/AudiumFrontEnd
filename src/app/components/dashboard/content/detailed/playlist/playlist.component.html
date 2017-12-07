@@ -50,6 +50,9 @@
                 (click)="changeFollowStatus(false)" >
           UNFOLLOW
         </button>
+        <a  class="right" (click)="addToQueue()" mz-tooltip
+            [tooltip]="'<b>Add to Queue</b>'"
+            [html]="true"><i class="material-icons">playlist_add</i></a>
       </div>
     </div>
   </div>

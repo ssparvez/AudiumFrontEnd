@@ -41,7 +41,7 @@
         <tr *ngFor="let song of (showAll || (songs?.length <= nRows)) ? songs : displayShowAllBt ? songs?.slice(0, nRows - 1) : songs?.slice(0, nRows); let i = index;"
           (dblclick)="disableDoubleClick ? absorbMouseEvent($event, i, true) : playSong(song, i)"
           (contextmenu)="disableContextMenu ? absorbMouseEvent($event, i, true) : songContextMenu.onContextMenu($event, song)"
-          [ngClass]="{ 'playing': (displayPlaying && song.isPlaying ) || (!song.isPlaying && song.isPaused) }"
+          [ngClass]="{ 'playing': (displayPlaying && song.isPlaying && !song.isPaused ) || (!song.isPlaying && song.isPaused) }"
         >
           <td class="song-number" *ngIf="displayTrackNumber || (!disablePlayPauseBt)" [ngStyle]="{ 'text-align': trackNumberAlign }">
             <!-- <div class="song-number-value" *ngIf="displayTrackNumber && song?.trackNumber">{{song?.trackNumber}}.</div> -->

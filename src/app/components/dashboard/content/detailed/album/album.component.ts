@@ -6,6 +6,7 @@ import { PlayerService } from '../../../../../services/player/player.service';
 import { DataService } from '../../../../../services/data.service';
 import {AppError} from "../../../../../errors/AppError";
 import {MzToastService} from "ng2-materialize";
+import {PlaybackService} from "../../../../../services/playback/playback.service";
 
 @Component({
   selector: 'app-album',
@@ -25,6 +26,7 @@ export class AlbumComponent implements OnInit {
     private generalService: GeneralService,
     private playerService: PlayerService,
     private dataService: DataService,
+    private playbackService: PlaybackService,
     private toastService: MzToastService) {
 
     let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -88,11 +90,8 @@ export class AlbumComponent implements OnInit {
   }
 
   addAlbumToQueue() {
-    this.playerService.queueSongs(this.album.songs);
+    this.playbackService.addListToUserQueue(this.album.songs);
   }
 
 
-  playSongs(index): void {
-    this.playerService.loadSongs(index, this.album.songs);
-  }
 }

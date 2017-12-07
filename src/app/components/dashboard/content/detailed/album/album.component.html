@@ -51,12 +51,10 @@
                 (click)="changeSaveStatus(false)" >
           UNSAVE
         </button>
-      </div>
-      <div class="col s2" style="margin-top: 5px;">
-        <a (click)="addAlbumToQueue()" mz-tooltip
-        [tooltip]="'<b>Add to Queue</b>'"
-        [position]="'right'"
-        [html]="true"><i class="material-icons">playlist_add</i></a>
+          <a  class="right" (click)="addAlbumToQueue()" mz-tooltip
+             [tooltip]="'<b>Add to Queue</b>'"
+             [position]="'right'"
+             [html]="true"><i class="material-icons">playlist_add</i></a>
       </div>
     </div>
   </div>

@@ -125,6 +125,10 @@ export class PlaylistComponent implements OnInit, OnDestroy {
     localStorage.setItem("playlistsfollowed", JSON.stringify(playlistsFollowed));
   }
 
+  addToQueue() {
+    this.playbackService.addListToUserQueue(this.songsInPlaylist);
+  }
+
   pausePlayback($event: MouseEvent, playlistId) {
     this.isPlaying = false;
     this.playbackCondition= "play_arrow";
