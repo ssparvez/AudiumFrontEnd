@@ -133,9 +133,4 @@ export class MusicplayerComponent implements OnInit {
     }
     this.playbackService.repeat(this.isRepeating);
   }
-
-  viewQueue(): void {
-    this.playerService.currentSongQueue = this.songQueue;
-    this.router.navigate(['/dash/queue/']);
-  }
 }
