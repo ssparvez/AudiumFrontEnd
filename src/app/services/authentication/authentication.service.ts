@@ -9,7 +9,8 @@ import { DataService } from "../data.service";
 import { AppError } from "../../errors/AppError";
 import { NotFoundError } from "../../errors/not-found-error";
 import { ServerError } from "../../errors/server-error";
-import {PlaybackService} from "../playback/playback.service";
+import { PlaybackService } from "../playback/playback.service";
+import { UserPreferences } from '../../classes/UserPreferences';
 
 @Injectable()
 export class AuthenticationService {
@@ -71,6 +72,15 @@ export class AuthenticationService {
   }
 
   loadPersonalizedData() {
+    this.service.get('/accounts/'+ this.currentUser.accountId +'/preferences').subscribe(
+      preferences => {
+        this.dataService.privateSession = !(preferences.defaultPublicSession);
+        localStorage.setItem("preferences", JSON.stringify(preferences));
+        sessionStorage.setItem("preferences", JSON.stringify(preferences));
+      }, (error: AppError) => {
+        console.log("auth Prefs: error");
+      }
+    );
     this.service.get('/accounts/'+ this.currentUser.accountId +'/playlists/allfollowed').subscribe(
       playlistIds => {
         localStorage.setItem("playlistsfollowed", JSON.stringify(playlistIds));

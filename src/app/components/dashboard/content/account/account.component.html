@@ -7,9 +7,9 @@
           <div class="card-content center">
             <div class="row">
               <a [routerLink]="['../profile', getCurrentUser().accountId]">
-                <img class="circle tst responsive-img" src="{{getCurrentUser().profilePicURL}}" onerror="this.src='assets/images/defaults/user_profile.svg'">
+                <img class="circle tst responsive-img" src="assets/images/defaults/user_profile.svg" onerror="this.src='assets/images/defaults/user_profile.svg'">
               </a>
-            </div>
+              </div>
             <div class="row account-username">
               <a class="account-username-link" [routerLink]="['../profile', getCurrentUser().accountId]">{{getCurrentUser().username}}</a>
             </div>
@@ -115,14 +115,14 @@
               <div *ngIf="getCurrentUser().role === this.basicUser ; then upgrade else downgrade"></div>
               <ng-template #upgrade>
                 <div class="col s6">
-                  <button mz-button class="account-btn-ug waves-effect green btn" (click)="openNewPaymentDialog()">
+                  <button mz-button class="account-btn-ug waves-effect btn" (click)="openNewPaymentDialog()">
                     Upgrade
                   </button>
                 </div>
               </ng-template>
               <ng-template #downgrade>
                 <div class="col s6">
-                  <button mz-button class="account-btn-dg waves-effect red btn" (click)="downgradeAccount()">
+                  <button mz-button class="account-btn-dg waves-effect btn" (click)="downgradeAccount()">
                     Downgrade
                   </button>
                 </div>
@@ -171,66 +171,139 @@
     <!--</div>-->
   </mz-tab-item>
   <mz-tab-item [label]="'Settings'" class="fade-in-half-sec">
-    <div class="row" style="margin-top: 20px;">
-      <div class="left">
-        <a class="btn btn-floating btn-large fade-in-half-sec" [ngClass]="{'grey': getCurrentUser().role == 'BasicUser', 'green': getCurrentUser().role == 'PremiumUser'}">
+    <div class="row fade-in-1-sec" style="margin-top: 20px;">
+      <div class="col  s6 m8 l10">
+        <a class="btn btn-floating btn-large fade-in-half-sec" style="cursor: default;" [ngClass]="{'grey': getCurrentUser().role == 'BasicUser', 'green': getCurrentUser().role == 'PremiumUser'}">
           <i class="material-icons">translate</i>
         </a>
         <span [ngClass]="{'grey-text': getCurrentUser().role == 'BasicUser', 'white-text': getCurrentUser().role == 'PremiumUser'}" style="margin-left: 20px;">
           <b>Language</b>
         </span>
       </div>
-      <div class="right">
-        <div class="secondary-content">
-          <mz-dropdown [id]="'lang-dropdown'" [belowOrigin]="false" [constrainWidth]="true" [dropdownButtonId]="'lang-dropdown-btn'" [hover]="true"
-            [stopPropagation]="true">
-            <mz-dropdown-item *ngFor="let language of languages"><a class="center">{{language | uppercase}}</a></mz-dropdown-item>
+      <div class="col s6 m4 l2">
+        <div *ngIf="currentUser?.userPreferences?.accountId && (getCurrentUser().role != 'BasicUser')">
+          <mz-dropdown
+            [id]="'language-dropdown'"
+            [belowOrigin]="false"
+            [constrainWidth]="true"
+            [dropdownButtonId]="'language-dropdown-bt'"
+            [hover]="true"
+            [inDuration]="300"
+            [outDuration]="300"
+            [stopPropagation]="true"
+          >
+            <mz-dropdown-item *ngFor="let language of languages; let i = index;"><a class="blue-text center" (click)="setLanguage($event, i)">{{language | uppercase}}<i class="material-icons right" style="padding-right: 5px; color: transparent;">arrow_drop_down</i></a></mz-dropdown-item>
           </mz-dropdown>
-          <a mz-button id="lang-dropdown-btn" [disabled]="getCurrentUser().role == 'BasicUser'">ENGLISH</a>
+          <a mz-button
+            id="language-dropdown-bt"
+            class='btn blue-bt white-text'
+            [ngClass]="(getCurrentUser().role == 'BasicUser') ? 'disabled' : ''"
+            style="width: 100%; height: 100%; padding: 0px;"
+            data-activates='language-dropdown'
+          >
+            <span class="center">{{currentUser?.userPreferences?.language | uppercase}}</span>
+            <i class="material-icons right" style="padding-right: 5px;">arrow_drop_down</i>
+          </a>
+        </div>
+        <div *ngIf="currentUser?.userPreferences?.accountId && (getCurrentUser().role == 'BasicUser')">
+          <a class='btn blue-bt white-text disabled' style="width: 100%; height: 100%; padding: 0px;">
+            <span class="center">{{currentUser?.userPreferences?.language | uppercase}}</span>
+            <i class="material-icons right" style="padding-right: 5px;">arrow_drop_down</i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="divider"></div> -->
+    <div class="row fade-in-1-sec" style="margin-top: 20px;">
+      <div class="col s6 m8 l10">
+        <a class="btn btn-floating btn-large fade-in-half-sec" style="cursor: default;" [ngClass]="{'grey': getCurrentUser().role == 'BasicUser', 'red': getCurrentUser().role == 'PremiumUser'}">
+          <i class="material-icons">speaker</i>
+        </a>
+        <span [ngClass]="{'grey-text': getCurrentUser().role == 'BasicUser', 'white-text': getCurrentUser().role == 'PremiumUser'}" style="margin-left: 20px;"><b>Sound Quality</b></span>
+      </div>
+      <div class="col s6 m4 l2">
+        <div *ngIf="currentUser?.userPreferences?.accountId && (getCurrentUser().role != 'BasicUser')">
+          <mz-dropdown
+            [id]="'quality-dropdown'"
+            [belowOrigin]="false"
+            [constrainWidth]="true"
+            [dropdownButtonId]="'quality-dropdown-bt'"
+            [hover]="true"
+            [inDuration]="300"
+            [outDuration]="300"
+            [stopPropagation]="true"
+          >
+            <mz-dropdown-item *ngFor="let quality of streamingQualities; let i = index;"><a class="blue-text center" (click)="setQuality($event, i)">{{quality | uppercase}}<i class="material-icons right" style="padding-right: 5px; color: transparent;">arrow_drop_down</i></a></mz-dropdown-item>
+          </mz-dropdown>
+          <a mz-button
+            id="quality-dropdown-bt"
+            class='btn blue-bt white-text'
+            [ngClass]="(getCurrentUser().role == 'BasicUser') ? 'disabled' : ''"
+            style="width: 100%; height: 100%; padding: 0px;"
+            data-activates='quality-dropdown'
+          >
+            <span class="center">{{currentUser?.userPreferences?.quality | uppercase}}</span>
+            <i class="material-icons right" style="padding-right: 5px;">arrow_drop_down</i>
+          </a>
+        </div>
+        <div *ngIf="currentUser?.userPreferences?.accountId && (getCurrentUser().role == 'BasicUser')">
+          <a class='btn blue-bt white-text disabled' style="width: 100%; height: 100%; padding: 0px;">
+            <span class="center">{{currentUser?.userPreferences?.quality | uppercase}}</span>
+            <i class="material-icons right" style="padding-right: 5px;">arrow_drop_down</i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row fade-in-1-sec" style="margin-top: 20px;">
+      <div class="col s6 m8 l10">
+        <a class="btn btn-floating btn-large fade-in-half-sec" style="cursor: default;" [ngClass]="{'grey': getCurrentUser().role == 'BasicUser', 'purple': getCurrentUser().role == 'PremiumUser'}">
+          <i class="material-icons">{{profileIcon}}</i>
+        </a>
+        <span class="title" [ngClass]="{'grey-text': getCurrentUser().role == 'BasicUser', 'white-text': getCurrentUser().role == 'PremiumUser'}" style="margin-left: 20px;"><b>Profile Visibility</b></span>
+      </div>
+      <div class="col s6 m4 l2">
+        <div class="secondary-content" style="padding: 16px 12px 0px 0px;">
+          <div id="profile-switch" class="switch">
+            <label [ngStyle]="{ 'cursor': getCurrentUser().role == 'BasicUser' ? 'default' : '' }">
+              <span [ngClass]="{'grey-text': (getCurrentUser().role == 'BasicUser' || !(currentUser?.userPreferences?.publicProfile)), 'text-lighten-2': (getCurrentUser().role == 'PremiumUser' && currentUser?.userPreferences?.publicProfile), 'blue-text': (getCurrentUser().role == 'PremiumUser' && currentUser?.userPreferences?.publicProfile)}">Public</span>
+              <input [checked]="!(currentUser?.userPreferences?.publicProfile)" (click)="togglePrivateProfile($event)" type="checkbox" [disabled]="getCurrentUser().role == 'BasicUser'">
+              <span class="lever"></span>
+              <span [ngClass]="{'grey-text': (getCurrentUser().role == 'BasicUser' || currentUser?.userPreferences?.publicProfile), 'text-lighten-2': (getCurrentUser().role == 'PremiumUser' && !(currentUser?.userPreferences?.publicProfile)), 'blue-text': (getCurrentUser().role == 'PremiumUser' && !(currentUser?.userPreferences?.publicProfile))}">Private</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row fade-in-1-sec" style="margin-top: 20px;">
+      <div class="col s6 m8 l10">
+        <a class="btn btn-floating btn-large fade-in-half-sec" style="cursor: default;" [ngClass]="{'grey': getCurrentUser().role == 'BasicUser', 'blue': getCurrentUser().role == 'PremiumUser'}">
+          <i class="material-icons">{{sessionIcon}}</i>
+        </a>
+        <span class="title" [ngClass]="{'grey-text': getCurrentUser().role == 'BasicUser', 'white-text': getCurrentUser().role == 'PremiumUser'}" style="margin-left: 20px;"><b>Session Visibility</b></span>
+      </div>
+      <div class="col s6 m4 l2">
+        <div class="secondary-content" style="padding: 16px 12px 0px 0px;">
+          <div class="switch">
+            <label [ngStyle]="{ 'cursor': getCurrentUser().role == 'BasicUser' ? 'default' : '' }">
+              <span [ngClass]="{'grey-text': (getCurrentUser().role == 'BasicUser' || dataService?.privateSession), 'text-lighten-2': (getCurrentUser().role == 'PremiumUser' && (!dataService?.privateSession)), 'blue-text': (getCurrentUser().role == 'PremiumUser' && (!dataService?.privateSession))}">Public</span>
+              <input [checked]="dataService?.privateSession" (click)="togglePrivateSession($event)" type="checkbox" [disabled]="getCurrentUser().role == 'BasicUser'">
+              <span class="lever"></span>
+              <span [ngClass]="{'grey-text': (getCurrentUser().role == 'BasicUser' || (!dataService?.privateSession)), 'text-lighten-2': (getCurrentUser().role == 'PremiumUser' && dataService?.privateSession), 'blue-text': (getCurrentUser().role == 'PremiumUser' && dataService?.privateSession)}">Private</span>
+            </label>
+          </div>
         </div>
       </div>
     </div>
     <div class="row" style="margin-top: 20px;">
-        <div class="left">
-            <a class="btn btn-floating btn-large fade-in-half-sec" [ngClass]="{'grey': getCurrentUser().role == 'BasicUser', 'red': getCurrentUser().role == 'PremiumUser'}">
-              <i class="material-icons">speaker</i>
-            </a>
-            <span [ngClass]="{'grey-text': getCurrentUser().role == 'BasicUser', 'white-text': getCurrentUser().role == 'PremiumUser'}" style="margin-left: 20px;"><b>Sound Quality</b></span>
-          </div>
-          <div class="right">
-            <div class="secondary-content">
-                <mz-dropdown
-                [id]="'sound-dropdown'"
-                [belowOrigin]="false"
-                [constrainWidth]="true"
-                [dropdownButtonId]="'sound-dropdown-btn'"
-                [hover]="true"
-                [stopPropagation]="true">
-                <mz-dropdown-item *ngFor="let rate of streamingRates"><a class="center">{{rate | uppercase}}</a></mz-dropdown-item>
-              </mz-dropdown>
-              <a mz-button id="sound-dropdown-btn" [disabled]="getCurrentUser().role == 'BasicUser'">128Kbps</a>
-            </div>
-          </div>
-      </div>
-      <div class="row" style="margin-top: 20px;">
-          <div class="left">
-              <a class="btn btn-floating btn-large purple fade-in-half-sec">
-                <i class="material-icons">public</i>
-              </a>
-              <span class="title white-text" style="margin-left: 20px;"><b>Private Session</b></span>
-            </div>
-            <div class="right">
-              <div class="secondary-content" style="padding: 16px 12px 0px 0px;">
-                  <mz-switch-container>
-                      <input mz-switch
-                        id="switch-id"
-                        [off]="'Off'"
-                        [on]="'On'"
-                        type="checkbox">
-                    </mz-switch-container>
-              </div>
-            </div>
+      <div class="col s12 m10 l8 offset-m1 offset-l2 center">
+        <h3 class="grey-text fade-in-1-sec" *ngIf="getCurrentUser().role == 'BasicUser'"><b>Upgrade to Premium to change these settings</b></h3>
+        <div class="center">
+          <button mz-button class="account-btn account-btn-pssw btn fade-in-half-sec" @fade *ngIf="(getCurrentUser().role != 'BasicUser') && unsavedChanges" (click)="savePreferences()">
+            SAVE CHANGES
+          </button>
         </div>
+      </div>
+    </div>
   </mz-tab-item>
 
 </mz-tab>

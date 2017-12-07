@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Account } from "./Account";
+import { UserPreferences } from "./UserPreferences";
 
 @Injectable()
 export class CustomerAccount extends Account {
@@ -55,7 +56,7 @@ export class CustomerAccount extends Account {
     this._bio = value;
   }
 
-  loadWithJSON( json) {
+  loadWithJSON(json) {
     this.dob = json['_dob'];
     this.username = json['_username'];
     this.firstName = json['_firstName'];
@@ -65,5 +66,14 @@ export class CustomerAccount extends Account {
     this.lastName = json['_lastName'];
     this.gender = json['_gender'];
     this.followerCount = json['_followerCount'];
+  }
+
+  public loadPreferencesWithJSON(json): void {
+    this.userPreferences.accountId = json['accountId'];
+    this.userPreferences.language = json['language'];
+    this.userPreferences.publicProfile = json['publicProfile'];
+    this.userPreferences.defaultPublicSession = json['defaultPublicSession'];
+    this.userPreferences.showExplicitContent = json['showExplicitContent'];
+    this.userPreferences.quality = json['quality'];
   }
 }

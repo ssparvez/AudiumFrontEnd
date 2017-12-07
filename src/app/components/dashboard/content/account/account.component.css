@@ -1,5 +1,26 @@
 
-.edit-button{
+
+
+.switch label input[type=checkbox]+.lever, .switch label input[type=checkbox]:checked+.lever {
+  /*background-color: rgb(127, 183, 243);*/
+  /*background-color: rgb(147, 203, 243);*/
+  /*background-color: white;*/
+  background-color: rgb(158, 158, 158);
+}
+
+.switch label input[type=checkbox]+.lever:after, .switch label input[type=checkbox]:checked+.lever:after {
+  background-color: rgb(33, 150, 243);
+}
+
+.switch label input[type=checkbox]:disabled+.lever, .switch label input[type=checkbox]:disabled+.lever:disabled {
+  background-color: rgb(197, 197, 197);
+}
+
+.switch label input[type=checkbox]:disabled+.lever:after {
+    background-color: rgb(100, 100, 100);
+}
+
+.edit-button {
   border-radius: 20vw;
 }
 
@@ -10,17 +31,39 @@
     font-size: large;
 }
 
+.account-btn:hover {
+    background-color: rgb(64, 167, 243);
+}
+
 .account-btn-pssw {
     width: 75%;
     font-size: large;
 }
 
-.account-btn-ug,.account-btn-dg {
+.account-btn-ug {
+    background-color: rgb(76, 175, 80);
     width: 100%;
     border-radius: 20vw;
     margin-top: 10%;
     font-size: large;
     font-weight: bold;
+}
+
+.account-btn-ug:hover {
+    background-color: rgb(108, 189, 111);
+}
+
+.account-btn-dg {
+    background-color: rgb(244, 67, 54);
+    width: 100%;
+    border-radius: 20vw;
+    margin-top: 10%;
+    font-size: large;
+    font-weight: bold;
+}
+
+.account-btn-dg:hover {
+    background-color: rgb(244, 80, 71);
 }
 
 .account-subtext{
