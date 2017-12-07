@@ -3,6 +3,7 @@
     <entity-card-collection
       #albumImageCard
       *ngIf="album"
+      [songs]="album?.songs"
       [nRows]="1"
       [nPerRow]="1"
       [showAllBtHoverText]=""
