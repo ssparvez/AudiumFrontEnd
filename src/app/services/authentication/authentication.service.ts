@@ -9,7 +9,8 @@ import { DataService } from "../data.service";
 import { AppError } from "../../errors/AppError";
 import { NotFoundError } from "../../errors/not-found-error";
 import { ServerError } from "../../errors/server-error";
-import {PlaybackService} from "../playback/playback.service";
+import { PlaybackService } from "../playback/playback.service";
+import { UserPreferences } from '../../classes/UserPreferences';
 
 @Injectable()
 export class AuthenticationService {
@@ -26,8 +27,7 @@ export class AuthenticationService {
     headers.append('content-type', 'application/json');
     const options = new RequestOptions({ headers: headers});*/
     return this.http.post( this.dataService.connectionURL + '/login', credentials
-      )
-      .map(response => {
+      ).map(response => {
         const result = {
           token: response['_body']
         };
@@ -51,11 +51,13 @@ export class AuthenticationService {
   }
 
   logout() {
+    console.log("Logging out...");
     if(this.playbackService.getPlayback() != undefined && this.playbackService.getPlayback().state() === "loaded")  {
       this.playbackService.getPlayback().unload();
     }
     sessionStorage.clear();
     localStorage.clear();
+    this.currentUser.logout();
   }
 
   isLoggedIn() {
@@ -71,6 +73,16 @@ export class AuthenticationService {
   }
 
   loadPersonalizedData() {
+    this.service.get('/accounts/'+ this.currentUser.accountId +'/preferences').subscribe(
+      preferences => {
+        localStorage.setItem("sessionPrivacy", JSON.stringify( {private: !(preferences.defaultPublicSession)} ));
+        sessionStorage.setItem("sessionPrivacy", JSON.stringify( {private: !(preferences.defaultPublicSession)} ));
+        localStorage.setItem("preferences", JSON.stringify(preferences));
+        sessionStorage.setItem("preferences", JSON.stringify(preferences));
+      }, (error: AppError) => {
+        console.log("auth Prefs: error");
+      }
+    );
     this.service.get('/accounts/'+ this.currentUser.accountId +'/playlists/allfollowed').subscribe(
       playlistIds => {
         localStorage.setItem("playlistsfollowed", JSON.stringify(playlistIds));
@@ -108,7 +120,6 @@ export class AuthenticationService {
     sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
 
   }
-
 }
 
 

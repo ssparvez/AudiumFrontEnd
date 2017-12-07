@@ -76,13 +76,6 @@ export class ArtistComponent implements OnInit {
   ngOnInit() {
     let date = new Date();
 
-    this.router.events.subscribe((event) => {
-      if (!(event instanceof NavigationEnd)) {
-          return;
-      }
-      window.scrollTo(0, 0);
-    });
-
     if((date.getMonth()+1) < 10){
       this.today += "-0" + (date.getMonth()+1);
     }else{
@@ -244,7 +237,7 @@ export class ArtistComponent implements OnInit {
       }
       else {
         this.artist.followed = false;
-        
+
       }
     }
   }

@@ -50,12 +50,6 @@ export class ProfileComponent implements OnInit {
       if ( !this.isOwner) {
         this.loadFollowStatus();
       }
-      this.router.events.subscribe((event) => {
-        if (!(event instanceof NavigationEnd)) {
-            return;
-        }
-        window.scrollTo(0, 0);
-      });
     });
   }
 

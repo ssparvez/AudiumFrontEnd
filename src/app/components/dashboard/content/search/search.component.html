@@ -119,7 +119,7 @@
                   <div class="col m3" style="padding-left: 0px;">
                     <div class="row valign-wrapper" style="margin-bottom: 0px;" (window:resize)="0" [ngStyle]="{ 'min-height.px': eventTitleRow.offsetHeight, 'max-height.px': eventTitleRow.offsetHeight }">
                       <div class="col m12" style="padding: 0px;">
-                        <h4 class="text-lighten-1" style="font-weight: normal;" [ngClass]="(event?.eventDate < today ? 'grey-text' : (event?.isCancelled ? 'red-text' : (event?.eventDate > today ? 'blue-text' : 'green-text')))">
+                        <h4 class="text-lighten-1" style="font-weight: normal;" [ngClass]="(event?.eventDate < today ? 'grey-text' : (event?.isCancelled ? 'red-text' : (event?.eventDate > today ? 'white-text' : 'blue-text')))">
                           <div *ngIf="!event?.isCancelled && event?.eventDate?.slice(0, 10) == today" style="font-weight: bold;">Today</div>
                           <div *ngIf="!event?.isCancelled && event?.eventDate?.slice(0, 10) > today">Upcoming</div>
                           <div *ngIf="!event?.isCancelled && event?.eventDate?.slice(0, 10) < today">Ended</div>

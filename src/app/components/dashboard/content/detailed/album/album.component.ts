@@ -34,12 +34,6 @@ export class AlbumComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (!(event instanceof NavigationEnd)) {
-          return;
-      }
-      window.scrollTo(0, 0);
-    });
     this.mediaPath = this.dataService.mediaURL;
     this.route.params.subscribe(param => {
       this.id = + param['id'];

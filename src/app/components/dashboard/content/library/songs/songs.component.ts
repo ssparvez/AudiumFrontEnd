@@ -21,12 +21,6 @@ export class SongsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (!(event instanceof NavigationEnd)) {
-          return;
-      }
-      window.scrollTo(0, 0);
-    });
     let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
     if(currUser != null){
       this.accountId = currUser._accountId;

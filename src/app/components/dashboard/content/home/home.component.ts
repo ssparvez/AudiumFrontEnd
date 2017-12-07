@@ -17,7 +17,7 @@ import { DataService } from '../../../../services/data.service';
   animations: [
     trigger('fade',[
       transition('void => *',[
-        animate(500, style({opacity: 0}))
+        animate(500, style({opacity: 1}))
       ]),
       transition('* => void',[
         animate(500, style({opacity: 0}))
@@ -44,12 +44,6 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (!(event instanceof NavigationEnd)) {
-          return;
-      }
-      window.scrollTo(0, 0)
-    });
 
     this.mediaPath = this.dataService.mediaURL;
     if(this.authenticationService != null && this.authenticationService.currentUserInfo != null){

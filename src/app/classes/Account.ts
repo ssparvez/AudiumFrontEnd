@@ -9,9 +9,26 @@ export class Account {
   private _accountId: number;
   private _role: string;
   private _isActive: number;
-  private _userPreferences?: UserPreferences;
+  private _userPreferences: UserPreferences = new UserPreferences();
 
   constructor() {}
+
+  public logout(): void {
+    this.username = null;
+    this.firstName = null;
+    this.lastName = null;
+    this.email = null;
+    this.accountId = null;
+    this.role = null;
+    this.isActive = null;
+
+    this.userPreferences.accountId = null;
+    this.userPreferences.language = UserPreferences.DEFAULT_language;
+    this.userPreferences.publicProfile = true;
+    this.userPreferences.defaultPublicSession = true;
+    this.userPreferences.showExplicitContent = true;
+    this.userPreferences.quality = UserPreferences.DEFAULT_quality;
+  }
 
   set isActive(value: number) {
     this._isActive = value;
@@ -42,7 +59,7 @@ export class Account {
   }
 
   set userPreferences(value: UserPreferences) {
-    this.userPreferences = value;
+    this._userPreferences = value;
   }
 
   get isActive(): number {
@@ -73,7 +90,7 @@ export class Account {
   }
 
   get userPreferences(): UserPreferences {
-    return this.userPreferences;
+    return this._userPreferences;
   }
 
 }
