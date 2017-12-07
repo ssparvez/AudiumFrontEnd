@@ -11,7 +11,7 @@
           <input #ref1 ngModel (change)="seek(ref1.value)" class="track-slider" type='range' min='0' max='{{playbackService.getDuration()}}'
             id=fader step=1 [(ngModel)]="seekPosition">
         </span>
-        <i (click)="viewQueue()" class="material-icons" mz-tooltip
+        <i [routerLink]="['/dash/queue/']" class="material-icons" mz-tooltip
         [tooltip]="'<b>View Queue</b>'"
         [position]="'right'"
         [html]="true">playlist_play</i>
