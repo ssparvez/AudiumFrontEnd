@@ -34,12 +34,6 @@ export class AlbumsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (!(event instanceof NavigationEnd)) {
-          return;
-      }
-      window.scrollTo(0, 0)
-    });
     this.mediaPath = this.dataService.mediaURL;
     let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
     if(currUser != null){

@@ -48,12 +48,6 @@ export class PlaylistComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (!(event instanceof NavigationEnd)) {
-          return;
-      }
-      window.scrollTo(0, 0);
-    });
     this.route.params.subscribe(param => {
       this.id = + param['id'];
       console.log(this.id);
