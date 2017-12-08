@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col s2" style="padding-left: 0">
+      <div class="left" style="padding-left: 0">
         <button mz-button class="detailed-follow-btn btn-medium waves-effect"
                  *ngIf="!isFollowing() && !isOwnerOfPlaylist()"
                 (click)="changeFollowStatus(true)" >
@@ -50,7 +50,7 @@
                 (click)="changeFollowStatus(false)" >
           UNFOLLOW
         </button>
-        <a  class="right" (click)="addToQueue()" mz-tooltip
+        <a style="margin-left: 20px;" class="right" (click)="addToQueue()" mz-tooltip
             [tooltip]="'<b>Add to Queue</b>'"
             [html]="true"><i class="material-icons">playlist_add</i></a>
       </div>
