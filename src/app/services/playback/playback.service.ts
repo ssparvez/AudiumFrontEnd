@@ -42,6 +42,7 @@ export class PlaybackService {
   }
 
   public loadSongQueue(songs: Song[]) {
+    console.log(songs);
       this.queueOfSongs = Object.assign([], songs);
       this.hasBeenLoaded.next(true);
   }

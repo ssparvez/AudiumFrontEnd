@@ -10,4 +10,6 @@ export interface Album {
     artistName?: string;
     songs?: Song[];
     saved?: boolean;
+
+    isLoaded?: boolean;
   }

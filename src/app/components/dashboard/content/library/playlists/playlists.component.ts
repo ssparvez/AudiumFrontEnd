@@ -7,6 +7,7 @@ import {AppError} from "../../../../../errors/AppError";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {MatDialog} from "@angular/material";
 import {Playlist} from "../../../../../classes/Playlist";
+import {PlaybackService} from "../../../../../services/playback/playback.service";
 
 @Component({
   selector: 'app-playlists',
@@ -36,6 +37,7 @@ export class PlaylistsComponent implements OnInit {
   constructor(private router: Router,
               private dialog: MatDialog,
               private toastService: MzToastService,
+              private playbackService: PlaybackService,
               private service: GeneralService,) {
 
     this.emulateCardContentHover = [];
@@ -76,6 +78,18 @@ export class PlaylistsComponent implements OnInit {
           this.toastService.show("Playlist was created", 3000, 'blue');
         }
       });
+  }
+
+  private loadPlaylistSong(playlist: Playlist) {
+    this.service.get('/playlist/' + playlist.playlistId + '/songs').subscribe(
+      songs => {
+        let songsInPlaylist;
+        songsInPlaylist = songs;
+        this.playbackService.loadSongQueue(songsInPlaylist);
+      }, (error: AppError) => {
+        this.toastService.show("Playlist was created", 3000, 'red');
+      }
+    );
   }
 
   emulateContentHover(index: number, emulate: boolean) {

@@ -9,6 +9,8 @@ import { DataService } from '../../../../services/data.service';
 import { SafeHtmlPipe } from '../../../../pipes/safe-html.pipe';
 import {PlaybackService} from "../../../../services/playback/playback.service";
 import {Song} from "../../../../classes/Song";
+import {AppError} from "../../../../errors/AppError";
+import {GeneralService} from "../../../../services/general/general.service";
 
 
 // Supported entity types (only 1 type allowed per entity collection element)
@@ -133,6 +135,8 @@ export class EntityCardComponent implements OnInit {
   @Input() public collectionAddClass: string = '';
   @Input() public entityAddClass: string = '';
 
+  @Input() public playFromCard: boolean = false;
+  @Input() public typeOfContent: string;
 
 
   // Context menu variables:
@@ -160,6 +164,7 @@ export class EntityCardComponent implements OnInit {
     private dataService: DataService,
     private cdRef: ChangeDetectorRef,
     private playbackService: PlaybackService,
+    private service: GeneralService,
     private renderer: Renderer2
   ) {
     let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -370,22 +375,53 @@ export class EntityCardComponent implements OnInit {
     return false;
   }
 
-  public play($event: MouseEvent, i: number): void {
-    if ( !this.hasLoadedSongs) {
-      this.playbackService.loadSongQueue(this.songs);
-      this.hasLoadedSongs = true;
-      this.playbackService.playSongFromQueue(0);
-    } else {
-      this.playbackService.resumePlay();
-    }
+  public play($event: MouseEvent, i: number, id: number): void {
     $event.preventDefault();
     $event.stopPropagation();
+    if ( this.playFromCard) {
+      if ( this.typeOfContent === 'playlist') {
+        if ( !this.playlists[i].isLoaded) {
+          this.loadSongs(this.playlists[i].playlistId);
+          this.playlists[i].isLoaded = true;
+        } else {
+          this.playbackService.resumePlay();
+        }
+      } else if ( this.typeOfContent === 'albums') {
+        if ( !this.albums[i].isLoaded) {
+          this.loadSongs(this.albums[i].albumId);
+          this.albums[i].isLoaded = true;
+        } else {
+          this.playbackService.resumePlay();
+        }
+      }
+
+    } else {
+      if ( !this.hasLoadedSongs) {
+        this.playbackService.loadSongQueue(this.songs);
+        this.hasLoadedSongs = true;
+        this.playbackService.playSongFromQueue(0);
+      } else {
+        this.playbackService.resumePlay();
+      }
+    }
   }
 
   public pause($event: MouseEvent): void {
     this.playbackService.pause();
     $event.preventDefault();
     $event.stopPropagation();
+  }
+
+  private loadSongs(id: number) {
+    this.service.get('/' + this.typeOfContent +  '/' + id + '/songs').subscribe(
+      songsForContent => {
+        this.songs = songsForContent;
+        this.playbackService.loadSongQueue(this.songs);
+        this.playbackService.playSongFromQueue(0);
+      }, (error: AppError) => {
+
+      }
+    );
   }
 
   // Returns the materialize grid column class for an entity card

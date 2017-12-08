@@ -13,6 +13,8 @@ export interface Playlist {
   followed?: boolean;
   songs?: Song[];
 
+  isLoaded?:boolean;
+
 }
 
 
