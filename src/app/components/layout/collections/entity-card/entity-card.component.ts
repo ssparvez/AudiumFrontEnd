@@ -378,30 +378,36 @@ export class EntityCardComponent implements OnInit {
   public play($event: MouseEvent, i: number, id: number): void {
     $event.preventDefault();
     $event.stopPropagation();
-    if ( this.playFromCard) {
-      if ( this.typeOfContent === 'playlist') {
-        if ( !this.playlists[i].isLoaded) {
+    if (this.playFromCard) {
+      if (this.typeOfContent === 'playlist') {
+        if (!this.playlists[i].isLoaded) {
           this.loadSongs(this.playlists[i].playlistId);
           this.playlists[i].isLoaded = true;
         } else {
           this.playbackService.resumePlay();
         }
-      } else if ( this.typeOfContent === 'albums') {
-        if ( !this.albums[i].isLoaded) {
+      } else if (this.typeOfContent === 'albums') {
+        if (!this.albums[i].isLoaded) {
           this.loadSongs(this.albums[i].albumId);
           this.albums[i].isLoaded = true;
         } else {
           this.playbackService.resumePlay();
         }
-      }
-
-    } else {
-      if ( !this.hasLoadedSongs) {
-        this.playbackService.loadSongQueue(this.songs);
-        this.hasLoadedSongs = true;
-        this.playbackService.playSongFromQueue(0);
+      } else if (this.typeOfContent === 'artists') {
+        if (!this.artists[i].isLoaded) {
+          this.loadSongs(this.artists[i].artistId);
+          this.artists[i].isLoaded = true;
+        } else {
+          this.playbackService.resumePlay();
+        }
       } else {
-        this.playbackService.resumePlay();
+        if (!this.hasLoadedSongs) {
+          this.playbackService.loadSongQueue(this.songs);
+          this.hasLoadedSongs = true;
+          this.playbackService.playSongFromQueue(0);
+        } else {
+          this.playbackService.resumePlay();
+        }
       }
     }
   }

@@ -11,4 +11,6 @@ export interface Artist {
     songs?: Song[];
     events?: Event[];
     followed?: boolean;
+
+    isLoaded?:boolean;
 }

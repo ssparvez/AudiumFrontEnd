@@ -13,7 +13,8 @@
   ></track-list-component>
 </ng-container>
 
-<entity-card-collection *ngIf="artists?.length > 0"
+<ng-container *ngIf="artists?.length > 0">
+  <entity-card-collection
   #artistResultsCollection
   [nRows]="2"
   [nPerRow]="6"
@@ -22,7 +23,11 @@
   [noEntitiesMessage]="''"
   [showAllBtHoverText]="'Show all artist results'"
   [loadingAnimation]="false"
-></entity-card-collection>
+  [playFromCard]="true"
+  [typeOfContent]="'artists'"
+>
+  </entity-card-collection>
+</ng-container>
 
 <ng-container *ngIf="albums?.length > 0">
   <entity-card-collection
