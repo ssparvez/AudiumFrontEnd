@@ -1,27 +1,23 @@
-# AudiumFrontEnd
+# Audium Frontend  
+Frontend portion of semester project for CSE308 - Software Engineering (Fall 2017 semester at SBU)  
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.5.
+## [Backend Repository](https://github.com/ssparvez/AudiumBackEnd)  
 
-## Development server
+## [Database Repository](https://github.com/SeanPesce/AudiumDatabase)  
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## About  
 
-## Code scaffolding
+This repository contains all code/resources for the Audium frontend.  
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Authors  
 
-## Build
+* [Renato Briceno](https://github.com/rbriceno512)  
+* [Syed Parvez](https://github.com/ssparvez)  
+* [Sean Pesce](https://github.com/SeanPesce)  
+* [Oscar Trivino](https://github.com/otrivino)  
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## Built With  
+  * [Angular 4](https://angular.io)  
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Course Website  
+[CSE308 Homepage](http://www3.cs.stonybrook.edu/~cse308/index-Section2.html)  
