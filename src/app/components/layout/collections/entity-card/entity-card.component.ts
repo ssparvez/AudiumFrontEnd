@@ -400,14 +400,14 @@ export class EntityCardComponent implements OnInit {
         } else {
           this.playbackService.resumePlay();
         }
+      }
+    } else {
+      if (!this.hasLoadedSongs) {
+        this.playbackService.loadSongQueue(this.songs);
+        this.hasLoadedSongs = true;
+        this.playbackService.playSongFromQueue(0);
       } else {
-        if (!this.hasLoadedSongs) {
-          this.playbackService.loadSongQueue(this.songs);
-          this.hasLoadedSongs = true;
-          this.playbackService.playSongFromQueue(0);
-        } else {
-          this.playbackService.resumePlay();
-        }
+        this.playbackService.resumePlay();
       }
     }
   }
