@@ -21,6 +21,7 @@ This repository contains all code/resources for the Audium frontend.
 ## Built With  
   * [Angular 4](https://angular.io)  
   * [Visual Studio Code](https://code.visualstudio.com/): IDE  
+  * [Amazon Web Services](https://aws.amazon.com/): Web hosting  
 
 ## Course Website  
 [CSE308 Homepage](http://www3.cs.stonybrook.edu/~cse308/index-Section2.html)  
