@@ -11,13 +11,20 @@ This repository contains all code/resources for the Audium frontend.
 
 ## Authors  
 
-* [Renato Briceno](https://github.com/rbriceno512)  
-* [Syed Parvez](https://github.com/ssparvez)  
-* [Sean Pesce](https://github.com/SeanPesce)  
-* [Oscar Trivino](https://github.com/otrivino)  
+* **Renato Briceno** - [GitHub](https://github.com/rbriceno512)  
+* **Syed Parvez** - [GitHub](https://github.com/ssparvez)  
+* **Sean Pesce** - [Website](https://SeanPesce.github.io) | [GitHub](https://github.com/SeanPesce)  
+* **Oscar Trivino** - [GitHub](https://github.com/otrivino)  
 
 ## Built With  
   * [Angular 4](https://angular.io)  
+  * [Visual Studio Code](https://code.visualstudio.com/): IDE  
 
 ## Course Website  
 [CSE308 Homepage](http://www3.cs.stonybrook.edu/~cse308/index-Section2.html)  
+
+## Media  
+ * [Search results showcase video](https://www.youtube.com/watch?v=DXqlODCi0dw)  
+
+## License  
+[GNU General Public License v3.0](LICENSE)  
