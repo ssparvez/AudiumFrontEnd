@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PlayerService} from '../../../../services/player/player.service';
 import { Song } from '../../../../classes/Song';
-import { DataService } from '../../../../services/data.service';
+import { mediaURL } from '../../../../../environments/environment';
 import { Router } from '@angular/router';
 import { SongQueue } from '../../../../classes/SongQueue';
 import { GeneralService } from '../../../../services/general/general.service';
@@ -12,7 +11,7 @@ import {PlaybackService} from "../../../../services/playback/playback.service";
   templateUrl: './musicplayer.component.html',
   styleUrls: ['./musicplayer.component.css']
 })
-export class MusicplayerComponent implements OnInit {
+export class MusicPlayerComponent implements OnInit {
   // just testing for now
 
   mediaPath: string;
@@ -32,35 +31,25 @@ export class MusicplayerComponent implements OnInit {
 
   private currentlyPlaying: Song;
   private isCurrentlyPlaying: boolean;
-  private volumeLevel = 0.2;
+  private volumeLevel = 0.5;
   private isMuted: boolean;
   private isRepeating  = 0;
   private isShuffling: boolean;
 
   constructor(
-    private playerService: PlayerService,
-    private dataService: DataService,
     private generalService: GeneralService,
     private playbackService: PlaybackService,
     private router: Router ) {
-    this.playbackService.isPlaying.subscribe(
-      isPlaying => {
-        this.isCurrentlyPlaying = isPlaying;
-      }
-    );
+    this.playbackService.isPlaying.subscribe(isPlaying => this.isCurrentlyPlaying = isPlaying);
     this.playbackService.volumeLevel = this.volumeLevel;
 
     this.playbackService.currentlyPlaying.subscribe(
       song => {
         this.currentlyPlaying = song;
         // this.volumeLevel = this.playbackService.getVolume();
-        let songTime = this.playbackService.getCurrentSongTIme().subscribe(
-          time => {
-            if ( time !== undefined) {
-              this.seekPosition = time;
-            } else {
-              songTime.unsubscribe();
-            }
+        let songTime = this.playbackService.getCurrentSongTIme().subscribe(time => {
+            if ( time !== undefined) this.seekPosition = time;
+            else songTime.unsubscribe();
           }
         );
       }
@@ -68,6 +57,7 @@ export class MusicplayerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.mediaPath = mediaURL;
   }
 
 

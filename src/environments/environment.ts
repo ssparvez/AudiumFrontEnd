@@ -6,3 +6,6 @@
 export const environment = {
   production: false
 };
+//export const connectionURL = "http://localhost:5000"; // dev 
+export const connectionURL = "http://audium-api.us-east-2.elasticbeanstalk.com"; // prod
+export const mediaURL = "https://s3.us-east-2.amazonaws.com/assets.audium.io";

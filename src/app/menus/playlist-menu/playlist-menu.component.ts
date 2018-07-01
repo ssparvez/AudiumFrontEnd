@@ -8,14 +8,13 @@ import {MatDialog} from "@angular/material";
 import {MzToastService} from "ng2-materialize";
 import {Router} from "@angular/router";
 import {animate, transition, trigger, style} from "@angular/animations";
-import {ChoosePlaylistComponent} from "../../modals/choose-playlist/choose-playlist.component";
 import {CreatePlaylistComponent} from "../../modals/create-playlist/create-playlist.component";
-import { PlayerService } from '../../services/player/player.service';
+import { PlaybackService } from '../../services/playback/playback.service';
 
 @Component({
   selector: 'app-playlist-menu',
   templateUrl: './playlist-menu.component.html',
-  styleUrls: ['./playlist-menu.component.css'],
+  styleUrls: [],
 })
 export class PlaylistMenuComponent implements OnInit {
   @Input('playlists') public playlists: Playlist[];
@@ -76,11 +75,11 @@ export class PlaylistMenuComponent implements OnInit {
   ];
 
   constructor(private service: GeneralService,
-              private playerService: PlayerService,
               private contextMenuService: ContextMenuService,
               private dialog: MatDialog,
               private toastService: MzToastService,
-              private router: Router
+              private router: Router,
+              private playbackService: PlaybackService
               ) {
 
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -225,7 +224,7 @@ export class PlaylistMenuComponent implements OnInit {
 
   addPlaylistToQueue(playlist: Playlist) {
     this.service.get( "/playlist/" + playlist.playlistId + "/songs").subscribe((songs) => {
-      this.playerService.queueSongs(songs);
+      this.playbackService.addListToUserQueue(songs);
     });
   }
 

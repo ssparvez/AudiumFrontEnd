@@ -7,7 +7,7 @@ import { ContentInputComponent } from '../../../../../modals/admin/search/conten
 import { SongSearchComponent } from '../../../../../modals/admin/search/song-search/song-search.component';
 import { Album } from '../../../../../classes/Album';
 import { GeneralService } from '../../../../../services/general/general.service';
-import { DataService } from '../../../../../services/data.service';
+import { mediaURL } from '../../../../../../environments/environment';
 import { AppError } from '../../../../../errors/AppError';
 import { ConfirmComponent } from '../../../../../modals/confirm-modal/confirm.component';
 
@@ -25,8 +25,7 @@ export class ArtistContentComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
               private toastService: MzToastService,
-              private generalService: GeneralService,
-              private dataService: DataService) {
+              private generalService: GeneralService) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     if(this.currentUser != null){
       this.currentAdminId = this.currentUser['_accountId'];
@@ -34,7 +33,7 @@ export class ArtistContentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mediaPath = this.dataService.mediaURL;
+    this.mediaPath = mediaURL;
     this.generalService.get("/artists/accounts/" + this.currentUser['_accountId'] + "/albums").subscribe((albums) => {
       this.albums = albums;
       console.log(albums);

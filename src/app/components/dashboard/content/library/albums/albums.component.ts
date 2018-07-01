@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from "@angular/router";
 import { Album } from '../../../../../classes/Album';
 import { GeneralService } from '../../../../../services/general/general.service';
-import { PlayerService } from '../../../../../services/player/player.service';
-import { DataService } from '../../../../../services/data.service';
-import {animate, style, transition, trigger} from "@angular/animations";
+import { mediaURL } from '../../../../../../environments/environment';
+import { animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-albums',
@@ -12,12 +11,8 @@ import {animate, style, transition, trigger} from "@angular/animations";
   styleUrls: ['./albums.component.css'],
   animations: [
     trigger('fade',[
-      transition('void => *',[
-        animate(300, style({opacity: 0}))
-      ]),
-      transition('* => void',[
-        animate(300, style({opacity: 0}))
-      ])
+      transition('void => *',[animate(300, style({opacity: 0}))]),
+      transition('* => void',[animate(300, style({opacity: 0}))])
     ])
   ]
 })
@@ -29,12 +24,10 @@ export class AlbumsComponent implements OnInit {
   constructor(
     private router: Router,
     private generalService: GeneralService,
-    private playerService: PlayerService,
-    private dataService: DataService
   ) { }
 
   ngOnInit() {
-    this.mediaPath = this.dataService.mediaURL;
+    this.mediaPath = mediaURL;
     let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
     if(currUser != null){
       this.accountId = currUser._accountId;
@@ -54,12 +47,6 @@ export class AlbumsComponent implements OnInit {
 	console.log("album #" + albumId);
     this.router.navigate(['/dash/album/', albumId]);
   }
-
-  playAlbumSongs(albumId: number) {
-    this.generalService.get( "/albums/" + albumId + "/songs").subscribe((songs) => {
-      this.playerService.loadSongs(0, songs);
-    });
-  }
   checkImagePaths(albumId: number): string {
     let extensions = [".jpg", ".jpeg", ".png"]
     let imageUrl = "assets/images/defaults/album.svg"
@@ -76,7 +63,6 @@ export class AlbumsComponent implements OnInit {
   }
 
   playPlayback($event: MouseEvent, albumId) {
-    this.playAlbumSongs(albumId);
     this.isPlaying = true;
     $event.preventDefault();
     $event.stopPropagation();

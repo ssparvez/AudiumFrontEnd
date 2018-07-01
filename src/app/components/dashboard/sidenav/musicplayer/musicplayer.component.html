@@ -3,7 +3,7 @@
 <div class="card grey darken-3" *ngIf="currentlyPlaying">
   <div class="card-image">
     <a [routerLink]="['album', currentlyPlaying.albumId]">
-      <img src="{{ dataService.albumImg + currentlyPlaying.albumId + '/Album.jpg'}}" onError="this.src='assets/images/defaults/album.svg'">
+      <img src="{{ mediaPath + '/images/album_arts/' + currentlyPlaying.albumId + '/Album.jpg'}}" onError="this.src='assets/images/defaults/album.svg'">
     </a>
     <span class="card-title black" id="music-card-title">
       <div style="padding: 0px 16px;">

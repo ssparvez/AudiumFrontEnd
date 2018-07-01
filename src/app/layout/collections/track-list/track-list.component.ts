@@ -4,11 +4,11 @@ import {
   ViewChild, AfterContentInit, SimpleChanges, SimpleChange, EventEmitter, Output
 } from '@angular/core';
 import { Router } from "@angular/router";
-import { Playlist } from '../../../../classes/Playlist';
-import { Song } from '../../../../classes/Song';
-import { DataService } from '../../../../services/data.service';
-import { SafeHtmlPipe } from '../../../../pipes/safe-html.pipe';
-import { PlaybackService } from "../../../../services/playback/playback.service";
+import { Playlist } from '../../../classes/Playlist';
+import { Song } from '../../../classes/Song';
+import { mediaURL } from '../../../../environments/environment';
+import { SafeHtmlPipe } from '../../../pipes/safe-html.pipe';
+import { PlaybackService } from "../../../services/playback/playback.service";
 
 
 @Component({
@@ -18,12 +18,8 @@ import { PlaybackService } from "../../../../services/playback/playback.service"
   styleUrls: ['./track-list.component.css'],
   animations: [
     trigger('fade',[
-      transition('void => *',[
-        animate(500, style({opacity: 1}))
-      ]),
-      transition('* => void',[
-        animate(500, style({opacity: 0}))
-      ])
+      transition('void => *',[animate(500, style({opacity: 1}))]),
+      transition('* => void',[animate(500, style({opacity: 0}))])
     ])
   ]
 })
@@ -192,7 +188,6 @@ export class TrackListComponent implements OnInit, OnChanges {
 
   constructor(
     private router: Router,
-    private dataService: DataService,
     private cdRef: ChangeDetectorRef,
     private playbackService: PlaybackService,
     private renderer: Renderer2
@@ -231,7 +226,7 @@ export class TrackListComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.playbackService.clean();
-    this.mediaPath = this.dataService.mediaURL;
+    this.mediaPath = mediaURL;
     var root = this;
     setTimeout(function() {
       if ((!root.destroyed) && root.collectionWidth) {

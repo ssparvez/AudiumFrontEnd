@@ -6,11 +6,11 @@ import {ContextMenuComponent, ContextMenuService} from "ngx-contextmenu";
 import {GeneralService} from "../../services/general/general.service";
 import {MzToastService} from "ng2-materialize";
 import {AppError} from "../../errors/AppError";
-import { PlayerService } from "../../services/player/player.service";
+import { PlaybackService } from "../../services/playback/playback.service";
 @Component({
   selector: 'app-album-menu',
   templateUrl: './album-menu.component.html',
-  styleUrls: ['./album-menu.component.css']
+  styleUrls: []
 })
 export class AlbumMenuComponent implements OnInit {
 
@@ -42,7 +42,7 @@ export class AlbumMenuComponent implements OnInit {
   ];
 
   constructor(private service: GeneralService,
-              private playerService: PlayerService,
+              private playbackService: PlaybackService,
               private contextMenuService: ContextMenuService,
               private toastService: MzToastService) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -112,7 +112,7 @@ export class AlbumMenuComponent implements OnInit {
 
   addAlbumToQueue(album: Album) {
     this.service.get( "/albums/" + album.albumId + "/songs").subscribe((songs) => {
-      this.playerService.queueSongs(songs);
+      this.playbackService.addListToUserQueue(songs);
       console.log(songs);
     });
   }

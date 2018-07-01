@@ -7,14 +7,13 @@ import {Playlist} from "../../classes/Playlist";
 import {AppError} from "../../errors/AppError";
 import {ChoosePlaylistComponent} from "../../modals/choose-playlist/choose-playlist.component";
 import {MatDialog} from "@angular/material";
-import { PlayerService } from '../../services/player/player.service';
 import { Router } from '@angular/router';
 import {PlaybackService} from "../../services/playback/playback.service";
 
 @Component({
   selector: 'app-song-menu',
   templateUrl: './song-menu.component.html',
-  styleUrls: ['./song-menu.component.css'],
+  styleUrls: [],
 })
 export class SongMenuComponent implements OnInit {
 
@@ -96,7 +95,6 @@ export class SongMenuComponent implements OnInit {
               private contextMenuService: ContextMenuService,
               private dialog: MatDialog,
               private toastService: MzToastService,
-              private playerService: PlayerService,
               private playbackService: PlaybackService,
               private router: Router) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));

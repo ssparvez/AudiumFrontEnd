@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Song} from "../../classes/Song";
-import {DataService} from "../data.service";
+import { Song } from "../../classes/Song";
+import { mediaURL } from '../../../environments/environment';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { Howl } from 'howler';
@@ -37,9 +37,7 @@ export class PlaybackService {
   private isUserQueuePlaying: boolean;
 
 
-  constructor(private dataService: DataService) {
-
-  }
+  constructor() { }
 
   public loadSongQueue(songs: Song[]) {
     console.log(songs);
@@ -53,7 +51,7 @@ export class PlaybackService {
     this.queueOfSongs.unshift(song);
     this.stopCurrentSound();
     this.playback = new Howl({
-      src: [this.dataService.songUrl + song.file ],
+      src: [mediaURL + "/audio/" + song.file],
       html5: true,
       volume: this.volumeLevel,
       onplay: (soundId: number) => this.handleOnPlay(soundId, 0),
@@ -72,7 +70,7 @@ export class PlaybackService {
     let error: boolean;
     this.stopCurrentSound();
     this.playback = new Howl({
-      src: [this.dataService.songUrl + this.queueOfSongs[index].file ],
+      src: [mediaURL + "/audio/" + this.queueOfSongs[index].file ],
       html5: true,
       volume: this.volumeLevel,
       onplay: (soundId: number) => this.handleOnPlay(soundId, index),
@@ -91,7 +89,7 @@ export class PlaybackService {
     this.stopCurrentSound();
     let  currentSong = Object.assign({}, this.userQueue[0]);
     this.playback = new Howl({
-      src: [this.dataService.songUrl + this.userQueue[0].file ],
+      src: [mediaURL + "/audio/" + this.userQueue[0].file ],
       html5: true,
       volume: this.volumeLevel,
       onplay: (soundId: number) => {this.isUserQueuePlaying = true; this.handleOnPlay(soundId,0, currentSong);},
@@ -359,11 +357,8 @@ export class PlaybackService {
   }
 
   public getUserQueue() {
-    if (this.userQueue === undefined) {
-      return [];
-    } else {
-      return this.userQueue;
-    }
+    if (this.userQueue === undefined) return []; 
+    else return this.userQueue;
   }
 
   public addToUserQueue(song: Song) {

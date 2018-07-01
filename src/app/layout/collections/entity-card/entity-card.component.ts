@@ -1,16 +1,16 @@
 import { animate, style, transition, trigger } from "@angular/animations";
 import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, Renderer2, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from "@angular/router";
-import { Album } from '../../../../classes/Album';
-import { Artist } from '../../../../classes/Artist';
-import { Playlist } from '../../../../classes/Playlist';
-import { Profile } from '../../../../classes/Profile';
-import { DataService } from '../../../../services/data.service';
-import { SafeHtmlPipe } from '../../../../pipes/safe-html.pipe';
-import {PlaybackService} from "../../../../services/playback/playback.service";
-import {Song} from "../../../../classes/Song";
-import {AppError} from "../../../../errors/AppError";
-import {GeneralService} from "../../../../services/general/general.service";
+import { Album } from '../../../classes/Album';
+import { Artist } from '../../../classes/Artist';
+import { Playlist } from '../../../classes/Playlist';
+import { Profile } from '../../../classes/Profile';
+import { mediaURL } from '../../../../environments/environment';
+import { SafeHtmlPipe } from '../../../pipes/safe-html.pipe';
+import {PlaybackService} from "../../../services/playback/playback.service";
+import {Song} from "../../../classes/Song";
+import {AppError} from "../../../errors/AppError";
+import {GeneralService} from "../../../services/general/general.service";
 
 
 // Supported entity types (only 1 type allowed per entity collection element)
@@ -161,7 +161,6 @@ export class EntityCardComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private dataService: DataService,
     private cdRef: ChangeDetectorRef,
     private playbackService: PlaybackService,
     private service: GeneralService,
@@ -187,15 +186,11 @@ export class EntityCardComponent implements OnInit {
         }
       });
 
-    this.playbackService.hasBeenLoaded.subscribe(
-      status => {
-        this.hasLoadedSongs = status;
-      }
-    );
+    this.playbackService.hasBeenLoaded.subscribe(status => this.hasLoadedSongs = status);
   }
 
   ngOnInit() {
-    this.mediaPath = this.dataService.mediaURL;
+    this.mediaPath = mediaURL;
     var root = this;
     setTimeout(function() {
       if ((!root.destroyed) && root.collectionWidth) {
@@ -212,15 +207,10 @@ export class EntityCardComponent implements OnInit {
 
   ngOnChanges() {
     if (this.e === Entity.None) {
-      if (this.albums != undefined) {
-        this.e = Entity.Album;
-      } else if (this.artists  != undefined) {
-        this.e = Entity.Artist;
-      } else if (this.playlists  != undefined) {
-        this.e = Entity.Playlist;
-      } else if (this.profiles  != undefined) {
-        this.e = Entity.Profile;
-      }
+      if (this.albums != undefined) this.e = Entity.Album;
+      else if (this.artists  != undefined) this.e = Entity.Artist;
+      else if (this.playlists  != undefined) this.e = Entity.Playlist;
+      else if (this.profiles  != undefined) this.e = Entity.Profile;
       this.initializeCollection();
     }
   }
@@ -248,9 +238,7 @@ export class EntityCardComponent implements OnInit {
 }
 
   private initializeCollection(): void {
-    if(this.e === Entity.None) {
-      return;
-    }
+    if(this.e === Entity.None) return;
 
     switch (this.e) {
       case Entity.Album:
@@ -288,13 +276,9 @@ export class EntityCardComponent implements OnInit {
       this.nRowsInShowAllBt = EntityCardComponent.DEFAULT_nRowsInShowAllBt;
     }
 
-    if(this.showAll) {
-      this.displayShowAllBt = false;
-    }
+    if(this.showAll) this.displayShowAllBt = false;
 
-    if(this.forceEnableImageLink) {
-      this.disableImageLink = false;
-    }
+    if(this.forceEnableImageLink) this.disableImageLink = false;
     this.recheckSize(true);
   }
 
@@ -424,7 +408,8 @@ export class EntityCardComponent implements OnInit {
         this.songs = songsForContent;
         this.playbackService.loadSongQueue(this.songs);
         this.playbackService.playSongFromQueue(0);
-      }, (error: AppError) => {
+      }, 
+      (error: AppError) => {
 
       }
     );
@@ -480,31 +465,21 @@ export class EntityCardComponent implements OnInit {
   // Returns the active entity collection
   public entities(): any[] {
     switch(this.e) {
-      case Entity.Album:
-        return this.albums;
-      case Entity.Artist:
-        return this.artists;
-      case Entity.Playlist:
-        return this.playlists;
-      case Entity.Profile:
-       return this.profiles;
-      default:
-        return undefined;
+      case Entity.Album: return this.albums;
+      case Entity.Artist: return this.artists;
+      case Entity.Playlist: return this.playlists;
+      case Entity.Profile: return this.profiles;
+      default: return undefined;
     }
   }
 
   public entity(i: number): any {
     switch(this.e) {
-      case Entity.Album:
-        return this.albums[i];
-      case Entity.Artist:
-        return this.artists[i];
-      case Entity.Playlist:
-        return this.playlists[i];
-      case Entity.Profile:
-       return this.profiles[i];
-      default:
-        return undefined;
+      case Entity.Album: return this.albums[i];
+      case Entity.Artist: return this.artists[i];
+      case Entity.Playlist: return this.playlists[i];
+      case Entity.Profile: return this.profiles[i];
+      default: return undefined;
     }
   }
 

@@ -15,7 +15,7 @@ import {NgxChartsModule} from "@swimlane/ngx-charts"
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SidenavComponent } from './components/dashboard/sidenav/sidenav.component';
-import { MusicplayerComponent } from './components/dashboard/sidenav/musicplayer/musicplayer.component';
+import { MusicPlayerComponent } from './components/dashboard/sidenav/musicplayer/musicplayer.component';
 import { ContentComponent } from './components/dashboard/content/content.component';
 import { HomeComponent } from './components/dashboard/content/home/home.component';
 import { SongsComponent } from './components/dashboard/content/library/songs/songs.component';
@@ -49,16 +49,14 @@ import { AdminContentComponent } from "./components/dashboard/content/admin/admi
 import { AccountsComponent } from "./modals/admin/accounts/accounts.component";
 import { ArtistHomeComponent } from "./components/dashboard/content/artist/artist-home/artist-home.component";
 import { ArtistSidenavComponent } from "./components/dashboard/sidenav/artist-sidenav/artist-sidenav.component";
-import { EntityCardComponent } from './components/layout/collections/entity-card/entity-card.component';
-import { GenreCardComponent } from './components/layout/collections/genre-card/genre-card.component';
-import { TrackListComponent } from './components/layout/collections/track-list/track-list.component';
+import { EntityCardComponent } from './layout/collections/entity-card/entity-card.component';
+import { GenreCardComponent } from './layout/collections/genre-card/genre-card.component';
+import { TrackListComponent } from './layout/collections/track-list/track-list.component';
 import { ArtistAccountEditComponent } from './modals/artist/artist-account-edit/artist-account-edit.component';
 
 // Services
 import { AuthenticationService } from "./services/authentication/authentication.service";
-import { PlayerService } from './services/player/player.service';
 import { AuthGuard } from "./guards/authguard.service";
-import { DataService } from "./services/data.service";
 import { CustomerAccount } from "./classes/CustomerAccount";
 import { GeneralService } from "./services/general/general.service";
 import { ContextMenuModule, ContextMenuService } from "ngx-contextmenu";
@@ -147,7 +145,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     PlaylistsComponent,
     DashboardComponent,
     AccountComponent,
-    MusicplayerComponent,
+    MusicPlayerComponent,
     LoginComponent,
     FrontPageComponent,
     PaymentInfoComponent,
@@ -218,9 +216,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   providers: [
     ContextMenuService,
     GeneralService,
-    DataService,
     AuthenticationService,
-    PlayerService,
     PlaybackService,
     AuthGuard,
     AuthHttp,

@@ -20,12 +20,12 @@ import { trigger, state, style, transition, animate, keyframes } from "@angular/
     ]),
     trigger('adBannerTrigger', [
       transition(':enter', [
-        style({transform: 'translateY(100%)'}),
-        animate('500ms ease-in-out', style({transform: 'translateY(0%)'}))
+        style({transform: 'translateY(100%)', height: '0%'}),
+        animate('500ms ease-in-out', style({transform: 'translateY(0%)', height: '100%'}))
       ]),
       transition(':leave', [
-        style({transform: 'translateY(0)'}),
-        animate('500ms ease-in-out', style({transform: 'translateY(100%)'}))
+        style({transform: 'translateY(0)', height: '100%'}),
+        animate('500ms ease-in-out', style({transform: 'translateY(100%)', height: '0%'}))
       ])
     ]),
   ]

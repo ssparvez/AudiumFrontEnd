@@ -5,7 +5,7 @@ import {Router} from "@angular/router";
 @Component({
   selector: 'app-admin-sidenav',
   templateUrl: './admin-sidenav.component.html',
-  styleUrls: ['./admin-sidenav.component.css']
+  styleUrls: ['../sidenav.component.css']
 })
 export class AdminSidenavComponent implements OnInit {
   public isExpanded = false;

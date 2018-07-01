@@ -9,9 +9,9 @@ import { GeneralService } from '../../../../services/general/general.service';
 import { AppError } from '../../../../errors/AppError';
 import { Playlist } from '../../../../classes/Playlist';
 import { CustomerAccount } from '../../../../classes/CustomerAccount';
-import { PlayerService } from '../../../../services/player/player.service';
-import { DataService } from '../../../../services/data.service';
-import {MzToastService} from "ng2-materialize";
+import { mediaURL } from '../../../../../environments/environment';
+import { MzToastService } from "ng2-materialize";
+import { PlaybackService } from '../../../../services/playback/playback.service';
 
 @Component({
   selector: 'app-search',
@@ -48,31 +48,23 @@ export class SearchComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private generalService: GeneralService,
-    private playerService: PlayerService,
-    private dataService: DataService,
+    private playbackService: PlaybackService,
     private toastService: MzToastService,
   ) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    if(this.currentUser) {
-      this.currentAccountId = this.currentUser['_accountId'];
-    }
+    if(this.currentUser) this.currentAccountId = this.currentUser['_accountId'];
   }
 
   ngOnInit() {
 
     let date = new Date();
-    if((date.getMonth()+1) < 10){
-      this.today += "-0" + (date.getMonth()+1);
-    }else{
-      this.today += "-" + (date.getMonth()+1);
-    }
-    if(date.getDate() < 10){
-      this.today += "-0" + date.getDate();
-    }else{
-      this.today += "-" + date.getDate();
-    }
+    if((date.getMonth()+1) < 10) this.today += "-0" + (date.getMonth()+1);
+    else this.today += "-" + (date.getMonth()+1);
 
-    this.mediaPath = this.dataService.mediaURL;
+    if(date.getDate() < 10) this.today += "-0" + date.getDate();
+    else this.today += "-" + date.getDate();
+
+    this.mediaPath = mediaURL;
     this.route.params.subscribe(param => {
       this.keywords = param['keywords'];
       this.generalService.get("/search/songs/" + this.keywords).subscribe((songs) => {
@@ -96,7 +88,6 @@ export class SearchComponent implements OnInit {
             });
           });
         });
-
       });
     });
   }
@@ -113,11 +104,8 @@ export class SearchComponent implements OnInit {
     let navUrl: string = "https://www.ticketmaster.com/search?q=";
     let firstTerm: boolean = true;
     for(let term of eventTitle.replace("+", "%2B").split(" ")){
-      if(!firstTerm){
-        navUrl += "+";
-      }else{
-        firstTerm = false;
-      }
+      if(!firstTerm) navUrl += "+";
+      else firstTerm = false;
       navUrl += term;
     }
     window.open(navUrl);
@@ -129,16 +117,9 @@ export class SearchComponent implements OnInit {
       .subscribe(
         response => {
           if (status) {
-            if ( response) {
-              this.toastService.show("You are now following this person", 3000, 'blue');
-            }
-            else {
-              this.toastService.show("You are already following this person", 3000, 'blue');
-            }
-
+            this.toastService.show("You are" + (response? "now" : "already")  + "following this person", 3000, 'blue');
           } else {
             this.toastService.show("Person was unfollowed", 3000, 'blue');
-
           }
         }, (error: AppError) => {
           this.toastService.show("Person follow status could not be changed", 3000, 'red');
@@ -147,13 +128,15 @@ export class SearchComponent implements OnInit {
   }
 
   playSongs(index: number): void {
-    this.playerService.loadSongs(index, this.songs);
+    this.playbackService.loadSongQueue(this.songs);
+    this.playbackService.playSongFromQueue(index);
   }
 
 
   playArtistSongs($event: MouseEvent, artistId: number): void {
     this.generalService.get("/artists/" + artistId + "/songs").subscribe((songs) => {
-      this.playerService.loadSongs(0, songs);
+      this.playbackService.loadSongQueue(songs);
+      this.playbackService.playSongFromQueue(0);
     });
     this.isPlaying = true;
     $event.preventDefault();
@@ -162,7 +145,8 @@ export class SearchComponent implements OnInit {
 
   playAlbumSongs($event: MouseEvent, albumId: number): void {
     this.generalService.get("/albums/" + albumId + "/songs").subscribe((songs) => {
-      this.playerService.loadSongs(0, songs);
+      this.playbackService.loadSongQueue(songs);
+      this.playbackService.playSongFromQueue(0);
     });
     this.isPlaying = true;
     $event.preventDefault();
@@ -171,7 +155,8 @@ export class SearchComponent implements OnInit {
 
   playPlaylistSongs($event: MouseEvent, playlistId: number): void {
     this.generalService.get("/playlist/" + playlistId + "/songs").subscribe((songs) => {
-      this.playerService.loadSongs(0, songs);
+      this.playbackService.loadSongQueue(songs);
+      this.playbackService.playSongFromQueue(0);
     });
     this.isPlaying = true;
     $event.preventDefault();

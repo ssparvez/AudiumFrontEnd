@@ -2,7 +2,7 @@ import { animate, style, transition, trigger } from "@angular/animations";
 import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CustomerAccount } from "../../../../classes/CustomerAccount";
 import { PaymentInfoComponent } from "../../../../modals/payment-info/payment-info.component";
-import { DataService } from "../../../../services/data.service";
+import { mediaURL } from '../../../../../environments/environment';
 import { GeneralService } from "../../../../services/general/general.service";
 import { AuthenticationService } from "../../../../services/authentication/authentication.service";
 import { AppError } from "../../../../errors/AppError";
@@ -20,12 +20,8 @@ import { UserPreferences } from '../../../../classes/UserPreferences';
   styleUrls: ['./account.component.css'],
   animations: [
     trigger('fade',[
-      transition('void => *',[
-        animate(500, style({opacity: 1}))
-      ]),
-      transition('* => void',[
-        animate(500, style({opacity: 0}))
-      ])
+      transition('void => *',[animate(500, style({opacity: 1}))]),
+      transition('* => void',[animate(500, style({opacity: 0}))])
     ])
   ]
 })
@@ -54,7 +50,6 @@ export class AccountComponent implements OnInit {
 
   constructor( private router: Router,
                private currentUser: CustomerAccount,
-               private dataService: DataService,
                private service: GeneralService,
                private authService: AuthenticationService,
                private dialog: MatDialog,
@@ -70,7 +65,7 @@ export class AccountComponent implements OnInit {
     if (this.currentUser.accountId == null) {
       this.currentUser.loadWithJSON(JSON.parse(sessionStorage.getItem("currentUser")));
       this.currentUser.loadPreferencesWithJSON(JSON.parse(sessionStorage.getItem("preferences")));
-      this.currentUser.profilePicURL = this.dataService.mediaURL + "/profiles/" + this.currentUser.accountId + '/Profile.jpg';
+      this.currentUser.profilePicURL = mediaURL + "/profiles/" + this.currentUser.accountId + '/Profile.jpg';
     }
     if(this.currentUser.userPreferences == null || this.currentUser.userPreferences.accountId == null) {
       this.currentUser.loadPreferencesWithJSON(JSON.parse(sessionStorage.getItem("preferences")));

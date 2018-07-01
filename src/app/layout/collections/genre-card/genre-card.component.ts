@@ -1,9 +1,9 @@
 import { animate, style, transition, trigger } from "@angular/animations";
 import { AfterViewChecked, ChangeDetectorRef, Directive, Component, ElementRef, Renderer2, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { DataService } from '../../../../services/data.service';
-import { SafeHtmlPipe } from '../../../../pipes/safe-html.pipe';
-import { Genre } from '../../../../classes/Genre';
+import { mediaURL } from '../../../../environments/environment';
+import { SafeHtmlPipe } from '../../../pipes/safe-html.pipe';
+import { Genre } from '../../../classes/Genre';
 
 @Component({
   selector: 'genre-card-collection',
@@ -12,12 +12,8 @@ import { Genre } from '../../../../classes/Genre';
   styleUrls: ['./genre-card.component.css'],
   animations: [
     trigger('fade',[
-      transition('void => *',[
-        animate(500, style({opacity: 1}))
-      ]),
-      transition('* => void',[
-        animate(500, style({opacity: 0}))
-      ])
+      transition('void => *',[animate(500, style({opacity: 1}))]),
+      transition('* => void',[animate(500, style({opacity: 0}))])
     ])
   ]
 })
@@ -110,7 +106,6 @@ export class GenreCardComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private dataService: DataService,
     private cdRef: ChangeDetectorRef,
     private renderer: Renderer2
   ) {
@@ -127,7 +122,7 @@ export class GenreCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mediaPath = this.dataService.mediaURL;
+    this.mediaPath = mediaURL;
 
     var root = this;
     setTimeout(function() {

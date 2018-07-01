@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { Album } from '../../../../../classes/Album';
 import { GeneralService } from '../../../../../services/general/general.service';
-import { PlayerService } from '../../../../../services/player/player.service';
-import { DataService } from '../../../../../services/data.service';
+import { mediaURL } from '../../../../../../environments/environment';
 import {AppError} from "../../../../../errors/AppError";
 import {MzToastService} from "ng2-materialize";
 import {PlaybackService} from "../../../../../services/playback/playback.service";
@@ -24,8 +23,6 @@ export class AlbumComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private generalService: GeneralService,
-    private playerService: PlayerService,
-    private dataService: DataService,
     private playbackService: PlaybackService,
     private toastService: MzToastService) {
 
@@ -36,7 +33,7 @@ export class AlbumComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mediaPath = this.dataService.mediaURL;
+    this.mediaPath = mediaURL;
     this.route.params.subscribe(param => {
       this.id = + param['id'];
       console.log(this.id);
@@ -68,9 +65,8 @@ export class AlbumComponent implements OnInit {
         }
       );
   }
-  isSaved(): boolean {
-    return this.album.saved;
-  }
+  isSaved(): boolean { return this.album.saved; }
+  
   assignFollowStatus(): void {
     const albumsSaved = JSON.parse(localStorage.getItem("albumssaved"));
     if (albumsSaved.find( x => x === this.album.albumId) != null ) {
@@ -92,6 +88,4 @@ export class AlbumComponent implements OnInit {
   addAlbumToQueue() {
     this.playbackService.addListToUserQueue(this.album.songs);
   }
-
-
 }

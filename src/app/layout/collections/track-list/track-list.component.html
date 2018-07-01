@@ -88,10 +88,9 @@
     </div>
   </div>
   <div #footerDiv class="track-list-collection-footer" *ngIf="injectFooterDivSelector || injectFooterElement"></div>
-
 </div>
-
-<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px;" *ngIf="loadingAnimation && (!songs)">
+<br>
+<div class="row fade-in-2-sec valign-wrapper" style="min-height: 250px; display: block;" *ngIf="loadingAnimation && (!songs)">
   <div class="loader fade-in-2-sec" @fade>Loading...</div>
 </div>
 

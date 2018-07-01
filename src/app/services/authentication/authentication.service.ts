@@ -4,7 +4,7 @@ import { JwtHelper, tokenNotExpired } from "angular2-jwt";
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { CustomerAccount } from "../../classes/CustomerAccount";
 import { GeneralService } from "../general/general.service";
-import { DataService } from "../data.service";
+import { connectionURL } from '../../../environments/environment';
 // Errors
 import { AppError } from "../../errors/AppError";
 import { NotFoundError } from "../../errors/not-found-error";
@@ -16,7 +16,6 @@ import { UserPreferences } from '../../classes/UserPreferences';
 export class AuthenticationService {
 
   constructor(private http: Http,
-              private dataService: DataService,
               private currentUser: CustomerAccount,
               private playbackService: PlaybackService,
               private service: GeneralService) { }
@@ -26,12 +25,12 @@ export class AuthenticationService {
   /*  const headers = new Headers();
     headers.append('content-type', 'application/json');
     const options = new RequestOptions({ headers: headers});*/
-    return this.http.post( this.dataService.connectionURL + '/login', credentials
+    return this.http.post(connectionURL + '/login', credentials
       ).map(response => {
         const result = {
           token: response['_body']
         };
-        if ( result && result.token) {
+        if (result && result.token) {
           localStorage.setItem('token', result.token);
           console.log(this.currentUserInfo.isValid);
           if ( this.currentUserInfo.isValid) {
@@ -116,9 +115,8 @@ export class AuthenticationService {
     this.currentUser.email = info.email;
     this.currentUser.dob = info.dob;
     this.currentUser.gender = info.gender;
-    this.currentUser.profilePicURL = this.dataService.profilePic + this.currentUser.accountId + '.png';
+    this.currentUser.profilePicURL = connectionURL + '/profile/' + this.currentUser.accountId + '.png';
     sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
-
   }
 }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { GeneralService } from '../../../../../services/general/general.service';
-import { DataService } from '../../../../../services/data.service';
+import { mediaURL } from '../../../../../../environments/environment';
 import { Song } from '../../../../../classes/Song';
 import { Artist } from '../../../../../classes/Artist';
 import { Genre } from '../../../../../classes/Genre';
@@ -22,12 +22,11 @@ export class GenreComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private generalService: GeneralService,
-    private dataService: DataService
   ) { }
 
 
   ngOnInit() {
-    this.mediaPath = this.dataService.mediaURL;
+    this.mediaPath = mediaURL;
     this.route.params.subscribe(param => {
       this.id = + param['id'];
       this.generalService.get("/genres/" + this.id + "/browse").subscribe((genre) => {

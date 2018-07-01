@@ -2,8 +2,7 @@ import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, Vie
 import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { Artist } from '../../../../../classes/Artist';
 import { GeneralService } from '../../../../../services/general/general.service';
-import { PlayerService } from '../../../../../services/player/player.service';
-import { DataService } from '../../../../../services/data.service';
+import { mediaURL } from '../../../../../../environments/environment';
 import { Song } from '../../../../../classes/Song';
 import { Event } from '../../../../../classes/Event';
 import { Address } from '../../../../../classes/Address';
@@ -11,6 +10,7 @@ import { Album } from '../../../../../classes/Album';
 import { MzToastService } from "ng2-materialize";
 import { AppError } from "../../../../../errors/AppError";
 import { animate, style, transition, trigger } from "@angular/animations";
+import { PlaybackService } from '../../../../../services/playback/playback.service';
 
 @Component({
   selector: 'app-artist',
@@ -18,17 +18,12 @@ import { animate, style, transition, trigger } from "@angular/animations";
   styleUrls: ['./artist.component.css'],
   animations: [
     trigger('fade',[
-      transition('void => *',[
-        animate(300, style({opacity: 0}))
-      ]),
-      transition('* => void',[
-        animate(300, style({opacity: 0}))
-      ])
+      transition('void => *',[animate(300, style({opacity: 0}))]),
+      transition('* => void',[animate(300, style({opacity: 0}))])
     ])
   ]
 })
 export class ArtistComponent implements OnInit {
-
   private id;
   artist: Artist;
   similarArtists: Artist[];
@@ -61,8 +56,7 @@ export class ArtistComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private generalService: GeneralService,
-    private playerService: PlayerService,
-    private dataService: DataService,
+    private playbackService: PlaybackService,
     private toastService: MzToastService,
     private cdRef: ChangeDetectorRef
   ) {
@@ -87,7 +81,7 @@ export class ArtistComponent implements OnInit {
       this.today += "-" + date.getDate();
     }
 
-    this.mediaPath = this.dataService.mediaURL;
+    this.mediaPath = mediaURL;
     this.route.params.subscribe(param => {
       this.id = + param['id'];
       console.log(this.id);
@@ -128,12 +122,14 @@ export class ArtistComponent implements OnInit {
   }
 
   playArtistSongs(index: number, songs: Song[]): void {
-    this.playerService.loadSongs(index, songs);
+    this.playbackService.loadSongQueue(songs);
+    this.playbackService.playSongFromQueue(index);
   }
 
   playAlbumSongs(albumId: number) {
     this.generalService.get( "/albums/" + albumId + "/songs").subscribe((songs) => {
-      this.playerService.loadSongs(0, songs);
+      this.playbackService.loadSongQueue(songs);
+      this.playbackService.playSongFromQueue(0);
     });
   }
 
@@ -145,11 +141,8 @@ export class ArtistComponent implements OnInit {
     let navUrl: string = "https://www.ticketmaster.com/search?q=";
     let firstTerm: boolean = true;
     for(let term of eventTitle.replace("+", "%2B").split(" ")){
-      if(!firstTerm){
-        navUrl += "+";
-      }else{
-        firstTerm = false;
-      }
+      if(!firstTerm) navUrl += "+";
+      else firstTerm = false;
       navUrl += term;
     }
     window.open(navUrl);
@@ -181,9 +174,7 @@ export class ArtistComponent implements OnInit {
 
   // Returns the index of the last album to display in "Show all albums" card
   getMoreBtAlbumsEndIndex(): number {
-    if(this.showAllAlbums){
-      return 0;
-    }
+    if(this.showAllAlbums) return 0;
     let nAlbums = (this.nAlbumRows * this.nAlbumsPerRow);
     let nBtAlbums = (nAlbums + (this.nMoreBtAlbumRows * this.nMoreBtAlbumRows)) - 1;
     return this.artist.albums.length > nBtAlbums ? (nBtAlbums - 1) : nBtAlbums;
@@ -198,9 +189,7 @@ export class ArtistComponent implements OnInit {
 
   // Returns number of hidden albums
   getRemainingAlbumCount(): number {
-    if(this.showAllAlbums){
-      return 0;
-    }
+    if(this.showAllAlbums) return 0;
     let nAlbums = (this.nAlbumRows * this.nAlbumsPerRow) - 1;
     let nBtAlbums = (this.nMoreBtAlbumRows * this.nMoreBtAlbumRows) - 1;
     return this.artist.albums.length - (nAlbums + nBtAlbums);

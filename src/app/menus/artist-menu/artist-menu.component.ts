@@ -4,12 +4,12 @@ import {ContextMenuComponent, ContextMenuService} from "ngx-contextmenu";
 import {GeneralService} from "../../services/general/general.service";
 import {MzToastService} from "ng2-materialize";
 import {AppError} from "../../errors/AppError";
-import { PlayerService } from '../../services/player/player.service';
+import { PlaybackService } from '../../services/playback/playback.service';
 
 @Component({
   selector: 'app-artist-menu',
   templateUrl: './artist-menu.component.html',
-  styleUrls: ['./artist-menu.component.css']
+  styleUrls: []
 })
 export class ArtistMenuComponent implements OnInit {
 
@@ -40,9 +40,9 @@ export class ArtistMenuComponent implements OnInit {
   ];
 
   constructor(private service: GeneralService,
-              private playerService: PlayerService,
               private contextMenuService: ContextMenuService,
-              private toastService: MzToastService ) {
+              private toastService: MzToastService,
+              private playbackService: PlaybackService ) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     if(this.currentUser != null){
       this.currentAccountId = this.currentUser['_accountId'];
@@ -109,7 +109,7 @@ export class ArtistMenuComponent implements OnInit {
 
   addArtistToQueue(artist: Artist) {
     this.service.get( "/artists/" + artist.artistId + "/songs").subscribe((songs) => {
-      this.playerService.queueSongs(songs);
+      this.playbackService.addListToUserQueue(songs);
       console.log(songs);
     });
   }

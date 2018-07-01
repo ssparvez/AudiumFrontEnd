@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from "@angular/router";
 import { MzToastService } from 'ng2-materialize';
 import { Song } from '../../../../../classes/Song';
-import { PlayerService } from '../../../../../services/player/player.service'
 import { GeneralService } from '../../../../../services/general/general.service';
+import { PlaybackService } from '../../../../../services/playback/playback.service';
 
 @Component({
   selector: 'app-songs',
@@ -17,14 +17,13 @@ export class SongsComponent implements OnInit {
     private router: Router,
     private toastService: MzToastService,
     private generalService: GeneralService,
-    private playerService: PlayerService
+    private playbackService: PlaybackService
   ) { }
 
   ngOnInit() {
     let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    if(currUser != null){
-      this.accountId = currUser._accountId;
-    }
+    if(currUser != null) this.accountId = currUser._accountId;
+
     if(this.accountId != null){
       this.generalService.get("/accounts/" + this.accountId + "/songs").subscribe((songs) => {
         this.songs = songs;
@@ -33,19 +32,15 @@ export class SongsComponent implements OnInit {
     }
   }
 
-  playAllSongs() {
-    this.toastService.show('Playing Song!', 4000, 'blue');
-  }
-
-  playLibrarySongs(index: number) {
-    // initialize howl here?
-    // this.songs[index].isPlaying = true; used to change the play button
-    this.playerService.loadSongs(index, this.songs);
-    console.log(index);
+  playAllSongs(song: Song) {
+    if(this.songs.length > 0) {
+      this.toastService.show('Playing All Songs!', 4000, 'blue');
+      this.playbackService.loadSongQueue(this.songs);
+      this.playbackService.playSong(this.songs[0])
+    }
   }
 
   playbackSong($event: MouseEvent, song:Song) {
     song.isPlaying = !song.isPlaying;
   }
-
 }
