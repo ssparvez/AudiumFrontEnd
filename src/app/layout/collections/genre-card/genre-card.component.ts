@@ -1,7 +1,7 @@
 import { animate, style, transition, trigger } from "@angular/animations";
 import { AfterViewChecked, ChangeDetectorRef, Directive, Component, ElementRef, Renderer2, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { mediaURL } from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { SafeHtmlPipe } from '../../../pipes/safe-html.pipe';
 import { Genre } from '../../../classes/Genre';
 
@@ -122,7 +122,7 @@ export class GenreCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mediaPath = mediaURL;
+    this.mediaPath = environment.mediaURL;
 
     var root = this;
     setTimeout(function() {

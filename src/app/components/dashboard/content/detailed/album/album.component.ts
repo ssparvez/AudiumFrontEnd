@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { Album } from '../../../../../classes/Album';
 import { GeneralService } from '../../../../../services/general/general.service';
-import { mediaURL } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../environments/environment';
 import {AppError} from "../../../../../errors/AppError";
 import {MzToastService} from "ng2-materialize";
 import {PlaybackService} from "../../../../../services/playback/playback.service";
@@ -33,7 +33,7 @@ export class AlbumComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mediaPath = mediaURL;
+    this.mediaPath = environment.mediaURL;
     this.route.params.subscribe(param => {
       this.id = + param['id'];
       console.log(this.id);

@@ -4,7 +4,7 @@ import { JwtHelper, tokenNotExpired } from "angular2-jwt";
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { CustomerAccount } from "../../classes/CustomerAccount";
 import { GeneralService } from "../general/general.service";
-import { connectionURL } from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 // Errors
 import { AppError } from "../../errors/AppError";
 import { NotFoundError } from "../../errors/not-found-error";
@@ -25,7 +25,7 @@ export class AuthenticationService {
   /*  const headers = new Headers();
     headers.append('content-type', 'application/json');
     const options = new RequestOptions({ headers: headers});*/
-    return this.http.post(connectionURL + '/login', credentials
+    return this.http.post(environment.connectionURL + '/login', credentials
       ).map(response => {
         const result = {
           token: response['_body']
@@ -115,7 +115,7 @@ export class AuthenticationService {
     this.currentUser.email = info.email;
     this.currentUser.dob = info.dob;
     this.currentUser.gender = info.gender;
-    this.currentUser.profilePicURL = connectionURL + '/profile/' + this.currentUser.accountId + '.png';
+    this.currentUser.profilePicURL = environment.connectionURL + '/profile/' + this.currentUser.accountId + '.png';
     sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
   }
 }

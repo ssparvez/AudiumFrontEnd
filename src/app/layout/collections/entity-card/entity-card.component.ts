@@ -5,7 +5,7 @@ import { Album } from '../../../classes/Album';
 import { Artist } from '../../../classes/Artist';
 import { Playlist } from '../../../classes/Playlist';
 import { Profile } from '../../../classes/Profile';
-import { mediaURL } from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { SafeHtmlPipe } from '../../../pipes/safe-html.pipe';
 import {PlaybackService} from "../../../services/playback/playback.service";
 import {Song} from "../../../classes/Song";
@@ -190,7 +190,7 @@ export class EntityCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mediaPath = mediaURL;
+    this.mediaPath = environment.mediaURL;
     var root = this;
     setTimeout(function() {
       if ((!root.destroyed) && root.collectionWidth) {

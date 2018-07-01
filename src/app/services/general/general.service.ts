@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthHttp } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
-import { connectionURL } from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { NotFoundError } from "../../errors/not-found-error";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -16,26 +16,26 @@ export class GeneralService {
   constructor(private http: AuthHttp) { }
 
   get(endpoint) {
-    return this.http.get(connectionURL + endpoint)
+    return this.http.get(environment.connectionURL + endpoint)
       .map(response => response.json())
       .catch(this.handleError);
   }
 
 
   update(endpoint, resources) {
-    return this.http.put(connectionURL + endpoint, resources)
+    return this.http.put(environment.connectionURL + endpoint, resources)
       .map(response => response.json())
       .catch(this.handleError);
   }
 
   post(endpoint, resources) {
-    return this.http.post(connectionURL + endpoint , resources)
+    return this.http.post(environment.connectionURL + endpoint , resources)
       .map(response => response.json())
       .catch(this.handleError);
   }
 
   deleteResource(endpoint) {
-    return this.http.delete(connectionURL + endpoint)
+    return this.http.delete(environment.connectionURL + endpoint)
       .map(response => response.json())
       .catch(this.handleError);
   }

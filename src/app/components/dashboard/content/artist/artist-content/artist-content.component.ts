@@ -7,7 +7,7 @@ import { ContentInputComponent } from '../../../../../modals/admin/search/conten
 import { SongSearchComponent } from '../../../../../modals/admin/search/song-search/song-search.component';
 import { Album } from '../../../../../classes/Album';
 import { GeneralService } from '../../../../../services/general/general.service';
-import { mediaURL } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../environments/environment';
 import { AppError } from '../../../../../errors/AppError';
 import { ConfirmComponent } from '../../../../../modals/confirm-modal/confirm.component';
 
@@ -33,7 +33,7 @@ export class ArtistContentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mediaPath = mediaURL;
+    this.mediaPath = environment.mediaURL;
     this.generalService.get("/artists/accounts/" + this.currentUser['_accountId'] + "/albums").subscribe((albums) => {
       this.albums = albums;
       console.log(albums);

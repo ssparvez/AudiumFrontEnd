@@ -7,7 +7,7 @@ import { Router, NavigationEnd } from "@angular/router";
 import { Observable } from 'rxjs/Rx';
 import { Song } from '../../../../classes/Song';
 import { Genre } from '../../../../classes/Genre';
-import { mediaURL } from '../../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.mediaPath = mediaURL;
+    this.mediaPath = environment.mediaURL;
     if(this.authenticationService != null && this.authenticationService.currentUserInfo != null){
       this.currentUser = this.authenticationService.currentUserInfo;
     }

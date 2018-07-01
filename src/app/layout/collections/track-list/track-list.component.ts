@@ -6,7 +6,7 @@ import {
 import { Router } from "@angular/router";
 import { Playlist } from '../../../classes/Playlist';
 import { Song } from '../../../classes/Song';
-import { mediaURL } from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { SafeHtmlPipe } from '../../../pipes/safe-html.pipe';
 import { PlaybackService } from "../../../services/playback/playback.service";
 
@@ -226,7 +226,7 @@ export class TrackListComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.playbackService.clean();
-    this.mediaPath = mediaURL;
+    this.mediaPath = environment.mediaURL;
     var root = this;
     setTimeout(function() {
       if ((!root.destroyed) && root.collectionWidth) {

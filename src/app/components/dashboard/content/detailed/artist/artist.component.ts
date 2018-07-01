@@ -2,7 +2,7 @@ import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, Vie
 import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 import { Artist } from '../../../../../classes/Artist';
 import { GeneralService } from '../../../../../services/general/general.service';
-import { mediaURL } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../environments/environment';
 import { Song } from '../../../../../classes/Song';
 import { Event } from '../../../../../classes/Event';
 import { Address } from '../../../../../classes/Address';
@@ -81,7 +81,7 @@ export class ArtistComponent implements OnInit {
       this.today += "-" + date.getDate();
     }
 
-    this.mediaPath = mediaURL;
+    this.mediaPath = environment.mediaURL;
     this.route.params.subscribe(param => {
       this.id = + param['id'];
       console.log(this.id);

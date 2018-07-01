@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Song } from '../../../../classes/Song';
-import { mediaURL } from '../../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { Router } from '@angular/router';
 import { SongQueue } from '../../../../classes/SongQueue';
 import { GeneralService } from '../../../../services/general/general.service';
@@ -57,7 +57,7 @@ export class MusicPlayerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mediaPath = mediaURL;
+    this.mediaPath = environment.mediaURL;
   }
 
 

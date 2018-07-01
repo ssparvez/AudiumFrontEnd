@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Song } from "../../classes/Song";
-import { mediaURL } from '../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import { Howl } from 'howler';
@@ -51,7 +51,7 @@ export class PlaybackService {
     this.queueOfSongs.unshift(song);
     this.stopCurrentSound();
     this.playback = new Howl({
-      src: [mediaURL + "/audio/" + song.file],
+      src: [environment.mediaURL + "/audio/" + song.file],
       html5: true,
       volume: this.volumeLevel,
       onplay: (soundId: number) => this.handleOnPlay(soundId, 0),
@@ -70,7 +70,7 @@ export class PlaybackService {
     let error: boolean;
     this.stopCurrentSound();
     this.playback = new Howl({
-      src: [mediaURL + "/audio/" + this.queueOfSongs[index].file ],
+      src: [environment.mediaURL + "/audio/" + this.queueOfSongs[index].file ],
       html5: true,
       volume: this.volumeLevel,
       onplay: (soundId: number) => this.handleOnPlay(soundId, index),
@@ -89,7 +89,7 @@ export class PlaybackService {
     this.stopCurrentSound();
     let  currentSong = Object.assign({}, this.userQueue[0]);
     this.playback = new Howl({
-      src: [mediaURL + "/audio/" + this.userQueue[0].file ],
+      src: [environment.mediaURL + "/audio/" + this.userQueue[0].file ],
       html5: true,
       volume: this.volumeLevel,
       onplay: (soundId: number) => {this.isUserQueuePlaying = true; this.handleOnPlay(soundId,0, currentSong);},

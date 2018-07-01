@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from "@angular/router";
 import { Artist } from '../../../../../classes/Artist';
 import { GeneralService } from '../../../../../services/general/general.service';
-import { mediaURL } from '../../../../../../environments/environment';
+import { environment } from '../../../../../../environments/environment';
 import {trigger, transition, style, animate} from "@angular/animations";
 import { PlaybackService } from '../../../../../services/playback/playback.service';
 
@@ -30,7 +30,7 @@ export class ArtistsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.mediaPath = mediaURL;
+    this.mediaPath = environment.mediaURL;
     let currUser = JSON.parse(sessionStorage.getItem("currentUser"));
     if(currUser != null) this.accountId = currUser._accountId;
 

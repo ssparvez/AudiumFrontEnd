@@ -9,7 +9,7 @@ import { GeneralService } from '../../../../services/general/general.service';
 import { AppError } from '../../../../errors/AppError';
 import { Playlist } from '../../../../classes/Playlist';
 import { CustomerAccount } from '../../../../classes/CustomerAccount';
-import { mediaURL } from '../../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { MzToastService } from "ng2-materialize";
 import { PlaybackService } from '../../../../services/playback/playback.service';
 
@@ -64,7 +64,7 @@ export class SearchComponent implements OnInit {
     if(date.getDate() < 10) this.today += "-0" + date.getDate();
     else this.today += "-" + date.getDate();
 
-    this.mediaPath = mediaURL;
+    this.mediaPath = environment.mediaURL;
     this.route.params.subscribe(param => {
       this.keywords = param['keywords'];
       this.generalService.get("/search/songs/" + this.keywords).subscribe((songs) => {

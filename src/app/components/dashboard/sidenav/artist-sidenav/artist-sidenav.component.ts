@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SidenavComponent } from '../sidenav.component';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../../../services/authentication/authentication.service';
-import { mediaURL } from '../../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-artist-sidenav',
@@ -20,7 +20,7 @@ export class ArtistSidenavComponent implements OnInit {
     private authService: AuthenticationService) {
     //const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-    this.mediaURL = mediaURL;
+    this.mediaURL = environment.mediaURL;
   }
 
   ngOnInit() {
