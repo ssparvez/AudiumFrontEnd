@@ -1,17 +1,18 @@
 version: 0.1
 environment_variables:
     plaintext:
+        S3_BUCKET: "app.audium.io"
         BUILD_ENV: "prod"
 phases:
     install:
         commands:
             - echo Installing source NPM dependencies...
             - npm install
-            - npm install -g @angular/cli
+            - npm install -g @angular/cli@1.4.5
     build:
         commands:
             - echo Build started on `date`
-            - ng build --env=prod
+            - ng build --env=${BUILD_ENV}
     post_build:
          commands:
             - aws s3 cp dist s3://${S3_BUCKET} --recursive
