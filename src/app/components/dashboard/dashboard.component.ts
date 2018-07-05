@@ -11,9 +11,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public currentUser: JSON;
   public currentAccountRole;
 
-  constructor(
-    private router: Router
-  ) {
+  constructor(private router: Router) {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     if(this.currentUser != null){
       this.currentAccountRole = this.currentUser['_role'];
