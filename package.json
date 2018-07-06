@@ -33,7 +33,7 @@
     "ng2-materialize": "^1.8.1",
     "ngx-contextmenu": "^2.0.0-beta.7",
     "rxjs": "^5.5.11",
-    "time-ago-pipe": "^1.2.1",
+    "time-ago-pipe": "0.0.2",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

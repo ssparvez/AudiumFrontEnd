@@ -1,6 +1,6 @@
-version: 0.1
-environment_variables:
-    plaintext:
+version: 0.2
+env:
+    variables:
         S3_BUCKET: "app.audium.io"
         BUILD_ENV: "prod"
 phases:
