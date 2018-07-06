@@ -12,10 +12,10 @@ phases:
     build:
         commands:
             - echo Build started on `date`
-            - ng build --env=${BUILD_ENV}
+            - ng build --env=$BUILD_ENV
     post_build:
          commands:
-            - aws s3 cp dist s3://${S3_BUCKET} --recursive
+            - aws s3 cp dist s3://$S3_BUCKET --recursive
             - echo Build completed on `date`
 artifacts:
     files:
