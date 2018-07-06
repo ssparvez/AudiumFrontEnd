@@ -1,122 +1,111 @@
-<html>
-
-<body>
-  <!-- Main Content -->
-  <div class="container">
-    <!-- Page Content goes here -->
-    <div class="row">
-      <div class="row center-align">
-        <img src="assets/images/logo_blue.png" class="login-page-logo">
-        <span class="login-page-logo2">Audium</span>
-        <div class="divider" style="background-color: #2196f3"></div>
-      </div>
-      <div class="col s6 offset-s3">
-        <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'">
-          <mz-tab-item [label]="'LOGIN'">
-            <div class="col s12 grey darken-1">
-              <form #f="ngForm" (ngSubmit)="login(f.value)">
-                <div *ngIf="invalidLogin" class="card-panel red lighten-1 center-align">Invalid username and/or password.</div>
-                <div *ngIf="suspended" class="card-panel red lighten-1 center-align">Your account has been suspended</div>
-                <div class="row">
-                  <div class="input-field col s12 ">
-                    <i class="material-icons prefix white-text">email</i>
-                    <input required ngModel name="username" id="email-signin" type="text" class="form-control validate">
-                    <label for="email-signin">Username or Email</label>
-                  </div>
+<!-- Main Content -->
+<div class="container">
+  <!-- Page Content goes here -->
+  <div class="row">
+    <div class="row center-align">
+      <img src="assets/images/logo_blue.png" class="login-page-logo">
+      <span class="login-page-logo2">Audium</span>
+      <div class="divider" style="background-color: #2196f3"></div>
+    </div>
+    <div class="col s6 offset-s3">
+      <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'">
+        <mz-tab-item [label]="'LOGIN'">
+          <div class="col s12 grey darken-1">
+            <form #f="ngForm" (ngSubmit)="login(f.value)">
+              <div *ngIf="invalidLogin" class="card-panel red lighten-1 center-align">Invalid username and/or password.</div>
+              <div *ngIf="suspended" class="card-panel red lighten-1 center-align">Your account has been suspended</div>
+              <div class="row">
+                <div class="input-field col s12 ">
+                  <i class="material-icons prefix white-text">email</i>
+                  <input required ngModel name="username" id="email-signin" type="text" class="form-control validate">
+                  <label for="email-signin">Username or Email</label>
                 </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <i class="material-icons prefix white-text">vpn_key</i>
-                    <input ngModel name="password" required id="password-signin" type="password" class="form-control validate" autocomplete="current-password">
-                    <label for="password-signin">Password</label>
-                  </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <i class="material-icons prefix white-text">vpn_key</i>
+                  <input ngModel name="password" required id="password-signin" type="password" class="form-control validate" autocomplete="current-password">
+                  <label for="password-signin">Password</label>
                 </div>
-                <label>
-                  <a class='login-page-forgotpass' href='#!'>
-                    <b>Forgot Password?</b>
-                  </a>
-                </label>
-                <br/>
-                <div class='row'>
-                  <button type='submit' name='btn_login' class='col s10 push-s1 btn btn-large waves-effect login-page-loginbtn'>
-                    Log In
-                  </button>
+              </div>
+              <label>
+                <a class='login-page-forgotpass' href='#!'>
+                  <b>Forgot Password?</b>
+                </a>
+              </label>
+              <br/>
+              <div class='row'>
+                <button type='submit' name='btn_login' class='col s10 push-s1 btn btn-large waves-effect login-page-loginbtn'>
+                  Log In
+                </button>
+              </div>
+            </form>
+          </div>
+        </mz-tab-item>
+        <mz-tab-item [active]="registerCheck" [label]="'REGISTER'">
+          <div class="col s12 grey darken-1">
+            <div *ngIf="registrationCheck == false" class="card-panel red lighten-1 center-align">Registration failed. Please try again.</div>
+            <form #form="ngForm" (ngSubmit)="signUp(form.value)">
+              <div class="row">
+                <div class="input-field col s6">
+                  <input ngModel required [(ngModel)]="fN" name="firstName" id="first_name" type="text" class="validate" (blur)="formatFirstLetterFN()">
+                  <label for="first_name">First Name</label>
                 </div>
-              </form>
-            </div>
-          </mz-tab-item>
-          <mz-tab-item [active]="registerCheck" [label]="'REGISTER'">
-            <div class="col s12 grey darken-1">
-              <div *ngIf="registrationCheck == false" class="card-panel red lighten-1 center-align">Registration failed. Please try again.</div>
-              <form #form="ngForm" (ngSubmit)="signUp(form.value)">
-                <div class="row">
-                  <div class="input-field col s6">
-                    <input ngModel required [(ngModel)]="fN" name="firstName" id="first_name"
-                           type="text" class="validate" (blur)="formatFirstLetterFN()"
-                           >
-                    <label for="first_name">First Name</label>
-                  </div>
-                  <div class="input-field col s6">
-                    <input ngModel required [(ngModel)]="lN" name="lastName" id="last_name"
-                           type="text" class="validate" (blur)="formatFirstLetterLN()">
-                    <label for="last_name">Last Name</label>
-                  </div>
+                <div class="input-field col s6">
+                  <input ngModel required [(ngModel)]="lN" name="lastName" id="last_name" type="text" class="validate" (blur)="formatFirstLetterLN()">
+                  <label for="last_name">Last Name</label>
                 </div>
-                <div class="row">
-                  <div class="input-field col s5">
-                    <input required ngModel minlength="6" name="username"
-                           #username="ngModel" type="text" class="validate" id="username">
-                    <label for="username">Username</label>
-                    <div *ngIf="username.touched && !username.valid">
-                      <div *ngIf="username.errors['minlength']" class=" card-panel login-cp1 red lighten-1">
-                        <span class=""> Username should be minimun {{username.errors['minlength'].requiredLength}} characters</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="input-field col s7">
-                    <input ngModel required name="email" id="email" type="email" class="validate">
-                    <label for="email">Email</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input ngModel minlength="5" name="passwordHash"
-                           #password="ngModel" required id="password" type="password"
-                           class=" validate" autocomplete="new-password">
-                    <label for="password">Password</label>
-                    <div *ngIf="password.touched && !password.valid">
-                      <div *ngIf="password.errors['minlength']" class="card-panel red lighten-1">
-                        <span> Password should be minimun {{password.errors['minlength'].requiredLength}} characters</span>
-                      </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s5">
+                  <input required ngModel minlength="6" name="username" #username="ngModel" type="text" class="validate" id="username">
+                  <label for="username">Username</label>
+                  <div *ngIf="username.touched && !username.valid">
+                    <div *ngIf="username.errors['minlength']" class=" card-panel login-cp1 red lighten-1">
+                      <span class=""> Username should be minimun {{username.errors['minlength'].requiredLength}} characters</span>
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="input-field col s4">
-                    <mz-datepicker-container class="col s12">
-                      <input mz-datepicker ngModel name="dateOfBirth" required [label]="'Date of Birth'" [options]="dateOptions" type="text">
-                    </mz-datepicker-container>
-                  </div>
-                  <div class="input-field col s8">
-                    <input ngModel name="gender" type="radio" value="male" id="radio1" required />
-                    <label for="radio1">Male</label>
-                    <input ngModel name="gender" type="radio" value="female" id="radio2" />
-                    <label for="radio2">Female</label>
-                    <input ngModel name="gender" type="radio" value="nonbinary" id="radio3" />
-                    <label for="radio3">Non-binary</label>
+                <div class="input-field col s7">
+                  <input ngModel required name="email" id="email" type="email" class="validate">
+                  <label for="email">Email</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input ngModel minlength="5" name="passwordHash" #password="ngModel" required id="password" type="password" class=" validate"
+                    autocomplete="new-password">
+                  <label for="password">Password</label>
+                  <div *ngIf="password.touched && !password.valid">
+                    <div *ngIf="password.errors['minlength']" class="card-panel red lighten-1">
+                      <span> Password should be minimun {{password.errors['minlength'].requiredLength}} characters</span>
+                    </div>
                   </div>
                 </div>
-                <br />
-                <div class='row'>
-                  <button type='submit' [disabled]="!form.valid" name='btn_login' class='col s10 offset-s1 btn btn-large waves-effect login-page-createbtn'>Create Account</button>
+              </div>
+              <div class="row">
+                <div class="input-field col s4">
+                  <mz-datepicker-container class="col s12">
+                    <input mz-datepicker ngModel name="dateOfBirth" required [label]="'Date of Birth'" [options]="dateOptions" type="text">
+                  </mz-datepicker-container>
                 </div>
-              </form>
-            </div>
-          </mz-tab-item>
-        </mz-tab>
-      </div>
+                <div class="input-field col s8">
+                  <input ngModel name="gender" type="radio" value="male" id="radio1" required />
+                  <label for="radio1">Male</label>
+                  <input ngModel name="gender" type="radio" value="female" id="radio2" />
+                  <label for="radio2">Female</label>
+                  <input ngModel name="gender" type="radio" value="nonbinary" id="radio3" />
+                  <label for="radio3">Non-binary</label>
+                </div>
+              </div>
+              <br />
+              <div class='row'>
+                <button type='submit' [disabled]="!form.valid" name='btn_login' class='col s10 offset-s1 btn btn-large waves-effect login-page-createbtn'>Create Account</button>
+              </div>
+            </form>
+          </div>
+        </mz-tab-item>
+      </mz-tab>
     </div>
   </div>
-</body>
-
-</html>
+</div>

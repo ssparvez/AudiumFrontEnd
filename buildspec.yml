@@ -1,3 +1,4 @@
+# time-ago-pipe must be less than version 1.0.0 to pass Angular 4.4 build
 version: 0.2
 env:
     variables:
