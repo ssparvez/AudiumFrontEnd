@@ -173,6 +173,14 @@ span h5 a.album-tile:hover, span h4 a.album-tile:hover {
          animation: fadein 2s;
 }
 
+.fade-in-4-sec {
+    -webkit-animation: fadein 4s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 4s; /* Firefox < 16 */
+     -ms-animation: fadein 4s; /* Internet Explorer */
+      -o-animation: fadein 4s; /* Opera < 12.1 */
+         animation: fadein 4s;
+}
+
 /*Background and text color when a tab is active*/
 
 .tabs .indicator {
@@ -619,5 +627,9 @@ input[type=search] {
 
 .advanced-pie-legend .total-value::before, .advanced-pie-legend .item-value::before { 
     content: "$";
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #212121 inset;
 }
 

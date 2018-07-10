@@ -10,7 +10,7 @@
     <div class="col s6 offset-s3">
       <mz-tab [fixedTabWidth]="'true'" [responsiveThreshold]="'true'">
         <mz-tab-item [label]="'LOGIN'">
-          <div class="col s12 grey darken-1">
+          <div class="col s12">
             <form #f="ngForm" (ngSubmit)="login(f.value)">
               <div *ngIf="invalidLogin" class="card-panel red lighten-1 center-align">Invalid username and/or password.</div>
               <div *ngIf="suspended" class="card-panel red lighten-1 center-align">Your account has been suspended</div>
@@ -43,7 +43,7 @@
           </div>
         </mz-tab-item>
         <mz-tab-item [active]="registerCheck" [label]="'REGISTER'">
-          <div class="col s12 grey darken-1">
+          <div class="col s12">
             <div *ngIf="registrationCheck == false" class="card-panel red lighten-1 center-align">Registration failed. Please try again.</div>
             <form #form="ngForm" (ngSubmit)="signUp(form.value)">
               <div class="row">

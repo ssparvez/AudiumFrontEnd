@@ -29,12 +29,8 @@ enum Entity {
   styleUrls: ['./entity-card.component.css'],
   animations: [
     trigger('fade',[
-      transition('void => *',[
-        animate(500, style({opacity: 1}))
-      ]),
-      transition('* => void',[
-        animate(500, style({opacity: 0}))
-      ])
+      transition('void => *',[animate(500, style({opacity: 1}))]),
+      transition('* => void',[animate(500, style({opacity: 0}))])
     ])
   ]
 })
