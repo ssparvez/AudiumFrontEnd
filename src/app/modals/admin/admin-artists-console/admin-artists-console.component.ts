@@ -78,7 +78,7 @@ export class AdminArtistsConsoleComponent implements OnInit {
       .subscribe( confirm => {
         if ( confirm) {
           if ( this.artistIdToDelete !== "") {
-            this.service.deleteResource('/admin/' + this.data.adminId + '/artists/' + this.artistIdToDelete
+            this.service.delete('/admin/' + this.data.adminId + '/artists/' + this.artistIdToDelete
               + '/delete').subscribe(
               response => {
                 this.closeDialog(true);

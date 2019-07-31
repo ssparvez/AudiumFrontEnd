@@ -128,7 +128,7 @@ export class SongMenuComponent implements OnInit {
 
   public removeSongFromPlaylist(songToRemove: Song) {
     console.log(songToRemove.songId);
-   this.service.deleteResource('/accounts/' + this.currentAccountId + '/playlist/' + this.currentPlaylist +
+   this.service.delete('/accounts/' + this.currentAccountId + '/playlist/' + this.currentPlaylist +
      '/remove/song/' + songToRemove.songId).subscribe(
        response => {
          this.toastService.show("Song was removed from your playlist", 3000, 'blue');
@@ -174,7 +174,7 @@ export class SongMenuComponent implements OnInit {
 
   removeSongFromMusic(songToRemove: Song) {
     if (this.inMusic) {
-      this.service.deleteResource('/accounts/' + this.currentAccountId + '/song/' + songToRemove.songId + "/remove").subscribe(
+      this.service.delete('/accounts/' + this.currentAccountId + '/song/' + songToRemove.songId + "/remove").subscribe(
         response => {
           this.toastService.show("Song was removed from your music", 3000, 'blue');
           this.playbackService.removeSongFromQueue(songToRemove);

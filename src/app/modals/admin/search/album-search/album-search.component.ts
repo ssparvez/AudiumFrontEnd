@@ -57,7 +57,7 @@ export class AlbumSearchComponent implements OnInit {
     }).afterClosed()
       .subscribe( confirm => {
         if ( confirm) {
-            this.service.deleteResource('/admin/' + this.data.adminId + '/album/' + albumIdToDelete
+            this.service.delete('/admin/' + this.data.adminId + '/album/' + albumIdToDelete
               + '/delete').subscribe(
               response => {
                 this.albums.splice(index, 1);

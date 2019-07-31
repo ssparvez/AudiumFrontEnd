@@ -55,7 +55,7 @@ export class ArtistSearchComponent implements OnInit {
       .subscribe( confirm => {
         if ( confirm) {
           if ( artistIdToDelete !== "") {
-            this.service.deleteResource('/admin/' + this.data.adminId + '/artist/' + artistIdToDelete
+            this.service.delete('/admin/' + this.data.adminId + '/artist/' + artistIdToDelete
               + '/delete').subscribe(
               response => {
                 this.artists.splice(index, 1);

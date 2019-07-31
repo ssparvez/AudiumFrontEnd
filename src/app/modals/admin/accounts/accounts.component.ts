@@ -97,7 +97,7 @@ export class AccountsComponent implements OnInit {
       .subscribe( confirm => {
         if ( confirm) {
           if ( this.accountIdToUse !== "" || this.accountIdToUse !== undefined ) {
-            this.service.deleteResource('/admin/' + this.data.adminId + '/accounts/' + this.accountIdToUse
+            this.service.delete('/admin/' + this.data.adminId + '/accounts/' + this.accountIdToUse
               + '/delete').subscribe(
               response => {
                 this.closeDialog(true);

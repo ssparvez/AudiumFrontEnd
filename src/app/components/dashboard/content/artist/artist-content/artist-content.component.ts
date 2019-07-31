@@ -46,7 +46,7 @@ export class ArtistContentComponent implements OnInit {
     .subscribe(
       result => {
         if(result) {
-          this.generalService.deleteResource("adasdasd").subscribe(
+          this.generalService.delete("adasdasd").subscribe(
             response => {
             }, (error: AppError) => {
           });

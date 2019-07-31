@@ -119,7 +119,7 @@ export class AccountComponent implements OnInit {
           .subscribe(
             result => {
               if(result) {
-                this.service.deleteResource('/accounts/'+ this.currentUser.accountId).subscribe(
+                this.service.delete('/accounts/'+ this.currentUser.accountId).subscribe(
                   response => {
                     if(response) {
                       this.router.navigate(['']);
@@ -255,7 +255,7 @@ export class AccountComponent implements OnInit {
       .subscribe(
         result => {
           if(result) {
-            this.service.deleteResource('/accounts/' + this.currentUser.accountId + '/downgrade').subscribe(
+            this.service.delete('/accounts/' + this.currentUser.accountId + '/downgrade').subscribe(
               response => {
                 if (response && response.token) {
                   localStorage.setItem('token', response.token);

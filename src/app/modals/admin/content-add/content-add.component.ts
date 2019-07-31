@@ -95,7 +95,7 @@ export class ContentAddComponent implements OnInit {
       .subscribe( confirm => {
         if ( confirm) {
           if ( this.contentIdToDelete.contentId !== "") {
-            this.service.deleteResource('/admin/' + this.data.adminId + '/' + this.contentTypeToDelete.toLowerCase()
+            this.service.delete('/admin/' + this.data.adminId + '/' + this.contentTypeToDelete.toLowerCase()
               + '/' + this.contentIdToDelete.contentId + '/delete').subscribe(
               response => {
                 this.closeDialog(true);

@@ -34,7 +34,7 @@ export class GeneralService {
       .catch(this.handleError);
   }
 
-  deleteResource(endpoint) {
+  delete(endpoint) {
     return this.http.delete(environment.connectionURL + endpoint)
       .map(response => response.json())
       .catch(this.handleError);

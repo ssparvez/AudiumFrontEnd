@@ -118,7 +118,7 @@ export class PlaylistMenuComponent implements OnInit {
     }).afterClosed()
       .subscribe( confirm => {
         if (confirm ) {
-          this.service.deleteResource('/playlist/delete/' + this.currentUser['_accountId'] + '/' + playlistToDelete.playlistId)
+          this.service.delete('/playlist/delete/' + this.currentUser['_accountId'] + '/' + playlistToDelete.playlistId)
             .subscribe(
               response => {
                 if(this.detailed) {
